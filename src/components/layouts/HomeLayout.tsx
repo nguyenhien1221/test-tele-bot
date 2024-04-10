@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import NavBar from "../common/NavBar";
+
 import { Outlet } from "react-router-dom";
 
 const HomeLayout = () => {

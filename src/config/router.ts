@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import AuthLayout from "../components/layouts/AuthLayout";
 import { missionsRoute } from "../modules/Missions/route";
 import HomeLayout from "../components/layouts/HomeLayout";
 import { bootsRoute } from "../modules/Boots/route";
