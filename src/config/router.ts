@@ -3,6 +3,7 @@ import { missionsRoute } from "../modules/Missions/route";
 import HomeLayout from "../components/layouts/HomeLayout";
 import { bootsRoute } from "../modules/Boots/route";
 import { homeRoute } from "../modules/Home/route";
+import { friendsRoute } from "../modules/Friends/route";
 
 export const router = createBrowserRouter([
   {
@@ -12,7 +13,7 @@ export const router = createBrowserRouter([
       {
         path: "",
         Component: HomeLayout,
-        children: [homeRoute, missionsRoute, bootsRoute],
+        children: [homeRoute, missionsRoute, bootsRoute, friendsRoute],
       },
     ],
   },

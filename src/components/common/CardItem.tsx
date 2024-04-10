@@ -5,7 +5,7 @@ const CardItem = () => {
   return (
     <div className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full">
       <div className="col-span-2">
-        <img src="/images/icons/storage.svg" width={62} alt="storage"></img>
+        <img src="/images/icons/storage1.svg" width={62} alt="storage"></img>
       </div>
       <div className="col-span-3">
         <p className="font-bold">Storage</p>

@@ -6,8 +6,8 @@ const NavBar = () => {
   return (
     <div>
       <div className="flex justify-around bg-[#fff] shadow-lg rounded-[50px] py-[9px] px-[37px]">
-        {navbarItems.map((item) => (
-          <div>
+        {navbarItems.map((item, index) => (
+          <div key={index}>
             <Link to={item.path}>
               <div className="flex flex-col items-center">
                 <div className="h-[36px] ">
