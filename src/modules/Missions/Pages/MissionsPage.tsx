@@ -1,9 +1,15 @@
+import { useState } from "react";
 import { missionsOptions } from "../../../constants/missions.constants";
+import MissionsModal from "../Components/MissionsModal";
 
 const MissionsPage = () => {
-  const handleChooseBoot = (index: number) => {
+  const [isOpen, setisOpen] = useState<boolean>(false);
+
+  const handleChooseMission = (index: number) => {
+    setisOpen(true);
     console.log(index);
   };
+
   return (
     <div className="pt-[42px] px-4 bg-gradient-to-b relative h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
       {/* boot info */}
@@ -26,7 +32,7 @@ const MissionsPage = () => {
       <div className="mt-[49px]">
         {missionsOptions.map((item, index) => (
           <div
-            onClick={() => handleChooseBoot(index)}
+            onClick={() => handleChooseMission(index)}
             key={index}
             className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
           >
@@ -34,7 +40,9 @@ const MissionsPage = () => {
               <img src={item.icon} width={48} alt="storage"></img>
             </div>
             <div className="col-span-4">
-              <p className="text-[13px] font-normal mb-2">{item.title}</p>
+              <p className="text-[13px] font-normal mb-2 text-[#7D7D7D]">
+                {item.title}
+              </p>
               <div className="flex gap-[7px] mb-2">
                 <p className="font-normal">{item.description}</p>
               </div>
@@ -46,7 +54,7 @@ const MissionsPage = () => {
                     height={14}
                     alt="token"
                   ></img>
-                  <p className="text-xs font-bold">0.2 SEED</p>
+                  <p className="text-xs font-bold">{`${item.seed} SEED`}</p>
                 </div>
               </div>
             </div>
@@ -61,6 +69,12 @@ const MissionsPage = () => {
           </div>
         ))}
       </div>
+      {isOpen && (
+        <MissionsModal
+          closeModal={() => setisOpen(false)}
+          isOpen={true}
+        ></MissionsModal>
+      )}
     </div>
   );
 };

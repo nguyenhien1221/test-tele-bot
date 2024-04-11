@@ -1,14 +1,33 @@
-import React from "react";
+import { ToastContainer, toast } from "react-toastify";
 import { navbarItems } from "../../constants/navbar.constants";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
+  const navigate = useNavigate();
+
+  const handleShowToast = (index: number, item: any) => {
+    if (index === 3) {
+      toast.info("Coming soon", {
+        position: "top-center",
+        style: { width: 272, borderRadius: 8 },
+        progressStyle: {
+          backgroundColor: "#FF8C21",
+        },
+        icon: <img src="/images/icons/clock.png" alt=""></img>,
+      });
+    } else {
+      navigate(item.path);
+      return;
+    }
+  };
+
   return (
     <div>
+      <ToastContainer className="top-3 w-[272px] left-[50%] -translate-x-[50%]" />
       <div className="flex justify-around bg-[#fff] shadow-lg rounded-[50px] py-[9px] px-[37px]">
         {navbarItems.map((item, index) => (
           <div key={index}>
-            <Link to={item.path}>
+            <div onClick={() => handleShowToast(index, item)}>
               <div className="flex flex-col items-center">
                 <div className="h-[36px] ">
                   <img
@@ -20,7 +39,7 @@ const NavBar = () => {
                 </div>
                 <p className="text-xs font-medium">{item.name}</p>
               </div>
-            </Link>
+            </div>
           </div>
         ))}
       </div>

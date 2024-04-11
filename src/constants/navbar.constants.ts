@@ -3,6 +3,7 @@ export const navPaths = {
   BOOTS: "/boots",
   FRIENDS: "/friends",
   GAMES: "/games",
+  REGISTER: "/register",
 };
 
 export interface NavBarItem {

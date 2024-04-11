@@ -1,12 +1,12 @@
 import React from "react";
-import NavBar from "../common/NavBar";
+import { Navigate, Outlet } from "react-router-dom";
+import { navPaths } from "../../constants/navbar.constants";
 
 const AuthLayout = () => {
-  return (
-    <div>
-      <NavBar />
-    </div>
-  );
+  const firstLogin = Math.floor(Math.random() * 10);
+
+  if (firstLogin < 5) return <Navigate to={navPaths.REGISTER} />;
+  return <Outlet />;
 };
 
 export default AuthLayout;

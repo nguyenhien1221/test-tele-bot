@@ -1,12 +1,40 @@
 import { useState } from "react";
-import { bootOptions } from "../../../constants/boots.constants";
-import MissionsModal from "../Components/MissionsModal";
+import { bootOptions, bootTypeEnum } from "../../../constants/boots.constants";
+import { ToastContainer, toast } from "react-toastify";
+import BootsModal from "../Components/BootsModal";
 
 const Boots = () => {
-  const [isOpen, setisOpen] = useState<boolean>(false);
+  const [isOpen, setisOpen] = useState<any>({ isOpen: false, type: 0 });
+
+  const handleUpgrade = () => {
+    toast.success("Upgraded Successfully", {
+      style: { width: 272, borderRadius: 8 },
+    });
+    setisOpen({ isOpen: false, type: 0 });
+  };
+
+  const handleOpenModal = (type: number) => {
+    if (type === bootTypeEnum.WATER) {
+      toast.info("Coming soon", {
+        position: "top-center",
+        style: { width: 272, borderRadius: 8 },
+        progressStyle: {
+          backgroundColor: "#FF8C21",
+        },
+        icon: <img src="/images/icons/clock.png" alt=""></img>,
+      });
+    } else {
+      setisOpen({ isOpen: true, type: type });
+    }
+  };
 
   return (
     <div className="pt-[42px] px-4 bg-gradient-to-b relative h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
+      <ToastContainer
+        stacked
+        className="top-3 w-[272px] left-[50%] -translate-x-[50%]"
+      />
+
       {/* boot info */}
       <div className="flex flex-col items-center">
         <p className="text-sm font-normal">Your balance</p>
@@ -17,7 +45,7 @@ const Boots = () => {
             height={44}
             alt="token"
           ></img>
-          <p className="text-[40px] font-bold">0.00001</p>
+          <p className="text-[40px] font-extrabold">0.00001</p>
         </div>
         <div className="flex gap-2 items-center text-sm">
           <p className=" font-normal">Storage size:</p>
@@ -51,16 +79,22 @@ const Boots = () => {
       <div className="mt-[49px]">
         {bootOptions.map((item, index) => (
           <div
-            onClick={() => setisOpen(true)}
+            onClick={() => handleOpenModal(index)}
             key={index}
             className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
           >
-            <div className="col-span-2 flex ">
-              <img src={item.icon} width={62} alt="storage"></img>
+            <div className="col-span-2 flex w-[73px] h-[67px]">
+              <img
+                className="object-contain"
+                src={item.icon}
+                width={73}
+                height={67}
+                alt="storage"
+              ></img>
             </div>
             <div className="col-span-5">
               <p className="font-bold mb-2">{item.title}</p>
-              <div className="flex gap-[7px] mb-2">
+              <div className=" mb-2">
                 <p className="text-sm font-normal">{item.description}</p>
               </div>
               <div>
@@ -79,8 +113,12 @@ const Boots = () => {
         ))}
       </div>
 
-      {isOpen && (
-        <MissionsModal closeModal={() => setisOpen(false)} isOpen={true} />
+      {isOpen.isOpen && (
+        <BootsModal
+          type={isOpen.type}
+          closeModal={() => setisOpen({ isOpen: false, type: 0 })}
+          handleUpgrade={() => handleUpgrade()}
+        />
       )}
     </div>
   );

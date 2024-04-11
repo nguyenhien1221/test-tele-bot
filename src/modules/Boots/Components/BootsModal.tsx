@@ -1,0 +1,90 @@
+import React from "react";
+import MissionsItem from "./MissionsItem";
+import { Button } from "@mui/material";
+
+interface ModalPropsType {
+  type: number;
+  closeModal: () => void;
+  handleUpgrade: () => void;
+}
+
+const BootsModal = ({ closeModal, handleUpgrade, type }: ModalPropsType) => {
+  const renderTitle = (type: number) => {
+    if (type === 0) {
+      return (
+        <>
+          <p className="text-[24px] font-bold">Storage</p>
+          <p className="text-center font-normal">
+            Increase the storage capacity
+            <br />
+            of the mined
+          </p>
+        </>
+      );
+    }
+    if (type === 1) {
+      return (
+        <>
+          <p className="text-[24px] font-bold">Tree</p>
+          <p className="text-center font-normal">
+            Increase passive mining speed.
+          </p>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <p className="text-[24px] font-bold">Holy Water</p>
+          <p className="text-center font-normal">
+            Increase passive mining speed.
+          </p>
+        </>
+      );
+    }
+  };
+  return (
+    <>
+      <div
+        onClick={closeModal}
+        className="fixed z-0 flex flex-col-reverse items-center w-full h-full top-0 left-0 bg-black bg-opacity-50"
+      ></div>
+      <div className="fixed py-4  bottom-0 left-0 flex flex-col items-center h-[80%] px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
+        <div className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"></div>
+        <div className="overflow-auto w-full ">
+          <div className="flex flex-col items-center ">{renderTitle(type)}</div>
+          <div className="mt-8 mb-[26px] w-full">
+            <MissionsItem type={type} level={6} />
+            <div className="flex justify-center">
+              <img
+                className="my-5"
+                src="/images/icons/uparrow.svg"
+                width={21}
+                height={28}
+                alt="arrow"
+              ></img>
+            </div>
+            <MissionsItem type={type} level={1} />
+          </div>
+          <div className="flex justify-center gap-2 mb-[17px]">
+            <img
+              src="/images/icons/token_icon.svg"
+              width={32}
+              height={32}
+              alt="token"
+            ></img>
+            <p className="text-[24px] font-bold">0.2</p>
+          </div>
+        </div>
+
+        <Button
+          onClick={() => handleUpgrade()}
+          className="font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] w-full rounded-xl drop-shadow-lg "
+        >
+          UPGRADE
+        </Button>
+      </div>
+    </>
+  );
+};
+
+export default BootsModal;
