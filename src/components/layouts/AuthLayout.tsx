@@ -5,7 +5,7 @@ import { navPaths } from "../../constants/navbar.constants";
 const AuthLayout = () => {
   const firstLogin = Math.floor(Math.random() * 10);
 
-  if (firstLogin < 5) return <Navigate to={navPaths.REGISTER} />;
+  if (firstLogin < 0.5) return <Navigate to={navPaths.REGISTER} />;
   return <Outlet />;
 };
 
