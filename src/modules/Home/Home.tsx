@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { formatNumberFloatFix } from "../../utils/formatNumber";
 
 const Home = () => {
-  console.log(window.Telegram);
   const [isClaimed, setIsClaimed] = useState<any>(false);
   const [instorage, setInstorage] = useState<any>(() => {
     const savedCount = Number(localStorage.getItem("count") as string);
