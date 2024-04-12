@@ -9,7 +9,7 @@ const web_link = "https://main--tele-bot-test.netlify.app/";
 bot.start((ctx) => {
   ctx.reply("Welcome", {
     reply_markup: {
-      keyboard: [[{ text: "test", web_app: { url: web_link } }]],
+      inline_keyboard: [[{ text: "Open app", web_app: { url: web_link } }]],
     },
   });
 });
