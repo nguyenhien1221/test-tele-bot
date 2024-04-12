@@ -3,18 +3,18 @@ import { Button } from "@mui/material";
 import NavBar from "../../components/common/NavBar";
 import { useEffect, useRef, useState } from "react";
 import { formatNumberFloatFix } from "../../utils/formatNumber";
+import Loading from "../../components/common/Loading";
 
 const Home = () => {
   const [isClaimed, setIsClaimed] = useState<any>(false);
   const [instorage, setInstorage] = useState<any>(() => {
     const savedCount = Number(localStorage.getItem("count") as string);
-    console.log(localStorage.getItem("count"), savedCount);
     return isNaN(savedCount) ? 0 : savedCount;
   });
   const [isFull, setIsFull] = useState<boolean>(false);
 
-  const endTime = 1712807990;
-  const startTime = 1712804142;
+  const endTime = 1712890222;
+  const startTime = 1712889742;
   const tokenPerSec = 0.00001;
 
   const progressRef = useRef<any>();
@@ -28,17 +28,21 @@ const Home = () => {
       const percentEnd = (distanceFromStart / distanceFromEnd) * 100;
 
       //save mained token to local storage
-      setInstorage((instorage: any) => {
-        const newCount = instorage + tokenPerSec;
-        localStorage.setItem("count", formatNumberFloatFix(newCount, 5));
-        return newCount;
-      });
+      if (percentEnd < 100) {
+        setInstorage((instorage: any) => {
+          const newCount = instorage + tokenPerSec;
+          localStorage.setItem("count", formatNumberFloatFix(newCount, 5));
+          return newCount;
+        });
+      }
 
       progressRef.current.style.width =
         (percentEnd >= 100 ? 100 : percentEnd) + "%";
       if (percentEnd >= 100) {
         clearInterval(countProgess);
         setIsFull(true);
+      } else {
+        setIsFull(false);
       }
     }, 1000);
 
@@ -53,7 +57,7 @@ const Home = () => {
     setIsClaimed(!isClaimed);
     setIsFull(false);
     setInstorage(() => {
-      console.log(localStorage.getItem("count"), 0);
+      localStorage.setItem("count", "0");
       return;
     });
   };
@@ -139,7 +143,7 @@ const Home = () => {
               <Button
                 disabled={!isFull}
                 onClick={handleClaim}
-                className="w-full h-40px rounded-lg disabled:bg-black disabled:text-[#747474] bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold"
+                className="w-full h-40px rounded-lg disabled:bg-[#D9D9D9] disabled:text-[#747474] bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold"
               >
                 Claim
               </Button>
