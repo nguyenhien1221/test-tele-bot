@@ -6,9 +6,6 @@ const bot = new Telegraf(TOKEN);
 
 const web_link = "https://main--tele-bot-test.netlify.app/";
 
-const tesst = window.Telegram.WebApp;
-tesst.setHeaderColor("#FFF5CF");
-
 bot.start((ctx) => {
   ctx.reply("Welcome", {
     reply_markup: {
