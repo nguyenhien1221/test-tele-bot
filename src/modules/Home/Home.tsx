@@ -3,7 +3,6 @@ import { Button } from "@mui/material";
 import NavBar from "../../components/common/NavBar";
 import { useEffect, useRef, useState } from "react";
 import { formatNumberFloatFix } from "../../utils/formatNumber";
-import Loading from "../../components/common/Loading";
 
 const Home = () => {
   const [isClaimed, setIsClaimed] = useState<any>(false);
@@ -13,8 +12,8 @@ const Home = () => {
   });
   const [isFull, setIsFull] = useState<boolean>(false);
 
-  const endTime = 1712890222;
-  const startTime = 1712889742;
+  const endTime = 1712893822;
+  const startTime = 1712890222;
   const tokenPerSec = 0.00001;
 
   const progressRef = useRef<any>();
@@ -143,7 +142,7 @@ const Home = () => {
               <Button
                 disabled={!isFull}
                 onClick={handleClaim}
-                className="w-full h-40px rounded-lg disabled:bg-[#D9D9D9] disabled:text-[#747474] bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold"
+                className="w-full h-40px rounded-lg bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold"
               >
                 Claim
               </Button>

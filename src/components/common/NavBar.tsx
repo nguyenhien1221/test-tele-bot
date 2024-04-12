@@ -31,6 +31,7 @@ const NavBar = () => {
               <div className="flex flex-col items-center">
                 <div className="h-[36px] ">
                   <img
+                    className="h-[36px]"
                     width={36}
                     height={36}
                     src={item.icon}

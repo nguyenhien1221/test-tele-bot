@@ -16,22 +16,22 @@ export interface NavBarItem {
 
 export const navbarItems: NavBarItem[] = [
   {
-    icon: "/images/navbar/missions.svg",
+    icon: "/images/navbar/missions.png",
     name: "Missions",
     path: navPaths.MISSIONS,
   },
   {
-    icon: "/images/navbar/boots.svg",
+    icon: "/images/navbar/boots.png",
     name: "Boots",
     path: navPaths.BOOTS,
   },
   {
-    icon: "/images/navbar/friends.svg",
+    icon: "/images/navbar/friends.png",
     name: "Friends",
     path: navPaths.FRIENDS,
   },
   {
-    icon: "/images/navbar/games.svg",
+    icon: "/images/navbar/games.png",
     name: "Games",
     path: navPaths.GAMES,
   },
