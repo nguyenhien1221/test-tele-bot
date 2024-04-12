@@ -3,6 +3,9 @@ import { Navigate, Outlet } from "react-router-dom";
 import { navPaths } from "../../constants/navbar.constants";
 
 const AuthLayout = () => {
+  const tele = window.Telegram.WebApp;
+  tele.setHeaderColor("#FFF5CF");
+
   const firstLogin = Math.floor(Math.random() * 10);
 
   if (firstLogin < 0.5) return <Navigate to={navPaths.REGISTER} />;
