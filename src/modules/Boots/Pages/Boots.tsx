@@ -4,11 +4,6 @@ import { ToastContainer, toast } from "react-toastify";
 import BootsModal from "../Components/BootsModal";
 
 const Boots = () => {
-  const tele = window.Telegram.WebApp;
-  tele.onClick(() => {
-    return <div>Back</div>;
-  });
-
   const [isOpen, setisOpen] = useState<any>({ isOpen: false, type: 0 });
 
   const handleUpgrade = () => {
