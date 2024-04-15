@@ -9,6 +9,8 @@ const Home = () => {
 
   tele.BackButton.hide();
 
+  console.log(window.innerHeight);
+
   const [isClaimed, setIsClaimed] = useState<any>(false);
   const [instorage, setInstorage] = useState<any>(() => {
     const savedCount = Number(localStorage.getItem("count") as string);
@@ -96,7 +98,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className=" max-h-[312px] flex justify-center">
+        <div className="mb-[25px] max-h-[312px] flex justify-center">
           <img
             className="object-contain"
             src="/images/trees/6.png"

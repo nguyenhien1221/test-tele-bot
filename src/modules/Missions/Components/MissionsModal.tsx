@@ -14,7 +14,7 @@ const MissionsModal = ({ closeModal }: ModalPropsType) => {
         onClick={closeModal}
         className="fixed z-0 flex flex-col-reverse items-center w-full h-full top-0 left-0 bg-black bg-opacity-50"
       ></div>
-      <div className="fixed py-4  bottom-0 left-0 flex flex-col items-center h-[80%] px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
+      <div className="fixed py-4  bottom-0 left-0 flex flex-col items-center h-[85%] px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
         <div className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"></div>
         <div className="overflow-auto w-full ">
           <div className="flex flex-col items-center ">
@@ -35,7 +35,10 @@ const MissionsModal = ({ closeModal }: ModalPropsType) => {
           ))}
         </div>
 
-        <Button className="font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] w-full rounded-xl drop-shadow-lg ">
+        <Button
+          onClick={closeModal}
+          className="font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] w-full rounded-xl drop-shadow-lg "
+        >
           got it
         </Button>
       </div>

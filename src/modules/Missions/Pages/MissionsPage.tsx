@@ -45,14 +45,14 @@ const MissionsPage = () => {
           <div
             onClick={() => handleChooseMission(index)}
             key={index}
-            className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
+            className="grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
           >
             <div className="col-span-2 flex items-center">
               <div>
                 <img src={item.icon} width={48} height={48} alt="storage"></img>
               </div>
             </div>
-            <div className="col-span-4">
+            <div className="col-span-7">
               <p className="text-[13px] font-normal mb-2 text-[#7D7D7D]">
                 {item.title}
               </p>
