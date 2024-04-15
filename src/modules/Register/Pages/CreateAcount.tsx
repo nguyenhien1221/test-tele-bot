@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import About from "../Components/About";
 import Mining from "../Components/Mining";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Register from "../Components/Register";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +13,14 @@ const CreateAcount = () => {
 
   const navigate = useNavigate();
   const [tab, setTab] = useState<number>(0);
+
+  useEffect(() => {
+    if (tab === 0) {
+      const tele = window.Telegram.WebApp;
+
+      tele.BackButton.hide();
+    }
+  }, [tab]);
 
   const handleBackBtn = () => {
     if (tab === 1) {
@@ -54,7 +62,7 @@ const CreateAcount = () => {
     }
     setTab(tab + 1);
   };
-  
+
   return (
     <div className="bg-gradient-to-b h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7] px-4 pt-[120px]">
       <div>{renderContent()}</div>
