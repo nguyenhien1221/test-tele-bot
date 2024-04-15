@@ -109,13 +109,15 @@ const Home = () => {
             ref={progressRef}
             className="bg-[#E4FFCE]  h-full top-0 left-0 absolute z-0 rounded-2xl"
           ></div>
-          <div className=" relative z-10 grid grid-cols-7 gap-1">
-            <div className="col-span-2 ">
-              <img
-                src="/images/icons/storage1.svg"
-                width={62}
-                alt="storage"
-              ></img>
+          <div className=" relative z-10 grid grid-cols-8 gap-1">
+            <div className="col-span-2 flex items-center">
+              <div>
+                <img
+                  src="/images/icons/storage1.svg"
+                  width={62}
+                  alt="storage"
+                ></img>
+              </div>
             </div>
             <div className="col-span-3">
               <p className="font-bold">Storage</p>
@@ -138,11 +140,11 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className="flex items-center col-span-2 ">
+            <div className="flex items-center col-span-3 ">
               <Button
                 disabled={!isFull}
                 onClick={handleClaim}
-                className="w-full h-40px rounded-lg bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold"
+                className="w-[100px] h-40px py-3 rounded-lg bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold"
               >
                 Claim
               </Button>

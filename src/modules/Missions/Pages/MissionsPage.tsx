@@ -3,6 +3,9 @@ import { missionsOptions } from "../../../constants/missions.constants";
 import MissionsModal from "../Components/MissionsModal";
 
 const MissionsPage = () => {
+  const tele = window.Telegram.WebApp;
+  tele.BackButton.show();
+
   const [isOpen, setisOpen] = useState<boolean>(false);
 
   const handleChooseMission = (index: number) => {
@@ -36,8 +39,10 @@ const MissionsPage = () => {
             key={index}
             className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
           >
-            <div className="col-span-2 flex ">
-              <img src={item.icon} width={48} alt="storage"></img>
+            <div className="col-span-2 flex items-center">
+              <div>
+                <img src={item.icon} width={48} height={48} alt="storage"></img>
+              </div>
             </div>
             <div className="col-span-4">
               <p className="text-[13px] font-normal mb-2 text-[#7D7D7D]">

@@ -7,9 +7,10 @@ const Friends = () => {
       <div className="flex flex-col items-center">
         <div className="flex flex-col items-center gap-3">
           <img
-            src="/images/navbar/friends.svg"
+            className="h-[99px]"
+            src="/images/icons/friends.png"
             width={119}
-            height={100}
+            height={99}
             alt="token"
           ></img>
           <p className="text-[24px] font-bold">1 Friends</p>
