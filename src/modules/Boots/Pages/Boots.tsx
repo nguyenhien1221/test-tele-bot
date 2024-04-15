@@ -3,10 +3,15 @@ import { bootOptions, bootTypeEnum } from "../../../constants/boots.constants";
 import { ToastContainer, toast } from "react-toastify";
 import BootsModal from "../Components/BootsModal";
 import { useNavigate } from "react-router-dom";
+import useUpgradeStorage from "../Hooks/useUpgradeStoarage";
+import useUpgradeSpeed from "../Hooks/useUpgradeSpeed";
 
 const Boots = () => {
   const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
+
+  const UpgradeStorage = useUpgradeStorage();
+  const UpgradeSpeed = useUpgradeSpeed();
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
@@ -14,10 +19,38 @@ const Boots = () => {
   const [isOpen, setisOpen] = useState<any>({ isOpen: false, type: 0 });
 
   const handleUpgrade = () => {
-    toast.success("Upgraded Successfully", {
-      style: { width: 272, borderRadius: 8 },
-    });
-    setisOpen({ isOpen: false, type: 0 });
+    if (isOpen.type === bootTypeEnum.STORAGE) {
+      UpgradeStorage.mutateAsync()
+        .then(() => {
+          toast.success("Upgraded Successfully", {
+            style: { width: 272, borderRadius: 8 },
+          });
+          setisOpen({ isOpen: false, type: 0 });
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message, {
+            style: { width: 272, borderRadius: 8 },
+          });
+          setisOpen({ isOpen: false, type: 0 });
+        });
+
+      return;
+    }
+    if (isOpen.type === bootTypeEnum.SPEED) {
+      UpgradeSpeed.mutateAsync()
+        .then(() => {
+          toast.success("Upgraded Successfully", {
+            style: { width: 272, borderRadius: 8 },
+          });
+          setisOpen({ isOpen: false, type: 0 });
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message, {
+            style: { width: 272, borderRadius: 8 },
+          });
+          setisOpen({ isOpen: false, type: 0 });
+        });
+    }
   };
 
   const handleBackBtn = () => {

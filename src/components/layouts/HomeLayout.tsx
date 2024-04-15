@@ -8,7 +8,7 @@ const HomeLayout = () => {
   tele.setHeaderColor("#FFF5CF");
 
   return (
-    <div className="h-screen bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
+    <div className="h-screen pt-9 bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
       <div>
         <Suspense fallback={<Loading />}>
           <Outlet />

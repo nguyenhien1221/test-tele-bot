@@ -1,6 +1,6 @@
 export enum bootTypeEnum {
   STORAGE = 0,
-  TREE = 1,
+  SPEED = 1,
   WATER = 2,
 }
 

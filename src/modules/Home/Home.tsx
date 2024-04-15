@@ -1,15 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button } from "@mui/material";
 import NavBar from "../../components/common/NavBar";
 import { useEffect, useRef, useState } from "react";
 import { formatNumberFloatFix } from "../../utils/formatNumber";
+import useGetAcountBalance from "./Hooks/useGetAcountBalance";
+import useClaimSeed from "./Hooks/useClaimSeed";
+import { toast } from "react-toastify";
+import { Button } from "@mui/material";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
 
   tele.BackButton.hide();
 
-  console.log(tele);
+  const AcountBalnce = useGetAcountBalance();
+  const ClaimSeed = useClaimSeed();
 
   const [isClaimed, setIsClaimed] = useState<any>(false);
   const [instorage, setInstorage] = useState<any>(() => {
@@ -57,18 +61,28 @@ const Home = () => {
   }, [isClaimed]);
 
   const handleClaim = () => {
-    clearInterval(countProgess);
-    progressRef.current.style.width = 0;
-    setIsClaimed(!isClaimed);
-    setIsFull(false);
-    setInstorage(() => {
-      localStorage.setItem("count", "0");
-      return;
-    });
+    ClaimSeed.mutateAsync()
+      .then(() => {
+        clearInterval(countProgess);
+        progressRef.current.style.width = 0;
+        setIsClaimed(!isClaimed);
+        setIsFull(false);
+        setInstorage(() => {
+          localStorage.setItem("count", "0");
+          return;
+        });
+        AcountBalnce.refetch();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message, {
+          position: "top-center",
+          style: { width: 272, borderRadius: 8 },
+        });
+      });
   };
 
   return (
-    <div className="h-[calc(100vh - 20px)] px-4 relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
+    <div className="h-[100vh] px-4 relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
       <div>
         <div className="flex flex-col items-center">
           <p className="text-sm font-normal">In Storage:</p>
@@ -93,12 +107,15 @@ const Home = () => {
                 alt="token"
               ></img>
               <p className="text-sm font-bold">
-                {formatNumberFloatFix(0.00011111, 5)}
+                {formatNumberFloatFix(
+                  Number(AcountBalnce.data?.data.data / Math.pow(10, 9)) ?? 0,
+                  5
+                )}
               </p>
             </div>
           </div>
         </div>
-        <div className="mb-[25px] max-h-[312px] flex justify-center">
+        <div className=" max-h-[312px] flex justify-center">
           <img
             className="object-contain"
             src="/images/trees/6.png"

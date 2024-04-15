@@ -1,15 +1,29 @@
-import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { navPaths } from "../../constants/navbar.constants";
+import useGetAcountDetails from "../Hooks/useRegister";
+import { Suspense } from "react";
+import Loading from "../common/Loading";
+import { ResponseCode } from "../../constants/response";
 
 const AuthLayout = () => {
+  const location = useLocation();
   const tele = window.Telegram.WebApp;
   tele.setHeaderColor("#FFF5CF");
 
-  const firstLogin = Math.floor(Math.random() * 10);
+  const AcountData = useGetAcountDetails();
 
-  if (firstLogin < 0.5) return <Navigate to={navPaths.REGISTER} />;
-  return <Outlet />;
+  if (
+    AcountData.data?.status === ResponseCode.NOT_FOUND &&
+    location.pathname !== navPaths.REGISTER
+  ) {
+    return <Navigate to={navPaths.REGISTER} />;
+  }
+
+  return (
+    <Suspense fallback={<Loading />}>
+      <Outlet />
+    </Suspense>
+  );
 };
 
 export default AuthLayout;

@@ -1,10 +1,14 @@
-import React from "react";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import useGetAcountReferees from "../Hooks/useGetAcountReferees";
 
 const Friends = () => {
   const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
+
+  const AcountReferees = useGetAcountReferees();
+
+  console.log(AcountReferees.data?.data.data);
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
@@ -23,7 +27,9 @@ const Friends = () => {
             height={99}
             alt="token"
           ></img>
-          <p className="text-[24px] font-bold">1 Friends</p>
+          <p className="text-[24px] font-bold">{`${
+            AcountReferees.data?.data.data.length ?? 0
+          } Friends`}</p>
         </div>
         <p className="text-sm font-normal text-center">
           You will receive 20% of the PXLs
@@ -34,35 +40,38 @@ const Friends = () => {
       </div>
 
       {/* friends list */}
-      <div className="mt-10">
-        <p className="text-xl font-bold mb-4">My friends</p>
-        <div className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-4 drop-shadow-lg">
-          <div className="col-span-2 flex ">
-            <img
-              src="/images/icons/user.svg"
-              width={48}
-              height={48}
-              alt="avt"
-            ></img>
-          </div>
-          <div className="col-span-5">
-            <p className="text-sm font-normal mb-2">Ms. Thế Vinh</p>
-            <div>
-              <div className="flex items-center gap-1">
+      {AcountReferees.data?.data.data &&
+        AcountReferees.data?.data.data.map((item: any) => (
+          <div className="mt-10">
+            <p className="text-xl font-bold mb-4">My friends</p>
+            <div className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-4 drop-shadow-lg">
+              <div className="col-span-2 flex ">
                 <img
-                  src="/images/icons/token_icon.svg"
-                  width={18}
-                  height={18}
-                  alt="token"
+                  src="/images/icons/user.svg"
+                  width={48}
+                  height={48}
+                  alt="avt"
                 ></img>
-                <p className="text-sm font-bold">0.2 SEED</p>
+              </div>
+              <div className="col-span-5">
+                <p className="text-sm font-normal mb-2">Ms. Thế Vinh</p>
+                <div>
+                  <div className="flex items-center gap-1">
+                    <img
+                      src="/images/icons/token_icon.svg"
+                      width={18}
+                      height={18}
+                      alt="token"
+                    ></img>
+                    <p className="text-sm font-bold">0.2 SEED</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        ))}
 
-      <div className="relative -bottom-[140px]">
+      <div className="absolute bottom-[30px] right-4 left-4">
         <Button
           startIcon={<img src="images/icons/copy.svg" alt="copy" />}
           className="font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] w-full rounded-xl drop-shadow-lg "
