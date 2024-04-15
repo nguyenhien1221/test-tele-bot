@@ -2,8 +2,15 @@ import { useState } from "react";
 import { bootOptions, bootTypeEnum } from "../../../constants/boots.constants";
 import { ToastContainer, toast } from "react-toastify";
 import BootsModal from "../Components/BootsModal";
+import { useNavigate } from "react-router-dom";
 
 const Boots = () => {
+  const navigate = useNavigate();
+  const tele = window.Telegram.WebApp;
+
+  tele.BackButton.show();
+  tele.BackButton.onClick(() => handleBackBtn());
+
   const [isOpen, setisOpen] = useState<any>({ isOpen: false, type: 0 });
 
   const handleUpgrade = () => {
@@ -11,6 +18,10 @@ const Boots = () => {
       style: { width: 272, borderRadius: 8 },
     });
     setisOpen({ isOpen: false, type: 0 });
+  };
+
+  const handleBackBtn = () => {
+    navigate("/");
   };
 
   const handleOpenModal = (type: number) => {

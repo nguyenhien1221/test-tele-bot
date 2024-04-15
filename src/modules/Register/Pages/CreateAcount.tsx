@@ -6,10 +6,23 @@ import Register from "../Components/Register";
 import { useNavigate } from "react-router-dom";
 
 const CreateAcount = () => {
+  const tele = window.Telegram.WebApp;
+
+  tele.BackButton.show();
+  tele.BackButton.onClick(() => handleBackBtn());
+
   const navigate = useNavigate();
   const [tab, setTab] = useState<number>(0);
 
-  console.log(tab);
+  const handleBackBtn = () => {
+    if (tab === 1) {
+      setTab(0);
+    }
+    if (tab === 2) {
+      setTab(1);
+    }
+  };
+
   const renderContent = () => {
     if (tab === 0) {
       return <Register />;
@@ -41,6 +54,7 @@ const CreateAcount = () => {
     }
     setTab(tab + 1);
   };
+  
   return (
     <div className="bg-gradient-to-b h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7] px-4 pt-[120px]">
       <div>{renderContent()}</div>

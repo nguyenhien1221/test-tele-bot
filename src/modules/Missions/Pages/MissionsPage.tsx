@@ -1,16 +1,24 @@
 import { useState } from "react";
 import { missionsOptions } from "../../../constants/missions.constants";
 import MissionsModal from "../Components/MissionsModal";
+import { useNavigate } from "react-router-dom";
 
 const MissionsPage = () => {
+  const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
+
   tele.BackButton.show();
+  tele.BackButton.onClick(() => handleBackBtn());
 
   const [isOpen, setisOpen] = useState<boolean>(false);
 
   const handleChooseMission = (index: number) => {
     setisOpen(true);
     console.log(index);
+  };
+
+  const handleBackBtn = () => {
+    navigate("/");
   };
 
   return (

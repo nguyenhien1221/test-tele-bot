@@ -1,7 +1,17 @@
 import React from "react";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Friends = () => {
+  const navigate = useNavigate();
+  const tele = window.Telegram.WebApp;
+
+  tele.BackButton.show();
+  tele.BackButton.onClick(() => handleBackBtn());
+  const handleBackBtn = () => {
+    navigate("/");
+  };
+
   return (
     <div className="pt-[42px] px-4 bg-gradient-to-b h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
       <div className="flex flex-col items-center">

@@ -92,7 +92,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="mb-[20px] max-h-[312px] flex justify-center">
+        <div className=" max-h-[312px] flex justify-center">
           <img
             className="object-contain"
             src="/images/trees/6.png"
@@ -140,7 +140,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className="flex items-center col-span-3 ">
+            <div className="flex items-center justify-end col-span-3 ">
               <Button
                 disabled={!isFull}
                 onClick={handleClaim}
@@ -153,7 +153,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="mt-3">
+      <div className="fixed bottom-6 left-4 right-4 mt-3">
         <NavBar />
       </div>
     </div>
