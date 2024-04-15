@@ -151,7 +151,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="fixed bottom-6 left-4 right-4 mt-3">
+      <div className="mt-3">
         <NavBar />
       </div>
     </div>

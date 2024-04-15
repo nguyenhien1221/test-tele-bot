@@ -6,6 +6,7 @@ import Loading from "../common/Loading";
 const HomeLayout = () => {
   const tele = window.Telegram.WebApp;
   tele.setHeaderColor("#FFF5CF");
+
   return (
     <div className="bg-gradient-to-b h-screen from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2] overflow-auto">
       <div>
