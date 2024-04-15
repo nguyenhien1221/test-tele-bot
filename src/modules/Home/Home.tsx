@@ -9,7 +9,7 @@ const Home = () => {
 
   tele.BackButton.hide();
 
-  console.log(window.innerHeight);
+  console.log(tele);
 
   const [isClaimed, setIsClaimed] = useState<any>(false);
   const [instorage, setInstorage] = useState<any>(() => {
@@ -68,7 +68,7 @@ const Home = () => {
   };
 
   return (
-    <div className="h-screen px-4 relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
+    <div className="h-[calc(100vh - 20px)] px-4 relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
       <div>
         <div className="flex flex-col items-center">
           <p className="text-sm font-normal">In Storage:</p>
