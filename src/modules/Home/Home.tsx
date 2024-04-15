@@ -82,7 +82,7 @@ const Home = () => {
   };
 
   return (
-    <div className="h-[100vh] px-4 relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
+    <div className="h-full px-4 relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
       <div>
         <div className="flex flex-col items-center">
           <p className="text-sm font-normal">In Storage:</p>
@@ -175,8 +175,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      <div className="fixed bottom-6 left-4 right-4 mt-3">
+      <div className="fixed bottom-6 left-4 right-4">
         <NavBar />
       </div>
     </div>
