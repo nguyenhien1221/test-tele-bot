@@ -81,8 +81,13 @@ const Home = () => {
       });
   };
 
+  useEffect(() => {
+    if (window.innerHeight < 667) {
+    }
+  }, []);
+
   return (
-    <div className="h-full px-4 relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
+    <div className="h-screen overflow-hidden px-4 relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
       <div>
         <div className="flex flex-col items-center">
           <p className="text-sm font-normal">In Storage:</p>
