@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import NavBar from "../../components/common/NavBar";
 import { useEffect, useRef, useState } from "react";
-import { formatNumberFloatFix } from "../../utils/formatNumber";
+import { formatDecimals, formatNumberFloatFix } from "../../utils/formatNumber";
 import useGetAcountBalance from "./Hooks/useGetAcountBalance";
 import useClaimSeed from "./Hooks/useClaimSeed";
 import { toast } from "react-toastify";
@@ -82,7 +82,7 @@ const Home = () => {
   };
 
   return (
-    <div className="h-[100vh] px-4 relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
+    <div className="h-[calc(100% - 40px)] px-4 relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
       <div>
         <div className="flex flex-col items-center">
           <p className="text-sm font-normal">In Storage:</p>
@@ -108,7 +108,7 @@ const Home = () => {
               ></img>
               <p className="text-sm font-bold">
                 {formatNumberFloatFix(
-                  Number(AcountBalnce.data?.data.data / Math.pow(10, 9)) ?? 0,
+                  Number(formatDecimals(AcountBalnce.data?.data.data)) ?? 0,
                   5
                 )}
               </p>
