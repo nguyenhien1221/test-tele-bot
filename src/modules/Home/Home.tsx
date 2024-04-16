@@ -7,13 +7,23 @@ import useClaimSeed from "./Hooks/useClaimSeed";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 import clsx from "clsx";
+import {
+  calculateMinedSeeds,
+  getSpeedUpgradesLevel,
+} from "../../utils/minedSeed";
+import useGetAcountDetails from "../../components/Hooks/useRegister";
+import {
+  boostSpeedLevel,
+  bootsStorageLevel,
+} from "../../constants/boots.constants";
+import Countdown from "react-countdown";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
-
   tele.BackButton.hide();
 
   const AcountBalnce = useGetAcountBalance();
+  const AcountData = useGetAcountDetails();
   const ClaimSeed = useClaimSeed();
 
   const [isClaimed, setIsClaimed] = useState<any>(false);
@@ -24,10 +34,27 @@ const Home = () => {
   const [isFull, setIsFull] = useState<boolean>(false);
 
   const isDesktop = window.innerHeight < 610 ? true : false;
+  const isSmallScreen = window.innerHeight < 380 ? true : false;
 
-  const endTime = 1712893822;
-  const startTime = 1712890222;
-  const tokenPerSec = 0.00001;
+  const minedSeed = formatDecimals(
+    calculateMinedSeeds(
+      AcountData.data?.data.data.last_claim,
+      AcountData.data?.data.data.upgrades ?? [],
+      new Date().getTime()
+    )
+  );
+
+  const startTime =
+    new Date(AcountData.data?.data.data.last_claim).getTime() / 1000;
+  const endTime =
+    startTime +
+    bootsStorageLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) - 1]
+      ?.duration *
+      3600;
+  console.log(startTime, endTime);
+  const tokenPerSec =
+    boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) - 1]
+      ?.speed / 3600;
 
   const progressRef = useRef<any>();
   let countProgess: any;
@@ -43,14 +70,14 @@ const Home = () => {
       if (percentEnd < 100) {
         setInstorage((instorage: any) => {
           const newCount = instorage + tokenPerSec;
-          localStorage.setItem("count", formatNumberFloatFix(newCount, 5));
+          localStorage.setItem("count", formatNumberFloatFix(newCount, 6));
           return newCount;
         });
       }
 
       progressRef.current.style.width =
         (percentEnd >= 100 ? 100 : percentEnd) + "%";
-      if (percentEnd >= 100) {
+      if (percentEnd >= 40) {
         clearInterval(countProgess);
         setIsFull(true);
       } else {
@@ -64,6 +91,8 @@ const Home = () => {
   }, [isClaimed]);
 
   const handleClaim = () => {
+    console.log("mined:", minedSeed, instorage);
+
     ClaimSeed.mutateAsync()
       .then(() => {
         clearInterval(countProgess);
@@ -74,7 +103,9 @@ const Home = () => {
           localStorage.setItem("count", "0");
           return;
         });
+
         AcountBalnce.refetch();
+        AcountData.refetch();
       })
       .catch((err) => {
         toast.error(err.response.data.message, {
@@ -85,7 +116,7 @@ const Home = () => {
   };
 
   return (
-    <div className="h-screen overflow-hidden px-4 relative bg-gradient-to-b from-[#F8FFE1] via-[#EDFFC6] to-[#8CC83C]">
+    <div className="h-screen overflow-hidden px-4 relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
       <div>
         <div className="flex flex-col items-center">
           <p className="text-sm font-normal">In Storage:</p>
@@ -97,7 +128,7 @@ const Home = () => {
               alt="token"
             ></img>
             <p className="text-[40px] font-bold">
-              {formatNumberFloatFix(instorage, 5)}
+              {formatNumberFloatFix(instorage, 6)}
             </p>
           </div>
           <div className="flex gap-2 items-center">
@@ -112,7 +143,7 @@ const Home = () => {
               <p className="text-sm font-bold">
                 {formatNumberFloatFix(
                   Number(formatDecimals(AcountBalnce.data?.data.data)) ?? 0,
-                  5
+                  6
                 )}
               </p>
             </div>
@@ -120,8 +151,8 @@ const Home = () => {
         </div>
         <div
           className={clsx(
-            " flex justify-center",
-            isDesktop ? "h-[212px]" : "h-[312px]"
+            isDesktop ? "h-[275px]" : "h-[312px]",
+            isSmallScreen ? "hidden" : "flex justify-center"
           )}
         >
           <img
@@ -134,7 +165,7 @@ const Home = () => {
       </div>
 
       {/* storage button */}
-      <div className="relative">
+      <div className={clsx(isSmallScreen ? "mt-4 relative" : "relative")}>
         <div className=" bg-white rounded-2xl p-4 w-full overflow-hidden">
           <div
             ref={progressRef}
@@ -154,7 +185,12 @@ const Home = () => {
               <p className="font-bold">Storage</p>
               <div className="flex gap-[7px]">
                 <img src="/images/icons/clock.svg" width={14} alt="clock"></img>
-                <p className="text-xs">3h 36m to fill</p>
+                <p className="text-xs">
+                  <Countdown
+                    date={endTime / 1000}
+                    onComplete={() => clearInterval(countProgess)}
+                  ></Countdown>
+                </p>
               </div>
               <div>
                 <div className="flex items-center gap-1">
@@ -165,15 +201,17 @@ const Home = () => {
                     alt="token"
                   ></img>
                   <p className="text-xs font-normal">{`${formatNumberFloatFix(
-                    tokenPerSec,
-                    5
+                    boostSpeedLevel[
+                      getSpeedUpgradesLevel(AcountData.data?.data.data) - 1
+                    ]?.speed,
+                    6
                   )} SEED/hour`}</p>
                 </div>
               </div>
             </div>
             <div className="flex items-center justify-end col-span-3 ">
               <Button
-                disabled={!isFull}
+                // disabled={!isFull}
                 onClick={handleClaim}
                 className="w-[100px] h-40px py-3 rounded-lg bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold"
               >
