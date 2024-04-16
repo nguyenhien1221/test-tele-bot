@@ -35,7 +35,7 @@ const MissionsPage = () => {
             height={100}
             alt="token"
           ></img>
-          <p className="text-[24px] font-bold">3 missions available</p>
+          <p className="text-[24px] font-extrabold">3 missions available</p>
         </div>
         <p className="text-sm font-normal">
           Complete the mission to get golden seed

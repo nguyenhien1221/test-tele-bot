@@ -4,11 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: SF Pro;
+  src: url(../../public/font/FontsFree-Net-SFProText-Regular.ttf);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /* font-family: "Tomorrow" !important; */
+  font-family: "SF Pro" !important;
 }
 
 *::-webkit-scrollbar {
