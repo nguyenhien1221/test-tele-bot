@@ -20,9 +20,9 @@ import Countdown from "../../components/common/Countdown";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
-  const isExpanded = tele.isExpanded;
+  // const isExpanded = tele.isExpanded;
 
-  const viewHeight = tele.viewportHeight;
+  // const viewHeight = tele.viewportHeight;
 
   tele.BackButton.hide();
 
@@ -36,7 +36,7 @@ const Home = () => {
     return isNaN(savedCount) ? 0 : savedCount;
   });
   // const [isFull, setIsFull] = useState<boolean>(false);
-  const [expand, setExpand] = useState<any>(isExpanded);
+  // const [expand, setExpand] = useState<any>(isExpanded);
 
   const isSmallScreen = window.innerHeight < 450 ? true : false;
 
@@ -63,11 +63,11 @@ const Home = () => {
   const progressRef = useRef<any>();
   let countProgess: any;
 
-  useEffect(() => {
-    window.Telegram.WebApp.onEvent("viewportChanged", () => {
-      setExpand(isExpanded);
-    });
-  }, [viewHeight]);
+  // useEffect(() => {
+  //   window.Telegram.WebApp.onEvent("viewportChanged", () => {
+  //     setExpand(isExpanded);
+  //   });
+  // }, [viewHeight]);
 
   useEffect(() => {
     countProgess = setInterval(() => {
@@ -162,9 +162,7 @@ const Home = () => {
       </div>
       <div
         className={clsx(
-          !expand
-            ? "hidden"
-            : "flex flex-1 justify-center bg-no-repeat bg-contain bg-center"
+          "flex flex-1 justify-center bg-no-repeat bg-contain bg-center"
         )}
         style={{ backgroundImage: "url('/images/trees/6.png')" }}
       ></div>
@@ -228,12 +226,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div
-        className={clsx(
-          "fixed left-4 right-4",
-          !expand ? "bottom-[35%] " : "bottom-6"
-        )}
-      >
+      <div className={clsx("fixed left-4 right-4", "bottom-6")}>
         <NavBar />
       </div>
     </div>

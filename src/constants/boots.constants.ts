@@ -6,7 +6,7 @@ export enum bootTypeEnum {
 
 export const bootOptions = [
   {
-    icon: "/images/icons/storage1.svg",
+    icon: "/images/storage/1.png",
     title: "Storage",
     description: "Increase the storage capacity of the mined",
   },
@@ -16,7 +16,7 @@ export const bootOptions = [
     description: "Increase mining speed",
   },
   {
-    icon: "/images/icons/water.svg",
+    icon: "/images/icons/water.png",
     title: "Holy Water",
     description: "Boost mining speed by 1.25x, 1.5x, 2x times",
   },
