@@ -23,7 +23,7 @@ const Home = () => {
   const teleViewHeight = window.Telegram.WebApp.isExpanded;
 
   window.Telegram.WebApp.onEvent("viewportChanged", () => {
-    setExpand(teleViewHeight);
+    setExpand(!teleViewHeight);
   });
 
   tele.BackButton.hide();
