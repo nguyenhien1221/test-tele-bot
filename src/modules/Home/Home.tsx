@@ -21,6 +21,7 @@ import Countdown from "../../components/common/Countdown";
 const Home = () => {
   const tele = window.Telegram.WebApp;
   const teleViewHeight = window.Telegram.WebApp.isExpanded;
+
   tele.BackButton.hide();
 
   const AcountBalnce = useGetAcountBalance();
@@ -33,6 +34,7 @@ const Home = () => {
     return isNaN(savedCount) ? 0 : savedCount;
   });
   const [isFull, setIsFull] = useState<boolean>(false);
+  const [expand, setExpand] = useState<any>(teleViewHeight);
 
   const isSmallScreen = window.innerHeight < 450 ? true : false;
 
@@ -58,6 +60,10 @@ const Home = () => {
 
   const progressRef = useRef<any>();
   let countProgess: any;
+
+  useEffect(() => {
+    setExpand(teleViewHeight);
+  }, [teleViewHeight]);
 
   useEffect(() => {
     countProgess = setInterval(() => {
