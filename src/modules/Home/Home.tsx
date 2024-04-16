@@ -20,7 +20,6 @@ import Countdown from "../../components/common/Countdown";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
-
   const isExpanded = tele.isExpanded;
 
   tele.BackButton.hide();
@@ -36,14 +35,6 @@ const Home = () => {
   });
   const [isFull, setIsFull] = useState<boolean>(false);
   const [expand, setExpand] = useState<any>(isExpanded);
-
-  window.Telegram.WebApp.onEvent("viewportChanged", () => {
-    setExpand(isExpanded);
-  });
-
-  window.Telegram.WebApp.offEvent("viewportChanged", () => {
-    setExpand(!isExpanded);
-  });
 
   const isSmallScreen = window.innerHeight < 450 ? true : false;
 
@@ -69,6 +60,16 @@ const Home = () => {
 
   const progressRef = useRef<any>();
   let countProgess: any;
+
+  useEffect(() => {
+    window.Telegram.WebApp.onEvent("viewportChanged", () => {
+      setExpand(isExpanded);
+    });
+
+    window.Telegram.WebApp.offEvent("viewportChanged", () => {
+      setExpand(!isExpanded);
+    });
+  });
 
   useEffect(() => {
     countProgess = setInterval(() => {
@@ -232,7 +233,7 @@ const Home = () => {
       <div
         className={clsx(
           "fixed left-4 right-4",
-          !expand ? "bottom-[120px] " : "bottom-6"
+          !expand ? "bottom-[40%] " : "bottom-6"
         )}
       >
         <NavBar />
