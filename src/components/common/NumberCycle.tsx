@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useRef } from "react";
 
 interface NumberCycleProps {
@@ -25,7 +26,7 @@ export default function NumberCycle({ value, className }: NumberCycleProps) {
         className="relative transition-all origin-center"
         style={{ bottom: (value * containerHeight) / 10 }}
       >
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => (
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
           <div
             className={className}
             style={{
