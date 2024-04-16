@@ -22,11 +22,19 @@ export const bootOptions = [
   },
 ];
 
-export const bootsStorageItems = {
-  "1": 2,
-  "2": 3,
-  "3": 4,
-  "4": 5,
-  "5": 6,
-  "6": 7,
-};
+export const bootsStorageLevel = [
+  { duration: 2, price: 0 },
+  { duration: 4, price: 0.2 },
+  { duration: 6, price: 0.5 },
+  { duration: 12, price: 1 },
+  { duration: 24, price: 10 },
+];
+
+export const boostSpeedLevel = [
+  { speed: 0.01, price: 0 },
+  { speed: 0.015, price: 0.2 },
+  { speed: 0.02, price: 1 },
+  { speed: 0.025, price: 2 },
+  { speed: 0.03, price: 5 },
+  { speed: 0.05, price: 15 },
+];

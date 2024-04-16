@@ -25,7 +25,7 @@ const MissionsPage = () => {
   };
 
   return (
-    <div className="pt-[42px] px-4 bg-gradient-to-b relative h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
+    <div className="overflow-auto pt-[42px] px-4 bg-gradient-to-b relative h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
       {/* boot info */}
       <div className="flex flex-col items-center">
         <div className="flex flex-col items-center gap-3">

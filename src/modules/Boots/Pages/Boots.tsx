@@ -1,11 +1,26 @@
 import { useState } from "react";
-import { bootOptions, bootTypeEnum } from "../../../constants/boots.constants";
+import {
+  boostSpeedLevel,
+  bootOptions,
+  bootTypeEnum,
+  bootsStorageLevel,
+} from "../../../constants/boots.constants";
 import { ToastContainer, toast } from "react-toastify";
 import BootsModal from "../Components/BootsModal";
 import { useNavigate } from "react-router-dom";
 import useUpgradeStorage from "../Hooks/useUpgradeStoarage";
 import useUpgradeSpeed from "../Hooks/useUpgradeSpeed";
 import clsx from "clsx";
+import useGetAcountBalance from "../../Home/Hooks/useGetAcountBalance";
+import {
+  formatDecimals,
+  formatNumberFloatFix,
+} from "../../../utils/formatNumber";
+import useGetAcountDetails from "../../../components/Hooks/useRegister";
+import {
+  getSpeedUpgradesLevel,
+  getStorageUpgradesLevel,
+} from "../../../utils/minedSeed";
 
 const Boots = () => {
   const navigate = useNavigate();
@@ -13,6 +28,8 @@ const Boots = () => {
 
   const UpgradeStorage = useUpgradeStorage();
   const UpgradeSpeed = useUpgradeSpeed();
+  const AcountBalnce = useGetAcountBalance();
+  const AcountData = useGetAcountDetails();
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
@@ -76,7 +93,7 @@ const Boots = () => {
   };
 
   return (
-    <div className="pt-[42px] px-4 bg-gradient-to-b relative h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
+    <div className="overflow-auto pt-[42px] px-4 bg-gradient-to-b relative h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
       <ToastContainer
         stacked
         className="top-3 w-[272px] left-[50%] -translate-x-[50%]"
@@ -92,7 +109,12 @@ const Boots = () => {
             height={44}
             alt="token"
           ></img>
-          <p className="text-[40px] font-extrabold">0.00001</p>
+          <p className="text-[40px] font-extrabold">
+            {formatNumberFloatFix(
+              Number(formatDecimals(AcountBalnce.data?.data.data)) ?? 0,
+              5
+            )}
+          </p>
         </div>
         <div className="flex gap-2 items-center text-sm">
           <p className=" font-normal">Storage size:</p>
@@ -103,7 +125,13 @@ const Boots = () => {
               height={17}
               alt="token"
             ></img>
-            <p className="font-bold">0.00001</p>
+            <p className="font-bold">
+              {
+                bootsStorageLevel[
+                  getStorageUpgradesLevel(AcountData.data?.data.data)
+                ]?.duration
+              }
+            </p>
             <p>SEED</p>
           </div>
         </div>
@@ -116,7 +144,13 @@ const Boots = () => {
               height={17}
               alt="token"
             ></img>
-            <p className="font-bold">0.00001</p>
+            <p className="font-bold">
+              {
+                boostSpeedLevel[
+                  getSpeedUpgradesLevel(AcountData.data?.data.data)
+                ]?.speed
+              }
+            </p>
             <p>SEED/hour</p>
           </div>
         </div>
@@ -164,6 +198,8 @@ const Boots = () => {
 
       {isOpen.isOpen && (
         <BootsModal
+          storageLevel={getStorageUpgradesLevel(AcountData.data?.data.data)}
+          speedLevel={getSpeedUpgradesLevel(AcountData.data?.data.data)}
           type={isOpen.type}
           closeModal={() => setisOpen({ isOpen: false, type: 0 })}
           handleUpgrade={() => handleUpgrade()}

@@ -6,8 +6,8 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           "&.Mui-disabled": {
-            background: "#D9D9D9",
-            color: "#747474",
+            background: "#D9D9D9 !important",
+            color: "#747474 !important",
           },
         },
       },
