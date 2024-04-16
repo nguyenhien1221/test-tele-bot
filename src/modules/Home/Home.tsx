@@ -20,6 +20,7 @@ import Countdown from "../../components/common/Countdown";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
+  const teleViewHeight = window.Telegram.WebApp.viewportHeight;
   tele.BackButton.hide();
 
   const AcountBalnce = useGetAcountBalance();
@@ -151,7 +152,7 @@ const Home = () => {
       </div>
       <div
         className={clsx(
-          isSmallScreen
+          teleViewHeight < 500
             ? "hidden"
             : "flex flex-1 justify-center bg-no-repeat bg-contain bg-center"
         )}
