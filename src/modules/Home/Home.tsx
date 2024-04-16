@@ -42,7 +42,7 @@ const Home = () => {
   });
 
   window.Telegram.WebApp.offEvent("viewportChanged", () => {
-    setExpand(isExpanded);
+    setExpand(!isExpanded);
   });
 
   const isSmallScreen = window.innerHeight < 450 ? true : false;
