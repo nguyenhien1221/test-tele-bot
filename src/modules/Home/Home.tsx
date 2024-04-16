@@ -33,7 +33,6 @@ const Home = () => {
   });
   const [isFull, setIsFull] = useState<boolean>(false);
 
-  const isDesktop = window.innerHeight < 610 ? true : false;
   const isSmallScreen = window.innerHeight < 400 ? true : false;
 
   const minedSeed = formatDecimals(
@@ -51,7 +50,7 @@ const Home = () => {
     bootsStorageLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) - 1]
       ?.duration *
       3600;
-  console.log(startTime, endTime);
+
   const tokenPerSec =
     boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) - 1]
       ?.speed / 3600;
@@ -88,7 +87,7 @@ const Home = () => {
     return () => {
       clearInterval(countProgess);
     };
-  }, [isClaimed]);
+  }, [isClaimed, startTime]);
 
   const handleClaim = () => {
     console.log("mined:", minedSeed, instorage);
@@ -116,9 +115,9 @@ const Home = () => {
   };
 
   return (
-    <div className="h-screen overflow-hidden px-4 relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
+    <div className="h-screen overflow-hidden flex flex-col flex-1 px-4 pb-[130px] relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
       <div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center flex-1 ">
           <p className="text-sm font-normal">In Storage:</p>
           <div className="flex items-center gap-2">
             <img
@@ -149,24 +148,22 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div
-          className={clsx(
-            isDesktop ? "h-[275px]" : "max-h-[350px] min-h-[275px]",
-            isSmallScreen ? "hidden" : "flex justify-center"
-          )}
-        >
-          <img
-            className="object-contain"
-            src="/images/trees/6.png"
-            height={312}
-            alt=""
-          ></img>
-        </div>
       </div>
+      <div
+        className={clsx(
+          "flex flex-1 justify-center bg-no-repeat bg-contain bg-center"
+        )}
+        style={{ backgroundImage: "url('/images/trees/6.png')" }}
+      ></div>
 
       {/* storage button */}
-      <div className={clsx(isSmallScreen ? "mt-4 relative" : "relative")}>
-        <div className=" bg-white rounded-2xl p-4 w-full overflow-hidden">
+      <div
+        className={clsx(
+          isSmallScreen ? "mt-4 " : "",
+          "max-h-[90px] min-h-[90px]"
+        )}
+      >
+        <div className=" bg-white rounded-2xl p-4 w-full relative overflow-hidden">
           <div
             ref={progressRef}
             className="bg-[#E4FFCE]  h-full top-0 left-0 absolute z-0 rounded-2xl"
@@ -217,6 +214,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+
       <div className="fixed bottom-6 left-4 right-4">
         <NavBar />
       </div>

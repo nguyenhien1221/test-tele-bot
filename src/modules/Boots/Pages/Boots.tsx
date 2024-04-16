@@ -176,8 +176,8 @@ const Boots = () => {
               </div>
             </div>
             <div className="col-span-5">
-              <p className="font-bold mb-2">{item.title}</p>
-              <div className=" mb-2">
+              <p className="font-bold mb-1">{item.title}</p>
+              <div className=" mb-1">
                 <p className="text-sm font-normal">{item.description}</p>
               </div>
               <div>
