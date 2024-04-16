@@ -20,7 +20,7 @@ import Countdown from "../../components/common/Countdown";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
-  const teleViewHeight = window.Telegram.WebApp.isExpanded;
+  const teleViewHeight = window.Telegram.WebApp.viewportHeight;
 
   tele.BackButton.hide();
 
@@ -37,7 +37,11 @@ const Home = () => {
   const [expand, setExpand] = useState<any>(teleViewHeight);
 
   window.Telegram.WebApp.onEvent("viewportChanged", () => {
-    setExpand(!teleViewHeight);
+    if (teleViewHeight < 300) {
+      setExpand(false);
+    } else {
+      setExpand(true);
+    }
   });
 
   const isSmallScreen = window.innerHeight < 450 ? true : false;
