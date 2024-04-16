@@ -32,7 +32,7 @@ export const navbarItems: NavBarItem[] = [
   },
   {
     icon: "/images/navbar/games.png",
-    name: "Games",
+    name: "Apps",
     path: navPaths.GAMES,
   },
 ];

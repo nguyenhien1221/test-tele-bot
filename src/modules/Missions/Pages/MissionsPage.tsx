@@ -11,7 +11,7 @@ const MissionsPage = () => {
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
 
-  const [isOpen, setisOpen] = useState<any>({ isOpen: false, type: 0 });
+  const [isOpen, setisOpen] = useState({ isOpen: false, type: 0 });
 
   const isDesktop = window.innerHeight < 610 ? true : false;
 
@@ -75,12 +75,12 @@ const MissionsPage = () => {
               </div>
             </div>
             <div className="col-span-1 flex">
-              <img
+              {/* <img
                 src="/images/icons/check.svg"
                 alt="check"
                 width={22}
                 height={22}
-              ></img>
+              ></img> */}
             </div>
           </div>
         ))}
@@ -88,7 +88,7 @@ const MissionsPage = () => {
       {isOpen && (
         <MissionsModal
           type={isOpen.type}
-          closeModal={() => setisOpen(false)}
+          closeModal={() => setisOpen({ isOpen: false, type: 0 })}
           isOpen={isOpen.isOpen}
         ></MissionsModal>
       )}
