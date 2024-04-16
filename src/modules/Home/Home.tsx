@@ -38,7 +38,7 @@ const Home = () => {
 
   window.Telegram.WebApp.onEvent("viewportChanged", () => {
     console.log(teleViewHeight);
-    if (teleViewHeight < 300) {
+    if (teleViewHeight < 450) {
       setExpand(false);
     } else {
       setExpand(true);
