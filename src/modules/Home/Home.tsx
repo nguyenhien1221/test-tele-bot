@@ -20,7 +20,7 @@ import Countdown from "../../components/common/Countdown";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
-  const teleViewHeight = window.Telegram.WebApp.viewportHeight;
+  const teleViewHeight = window.Telegram.WebApp.isExpanded;
   tele.BackButton.hide();
 
   const AcountBalnce = useGetAcountBalance();
@@ -152,7 +152,7 @@ const Home = () => {
       </div>
       <div
         className={clsx(
-          teleViewHeight < 300
+          !teleViewHeight
             ? "hidden"
             : "flex flex-1 justify-center bg-no-repeat bg-contain bg-center"
         )}
@@ -221,7 +221,7 @@ const Home = () => {
       <div
         className={clsx(
           "fixed left-4 right-4",
-          teleViewHeight < 300 ? "bottom-10 " : "bottom-6"
+          !teleViewHeight ? "bottom-10 " : "bottom-6"
         )}
       >
         <NavBar />
