@@ -22,10 +22,6 @@ const Home = () => {
   const tele = window.Telegram.WebApp;
   const teleViewHeight = window.Telegram.WebApp.isExpanded;
 
-  window.Telegram.WebApp.onEvent("viewportChanged", () => {
-    setExpand(!teleViewHeight);
-  });
-
   tele.BackButton.hide();
 
   const AcountBalnce = useGetAcountBalance();
@@ -39,6 +35,10 @@ const Home = () => {
   });
   const [isFull, setIsFull] = useState<boolean>(false);
   const [expand, setExpand] = useState<any>(teleViewHeight);
+
+  window.Telegram.WebApp.onEvent("viewportChanged", () => {
+    setExpand(!teleViewHeight);
+  });
 
   const isSmallScreen = window.innerHeight < 450 ? true : false;
 
