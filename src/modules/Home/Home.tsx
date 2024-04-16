@@ -16,7 +16,7 @@ import {
   boostSpeedLevel,
   bootsStorageLevel,
 } from "../../constants/boots.constants";
-import Countdown from "react-countdown";
+import Countdown from "../../components/common/Countdown";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
@@ -33,7 +33,7 @@ const Home = () => {
   });
   const [isFull, setIsFull] = useState<boolean>(false);
 
-  const isSmallScreen = window.innerHeight < 400 ? true : false;
+  const isSmallScreen = window.innerHeight < 450 ? true : false;
 
   const minedSeed = formatDecimals(
     calculateMinedSeeds(
@@ -87,7 +87,7 @@ const Home = () => {
     return () => {
       clearInterval(countProgess);
     };
-  }, [isClaimed, startTime]);
+  }, [isClaimed, startTime, AcountData.data?.data.data]);
 
   const handleClaim = () => {
     console.log("mined:", minedSeed, instorage);
@@ -115,7 +115,7 @@ const Home = () => {
   };
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col flex-1 px-4 pb-[130px] relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
+    <div className="h-screen overflow-hidden flex flex-col flex-1 px-4 pb-[115px] relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
       <div>
         <div className="flex flex-col items-center flex-1 ">
           <p className="text-sm font-normal">In Storage:</p>
@@ -151,7 +151,9 @@ const Home = () => {
       </div>
       <div
         className={clsx(
-          "flex flex-1 justify-center bg-no-repeat bg-contain bg-center"
+          isSmallScreen
+            ? "hidden"
+            : "flex flex-1 justify-center bg-no-repeat bg-contain bg-center"
         )}
         style={{ backgroundImage: "url('/images/trees/6.png')" }}
       ></div>
@@ -180,7 +182,7 @@ const Home = () => {
                 <img src="/images/icons/clock.svg" width={14} alt="clock"></img>
                 <p className="text-xs">
                   <Countdown
-                    date={endTime / 1000}
+                    date={endTime}
                     onComplete={() => clearInterval(countProgess)}
                   ></Countdown>
                 </p>
@@ -204,7 +206,7 @@ const Home = () => {
             </div>
             <div className="flex items-center justify-end col-span-3 ">
               <Button
-                disabled={!isFull}
+                // disabled={!isFull}
                 onClick={handleClaim}
                 className="w-[100px] h-40px py-3 rounded-lg bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold"
               >
