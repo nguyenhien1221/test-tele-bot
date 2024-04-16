@@ -22,7 +22,7 @@ const Friends = () => {
         <div className="flex flex-col items-center gap-3">
           <img
             className="h-[99px]"
-            src="/images/icons/friends.png"
+            src="/images/navbar/friends.png"
             width={119}
             height={99}
             alt="token"

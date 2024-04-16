@@ -21,6 +21,7 @@ const MissionsPage = () => {
 
   const handleBackBtn = () => {
     navigate("/");
+    setisOpen({ isOpen: false, type: 0 });
   };
 
   return (
