@@ -11,13 +11,12 @@ const MissionsPage = () => {
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
 
-  const [isOpen, setisOpen] = useState<boolean>(false);
+  const [isOpen, setisOpen] = useState<any>({ isOpen: false, type: 0 });
 
   const isDesktop = window.innerHeight < 610 ? true : false;
 
   const handleChooseMission = (index: number) => {
-    setisOpen(true);
-    console.log(index);
+    setisOpen({ isOpen: true, type: index });
   };
 
   const handleBackBtn = () => {
@@ -87,8 +86,9 @@ const MissionsPage = () => {
       </div>
       {isOpen && (
         <MissionsModal
+          type={isOpen.type}
           closeModal={() => setisOpen(false)}
-          isOpen={true}
+          isOpen={isOpen.isOpen}
         ></MissionsModal>
       )}
     </div>

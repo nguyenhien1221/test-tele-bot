@@ -18,3 +18,5 @@ export const missionsOptions = [
     seed: 0.05,
   },
 ];
+
+export const socials = ["Twitter", "Telegram", "Discord"];

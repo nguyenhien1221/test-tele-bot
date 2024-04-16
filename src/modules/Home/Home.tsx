@@ -35,7 +35,7 @@ const Home = () => {
     const savedCount = Number(localStorage.getItem("count") as string);
     return isNaN(savedCount) ? 0 : savedCount;
   });
-  const [isFull, setIsFull] = useState<boolean>(false);
+  // const [isFull, setIsFull] = useState<boolean>(false);
   const [expand, setExpand] = useState<any>(isExpanded);
 
   const isSmallScreen = window.innerHeight < 450 ? true : false;
@@ -67,10 +67,6 @@ const Home = () => {
     window.Telegram.WebApp.onEvent("viewportChanged", () => {
       setExpand(isExpanded);
     });
-
-    window.Telegram.WebApp.offEvent("viewportChanged", () => {
-      setExpand(!isExpanded);
-    });
   }, [viewHeight]);
 
   useEffect(() => {
@@ -93,9 +89,9 @@ const Home = () => {
         (percentEnd >= 100 ? 100 : percentEnd) + "%";
       if (percentEnd >= 40) {
         clearInterval(countProgess);
-        setIsFull(true);
+        // setIsFull(true);
       } else {
-        setIsFull(false);
+        // setIsFull(false);
       }
     }, 1000);
 
@@ -112,7 +108,7 @@ const Home = () => {
         clearInterval(countProgess);
         progressRef.current.style.width = 0;
         setIsClaimed(!isClaimed);
-        setIsFull(false);
+        // setIsFull(false);
         setInstorage(() => {
           localStorage.setItem("count", "0");
           return;
@@ -221,7 +217,7 @@ const Home = () => {
             </div>
             <div className="flex items-center justify-end col-span-3 ">
               <Button
-                disabled={!isFull}
+                // disabled={!isFull}
                 onClick={handleClaim}
                 className="w-[100px] h-40px py-3 rounded-lg bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold"
               >

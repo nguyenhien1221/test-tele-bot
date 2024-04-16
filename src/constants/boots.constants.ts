@@ -16,7 +16,7 @@ export const bootOptions = [
     description: "Increase mining speed",
   },
   {
-    icon: "/images/icons/water.png",
+    icon: "/images/icons/water.svg",
     title: "Holy Water",
     description: "Boost mining speed by 1.25x, 1.5x, 2x times",
   },

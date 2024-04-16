@@ -1,13 +1,15 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { socialItems } from "../../../constants/socials.constants";
+import { socials } from "../../../constants/missions.constants";
 
 interface ModalPropsType {
+  type: number;
   isOpen: boolean;
   closeModal: () => void;
 }
 
-const MissionsModal = ({ closeModal }: ModalPropsType) => {
+const MissionsModal = ({ closeModal, type }: ModalPropsType) => {
   return (
     <>
       <div
@@ -18,10 +20,10 @@ const MissionsModal = ({ closeModal }: ModalPropsType) => {
         <div className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"></div>
         <div className="overflow-auto w-full ">
           <div className="flex flex-col items-center ">
-            <p className="text-[24px] font-bold">Follow on Twitter</p>
+            <p className="text-[24px] font-bold">Follow on {socials[type]}</p>
             <p className="text-center font-normal">
-              Every subscription +1 Gas Free.
-              <br /> Tap to open Twitter account.
+              Every subscription +0.02 SEED.
+              <br /> Tap to open {socials[type]} account.
             </p>
           </div>
         </div>
