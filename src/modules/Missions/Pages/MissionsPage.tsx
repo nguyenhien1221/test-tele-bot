@@ -2,6 +2,7 @@ import { useState } from "react";
 import { missionsOptions } from "../../../constants/missions.constants";
 import MissionsModal from "../Components/MissionsModal";
 import { useNavigate } from "react-router-dom";
+import clsx from "clsx";
 
 const MissionsPage = () => {
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ const MissionsPage = () => {
   tele.BackButton.onClick(() => handleBackBtn());
 
   const [isOpen, setisOpen] = useState<boolean>(false);
+
+  const isDesktop = window.innerHeight < 610 ? true : false;
 
   const handleChooseMission = (index: number) => {
     setisOpen(true);
@@ -40,7 +43,7 @@ const MissionsPage = () => {
       </div>
 
       {/* options */}
-      <div className="mt-[49px]">
+      <div className={clsx(isDesktop ? "mt-2" : "mt-[49px]")}>
         {missionsOptions.map((item, index) => (
           <div
             onClick={() => handleChooseMission(index)}

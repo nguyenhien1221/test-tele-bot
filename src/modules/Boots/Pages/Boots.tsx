@@ -5,6 +5,7 @@ import BootsModal from "../Components/BootsModal";
 import { useNavigate } from "react-router-dom";
 import useUpgradeStorage from "../Hooks/useUpgradeStoarage";
 import useUpgradeSpeed from "../Hooks/useUpgradeSpeed";
+import clsx from "clsx";
 
 const Boots = () => {
   const navigate = useNavigate();
@@ -17,6 +18,8 @@ const Boots = () => {
   tele.BackButton.onClick(() => handleBackBtn());
 
   const [isOpen, setisOpen] = useState<any>({ isOpen: false, type: 0 });
+
+  const isDesktop = window.innerHeight < 610 ? true : false;
 
   const handleUpgrade = () => {
     if (isOpen.type === bootTypeEnum.STORAGE) {
@@ -120,7 +123,7 @@ const Boots = () => {
       </div>
 
       {/* options */}
-      <div className="mt-[49px]">
+      <div className={clsx(isDesktop ? "mt-2" : "mt-[49px]")}>
         {bootOptions.map((item, index) => (
           <div
             onClick={() => handleOpenModal(index)}

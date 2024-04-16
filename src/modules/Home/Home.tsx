@@ -6,6 +6,7 @@ import useGetAcountBalance from "./Hooks/useGetAcountBalance";
 import useClaimSeed from "./Hooks/useClaimSeed";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
+import clsx from "clsx";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
@@ -21,6 +22,8 @@ const Home = () => {
     return isNaN(savedCount) ? 0 : savedCount;
   });
   const [isFull, setIsFull] = useState<boolean>(false);
+
+  const isDesktop = window.innerHeight < 610 ? true : false;
 
   const endTime = 1712893822;
   const startTime = 1712890222;
@@ -81,13 +84,8 @@ const Home = () => {
       });
   };
 
-  useEffect(() => {
-    if (window.innerHeight < 667) {
-    }
-  }, []);
-
   return (
-    <div className="h-screen overflow-hidden px-4 relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
+    <div className="h-screen overflow-hidden px-4 relative bg-gradient-to-b from-[#F8FFE1] via-[#EDFFC6] to-[#8CC83C]">
       <div>
         <div className="flex flex-col items-center">
           <p className="text-sm font-normal">In Storage:</p>
@@ -120,7 +118,12 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className=" max-h-[312px] flex justify-center">
+        <div
+          className={clsx(
+            " flex justify-center",
+            isDesktop ? "h-[212px]" : "h-[312px]"
+          )}
+        >
           <img
             className="object-contain"
             src="/images/trees/6.png"

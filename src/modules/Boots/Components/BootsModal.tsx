@@ -1,6 +1,7 @@
 import React from "react";
 import MissionsItem from "./MissionsItem";
 import { Button } from "@mui/material";
+import clsx from "clsx";
 
 interface ModalPropsType {
   type: number;
@@ -9,6 +10,8 @@ interface ModalPropsType {
 }
 
 const BootsModal = ({ closeModal, handleUpgrade, type }: ModalPropsType) => {
+  const isDesktop = window.innerHeight < 610 ? true : false;
+
   const renderTitle = (type: number) => {
     if (type === 0) {
       return (
@@ -52,11 +55,13 @@ const BootsModal = ({ closeModal, handleUpgrade, type }: ModalPropsType) => {
         <div className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"></div>
         <div className="overflow-auto w-full ">
           <div className="flex flex-col items-center ">{renderTitle(type)}</div>
-          <div className="mt-8 mb-[26px] w-full">
+          <div
+            className={clsx(" mb-[26px] w-full", isDesktop ? "mt-3" : "mt-8")}
+          >
             <MissionsItem type={type} level={6} />
             <div className="flex justify-center">
               <img
-                className="my-5"
+                className={isDesktop ? "my-2" : "my-5"}
                 src="/images/icons/uparrow.svg"
                 width={21}
                 height={28}
@@ -78,7 +83,7 @@ const BootsModal = ({ closeModal, handleUpgrade, type }: ModalPropsType) => {
 
         <Button
           onClick={() => handleUpgrade()}
-          className="font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] w-full rounded-xl drop-shadow-lg "
+          className="font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] w-full rounded-xl drop-shadow-lg"
         >
           UPGRADE
         </Button>
