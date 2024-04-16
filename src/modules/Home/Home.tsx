@@ -174,11 +174,7 @@ const Home = () => {
           <div className=" relative z-10 grid grid-cols-8 gap-1">
             <div className="col-span-2 flex items-center">
               <div>
-                <img
-                  src="/images/icons/storage1.svg"
-                  width={62}
-                  alt="storage"
-                ></img>
+                <img src="/images/storage/1.png" width={62} alt="storage"></img>
               </div>
             </div>
             <div className="col-span-3">
