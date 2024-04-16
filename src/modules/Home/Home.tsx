@@ -211,7 +211,7 @@ const Home = () => {
             </div>
             <div className="flex items-center justify-end col-span-3 ">
               <Button
-                // disabled={!isFull}
+                disabled={!isFull}
                 onClick={handleClaim}
                 className="w-[100px] h-40px py-3 rounded-lg bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold"
               >
