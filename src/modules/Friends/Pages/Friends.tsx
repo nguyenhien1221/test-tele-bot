@@ -32,10 +32,9 @@ const Friends = () => {
           } Friends`}</p>
         </div>
         <p className="text-sm font-normal text-center">
-          You will receive 20% of the PXLs
+          Every time your friend claims SEED
           <br />
-          mined by your friend and 5% of the <br />
-          PXLs mined by your friend's friend.
+          you get 20% cashback.
         </p>
       </div>
 

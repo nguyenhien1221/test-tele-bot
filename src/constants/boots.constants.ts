@@ -7,7 +7,7 @@ export enum bootTypeEnum {
 export const bootOptions = [
   {
     icon: "/images/icons/storage1.svg",
-    title: "Box Storage",
+    title: "Storage",
     description: "Increase the storage capacity of the mined",
   },
   {
