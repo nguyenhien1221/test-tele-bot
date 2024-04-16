@@ -158,7 +158,7 @@ const Home = () => {
       </div>
       <div
         className={clsx(
-          !teleViewHeight
+          !expand
             ? "hidden"
             : "flex flex-1 justify-center bg-no-repeat bg-contain bg-center"
         )}
@@ -227,7 +227,7 @@ const Home = () => {
       <div
         className={clsx(
           "fixed left-4 right-4",
-          !teleViewHeight ? "bottom-10 " : "bottom-6"
+          !expand ? "bottom-10 " : "bottom-6"
         )}
       >
         <NavBar />
