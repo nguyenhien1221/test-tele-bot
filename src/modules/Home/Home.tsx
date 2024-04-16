@@ -34,7 +34,7 @@ const Home = () => {
   const [isFull, setIsFull] = useState<boolean>(false);
 
   const isDesktop = window.innerHeight < 610 ? true : false;
-  const isSmallScreen = window.innerHeight < 380 ? true : false;
+  const isSmallScreen = window.innerHeight < 400 ? true : false;
 
   const minedSeed = formatDecimals(
     calculateMinedSeeds(
@@ -151,7 +151,7 @@ const Home = () => {
         </div>
         <div
           className={clsx(
-            isDesktop ? "h-[275px]" : "h-[312px]",
+            isDesktop ? "h-[275px]" : "max-h-[350px] min-h-[275px]",
             isSmallScreen ? "hidden" : "flex justify-center"
           )}
         >
