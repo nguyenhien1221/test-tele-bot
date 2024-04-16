@@ -231,7 +231,7 @@ const Home = () => {
       <div
         className={clsx(
           "fixed left-4 right-4",
-          !expand ? "bottom-10 " : "bottom-6"
+          !expand ? "bottom-[120px] " : "bottom-6"
         )}
       >
         <NavBar />
