@@ -22,6 +22,8 @@ const Home = () => {
   const tele = window.Telegram.WebApp;
   const isExpanded = tele.isExpanded;
 
+  const viewHeight = tele.viewportHeight;
+
   tele.BackButton.hide();
 
   const AcountBalnce = useGetAcountBalance();
@@ -69,7 +71,7 @@ const Home = () => {
     window.Telegram.WebApp.offEvent("viewportChanged", () => {
       setExpand(!isExpanded);
     });
-  });
+  }, [viewHeight]);
 
   useEffect(() => {
     countProgess = setInterval(() => {
@@ -233,7 +235,7 @@ const Home = () => {
       <div
         className={clsx(
           "fixed left-4 right-4",
-          !expand ? "bottom-[40%] " : "bottom-6"
+          !expand ? "bottom-[35%] " : "bottom-6"
         )}
       >
         <NavBar />
