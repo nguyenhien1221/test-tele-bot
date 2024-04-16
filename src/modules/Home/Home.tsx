@@ -38,6 +38,13 @@ const Home = () => {
 
   const isSmallScreen = window.innerHeight < 450 ? true : false;
 
+  const changeViewPort = window.Telegram.WebApp.onEvent(
+    "viewportChanged",
+    () => {
+      setExpand(teleViewHeight);
+    }
+  );
+
   const minedSeed = formatDecimals(
     calculateMinedSeeds(
       AcountData.data?.data.data.last_claim,
@@ -62,7 +69,7 @@ const Home = () => {
   let countProgess: any;
 
   useEffect(() => {
-    setExpand(teleViewHeight);
+    changeViewPort();
   }, [teleViewHeight]);
 
   useEffect(() => {
