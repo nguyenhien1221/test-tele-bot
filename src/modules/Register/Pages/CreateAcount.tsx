@@ -7,6 +7,7 @@ import Register from "../Components/Register";
 import { useNavigate } from "react-router-dom";
 import useCreateAcount from "../../../components/Hooks/useCreateAcount";
 import { toast } from "react-toastify";
+import { useQueryClient } from "@tanstack/react-query";
 
 const CreateAcount = () => {
   const tele = window.Telegram.WebApp;
@@ -16,6 +17,7 @@ const CreateAcount = () => {
 
   const navigate = useNavigate();
 
+  const qc = useQueryClient();
   const createAcount = useCreateAcount();
 
   const [tab, setTab] = useState<number>(0);
@@ -66,7 +68,8 @@ const CreateAcount = () => {
     if (tab >= 2) {
       createAcount
         .mutateAsync()
-        .then(() => {
+        .then((data) => {
+          qc.setQueryData(["AcountDetails"], data.data);
           navigate("/");
         })
         .catch((err) => {
