@@ -23,7 +23,11 @@ const NavBar = () => {
 
   return (
     <div>
-      <ToastContainer stacked className="top-3 w-[272px] left-[50%] -translate-x-[50%]" />
+      <ToastContainer
+        limit={1}
+        stacked
+        className="top-3 w-[272px] left-[50%] -translate-x-[50%]"
+      />
       <div className="flex justify-between bg-[#fff] shadow-lg rounded-[50px] py-[9px] px-[37px]">
         {navbarItems.map((item, index) => (
           <div key={index}>

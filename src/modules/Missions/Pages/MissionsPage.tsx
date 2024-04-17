@@ -66,6 +66,7 @@ const MissionsPage = () => {
       ) : (
         <div className="overflow-auto pt-[42px] px-4 bg-gradient-to-b relative h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
           <ToastContainer
+            limit={1}
             stacked
             className="top-3 w-[272px] left-[50%] -translate-x-[50%]"
           />
