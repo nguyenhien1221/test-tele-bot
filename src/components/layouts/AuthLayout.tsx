@@ -19,13 +19,12 @@ const AuthLayout = () => {
     ) {
       return <Navigate to={navPaths.REGISTER} />;
     }
-
-    return (
-      <Suspense fallback={<Loading />}>
-        <Outlet />
-      </Suspense>
-    );
   }
+  return (
+    <Suspense fallback={<Loading />}>
+      <Outlet />
+    </Suspense>
+  );
 };
 
 export default AuthLayout;
