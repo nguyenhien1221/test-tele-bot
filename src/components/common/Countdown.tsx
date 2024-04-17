@@ -15,33 +15,36 @@ export default function Countdown({ date, onComplete }: CountdownProps) {
     <Cd
       date={date}
       onComplete={onComplete}
-      renderer={({ hours, minutes }) => (
-        <div className="grid grid-cols-[repeat(7,auto)] gap-[6px]">
-          <div className={containerClassName}>
-            <div className={valueClassName}>
-              {String(hours)
-                .padStart(2, "0")
-                .split("")
-                .map((item, idx) => (
-                  <NumberCycle value={+item} key={idx} />
-                ))}
+      renderer={({ hours, minutes }) => {
+        // console.log(hours, minutes);
+        return (
+          <div className="grid grid-cols-[repeat(7,auto)] gap-[6px]">
+            <div className={containerClassName}>
+              <div className={valueClassName}>
+                {String(0)
+                  .padStart(2, "0")
+                  .split("")
+                  .map((item, idx) => (
+                    <NumberCycle value={+item} key={idx} />
+                  ))}
+              </div>
+              <div className={descriptionClassName}>h</div>
             </div>
-            <div className={descriptionClassName}>h</div>
-          </div>
 
-          <div className={containerClassName}>
-            <div className={valueClassName}>
-              {String(minutes)
-                .padStart(2, "0")
-                .split("")
-                .map((item, idx) => (
-                  <NumberCycle value={+item} key={idx} />
-                ))}
+            <div className={containerClassName}>
+              <div className={valueClassName}>
+                {String(0)
+                  .padStart(2, "0")
+                  .split("")
+                  .map((item, idx) => (
+                    <NumberCycle value={+item} key={idx} />
+                  ))}
+              </div>
+              <div className={descriptionClassName}>m</div>
             </div>
-            <div className={descriptionClassName}>m</div>
           </div>
-        </div>
-      )}
+        );
+      }}
     />
   ) : (
     <></>

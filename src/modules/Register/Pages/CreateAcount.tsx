@@ -64,18 +64,17 @@ const CreateAcount = () => {
   const handleChangeTab = () => {
     setTab(tab + 1);
     if (tab >= 2) {
-      navigate("/");
+      createAcount
+        .mutateAsync()
+        .then(() => {
+          navigate("/");
+        })
+        .catch((err) => {
+          toast.error(err);
+        });
+
       return;
     }
-
-    createAcount
-      .mutateAsync()
-      .then(() => {
-        setTab(tab + 1);
-      })
-      .catch((err) => {
-        toast.error(err);
-      });
   };
 
   return (
