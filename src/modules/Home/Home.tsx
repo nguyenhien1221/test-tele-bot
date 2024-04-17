@@ -115,9 +115,9 @@ const Home = () => {
   ]);
 
   useEffect(() => {
-    console.log(AcountData);
+    console.log(AcountData.data?.status);
     if (AcountData.data?.status) {
-      console.log(AcountData.data, ResponseCode.NOT_FOUND);
+      console.log(AcountData.data.status, ResponseCode.NOT_FOUND);
       if (AcountData.data?.status === ResponseCode.NOT_FOUND) {
         navigate(navPaths.REGISTER);
       }
