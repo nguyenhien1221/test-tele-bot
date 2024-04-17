@@ -114,12 +114,13 @@ const Home = () => {
     AcountData.isLoading,
   ]);
 
-  useEffect(() => {
-    console.log(AcountData.data?.status, ResponseCode.NOT_FOUND);
-    if (AcountData.data?.status === ResponseCode.NOT_FOUND) {
-      navigate(navPaths.REGISTER);
-    }
-  }, [AcountData]);
+  // useEffect(() => {
+  //   if (AcountData.data) {
+  //     if (AcountData.data?.status === ResponseCode.NOT_FOUND) {
+  //       navigate(navPaths.REGISTER);
+  //     }
+  //   }
+  // }, [AcountData]);
 
   const handleClaim = () => {
     ClaimSeed.mutateAsync()

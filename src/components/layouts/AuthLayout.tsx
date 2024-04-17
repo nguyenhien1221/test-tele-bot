@@ -12,18 +12,20 @@ const AuthLayout = () => {
 
   const AcountData = useGetAcountDetails();
 
-  if (
-    AcountData.data?.status === ResponseCode.NOT_FOUND &&
-    location.pathname !== navPaths.REGISTER
-  ) {
-    return <Navigate to={navPaths.REGISTER} />;
-  }
+  if (AcountData.data) {
+    if (
+      AcountData.data?.status === ResponseCode.NOT_FOUND &&
+      location.pathname !== navPaths.REGISTER
+    ) {
+      return <Navigate to={navPaths.REGISTER} />;
+    }
 
-  return (
-    <Suspense fallback={<Loading />}>
-      <Outlet />
-    </Suspense>
-  );
+    return (
+      <Suspense fallback={<Loading />}>
+        <Outlet />
+      </Suspense>
+    );
+  }
 };
 
 export default AuthLayout;
