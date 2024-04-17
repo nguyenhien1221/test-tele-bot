@@ -1,15 +1,25 @@
 import React from "react";
 import { Button } from "@mui/material";
-import { socialItems } from "../../../constants/socials.constants";
 import { socials } from "../../../constants/missions.constants";
+import { getMissionsByType } from "../Utils/missions";
+import { socialItems } from "../../../constants/socials.constants";
 
 interface ModalPropsType {
+  data: any;
   type: number;
   isOpen: boolean;
   closeModal: () => void;
+  handleDoMission: (id: string) => void;
 }
 
-const MissionsModal = ({ closeModal, type }: ModalPropsType) => {
+const MissionsModal = ({
+  closeModal,
+  type,
+  data,
+  handleDoMission,
+}: ModalPropsType) => {
+  const missions = getMissionsByType(type, data);
+
   return (
     <>
       <div
@@ -29,11 +39,24 @@ const MissionsModal = ({ closeModal, type }: ModalPropsType) => {
         </div>
 
         <div className="grid grid-cols-3 gap-[34px] mb-[38px] mt-[42px]">
-          {socialItems.map((item, index) => (
-            <div className="text-center">
-              <img src={item.icon} width={80} alt="logo"></img>
-              <p className="mt-3 font-medium text-sm">{item.title}</p>
-            </div>
+          {missions?.map((item: any, index: number) => (
+            <a
+              onClick={() => handleDoMission(item.id)}
+              href={item.metadata.url}
+              target="_blank"
+              rel="noreferrer"
+              className="text-center relative"
+            >
+              {item.task_user != null && (
+                <img
+                  className="absolute -right-3 -top-3"
+                  src="/images/icons/checkmark.svg"
+                  alt=""
+                ></img>
+              )}
+              <img src={item.metadata.images_url} width={80} alt="logo"></img>
+              <p className="mt-3 font-semibold text-sm">{item.metadata.name}</p>
+            </a>
           ))}
         </div>
 

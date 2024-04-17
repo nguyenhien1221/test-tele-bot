@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { formatDecimals, formatNumberFloatFix } from "../../utils/formatNumber";
 import useGetAcountBalance from "./Hooks/useGetAcountBalance";
 import useClaimSeed from "./Hooks/useClaimSeed";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { Button } from "@mui/material";
 import clsx from "clsx";
 import {
@@ -127,8 +127,12 @@ const Home = () => {
 
   return (
     <div className="h-screen overflow-hidden flex flex-col flex-1 px-4 pb-[115px] relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
+      <ToastContainer
+        stacked
+        className="top-3 w-[272px] left-[50%] -translate-x-[50%]"
+      />
       <div>
-        <div className="flex flex-col items-center flex-1 ">
+        <div className="flex flex-col items-center flex-1 pt-[38px]">
           <p className="text-sm font-normal">In Storage:</p>
           <div className="flex items-center gap-2">
             <img

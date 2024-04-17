@@ -20,3 +20,10 @@ export const missionsOptions = [
 ];
 
 export const socials = ["Twitter", "Telegram", "Discord"];
+
+export const missionsTypes = {
+  SIGN_IN: "sign-in",
+  TWITTER_FOLLOW: "twitter-follow",
+  TELEGRAM__JOIN: "telegram-join",
+  REFER: "refer",
+};
