@@ -15,12 +15,8 @@ import {
 } from "../../constants/boots.constants";
 import Countdown from "../../components/common/Countdown";
 import Loading from "../../components/common/Loading";
-import { ResponseCode } from "../../constants/response";
-import { useNavigate } from "react-router-dom";
-import { navPaths } from "../../constants/navbar.constants";
 
 const Home = () => {
-  const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
   // const isExpanded = tele.isExpanded;
 
