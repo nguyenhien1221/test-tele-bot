@@ -8,10 +8,11 @@ const Register = () => {
           <img src="/images/create.png" alt=""></img>
         </div>
         <div className="text-center mt-6">
-          <p className="text-[24px] font-extrabold">Create Account</p>
+          <p className="text-[32px] font-extrabold">SEED DAO</p>
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's.
+            Sow Your Own Seeds With One Click <br />
+            on Telegram
+            <br /> Yield Multichain Rewards
           </p>
         </div>
       </div>

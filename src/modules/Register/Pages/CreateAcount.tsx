@@ -66,11 +66,12 @@ const CreateAcount = () => {
       return "Next";
     }
     if (tab === 2) {
-      return "Start";
+      return "Start Sowing";
     }
   };
 
   const handleChangeTab = () => {
+    setTab(tab + 1);
     if (tab >= 2) {
       navigate("/");
       return;
@@ -91,7 +92,7 @@ const CreateAcount = () => {
       <div>{renderContent()}</div>
       <Button
         onClick={() => handleChangeTab()}
-        className="fixed bottom-[55px] left-4 right-4 bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg"
+        className="fixed capitalize font-extrabold bottom-[55px] left-4 right-4 bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg"
       >
         {renderButtonText()}
       </Button>

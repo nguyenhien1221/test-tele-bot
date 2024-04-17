@@ -87,12 +87,13 @@ export const getStorageUpgradesLevel = (data: any) => {
     return storageLevel;
   }
 
-  const storageUpgrades = data?.upgrades?.map(
+  const storageUpgrades = data?.upgrades?.filter(
     (item: any) => item.upgrade_type === "storage-size"
   );
+
   const level = storageUpgrades?.sort(
     (a: any, b: any) => a.timestamp - b.timestamp
-  )[0].upgrade_level;
+  )[0]?.upgrade_level;
 
   return level;
 };
@@ -104,9 +105,10 @@ export const getSpeedUpgradesLevel = (data: any) => {
     return speedLevel;
   }
 
-  const storageUpgrades = data?.upgrades?.map(
+  const storageUpgrades = data?.upgrades?.filter(
     (item: any) => item.upgrade_type === "mining-speed"
   );
+
   const level = storageUpgrades?.sort(
     (a: any, b: any) => a.timestamp - b.timestamp
   )[0].upgrade_level;

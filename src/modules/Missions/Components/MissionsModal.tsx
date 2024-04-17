@@ -45,20 +45,25 @@ const MissionsModal = ({
               target="_blank"
               rel="noreferrer"
               className={clsx(
-                item.task_user.completed
-                  ? "brightness-70 pointer-events-none"
-                  : "",
+                item.task_user?.completed ? "pointer-events-none" : "",
                 "text-center relative"
               )}
             >
               {item.task_user != null && (
                 <img
-                  className="absolute -right-3 -top-3"
+                  className="absolute -right-3 z-10 -top-3"
                   src="/images/icons/checkmark.svg"
                   alt=""
                 ></img>
               )}
-              <img src={item.metadata.image_url} width={80} alt="logo"></img>
+              <div className={clsx("rounded-[16px] overflow-hidden")}>
+                <img
+                  className={item.task_user?.completed ? "brightness-50" : ""}
+                  src={item.metadata.image_url}
+                  width={80}
+                  alt="logo"
+                ></img>
+              </div>
               <p className="mt-3 font-semibold text-sm">{item.metadata.name}</p>
             </a>
           ))}
