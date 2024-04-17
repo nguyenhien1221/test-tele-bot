@@ -3,7 +3,6 @@ import { navPaths } from "../../constants/navbar.constants";
 import useGetAcountDetails from "../Hooks/useRegister";
 import { Suspense } from "react";
 import Loading from "../common/Loading";
-import { ResponseCode } from "../../constants/response";
 
 const AuthLayout = () => {
   const location = useLocation();
@@ -12,14 +11,19 @@ const AuthLayout = () => {
 
   const AcountData = useGetAcountDetails();
 
-  if (AcountData.data) {
-    if (
-      AcountData.data?.status === ResponseCode.NOT_FOUND &&
+  console.log(
+    AcountData.data?.status === undefined &&
       location.pathname !== navPaths.REGISTER
-    ) {
-      return <Navigate to={navPaths.REGISTER} />;
-    }
+  );
+
+  if (
+    AcountData.data?.status === undefined &&
+    location.pathname !== navPaths.REGISTER &&
+    !AcountData.isLoading
+  ) {
+    return <Navigate to={navPaths.REGISTER} />;
   }
+
   return (
     <Suspense fallback={<Loading />}>
       <Outlet />

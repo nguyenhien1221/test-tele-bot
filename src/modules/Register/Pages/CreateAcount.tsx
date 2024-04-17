@@ -27,7 +27,7 @@ const CreateAcount = () => {
     if (AcountData.data?.status !== ResponseCode.NOT_FOUND) {
       navigate("/");
     }
-  }, [AcountData]);
+  }, []);
 
   useEffect(() => {
     if (tab === 0) {

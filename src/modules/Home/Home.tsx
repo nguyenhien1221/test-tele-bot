@@ -15,12 +15,8 @@ import {
 } from "../../constants/boots.constants";
 import Countdown from "../../components/common/Countdown";
 import Loading from "../../components/common/Loading";
-import { ResponseCode } from "../../constants/response";
-import { useNavigate } from "react-router-dom";
-import { navPaths } from "../../constants/navbar.constants";
 
 const Home = () => {
-  const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
   // const isExpanded = tele.isExpanded;
 
@@ -113,14 +109,6 @@ const Home = () => {
     progressRef.current,
     AcountData.isLoading,
   ]);
-
-  useEffect(() => {
-    console.log(AcountData.data?.status);
-    console.log(AcountData.data?.status, ResponseCode.NOT_FOUND);
-    if (AcountData.data?.status === ResponseCode.NOT_FOUND) {
-      navigate(navPaths.REGISTER);
-    }
-  }, [AcountData.data]);
 
   const handleClaim = () => {
     ClaimSeed.mutateAsync()
