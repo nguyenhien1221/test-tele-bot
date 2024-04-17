@@ -7,8 +7,6 @@ import Register from "../Components/Register";
 import { useNavigate } from "react-router-dom";
 import useCreateAcount from "../../../components/Hooks/useCreateAcount";
 import { toast } from "react-toastify";
-import useGetAcountDetails from "../../../components/Hooks/useRegister";
-import { ResponseCode } from "../../../constants/response";
 
 const CreateAcount = () => {
   const tele = window.Telegram.WebApp;
@@ -19,15 +17,8 @@ const CreateAcount = () => {
   const navigate = useNavigate();
 
   const createAcount = useCreateAcount();
-  const AcountData = useGetAcountDetails();
 
   const [tab, setTab] = useState<number>(0);
-
-  useEffect(() => {
-    if (AcountData.data?.status !== ResponseCode.NOT_FOUND) {
-      navigate("/");
-    }
-  }, []);
 
   useEffect(() => {
     if (tab === 0) {
