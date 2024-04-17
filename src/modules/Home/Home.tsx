@@ -56,7 +56,9 @@ const Home = () => {
 
   const tokenPerSec =
     boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) - 1]
-      ?.speed / 3600000;
+      ?.speed / 10000;
+
+  const timeToAdd = 360 / getSpeedUpgradesLevel(AcountData.data?.data.data);
 
   const progressRef = useRef<any>();
   let countProgess: any;
@@ -96,7 +98,7 @@ const Home = () => {
         } else {
           // setIsFull(false);
         }
-      }, 360);
+      }, timeToAdd);
 
       return () => {
         clearInterval(countProgess);
@@ -126,10 +128,7 @@ const Home = () => {
         AcountData.refetch();
       })
       .catch((err) => {
-        toast.error(err.response.data.message, {
-          position: "top-center",
-          style: { width: 272, borderRadius: 8 },
-        });
+        toast.error(err.response.data.message);
       });
   };
 
