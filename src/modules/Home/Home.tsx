@@ -7,10 +7,7 @@ import useClaimSeed from "./Hooks/useClaimSeed";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 import clsx from "clsx";
-import {
-  calculateMinedSeeds,
-  getSpeedUpgradesLevel,
-} from "../../utils/minedSeed";
+import { getSpeedUpgradesLevel } from "../../utils/minedSeed";
 import useGetAcountDetails from "../../components/Hooks/useRegister";
 import {
   boostSpeedLevel,
