@@ -9,11 +9,12 @@ import { getMissionsByType, getToltalReward } from "../Utils/missions";
 import useDoMissions from "../Hooks/useDoMissions";
 import { ToastContainer, toast } from "react-toastify";
 import Loading from "../../../components/common/Loading";
+import { copyToClipboard } from "../../../utils/helper";
 
 const MissionsPage = () => {
   const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
-  console.log(tele);
+  const userID = tele.initDataUnsafe?.user?.id;
 
   const missionsData = useGetMissions();
   const doMission = useDoMissions();
@@ -28,7 +29,10 @@ const MissionsPage = () => {
   const handleChooseMission = (index: number) => {
     const data = missionsData.data?.data.data;
     if (index === 2) {
-      handleDoMission(data[data.length - 1].id);
+      copyToClipboard(
+        `${process.env.REACT_APP_BOT_URL}/app?startapp=${String(userID)}`
+      );
+      handleDoMission(data[data.length - 1]?.id);
       return;
     }
     setisOpen({ isOpen: true, type: index });

@@ -196,10 +196,12 @@ const Boots = () => {
         ))}
       </div>
 
-      {isOpen.isOpen && (
+      {isOpen.isOpen && AcountData.data?.data.data && (
         <BootsModal
-          storageLevel={getStorageUpgradesLevel(AcountData.data?.data.data)}
-          speedLevel={getSpeedUpgradesLevel(AcountData.data?.data.data)}
+          storageLevel={
+            getStorageUpgradesLevel(AcountData.data?.data.data) ?? 0
+          }
+          speedLevel={getSpeedUpgradesLevel(AcountData.data?.data.data) ?? 0}
           type={isOpen.type}
           closeModal={() => setisOpen({ isOpen: false, type: 0 })}
           handleUpgrade={() => handleUpgrade()}

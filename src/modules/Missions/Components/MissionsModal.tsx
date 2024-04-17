@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { socials } from "../../../constants/missions.constants";
 import { getMissionsByType } from "../Utils/missions";
+import clsx from "clsx";
 
 interface ModalPropsType {
   data: any;
@@ -43,7 +44,12 @@ const MissionsModal = ({
               href={item.metadata.url}
               target="_blank"
               rel="noreferrer"
-              className="text-center relative"
+              className={clsx(
+                item.task_user.completed
+                  ? "brightness-70 pointer-events-none"
+                  : "",
+                "text-center relative"
+              )}
             >
               {item.task_user != null && (
                 <img
@@ -52,7 +58,7 @@ const MissionsModal = ({
                   alt=""
                 ></img>
               )}
-              <img src={item.metadata.images_url} width={80} alt="logo"></img>
+              <img src={item.metadata.image_url} width={80} alt="logo"></img>
               <p className="mt-3 font-semibold text-sm">{item.metadata.name}</p>
             </a>
           ))}

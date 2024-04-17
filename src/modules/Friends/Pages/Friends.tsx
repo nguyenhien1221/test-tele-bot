@@ -1,14 +1,15 @@
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useGetAcountReferees from "../Hooks/useGetAcountReferees";
+import { copyToClipboard } from "../../../utils/helper";
+import { ToastContainer, toast } from "react-toastify";
 
 const Friends = () => {
   const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
+  const userID = tele.initDataUnsafe?.user?.id;
 
   const AcountReferees = useGetAcountReferees();
-
-  console.log(AcountReferees.data?.data.data);
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
@@ -16,8 +17,20 @@ const Friends = () => {
     navigate("/");
   };
 
+  const handleCopyLink = () => {
+    copyToClipboard(
+      `${process.env.REACT_APP_BOT_URL}/app?startapp=${String(userID)}`
+    );
+
+    toast.success("Invite link copied");
+  };
+
   return (
     <div className="pt-[42px] px-4 bg-gradient-to-b h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
+      <ToastContainer
+        stacked
+        className="top-3 w-[272px] left-[50%] -translate-x-[50%]"
+      />
       <div className="flex flex-col items-center">
         <div className="flex flex-col items-center gap-3">
           <img
@@ -72,6 +85,7 @@ const Friends = () => {
 
       <div className="absolute bottom-[30px] right-4 left-4">
         <Button
+          onClick={() => handleCopyLink()}
           startIcon={<img src="images/icons/copy.svg" alt="copy" />}
           className="font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] w-full rounded-xl drop-shadow-lg "
         >
