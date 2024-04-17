@@ -88,12 +88,10 @@ const Home = () => {
             return newCount;
           });
         }
-        console.log("mined:", instorage, tokenPerSec);
 
         progressRef.current.style.width =
           (percentEnd >= 100 ? 100 : percentEnd) + "%";
-        if (percentEnd >= 40) {
-          clearInterval(countProgess);
+        if (distanceFromStart >= 120 || percentEnd >= 100) {
           // setIsFull(true);
         } else {
           // setIsFull(false);
@@ -115,8 +113,8 @@ const Home = () => {
   const handleClaim = () => {
     ClaimSeed.mutateAsync()
       .then(() => {
-        clearInterval(countProgess);
         progressRef.current.style.width = 0;
+        clearInterval(countProgess);
         setIsClaimed(!isClaimed);
         // setIsFull(false);
         setInstorage(() => {
@@ -148,7 +146,7 @@ const Home = () => {
                   height={44}
                   alt="token"
                 ></img>
-                <p className="text-[35px] font-extrabold">
+                <p className="text-[35px] font-black">
                   {instorage?.toFixed(6)}
                 </p>
               </div>

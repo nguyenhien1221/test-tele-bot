@@ -6,14 +6,39 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: SF Pro;
-  src: url(../../public/font/FontsFree-Net-SFProText-Regular.ttf),
-    url(../../public/font/sf-pro-text-bold.ttf),
-    url(../../public/font/sf-pro-text-heavy.ttf),
-    url(../../public/font/sf-pro-text-light.ttf),
-    url(../../public/font/sf-pro-text-medium.ttf),
-    url(../../public/font/sf-pro-text-regular.ttf),
-    url(../../public/font/sf-pro-text-semibold.ttf);
+  font-family: "SF Pro";
+  src: url(../../public/font/FontsFree-Net-SFProText-Regular.ttf);
+  font-weight: 400;
+}
+@font-face {
+  font-family: "SF Pro";
+  src: url(../../public/font/sf-pro-text-bold.ttf);
+  font-weight: 700;
+}
+@font-face {
+  font-family: "SF Pro";
+  src: url(../../public/font/sf-pro-text-heavy.ttf);
+  font-weight: 800;
+}
+@font-face {
+  font-family: "SF Pro";
+  src: url(../../public/font/sf-pro-text-light.ttf);
+  font-weight: 400;
+}
+@font-face {
+  font-family: "SF Pro";
+  src: url(../../public/font/sf-pro-text-medium.ttf);
+  font-weight: 500;
+}
+@font-face {
+  font-family: "SF Pro";
+  src: url(../../public/font/sf-pro-text-regular.ttf);
+  font-weight: 400;
+}
+@font-face {
+  font-family: "SF Pro";
+  src: url(../../public/font/sf-pro-text-semibold.ttf);
+  font-weight: 600;
 }
 
 * {
