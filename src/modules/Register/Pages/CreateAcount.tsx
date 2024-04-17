@@ -69,8 +69,9 @@ const CreateAcount = () => {
       createAcount
         .mutateAsync()
         .then((data) => {
-          qc.setQueryData(["AcountDetails"], data.data);
-          navigate("/");
+          qc.invalidateQueries({
+            queryKey: ["AcountDetails"],
+          }).then(() => navigate("/"));
         })
         .catch((err) => {
           toast.error(err);
