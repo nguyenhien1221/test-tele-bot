@@ -1,8 +1,6 @@
-import React from "react";
 import { Button } from "@mui/material";
 import { socials } from "../../../constants/missions.constants";
 import { getMissionsByType } from "../Utils/missions";
-import { socialItems } from "../../../constants/socials.constants";
 
 interface ModalPropsType {
   data: any;
