@@ -3,7 +3,6 @@ import { navPaths } from "../../constants/navbar.constants";
 import useGetAcountDetails from "../Hooks/useRegister";
 import { Suspense } from "react";
 import Loading from "../common/Loading";
-import { log } from "console";
 
 const AuthLayout = () => {
   const location = useLocation();
