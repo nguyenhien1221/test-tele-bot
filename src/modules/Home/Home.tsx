@@ -7,7 +7,10 @@ import useClaimSeed from "./Hooks/useClaimSeed";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 import clsx from "clsx";
-import { getSpeedUpgradesLevel } from "../../utils/minedSeed";
+import {
+  calculateMinedSeeds,
+  getSpeedUpgradesLevel,
+} from "../../utils/minedSeed";
 import useGetAcountDetails from "../../components/Hooks/useRegister";
 import {
   boostSpeedLevel,
@@ -37,13 +40,15 @@ const Home = () => {
 
   const isSmallScreen = window.innerHeight < 450 ? true : false;
 
-  // const minedSeed = formatDecimals(
-  //   calculateMinedSeeds(
-  //     AcountData.data?.data.data.last_claim,
-  //     AcountData.data?.data.data.upgrades ?? [],
-  //     new Date().getTime()
-  //   )
-  // );
+  const minedSeed = formatDecimals(
+    calculateMinedSeeds(
+      AcountData.data?.data.data.last_claim,
+      AcountData.data?.data.data.upgrades ?? [],
+      new Date().getTime()
+    )
+  );
+
+  console.log(minedSeed);
 
   const currentTime = new Date().getTime() / 1000;
   const startTime =

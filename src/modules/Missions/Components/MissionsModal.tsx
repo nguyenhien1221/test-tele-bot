@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import { socials } from "../../../constants/missions.constants";
 import { getMissionsByType } from "../Utils/missions";
 import clsx from "clsx";
+import { formatDecimals } from "../../../utils/formatNumber";
 
 interface ModalPropsType {
   data: any;
@@ -32,13 +33,14 @@ const MissionsModal = ({
             <div className="flex flex-col items-center ">
               <p className="text-[24px] font-bold">Follow on {socials[type]}</p>
               <p className="text-center font-normal">
-                Every subscription +0.02 SEED.
+                Every subscription +{formatDecimals(missions[0].reward_amount)}{" "}
+                SEED.
                 <br /> Tap to open {socials[type]} account.
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-[34px] mb-[38px] mt-[42px] h-[calc(100%-84px)]">
+          <div className="grid grid-cols-3 gap-x-[34px] gap-y-4 mb-[38px] mt-[42px]">
             {missions?.map((item: any, index: number) => (
               <a
                 onClick={() => handleDoMission(item.id)}
@@ -75,7 +77,7 @@ const MissionsModal = ({
 
         <Button
           onClick={closeModal}
-          className="font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] w-full rounded-xl drop-shadow-lg "
+          className="fixed bottom-10 w-[calc(100%-32px)] font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg "
         >
           got it
         </Button>
