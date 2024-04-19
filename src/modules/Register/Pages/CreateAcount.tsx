@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import useCreateAcount from "../../../components/Hooks/useCreateAcount";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
+import { registerImgs } from "../../../constants/register";
 
 const CreateAcount = () => {
   const tele = window.Telegram.WebApp;
@@ -73,8 +74,8 @@ const CreateAcount = () => {
             queryKey: ["AcountDetails"],
           }).then(() => navigate("/"));
         })
-        .catch((err) => {
-          toast.error(err);
+        .catch((err: any) => {
+          toast.error(err, { autoClose: 2000 });
         });
 
       return;
@@ -82,14 +83,20 @@ const CreateAcount = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7] px-4 pt-[120px]">
-      <div>{renderContent()}</div>
-      <Button
-        onClick={() => handleChangeTab()}
-        className="fixed capitalize font-extrabold bottom-[55px] left-4 right-4 bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg"
-      >
-        {renderButtonText()}
-      </Button>
+    <div className="bg-gradient-to-b h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7] px-4 py-[120px]">
+      <div className="flex flex-col h-full">
+        <div
+          className="flex-1 h-28 max-h-[223px] bg-no-repeat bg-contain bg-center"
+          style={{ backgroundImage: `url(${registerImgs[tab]})` }}
+        ></div>
+        {renderContent()}
+        <Button
+          onClick={() => handleChangeTab()}
+          className="fixed bottom-[55px] left-4 right-4 capitalize font-extrabold  bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg"
+        >
+          {renderButtonText()}
+        </Button>
+      </div>
     </div>
   );
 };

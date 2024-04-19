@@ -49,12 +49,14 @@ const MissionsPage = () => {
       .then(() => {
         toast.success("Mission completed", {
           style: { width: 272, borderRadius: 8 },
+          autoClose: 2000,
         });
         missionsData.refetch();
       })
       .catch((err) => {
-        toast.error(err?.response.data.message, {
+        toast.error("mission is not completed", {
           style: { width: 272, borderRadius: 8 },
+          autoClose: 2000,
         });
       });
   };

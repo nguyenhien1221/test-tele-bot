@@ -8,6 +8,7 @@ const NavBar = () => {
   const handleShowToast = (index: number, item: any) => {
     if (index === 3) {
       toast.info("Coming soon", {
+        autoClose: 2000,
         position: "top-center",
         style: { width: 272, borderRadius: 8 },
         progressStyle: {

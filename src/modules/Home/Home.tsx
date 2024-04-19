@@ -44,6 +44,7 @@ const Home = () => {
   //     new Date().getTime()
   //   )
   // );
+
   const currentTime = new Date().getTime() / 1000;
   const startTime =
     new Date(AcountData.data?.data.data.last_claim).getTime() / 1000;
@@ -126,7 +127,7 @@ const Home = () => {
         AcountData.refetch();
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        toast.error(err.response.data.message, { autoClose: 2000 });
       });
   };
 

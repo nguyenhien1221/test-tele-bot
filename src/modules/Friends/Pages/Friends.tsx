@@ -22,7 +22,7 @@ const Friends = () => {
       `${process.env.REACT_APP_BOT_URL}/app?startapp=${String(userID)}`
     );
 
-    toast.success("Invite link copied");
+    toast.success("link copied to clipboard", { autoClose: 2000 });
   };
 
   return (

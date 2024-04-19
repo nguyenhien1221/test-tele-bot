@@ -44,14 +44,16 @@ const Boots = () => {
         .then(() => {
           toast.success("Upgraded Successfully", {
             style: { width: 272, borderRadius: 8 },
+            autoClose: 2000,
           });
           setisOpen({ isOpen: false, type: 0 });
         })
         .catch((err) => {
-          toast.error(err.response.data.message, {
+          toast.error("not enough balance", {
             style: { width: 272, borderRadius: 8 },
+            autoClose: 2000,
           });
-          setisOpen({ isOpen: false, type: 0 });
+          // setisOpen({ isOpen: false, type: 0 });
         });
 
       return;
@@ -61,14 +63,16 @@ const Boots = () => {
         .then(() => {
           toast.success("Upgraded Successfully", {
             style: { width: 272, borderRadius: 8 },
+            autoClose: 2000,
           });
           setisOpen({ isOpen: false, type: 0 });
         })
         .catch((err) => {
-          toast.error(err.response.data.message, {
+          toast.error("not enough balance", {
             style: { width: 272, borderRadius: 8 },
+            autoClose: 2000,
           });
-          setisOpen({ isOpen: false, type: 0 });
+          // setisOpen({ isOpen: false, type: 0 });
         });
     }
   };
@@ -82,6 +86,7 @@ const Boots = () => {
       toast.info("Coming soon", {
         position: "top-center",
         style: { width: 272, borderRadius: 8 },
+        autoClose: 2000,
         progressStyle: {
           backgroundColor: "#FF8C21",
         },
