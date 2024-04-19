@@ -24,9 +24,10 @@ export const bootOptions = [
 
 export const bootsStorageLevel = [
   { duration: 2, price: 0 },
-  { duration: 4, price: 0.2 },
-  { duration: 6, price: 0.5 },
-  { duration: 12, price: 1 },
+  { duration: 3, price: 0.2 },
+  { duration: 4, price: 0.5 },
+  { duration: 6, price: 1 },
+  { duration: 12, price: 4 },
   { duration: 24, price: 10 },
 ];
 

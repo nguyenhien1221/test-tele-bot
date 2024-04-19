@@ -101,7 +101,7 @@ const BootsModal = ({
 
         <Button
           onClick={() => handleUpgrade()}
-          className="font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] w-full rounded-xl drop-shadow-lg"
+          className=" fixed bottom-10 left-4 right-4 font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg"
         >
           UPGRADE
         </Button>

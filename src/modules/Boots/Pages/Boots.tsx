@@ -132,11 +132,12 @@ const Boots = () => {
               alt="token"
             ></img>
             <p className="font-bold">
-              {
+              {boostSpeedLevel[
+                getSpeedUpgradesLevel(AcountData.data?.data.data) - 1
+              ]?.speed *
                 bootsStorageLevel[
-                  getStorageUpgradesLevel(AcountData.data?.data.data)
-                ]?.duration
-              }
+                  getStorageUpgradesLevel(AcountData.data?.data.data) - 1
+                ]?.duration}
             </p>
             <p>SEED</p>
           </div>
@@ -153,7 +154,7 @@ const Boots = () => {
             <p className="font-bold">
               {
                 boostSpeedLevel[
-                  getSpeedUpgradesLevel(AcountData.data?.data.data)
+                  getSpeedUpgradesLevel(AcountData.data?.data.data) - 1
                 ]?.speed
               }
             </p>
