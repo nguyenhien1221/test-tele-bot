@@ -47,11 +47,7 @@ const MissionsModal = ({
                 href={item.metadata.url}
                 target="_blank"
                 rel="noreferrer"
-                className={clsx(
-                  "",
-                  item.task_user?.completed ? "pointer-events-none" : "",
-                  "text-center relative"
-                )}
+                className={clsx("text-center relative")}
               >
                 {item.task_user != null && (
                   <img
