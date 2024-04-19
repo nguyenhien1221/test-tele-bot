@@ -28,7 +28,7 @@ const MissionsModal = ({
       ></div>
       <div className="fixed py-4  bottom-0 left-0 flex flex-col items-center h-[90%] px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
         <div className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"></div>
-        <div className="overflow-auto">
+        <div className="">
           <div className=" w-full ">
             <div className="flex flex-col items-center ">
               <p className="text-[24px] font-bold">Follow on {socials[type]}</p>
@@ -48,6 +48,7 @@ const MissionsModal = ({
                 target="_blank"
                 rel="noreferrer"
                 className={clsx(
+                  "",
                   item.task_user?.completed ? "pointer-events-none" : "",
                   "text-center relative"
                 )}
