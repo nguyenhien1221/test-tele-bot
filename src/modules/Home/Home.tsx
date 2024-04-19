@@ -99,11 +99,10 @@ const Home = () => {
         progressRef.current.style.width =
           (percentEnd >= 100 ? 100 : percentEnd) + "%";
       }, timeToAdd);
-
-      return () => {
-        clearInterval(countProgess);
-      };
     }
+    return () => {
+      clearInterval(countProgess);
+    };
   }, [
     isClaimed,
     startTime,
@@ -187,7 +186,7 @@ const Home = () => {
             <div className=" bg-white rounded-2xl p-4 w-full relative overflow-hidden">
               <div
                 ref={progressRef}
-                className="bg-[#E4FFCE]  h-full top-0 left-0 absolute z-0 rounded-2xl"
+                className="bg-[#E4FFCE]  h-full top-0 left-0 absolute z-0 "
               ></div>
               <div className=" relative z-10 grid grid-cols-8 gap-1">
                 <div className="col-span-2 flex items-center">
