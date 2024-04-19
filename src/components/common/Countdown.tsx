@@ -16,12 +16,11 @@ export default function Countdown({ date, onComplete }: CountdownProps) {
       date={date}
       onComplete={onComplete}
       renderer={({ hours, minutes }) => {
-        // console.log(hours, minutes);
         return (
           <div className="grid grid-cols-[repeat(7,auto)] gap-[6px]">
             <div className={containerClassName}>
               <div className={valueClassName}>
-                {String(0)
+                {String(hours)
                   .padStart(2, "0")
                   .split("")
                   .map((item, idx) => (
@@ -33,7 +32,7 @@ export default function Countdown({ date, onComplete }: CountdownProps) {
 
             <div className={containerClassName}>
               <div className={valueClassName}>
-                {String(0)
+                {String(minutes)
                   .padStart(2, "0")
                   .split("")
                   .map((item, idx) => (
@@ -45,6 +44,7 @@ export default function Countdown({ date, onComplete }: CountdownProps) {
           </div>
         );
       }}
+      key={date}
     />
   ) : (
     <></>

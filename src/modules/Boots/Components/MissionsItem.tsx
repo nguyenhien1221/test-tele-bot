@@ -10,7 +10,6 @@ interface MissionsItemPropType {
 }
 
 const MissionsItem = ({ level, type }: MissionsItemPropType) => {
-  
   const renderStorageItems = () => {
     return (
       <div className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full drop-shadow-lg">

@@ -19,7 +19,6 @@ import Loading from "../../components/common/Loading";
 const Home = () => {
   const tele = window.Telegram.WebApp;
   // const isExpanded = tele.isExpanded;
-
   // const viewHeight = tele.viewportHeight;
 
   tele.BackButton.hide();
@@ -33,7 +32,7 @@ const Home = () => {
     const savedCount = Number(localStorage.getItem("count") as string);
     return isNaN(savedCount) ? 0 : savedCount;
   });
-  // const [isFull, setIsFull] = useState<boolean>(false);
+  const [isFull, setIsFull] = useState<boolean>(false);
   // const [expand, setExpand] = useState<any>(isExpanded);
 
   const isSmallScreen = window.innerHeight < 450 ? true : false;
@@ -45,7 +44,7 @@ const Home = () => {
   //     new Date().getTime()
   //   )
   // );
-
+  const currentTime = new Date().getTime() / 1000;
   const startTime =
     new Date(AcountData.data?.data.data.last_claim).getTime() / 1000;
   const endTime =
@@ -53,6 +52,7 @@ const Home = () => {
     bootsStorageLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) - 1]
       ?.duration *
       3600;
+  const timePassed = currentTime - startTime;
 
   const tokenPerSec =
     boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) - 1]
@@ -70,6 +70,14 @@ const Home = () => {
   // }, [viewHeight]);
 
   useEffect(() => {
+    if (timePassed >= 120) {
+      setIsFull(true);
+    } else {
+      setIsFull(false);
+    }
+  });
+
+  useEffect(() => {
     if (progressRef.current) {
       countProgess = setInterval(() => {
         const now = new Date().getTime() / 1000;
@@ -77,7 +85,6 @@ const Home = () => {
         const distanceFromEnd = endTime - startTime;
         const percentEnd = (distanceFromStart / distanceFromEnd) * 100;
 
-        //save mained token to local storage
         if (percentEnd < 100) {
           setInstorage((instorage: any) => {
             const newCount = instorage + tokenPerSec;
@@ -91,11 +98,6 @@ const Home = () => {
 
         progressRef.current.style.width =
           (percentEnd >= 100 ? 100 : percentEnd) + "%";
-        if (distanceFromStart >= 120 || percentEnd >= 100) {
-          // setIsFull(true);
-        } else {
-          // setIsFull(false);
-        }
       }, timeToAdd);
 
       return () => {
@@ -113,10 +115,9 @@ const Home = () => {
   const handleClaim = () => {
     ClaimSeed.mutateAsync()
       .then(() => {
-        progressRef.current.style.width = 0;
+        progressRef.current.style.width = "0%";
         clearInterval(countProgess);
         setIsClaimed(!isClaimed);
-        // setIsFull(false);
         setInstorage(() => {
           localStorage.setItem("count", "0");
           return 0;
@@ -208,7 +209,7 @@ const Home = () => {
                     ></img>
                     <p className="text-xs">
                       <Countdown
-                        date={endTime}
+                        date={endTime * 1000}
                         onComplete={() => clearInterval(countProgess)}
                       ></Countdown>
                     </p>
@@ -231,7 +232,7 @@ const Home = () => {
                 </div>
                 <div className="flex items-center justify-end col-span-3 ">
                   <Button
-                    // disabled={!isFull}
+                    disabled={!isFull}
                     onClick={handleClaim}
                     className="w-[100px] h-40px py-3 rounded-lg bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold"
                   >
