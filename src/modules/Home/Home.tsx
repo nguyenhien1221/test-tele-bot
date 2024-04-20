@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import NavBar from "../../components/common/NavBar";
 import { useEffect, useRef, useState } from "react";
@@ -54,8 +55,7 @@ const Home = () => {
       new Date().getTime()
     )
   );
-
-
+  
   const firstLoginMission = MissionsData.data && MissionsData.data.data.data.find((item: any) => item.name === "Hello, world")
 
 
