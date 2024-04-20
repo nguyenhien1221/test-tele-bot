@@ -5,7 +5,6 @@ import { formatDecimals, formatNumberFloatFix } from "../../utils/formatNumber";
 import useGetAcountBalance from "./Hooks/useGetAcountBalance";
 import useClaimSeed from "./Hooks/useClaimSeed";
 import { toast } from "react-toastify";
-import { Button } from "@mui/material";
 import clsx from "clsx";
 import {
   calculateMinedSeeds,
@@ -55,9 +54,6 @@ const Home = () => {
       new Date().getTime()
     )
   );
-
-
-  console.log(minedSeed)
 
 
   const firstLoginMission = MissionsData.data && MissionsData.data.data.data.find((item: any) => item.name === "Hello, world")
@@ -118,7 +114,7 @@ const Home = () => {
             const newCount = instorage + tokenPerSec;
             localStorage.setItem(
               "count",
-              formatNumberFloatFix(newCount ?? 0, 6)
+              formatNumberFloatFix(minedSeed ?? 0, 6)
             );
             return newCount;
           });
@@ -127,10 +123,10 @@ const Home = () => {
         progressRef.current.style.width =
           (percentEnd >= 100 ? 100 : percentEnd) + "%";
       }, timeToAdd);
-      return () => {
-        clearInterval(countProgess);
-      };
     }
+    return () => {
+      clearInterval(countProgess);
+    };
   }, [
     isClaimed,
     startTime,
@@ -183,7 +179,7 @@ const Home = () => {
                   alt="token"
                 ></img>
                 <p className="text-[35px] font-black">
-                  {instorage?.toFixed(6)}
+                  {minedSeed?.toFixed(6)}
                 </p>
               </div>
               <div className="flex gap-2 items-center">
