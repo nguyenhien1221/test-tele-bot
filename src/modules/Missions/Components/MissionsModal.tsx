@@ -43,7 +43,7 @@ const MissionsModal = ({
           <div className="grid grid-cols-3 gap-x-[34px] gap-y-4 mb-[38px] mt-[42px]">
             {missions?.map((item: any, index: number) => (
               <a
-                onClick={() => handleDoMission(item.id)}
+                onClick={() =>{!item?.task_user?.completed && handleDoMission(item.id)} }
                 href={item.metadata.url}
                 target="_blank"
                 rel="noreferrer"
@@ -59,13 +59,13 @@ const MissionsModal = ({
                 <div className={clsx("rounded-[16px] overflow-hidden")}>
                   <img
                     className={item.task_user?.completed ? "brightness-50" : ""}
-                    src={item.metadata.image_url}
+                    src={item?.metadata.image_url}
                     width={80}
                     alt="logo"
                   ></img>
                 </div>
                 <p className="mt-3 font-semibold text-sm">
-                  {item.metadata.name}
+                  {item?.metadata.name}
                 </p>
               </a>
             ))}

@@ -53,7 +53,7 @@ const MissionsPage = () => {
         });
         missionsData.refetch();
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("mission is not completed", {
           style: { width: 272, borderRadius: 8 },
           autoClose: 2000,

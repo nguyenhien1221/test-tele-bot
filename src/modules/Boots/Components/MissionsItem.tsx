@@ -43,7 +43,7 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
           <div className="flex gap-[7px] mb-2">
             <p className="text-base font-extrabold">{`Mine ${
               boostSpeedLevel[level - 1]?.speed
-            }SEED/hour`}</p>
+            } SEED/hour`}</p>
           </div>
         </div>
       </div>
