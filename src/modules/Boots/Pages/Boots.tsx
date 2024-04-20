@@ -224,6 +224,7 @@ const Boots = () => {
 
       {isOpen.isOpen && AcountData.data?.data.data && (
         <BootsModal
+        isLoading={UpgradeStorage.isPending || UpgradeSpeed.isPending}
           storageLevel={
             getStorageUpgradesLevel(AcountData.data?.data.data) ?? 0
           }

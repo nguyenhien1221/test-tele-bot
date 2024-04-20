@@ -22,6 +22,7 @@ import Loading from "../../components/common/Loading";
 import useGetMissions from "../Missions/Hooks/useGetMissions";
 import GetFirstTokenModal from "./Components/getFirstTokenModal";
 import useDoMissions from "../Missions/Hooks/useDoMissions";
+import { LoadingButton } from "@mui/lab";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
@@ -67,17 +68,17 @@ const Home = () => {
     new Date(AcountData.data?.data.data.last_claim).getTime() / 1000;
   const endTime =
     startTime +
-    bootsStorageLevel[getStorageUpgradesLevel(AcountData.data?.data.data) +1 ]
+    bootsStorageLevel[getStorageUpgradesLevel(AcountData.data?.data.data) + 1]
       ?.duration *
     3600;
 
   const timePassed = currentTime - startTime;
 
   const tokenPerSec =
-    boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data ) + 1]
+    boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) + 1]
       ?.speed / 10000;
 
-  const timeToAdd = 360 / (getSpeedUpgradesLevel(AcountData.data?.data.data ) +1);
+  const timeToAdd = 360 / (getSpeedUpgradesLevel(AcountData.data?.data.data) + 1);
 
   const progressRef = useRef<any>();
   let countProgess: any;
@@ -257,20 +258,21 @@ const Home = () => {
                         alt="token"
                       ></img>
                       <p className="text-xs font-normal">{`${boostSpeedLevel[
-                        getSpeedUpgradesLevel(AcountData.data?.data.data) +1
+                        getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
                       ]?.speed
                         } SEED/hour`}</p>
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center justify-end col-span-3 ">
-                  <Button
+                  <LoadingButton
+                    loading={ClaimSeed.isPending}
                     disabled={!isFull}
                     onClick={handleClaim}
                     className="w-[100px] h-40px py-3 rounded-lg bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold"
                   >
                     Claim
-                  </Button>
+                  </LoadingButton>
                 </div>
               </div>
             </div>
@@ -283,7 +285,7 @@ const Home = () => {
       )}
 
       {isOpen && <GetFirstTokenModal
-        isLoading={doMission.isIdle}
+        isLoading={doMission.isPending}
         handleClaim={() => handleClaimMissionReward()}
         reward={formatDecimals(firstLoginMission?.reward_amount ?? 0)}
         closeModal={() => setIsOpen(false)}

@@ -8,6 +8,7 @@ import {
 } from "../../../constants/boots.constants";
 
 interface ModalPropsType {
+  isLoading: boolean;
   storageLevel: number;
   speedLevel: number;
   type: number;
@@ -15,7 +16,7 @@ interface ModalPropsType {
   handleUpgrade: () => void;
 }
 
-const BootsModal = ({
+const BootsModal = ({ isLoading,
   closeModal,
   handleUpgrade,
   type,
@@ -86,7 +87,7 @@ const BootsModal = ({
                 alt="arrow"
               ></img>
             </div>
-            <MissionsItem type={type} level={level+1} />
+            <MissionsItem type={type} level={level + 1} />
           </div>
           <div className="flex justify-center gap-2 mb-[17px]">
             <img
