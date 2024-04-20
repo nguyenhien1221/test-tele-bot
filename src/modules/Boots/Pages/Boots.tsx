@@ -165,7 +165,25 @@ const Boots = () => {
 
       {/* options */}
       <div className={clsx(isDesktop ? "mt-2" : "mt-[49px]")}>
-        {bootOptions.map((item, index) => (
+        {bootOptions.map((item, index) => {
+          let price  =  0.2
+          let level = 0
+          const storagePrice = bootsStorageLevel[getStorageUpgradesLevel(AcountData.data?.data.data)]?.price
+          const speedPrice = boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data)]?.price
+
+          if(index === 0 ){
+            price = storagePrice
+            level = getStorageUpgradesLevel(AcountData.data?.data.data)
+          } else if(index === 1){
+            price = speedPrice
+            level = getSpeedUpgradesLevel(AcountData.data?.data.data)
+          } else {
+            price = 0.2
+            level=1
+          }
+          
+    
+          return (
           <div
             onClick={() => handleOpenModal(index)}
             key={index}
@@ -195,12 +213,12 @@ const Boots = () => {
                     height={14}
                     alt="token"
                   ></img>
-                  <p className="text-xs font-normal">0.2 SEED . Lv1</p>
+                  <p className="text-xs font-normal">{price} SEED . Lv{level}</p>
                 </div>
               </div>
             </div>
           </div>
-        ))}
+        )})}
       </div>
 
       {isOpen.isOpen && AcountData.data?.data.data && (

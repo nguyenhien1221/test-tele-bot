@@ -18,6 +18,9 @@ import {
 } from "../../constants/boots.constants";
 import Countdown from "../../components/common/Countdown";
 import Loading from "../../components/common/Loading";
+import useGetMissions from "../Missions/Hooks/useGetMissions";
+import GetFirstTokenModal from "./Components/getFirstTokenModal";
+import useDoMissions from "../Missions/Hooks/useDoMissions";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
@@ -29,6 +32,8 @@ const Home = () => {
   const AcountBalnce = useGetAcountBalance();
   const AcountData = useGetAcountDetails();
   const ClaimSeed = useClaimSeed();
+  const MissionsData = useGetMissions();
+  const doMission = useDoMissions();
 
   const [isClaimed, setIsClaimed] = useState<any>(false);
   const [instorage, setInstorage] = useState<any>(() => {
@@ -36,6 +41,7 @@ const Home = () => {
     return isNaN(savedCount) ? 0 : savedCount;
   });
   const [isFull, setIsFull] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(true)
   // const [expand, setExpand] = useState<any>(isExpanded);
 
   const isSmallScreen = window.innerHeight < 450 ? true : false;
@@ -48,7 +54,12 @@ const Home = () => {
     )
   );
 
-  console.log(minedSeed);
+  
+  console.log(minedSeed)
+
+
+  const firstLoginMission = MissionsData.data && MissionsData.data.data.data.find((item: any) => item.name === "Hello, world")
+  
 
   const currentTime = new Date().getTime() / 1000;
   const startTime =
@@ -57,7 +68,7 @@ const Home = () => {
     startTime +
     bootsStorageLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) - 1]
       ?.duration *
-      3600;
+    3600;
   const timePassed = currentTime - startTime;
 
   const tokenPerSec =
@@ -81,7 +92,7 @@ const Home = () => {
     } else {
       setIsFull(false);
     }
-  });
+  }, [timePassed]);
 
   useEffect(() => {
     if (progressRef.current) {
@@ -105,10 +116,10 @@ const Home = () => {
         progressRef.current.style.width =
           (percentEnd >= 100 ? 100 : percentEnd) + "%";
       }, timeToAdd);
+      return () => {
+        clearInterval(countProgess);
+      };
     }
-    return () => {
-      clearInterval(countProgess);
-    };
   }, [
     isClaimed,
     startTime,
@@ -135,6 +146,14 @@ const Home = () => {
         toast.error(err.response.data.message, { autoClose: 2000 });
       });
   };
+
+  const handleClaimMissionReward = () => {
+    doMission.mutateAsync(firstLoginMission.id).then(() => {
+      AcountData.refetch()
+    }).catch(() => {
+      toast.error("Fail to claim reward", { autoClose: 2000 })
+    })
+  }
 
   return (
     <>
@@ -227,11 +246,10 @@ const Home = () => {
                         height={14}
                         alt="token"
                       ></img>
-                      <p className="text-xs font-normal">{`${
-                        boostSpeedLevel[
-                          getSpeedUpgradesLevel(AcountData.data?.data.data) - 1
-                        ]?.speed
-                      } SEED/hour`}</p>
+                      <p className="text-xs font-normal">{`${boostSpeedLevel[
+                        getSpeedUpgradesLevel(AcountData.data?.data.data) - 1
+                      ]?.speed
+                        } SEED/hour`}</p>
                     </div>
                   </div>
                 </div>
@@ -253,6 +271,12 @@ const Home = () => {
           </div>
         </div>
       )}
+
+      {(firstLoginMission?.task_user === null && isOpen) && <GetFirstTokenModal
+        handleClaim={() => handleClaimMissionReward()}
+        reward={formatDecimals(firstLoginMission.reward_amount ?? 0)}
+        closeModal={() => setIsOpen(false)}
+      />}
     </>
   );
 };

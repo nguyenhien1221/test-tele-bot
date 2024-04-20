@@ -86,7 +86,7 @@ const BootsModal = ({
                 alt="arrow"
               ></img>
             </div>
-            <MissionsItem type={type} level={level} />
+            <MissionsItem type={type} level={level } />
           </div>
           <div className="flex justify-center gap-2 mb-[17px]">
             <img
@@ -95,7 +95,7 @@ const BootsModal = ({
               height={32}
               alt="token"
             ></img>
-            <p className="text-[24px] font-bold">{price[level + 1]?.price}</p>
+            <p className="text-[24px] font-bold">{price[level ]?.price}</p>
           </div>
         </div>
 
