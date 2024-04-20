@@ -84,7 +84,7 @@ export const getStorageUpgradesLevel = (data: any) => {
   let storageLevel = 1;
   const hasUpgradeSize = data?.upgrades?.some((item: any) => item.upgrade_type === "storage-size")
 
-  if (data?.upgrades.length === 0) {
+  if (data?.upgrades?.length === 0) {
     return storageLevel;
   }
   if(data?.upgrades?.length &&  hasUpgradeSize ) {
@@ -100,8 +100,6 @@ export const getStorageUpgradesLevel = (data: any) => {
   } else {
     return storageLevel
   }
-
-  
 };
 
 export const getSpeedUpgradesLevel = (data: any) => {

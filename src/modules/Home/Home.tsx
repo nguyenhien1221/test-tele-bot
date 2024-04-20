@@ -10,6 +10,7 @@ import clsx from "clsx";
 import {
   calculateMinedSeeds,
   getSpeedUpgradesLevel,
+  getStorageUpgradesLevel,
 } from "../../utils/minedSeed";
 import useGetAcountDetails from "../../components/Hooks/useRegister";
 import {
@@ -54,28 +55,29 @@ const Home = () => {
     )
   );
 
-  
+
   console.log(minedSeed)
 
 
   const firstLoginMission = MissionsData.data && MissionsData.data.data.data.find((item: any) => item.name === "Hello, world")
-  
+
 
   const currentTime = new Date().getTime() / 1000;
   const startTime =
     new Date(AcountData.data?.data.data.last_claim).getTime() / 1000;
   const endTime =
     startTime +
-    bootsStorageLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) - 1]
+    bootsStorageLevel[getStorageUpgradesLevel(AcountData.data?.data.data) +1 ]
       ?.duration *
     3600;
+
   const timePassed = currentTime - startTime;
 
   const tokenPerSec =
-    boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) - 1]
+    boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data ) + 1]
       ?.speed / 10000;
 
-  const timeToAdd = 360 / getSpeedUpgradesLevel(AcountData.data?.data.data);
+  const timeToAdd = 360 / (getSpeedUpgradesLevel(AcountData.data?.data.data ) +1);
 
   const progressRef = useRef<any>();
   let countProgess: any;
@@ -85,6 +87,14 @@ const Home = () => {
   //     setExpand(isExpanded);
   //   });
   // }, [viewHeight]);
+
+  useEffect(() => {
+    if (firstLoginMission?.task_user === null) {
+      setIsOpen(true)
+    } else {
+      setIsOpen(false)
+    }
+  }, [AcountData.data])
 
   useEffect(() => {
     if (timePassed >= 120) {
@@ -150,8 +160,8 @@ const Home = () => {
   const handleClaimMissionReward = () => {
     doMission.mutateAsync(firstLoginMission.id).then(() => {
       AcountData.refetch()
-    }).catch(() => {
-      toast.error("Fail to claim reward", { autoClose: 2000 })
+    }).catch((err) => {
+      toast.error(err.response?.data?.message, { autoClose: 2000 })
     })
   }
 
@@ -247,7 +257,7 @@ const Home = () => {
                         alt="token"
                       ></img>
                       <p className="text-xs font-normal">{`${boostSpeedLevel[
-                        getSpeedUpgradesLevel(AcountData.data?.data.data) - 1
+                        getSpeedUpgradesLevel(AcountData.data?.data.data) +1
                       ]?.speed
                         } SEED/hour`}</p>
                     </div>
@@ -272,9 +282,10 @@ const Home = () => {
         </div>
       )}
 
-      {(firstLoginMission?.task_user === null && isOpen) && <GetFirstTokenModal
+      {isOpen && <GetFirstTokenModal
+        isLoading={doMission.isIdle}
         handleClaim={() => handleClaimMissionReward()}
-        reward={formatDecimals(firstLoginMission.reward_amount ?? 0)}
+        reward={formatDecimals(firstLoginMission?.reward_amount ?? 0)}
         closeModal={() => setIsOpen(false)}
       />}
     </>

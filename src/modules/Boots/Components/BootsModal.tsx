@@ -76,7 +76,7 @@ const BootsModal = ({
           <div
             className={clsx(" mb-[26px] w-full", isDesktop ? "mt-3" : "mt-8")}
           >
-            <MissionsItem type={type} level={level + 1} />
+            <MissionsItem type={type} level={level + 2} />
             <div className="flex justify-center">
               <img
                 className={isDesktop ? "my-2" : "my-5"}
@@ -86,7 +86,7 @@ const BootsModal = ({
                 alt="arrow"
               ></img>
             </div>
-            <MissionsItem type={type} level={level } />
+            <MissionsItem type={type} level={level+1} />
           </div>
           <div className="flex justify-center gap-2 mb-[17px]">
             <img
@@ -95,7 +95,7 @@ const BootsModal = ({
               height={32}
               alt="token"
             ></img>
-            <p className="text-[24px] font-bold">{price[level ]?.price}</p>
+            <p className="text-[24px] font-bold">{price[String(level + 2)]?.price}</p>
           </div>
         </div>
 

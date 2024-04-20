@@ -24,7 +24,7 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
           <p className="font-normal text-sm mb-2">{`Level ${level}`}</p>
           <div className="flex gap-[7px] mb-2">
             <p className="text-base font-extrabold">{`Claim every ${
-              bootsStorageLevel[level - 1]?.duration
+              bootsStorageLevel[level ]?.duration
             }h`}</p>
           </div>
         </div>
@@ -42,7 +42,7 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
           <p className="font-normal text-sm mb-2">{`Level ${level}`}</p>
           <div className="flex gap-[7px] mb-2">
             <p className="text-base font-extrabold">{`Mine ${
-              boostSpeedLevel[level - 1]?.speed
+              boostSpeedLevel[level ]?.speed
             } SEED/hour`}</p>
           </div>
         </div>

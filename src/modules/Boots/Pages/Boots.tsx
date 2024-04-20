@@ -133,10 +133,10 @@ const Boots = () => {
             ></img>
             <p className="font-bold">
               {boostSpeedLevel[
-                getSpeedUpgradesLevel(AcountData.data?.data.data) - 1
+                getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
               ]?.speed *
                 bootsStorageLevel[
-                  getStorageUpgradesLevel(AcountData.data?.data.data) - 1
+                  getStorageUpgradesLevel(AcountData.data?.data.data) + 1
                 ]?.duration}
             </p>
             <p>SEED</p>
@@ -154,7 +154,7 @@ const Boots = () => {
             <p className="font-bold">
               {
                 boostSpeedLevel[
-                  getSpeedUpgradesLevel(AcountData.data?.data.data) - 1
+                  getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
                 ]?.speed
               }
             </p>
@@ -166,59 +166,60 @@ const Boots = () => {
       {/* options */}
       <div className={clsx(isDesktop ? "mt-2" : "mt-[49px]")}>
         {bootOptions.map((item, index) => {
-          let price  =  0.2
+          let price = 0.2
           let level = 0
-          const storagePrice = bootsStorageLevel[getStorageUpgradesLevel(AcountData.data?.data.data)]?.price
-          const speedPrice = boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data)]?.price
+          const storagePrice = bootsStorageLevel[getStorageUpgradesLevel(AcountData.data?.data.data) + 2]?.price
+          const speedPrice = boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) + 2]?.price
 
-          if(index === 0 ){
+          if (index === 0) {
             price = storagePrice
             level = getStorageUpgradesLevel(AcountData.data?.data.data)
-          } else if(index === 1){
+          } else if (index === 1) {
             price = speedPrice
             level = getSpeedUpgradesLevel(AcountData.data?.data.data)
           } else {
             price = 0.2
-            level=1
+            level = 1
           }
-          
-    
+
+
           return (
-          <div
-            onClick={() => handleOpenModal(index)}
-            key={index}
-            className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
-          >
-            <div className="col-span-2 flex items-center ">
-              <div className="w-[73px] h-[67px]">
-                <img
-                  className="object-contain"
-                  src={item.icon}
-                  width={73}
-                  height={67}
-                  alt="storage"
-                ></img>
-              </div>
-            </div>
-            <div className="col-span-5">
-              <p className="font-bold mb-1">{item.title}</p>
-              <div className=" mb-1">
-                <p className="text-sm font-normal">{item.description}</p>
-              </div>
-              <div>
-                <div className="flex items-center gap-1">
+            <div
+              onClick={() => handleOpenModal(index)}
+              key={index}
+              className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
+            >
+              <div className="col-span-2 flex items-center ">
+                <div className="w-[73px] h-[67px]">
                   <img
-                    src="/images/icons/token_icon.svg"
-                    width={14}
-                    height={14}
-                    alt="token"
+                    className="object-contain"
+                    src={item.icon}
+                    width={73}
+                    height={67}
+                    alt="storage"
                   ></img>
-                  <p className="text-xs font-normal">{price} SEED . Lv{level}</p>
+                </div>
+              </div>
+              <div className="col-span-5">
+                <p className="font-bold mb-1">{item.title}</p>
+                <div className=" mb-1">
+                  <p className="text-sm font-normal">{item.description}</p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-1">
+                    <img
+                      src="/images/icons/token_icon.svg"
+                      width={14}
+                      height={14}
+                      alt="token"
+                    ></img>
+                    <p className="text-xs font-normal">{price} SEED . Lv{level + 1}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )})}
+          )
+        })}
       </div>
 
       {isOpen.isOpen && AcountData.data?.data.data && (
