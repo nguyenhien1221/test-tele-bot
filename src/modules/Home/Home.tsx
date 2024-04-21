@@ -58,7 +58,6 @@ const Home = () => {
   
   const firstLoginMission = MissionsData.data && MissionsData.data.data.data.find((item: any) => item.name === "Hello, world")
 
-
   const currentTime = new Date().getTime() / 1000;
   const startTime =
     new Date(AcountData.data?.data.data.last_claim).getTime() / 1000;
