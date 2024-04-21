@@ -30,7 +30,7 @@ const MissionsPage = () => {
     const data = missionsData.data?.data.data;
     if (index === 2) {
       copyToClipboard(
-        `${process.env.REACT_APP_BOT_URL}/startapp=${String(userID)}`
+        `${process.env.REACT_APP_BOT_URL}startapp=${String(userID)}`
       );
       handleDoMission(data[data.length - 1]?.id);
       return;
