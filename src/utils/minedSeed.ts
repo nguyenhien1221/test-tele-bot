@@ -33,11 +33,11 @@ export function calculateMinedSeeds(
     let newMiningSpeedLevel = currentMiningSpeedLevel;
     let newStorageSizeLevel = currentStorageSizeLevel;
 
-    switch (upgrade.upgradeType) {
-      case "MiningSpeed":
+    switch (upgrade.upgrade_type) {
+      case "mining-speed":
         newMiningSpeedLevel++;
         break;
-      case "StorageSize":
+      case "storage-size":
         newStorageSizeLevel++;
         break;
     }
