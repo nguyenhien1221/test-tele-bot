@@ -8,8 +8,6 @@ const Friends = () => {
   const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
 
-  console.log(tele)
-
   const userID = tele.initDataUnsafe?.user?.id;
 
   const AcountReferees = useGetAcountReferees();
@@ -22,7 +20,7 @@ const Friends = () => {
 
   const handleCopyLink = () => {
     copyToClipboard(
-      `${process.env.REACT_APP_BOT_URL}startapp=${String(userID)}&startApp=${String(userID)}`
+      `${process.env.REACT_APP_BOT_URL}startapp=${String(userID)}`
     );
 
     toast.success("link copied to clipboard", { autoClose: 2000 });
