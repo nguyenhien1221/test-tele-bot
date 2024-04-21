@@ -7,6 +7,9 @@ import { ToastContainer, toast } from "react-toastify";
 const Friends = () => {
   const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
+
+  console.log(tele)
+
   const userID = tele.initDataUnsafe?.user?.id;
 
   const AcountReferees = useGetAcountReferees();
