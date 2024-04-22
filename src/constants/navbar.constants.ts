@@ -22,7 +22,7 @@ export const navbarItems: NavBarItem[] = [
   },
   {
     icon: "/images/navbar/boots.png",
-    name: "Boots",
+    name: "Boost",
     path: navPaths.BOOTS,
   },
   {
