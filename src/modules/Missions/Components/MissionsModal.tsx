@@ -18,20 +18,16 @@ const MissionsModal = ({
   data,
   handleDoMission,
 }: ModalPropsType) => {
-  const tele = window.Telegram.WebApp;
   const missions = getMissionsByType(type, data);
   const isSmallScreen = window.innerHeight < 450 ? true : false;
-  console.log(tele);
 
-  const handleClickMission = (item: any) => {
-    if (!item?.task_user?.completed) {
-      handleDoMission(item.id);
-      return;
-    }
-
-    tele.showConfirm("test");
+  const handleClickLink = (item: any) => {
+    window.addEventListener("blur", () => {
+      if (!item?.task_user?.completed) {
+        handleDoMission(item.id);
+      }
+    });
   };
-
   return (
     <>
       <div
@@ -63,7 +59,7 @@ const MissionsModal = ({
             {missions?.map((item: any, index: number) => (
               <a
                 onClick={() => {
-                  handleClickMission(item);
+                  handleClickLink(item);
                 }}
                 href={item.metadata.url}
                 target="_blank"
