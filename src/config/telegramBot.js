@@ -15,6 +15,8 @@ bot.start((ctx) => {
   });
 });
 
-bot.on("test");
+bot.on((ctx) => {
+  ctx.replyWithHTML("tesstttt");
+});
 
 bot.launch();
