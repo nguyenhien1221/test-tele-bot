@@ -167,8 +167,12 @@ const Home = () => {
       .mutateAsync(firstLoginMission.id)
       .then(() => {
         MissionsData.refetch();
+        AcountBalnce.refetch();
+        AcountData.refetch();
         setIsOpen(false);
-        toast.success("Claimed mission reward successfully",{ autoClose: 2000 });
+        toast.success("Claimed mission reward successfully", {
+          autoClose: 2000,
+        });
       })
       .catch((err) => {
         toast.error(err.response?.data?.message, { autoClose: 2000 });
