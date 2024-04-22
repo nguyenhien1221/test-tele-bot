@@ -127,5 +127,3 @@ export const getSpeedUpgradesLevel = (data: any) => {
     return speedLevel;
   }
 };
-
-const getSpeedLevel = () => {};
