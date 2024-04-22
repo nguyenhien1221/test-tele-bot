@@ -167,6 +167,7 @@ const Home = () => {
       .mutateAsync(firstLoginMission.id)
       .then(() => {
         AcountData.refetch();
+        setIsOpen(false);
       })
       .catch((err) => {
         toast.error(err.response?.data?.message, { autoClose: 2000 });
