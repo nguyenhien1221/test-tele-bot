@@ -236,7 +236,9 @@ const Home = () => {
                 <div className="col-span-2 flex items-center">
                   <div>
                     <img
-                      src="/images/storage/1.png"
+                      src={`/images/storage/${
+                        getStorageUpgradesLevel(AcountData.data?.data.data) + 1
+                      }.png`}
                       width={62}
                       alt="storage"
                     ></img>
