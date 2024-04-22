@@ -64,14 +64,19 @@ const BootsModal = ({
 
   const price =
     type === bootTypeEnum.STORAGE ? bootsStorageLevel : boostSpeedLevel;
-
+  const isSmallScreen = window.innerHeight < 450 ? true : false;
   return (
     <>
       <div
         onClick={closeModal}
         className="fixed z-0 flex flex-col-reverse items-center w-full h-full top-0 left-0 bg-black bg-opacity-50"
       ></div>
-      <div className="fixed py-4  bottom-0 left-0 flex flex-col items-center h-[85%] px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
+      <div
+        className={clsx(
+          "fixed py-4  bottom-0 left-0 flex flex-col items-center px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]",
+          isSmallScreen ? "h-[90%]" : "h-[85%] max-h-[567px]"
+        )}
+      >
         <div className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"></div>
         <div className="overflow-auto w-full ">
           <div className="flex flex-col items-center ">{renderTitle(type)}</div>

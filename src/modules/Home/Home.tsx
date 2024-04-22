@@ -196,7 +196,7 @@ const Home = () => {
                   alt="token"
                 ></img>
                 <p className="text-[35px] font-black">
-                  {minedSeed?.toFixed(6)}
+                  {minedSeed < 0 ? Number(0).toFixed(6) : minedSeed.toFixed(6)}
                 </p>
               </div>
               <div className="flex gap-2 items-center">

@@ -2,8 +2,8 @@ import Cd from "react-countdown";
 import NumberCycle from "./NumberCycle";
 
 const containerClassName = "flex gap-0.5 items-center",
-  valueClassName = "flex justify-center items-center text-base",
-  descriptionClassName = "text-base ";
+  valueClassName = "flex justify-center items-center text-sm tracking-tighter",
+  descriptionClassName = "text-sm ";
 
 interface CountdownProps {
   date: number | string;
@@ -15,7 +15,7 @@ export default function Countdown({ date, onComplete }: CountdownProps) {
     <Cd
       date={date}
       onComplete={onComplete}
-      renderer={({ hours, minutes }) => {
+      renderer={({ hours, minutes }: any) => {
         return (
           <div className="grid grid-cols-[repeat(7,auto)] gap-[6px]">
             <div className={containerClassName}>
