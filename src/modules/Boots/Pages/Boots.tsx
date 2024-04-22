@@ -133,10 +133,10 @@ const Boots = () => {
             ></img>
             <p className="font-bold">
               {boostSpeedLevel[
-                getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
+                getSpeedUpgradesLevel(AcountData.data?.data.data)
               ]?.speed *
                 bootsStorageLevel[
-                  getStorageUpgradesLevel(AcountData.data?.data.data) + 1
+                  getStorageUpgradesLevel(AcountData.data?.data.data)
                 ]?.duration}
             </p>
             <p>SEED</p>
@@ -154,7 +154,7 @@ const Boots = () => {
             <p className="font-bold">
               {
                 boostSpeedLevel[
-                  getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
+                  getSpeedUpgradesLevel(AcountData.data?.data.data)
                 ]?.speed
               }
             </p>
@@ -166,22 +166,27 @@ const Boots = () => {
       {/* options */}
       <div className={clsx(isDesktop ? "mt-2" : "mt-[49px]")}>
         {bootOptions.map((item, index) => {
-          let price = 0.2
-          let level = 0
-          const storagePrice = bootsStorageLevel[getStorageUpgradesLevel(AcountData.data?.data.data) + 2]?.price
-          const speedPrice = boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) + 2]?.price
+          let price = 0.2;
+          let level = 0;
+          const storagePrice =
+            bootsStorageLevel[
+              getStorageUpgradesLevel(AcountData.data?.data.data) + 1
+            ]?.price;
+          const speedPrice =
+            boostSpeedLevel[
+              getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
+            ]?.price;
 
           if (index === 0) {
-            price = storagePrice
-            level = getStorageUpgradesLevel(AcountData.data?.data.data)
+            price = storagePrice;
+            level = getStorageUpgradesLevel(AcountData.data?.data.data);
           } else if (index === 1) {
-            price = speedPrice
-            level = getSpeedUpgradesLevel(AcountData.data?.data.data)
+            price = speedPrice;
+            level = getSpeedUpgradesLevel(AcountData.data?.data.data);
           } else {
-            price = 0.2
-            level = 1
+            price = 0.2;
+            level = 1;
           }
-
 
           return (
             <div
@@ -213,18 +218,20 @@ const Boots = () => {
                       height={14}
                       alt="token"
                     ></img>
-                    <p className="text-xs font-normal">{price} SEED . Lv{level + 1}</p>
+                    <p className="text-xs font-normal">
+                      {price} SEED . Lv{level + 1}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-          )
+          );
         })}
       </div>
 
       {isOpen.isOpen && AcountData.data?.data.data && (
         <BootsModal
-        isLoading={UpgradeStorage.isPending || UpgradeSpeed.isPending}
+          isLoading={UpgradeStorage.isPending || UpgradeSpeed.isPending}
           storageLevel={
             getStorageUpgradesLevel(AcountData.data?.data.data) ?? 0
           }

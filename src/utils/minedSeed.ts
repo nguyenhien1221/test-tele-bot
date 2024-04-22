@@ -81,7 +81,7 @@ export function calculateMinedSeeds(
 }
 
 export const getStorageUpgradesLevel = (data: any) => {
-  let storageLevel = 1;
+  let storageLevel = 0;
   const hasUpgradeSize = data?.upgrades?.some(
     (item: any) => item.upgrade_type === "storage-size"
   );
@@ -105,7 +105,7 @@ export const getStorageUpgradesLevel = (data: any) => {
 };
 
 export const getSpeedUpgradesLevel = (data: any) => {
-  let speedLevel = 1;
+  let speedLevel = 0;
   const hasUpgradeSpeed = data?.upgrades?.some(
     (item: any) => item.upgrade_type === "mining-speed"
   );
@@ -127,3 +127,5 @@ export const getSpeedUpgradesLevel = (data: any) => {
     return speedLevel;
   }
 };
+
+const getSpeedLevel = () => {};

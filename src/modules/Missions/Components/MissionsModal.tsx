@@ -19,6 +19,7 @@ const MissionsModal = ({
   handleDoMission,
 }: ModalPropsType) => {
   const missions = getMissionsByType(type, data);
+  const isSmallScreen = window.innerHeight < 450 ? true : false;
 
   return (
     <>
@@ -26,14 +27,19 @@ const MissionsModal = ({
         onClick={closeModal}
         className="fixed z-0 flex flex-col-reverse items-center w-full h-full top-0 left-0 bg-black bg-opacity-50"
       ></div>
-      <div className="fixed py-4  bottom-0 left-0 flex flex-col items-center h-[90%] px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
+      <div
+        className={clsx(
+          "fixed py-4  bottom-0 left-0 flex flex-col items-center  px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]",
+          isSmallScreen ? "h-[90%]" : "h-[80%]"
+        )}
+      >
         <div className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"></div>
         <div className="">
           <div className=" w-full ">
             <div className="flex flex-col items-center ">
               <p className="text-[24px] font-bold">Follow on {socials[type]}</p>
               <p className="text-center font-normal">
-                Every subscription +{formatDecimals(missions[0].reward_amount)}{" "}
+                Every subscription +{formatDecimals(missions[0].reward_amount)}
                 SEED.
                 <br /> Tap to open {socials[type]} account.
               </p>

@@ -44,6 +44,7 @@ const Home = () => {
   });
   const [isFull, setIsFull] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState(true);
+  const [isFill, setIsFill] = useState<boolean>(false);
   // const [expand, setExpand] = useState<any>(isExpanded);
 
   const isSmallScreen = window.innerHeight < 450 ? true : false;
@@ -67,18 +68,17 @@ const Home = () => {
     new Date(AcountData.data?.data.data.last_claim).getTime() / 1000;
   const endTime =
     startTime +
-    bootsStorageLevel[getStorageUpgradesLevel(AcountData.data?.data.data) + 1]
+    bootsStorageLevel[getStorageUpgradesLevel(AcountData.data?.data.data)]
       ?.duration *
       3600;
 
   const timePassed = currentTime - startTime;
 
   const tokenPerSec =
-    boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) + 1]
-      ?.speed / 10000;
+    boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data)]?.speed /
+    10000;
 
-  const timeToAdd =
-    360 / (getSpeedUpgradesLevel(AcountData.data?.data.data) + 1);
+  const timeToAdd = 360 / getSpeedUpgradesLevel(AcountData.data?.data.data);
 
   const progressRef = useRef<any>();
   let countProgess: any;
@@ -122,6 +122,10 @@ const Home = () => {
             );
             return newCount;
           });
+          setIsFill(false);
+        }
+        if (percentEnd >= 100) {
+          setIsFill(true);
         }
 
         progressRef.current.style.width =
@@ -241,15 +245,23 @@ const Home = () => {
                   <p className="font-extrabold">Storage</p>
                   <div className="flex gap-[7px]">
                     <img
-                      src="/images/icons/clock.svg"
+                      src={
+                        isFill
+                          ? "/images/icons/time_checked.svg"
+                          : "/images/icons/clock.svg"
+                      }
                       width={14}
                       alt="clock"
                     ></img>
                     <p className="text-xs">
-                      <Countdown
-                        date={endTime * 1000}
-                        onComplete={() => clearInterval(countProgess)}
-                      ></Countdown>
+                      {isFill ? (
+                        "Filled"
+                      ) : (
+                        <Countdown
+                          date={endTime * 1000}
+                          onComplete={() => clearInterval(countProgess)}
+                        ></Countdown>
+                      )}
                     </p>
                   </div>
                   <div>
@@ -262,7 +274,7 @@ const Home = () => {
                       ></img>
                       <p className="text-xs font-normal">{`${
                         boostSpeedLevel[
-                          getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
+                          getSpeedUpgradesLevel(AcountData.data?.data.data)
                         ]?.speed
                       } SEED/hour`}</p>
                     </div>
