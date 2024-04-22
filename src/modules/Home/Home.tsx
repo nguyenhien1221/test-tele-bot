@@ -28,6 +28,7 @@ const Home = () => {
   const tele = window.Telegram.WebApp;
   // const isExpanded = tele.isExpanded;
   // const viewHeight = tele.viewportHeight;
+  console.log(tele);
 
   tele.BackButton.hide();
 
@@ -187,8 +188,6 @@ const Home = () => {
       ? Number(minedSeed.toFixed(6)).toFixed(6)
       : Number(minedSeed.toFixed(2)).toFixed(6);
   };
-
-  console.log(minedSeed);
 
   return (
     <>
