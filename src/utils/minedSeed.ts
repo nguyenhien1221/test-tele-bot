@@ -82,48 +82,48 @@ export function calculateMinedSeeds(
 
 export const getStorageUpgradesLevel = (data: any) => {
   let storageLevel = 1;
-  const hasUpgradeSize = data?.upgrades?.some((item: any) => item.upgrade_type === "storage-size")
+  const hasUpgradeSize = data?.upgrades?.some(
+    (item: any) => item.upgrade_type === "storage-size"
+  );
 
   if (data?.upgrades?.length === 0) {
     return storageLevel;
   }
-  if(data?.upgrades?.length &&  hasUpgradeSize ) {
+  if (data?.upgrades?.length && hasUpgradeSize) {
     const storageUpgrades = data?.upgrades?.filter(
       (item: any) => item.upgrade_type === "storage-size"
     );
-  
+
     const level = storageUpgrades?.sort(
       (a: any, b: any) => a.upgrade_level - b.upgrade_level
     )[0]?.upgrade_level;
-  
+
     return level;
   } else {
-    return storageLevel
+    return storageLevel;
   }
 };
 
 export const getSpeedUpgradesLevel = (data: any) => {
   let speedLevel = 1;
-  const hasUpgradeSpeed = data?.upgrades?.some((item: any) => item.upgrade_type === "mining-speed")
+  const hasUpgradeSpeed = data?.upgrades?.some(
+    (item: any) => item.upgrade_type === "mining-speed"
+  );
 
   if (data?.upgrades?.length === 0) {
     return speedLevel;
   }
 
-  if(data?.upgrades?.length &&  hasUpgradeSpeed ) {
-
-    const storageUpgrades = data?.upgrades?.filter( 
+  if (data?.upgrades?.length && hasUpgradeSpeed) {
+    const storageUpgrades = data?.upgrades?.filter(
       (item: any) => item.upgrade_type === "mining-speed"
     );
-    
+
     const level = storageUpgrades?.sort(
       (a: any, b: any) => a.upgrade_level - b.upgrade_level
     )[0]?.upgrade_level;
     return level;
   } else {
-    return speedLevel
+    return speedLevel;
   }
-
 };
-
-

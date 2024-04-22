@@ -43,7 +43,7 @@ const Home = () => {
     return isNaN(savedCount) ? 0 : savedCount;
   });
   const [isFull, setIsFull] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(true);
   // const [expand, setExpand] = useState<any>(isExpanded);
 
   const isSmallScreen = window.innerHeight < 450 ? true : false;
@@ -55,8 +55,12 @@ const Home = () => {
       new Date().getTime()
     )
   );
-  
-  const firstLoginMission = MissionsData.data && MissionsData.data.data.data.find((item: any) => item.name === "Hello, world")
+
+  const firstLoginMission =
+    MissionsData.data &&
+    MissionsData.data.data.data.find(
+      (item: any) => item.name === "Hello, world"
+    );
 
   const currentTime = new Date().getTime() / 1000;
   const startTime =
@@ -65,7 +69,7 @@ const Home = () => {
     startTime +
     bootsStorageLevel[getStorageUpgradesLevel(AcountData.data?.data.data) + 1]
       ?.duration *
-    3600;
+      3600;
 
   const timePassed = currentTime - startTime;
 
@@ -73,7 +77,8 @@ const Home = () => {
     boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data) + 1]
       ?.speed / 10000;
 
-  const timeToAdd = 360 / (getSpeedUpgradesLevel(AcountData.data?.data.data) + 1);
+  const timeToAdd =
+    360 / (getSpeedUpgradesLevel(AcountData.data?.data.data) + 1);
 
   const progressRef = useRef<any>();
   let countProgess: any;
@@ -86,11 +91,11 @@ const Home = () => {
 
   useEffect(() => {
     if (firstLoginMission?.task_user === null) {
-      setIsOpen(true)
+      setIsOpen(true);
     } else {
-      setIsOpen(false)
+      setIsOpen(false);
     }
-  }, [AcountData.data])
+  }, [AcountData.data]);
 
   useEffect(() => {
     if (timePassed >= 120) {
@@ -154,12 +159,15 @@ const Home = () => {
   };
 
   const handleClaimMissionReward = () => {
-    doMission.mutateAsync(firstLoginMission.id).then(() => {
-      AcountData.refetch()
-    }).catch((err) => {
-      toast.error(err.response?.data?.message, { autoClose: 2000 })
-    })
-  }
+    doMission
+      .mutateAsync(firstLoginMission.id)
+      .then(() => {
+        AcountData.refetch();
+      })
+      .catch((err) => {
+        toast.error(err.response?.data?.message, { autoClose: 2000 });
+      });
+  };
 
   return (
     <>
@@ -252,10 +260,11 @@ const Home = () => {
                         height={14}
                         alt="token"
                       ></img>
-                      <p className="text-xs font-normal">{`${boostSpeedLevel[
-                        getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
-                      ]?.speed
-                        } SEED/hour`}</p>
+                      <p className="text-xs font-normal">{`${
+                        boostSpeedLevel[
+                          getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
+                        ]?.speed
+                      } SEED/hour`}</p>
                     </div>
                   </div>
                 </div>
@@ -279,12 +288,14 @@ const Home = () => {
         </div>
       )}
 
-      {isOpen && <GetFirstTokenModal
-        isLoading={doMission.isPending}
-        handleClaim={() => handleClaimMissionReward()}
-        reward={formatDecimals(firstLoginMission?.reward_amount ?? 0)}
-        closeModal={() => setIsOpen(false)}
-      />}
+      {isOpen && (
+        <GetFirstTokenModal
+          isLoading={doMission.isPending}
+          handleClaim={() => handleClaimMissionReward()}
+          reward={formatDecimals(firstLoginMission?.reward_amount ?? 0)}
+          closeModal={() => setIsOpen(false)}
+        />
+      )}
     </>
   );
 };

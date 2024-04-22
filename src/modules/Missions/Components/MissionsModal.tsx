@@ -43,7 +43,9 @@ const MissionsModal = ({
           <div className="grid grid-cols-3 gap-x-[34px] gap-y-4 mb-[38px] mt-[42px]">
             {missions?.map((item: any, index: number) => (
               <a
-                onClick={() =>{!item?.task_user?.completed && handleDoMission(item.id)} }
+                onClick={() => {
+                  !item?.task_user?.completed && handleDoMission(item.id);
+                }}
                 href={item.metadata.url}
                 target="_blank"
                 rel="noreferrer"
