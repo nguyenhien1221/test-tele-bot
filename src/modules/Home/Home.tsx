@@ -28,7 +28,6 @@ const Home = () => {
   const tele = window.Telegram.WebApp;
   // const isExpanded = tele.isExpanded;
   // const viewHeight = tele.viewportHeight;
-  console.log(tele);
 
   tele.BackButton.hide();
 
