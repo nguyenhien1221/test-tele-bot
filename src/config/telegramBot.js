@@ -15,4 +15,6 @@ bot.start((ctx) => {
   });
 });
 
+bot.on("test");
+
 bot.launch();
