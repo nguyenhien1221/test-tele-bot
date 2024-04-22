@@ -68,7 +68,7 @@ const Friends = () => {
                 ></img>
               </div>
               <div className="col-span-5">
-                <p className="text-sm font-normal mb-2">Ms. Thế Vinh</p>
+                <p className="text-sm font-normal mb-2">{item.name}</p>
                 <div>
                   <div className="flex items-center gap-1">
                     <img
