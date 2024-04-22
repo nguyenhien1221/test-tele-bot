@@ -133,7 +133,7 @@ const Home = () => {
 
         progressRef.current.style.width =
           (percentEnd >= 100 ? 100 : percentEnd) + "%";
-      }, 50);
+      }, 500);
     }
     return () => {
       clearInterval(countProgess);
