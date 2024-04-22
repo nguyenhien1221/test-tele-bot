@@ -58,6 +58,8 @@ const Home = () => {
     )
   );
 
+  console.log(minedSeed);
+
   const firstLoginMission =
     MissionsData.data &&
     MissionsData.data.data.data.find(
