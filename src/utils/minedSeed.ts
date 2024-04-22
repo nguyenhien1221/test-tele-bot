@@ -20,9 +20,13 @@ export function calculateMinedSeeds(
   let copied = upgrades.slice();
 
   // Sorting the copied slice by timestamp
-  copied.sort((a: any, b: any) => a.timestamp - b.timestamp);
+  copied.sort((a: any, b: any) => {
+    return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+  });
 
   let from = new Date(lastClaim).getTime();
+  console.log("from", from);
+  console.log("to", now);
   let currentMiningSpeedLevel = 0;
   let currentStorageSizeLevel = 0;
   let minedSeed = 0;
@@ -42,16 +46,18 @@ export function calculateMinedSeeds(
         break;
     }
 
+    const upgradeTimestamp = new Date(upgrade.timestamp).getTime();
+
     // This should not happen
-    if (upgrade.timestamp > now) {
+    if (upgradeTimestamp > now) {
       break;
     }
 
-    if (upgrade.timestamp > from) {
+    if (upgradeTimestamp > from) {
       let maxStorageSize = getStorageSizeByLevel(currentStorageSizeLevel);
       let miningSpeed = getMiningSpeedByLevel(currentMiningSpeedLevel);
 
-      let consumingStorageSize = upgrade.timestamp - from; // Convert milliseconds to seconds
+      let consumingStorageSize = upgradeTimestamp - from; // Convert milliseconds to seconds
 
       if (consumingStorageSize + consumedStorageSize > maxStorageSize) {
         consumingStorageSize = maxStorageSize - consumedStorageSize;
@@ -60,7 +66,7 @@ export function calculateMinedSeeds(
       minedSeed += consumingStorageSize * miningSpeed;
 
       consumedStorageSize += consumingStorageSize;
-      from = upgrade.timestamp;
+      from = upgradeTimestamp;
     }
 
     currentMiningSpeedLevel = newMiningSpeedLevel;
@@ -75,7 +81,10 @@ export function calculateMinedSeeds(
     consumingStorageSize = maxStorageSize - consumedStorageSize;
   }
 
+  console.log("consumingStorageSize", consumingStorageSize);
+  console.log("miningSpeed", miningSpeed);
   minedSeed += consumingStorageSize * miningSpeed;
+  console.log("minedSeed", minedSeed);
 
   return minedSeed / 3600000;
 }
