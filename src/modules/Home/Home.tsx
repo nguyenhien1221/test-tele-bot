@@ -95,7 +95,7 @@ const Home = () => {
     } else {
       setIsOpen(false);
     }
-  }, [AcountData.data]);
+  }, [MissionsData.data]);
 
   useEffect(() => {
     if (timePassed >= 120) {
@@ -166,7 +166,7 @@ const Home = () => {
     doMission
       .mutateAsync(firstLoginMission.id)
       .then(() => {
-        AcountData.refetch();
+        MissionsData.refetch();
         setIsOpen(false);
       })
       .catch((err) => {
