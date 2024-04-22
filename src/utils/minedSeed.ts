@@ -77,7 +77,7 @@ export function calculateMinedSeeds(
 
   minedSeed += consumingStorageSize * miningSpeed;
 
-  return minedSeed;
+  return minedSeed / 3600;
 }
 
 export const getStorageUpgradesLevel = (data: any) => {

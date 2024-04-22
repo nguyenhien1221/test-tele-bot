@@ -32,7 +32,10 @@ const NavBar = () => {
       <div className="flex justify-between bg-[#fff] shadow-lg rounded-[50px] py-[9px] px-[37px]">
         {navbarItems.map((item, index) => (
           <div key={index}>
-            <div onClick={() => handleShowToast(index, item)}>
+            <div
+              className="cursor-pointer"
+              onClick={() => handleShowToast(index, item)}
+            >
               <div className="flex flex-col items-center">
                 <div className="h-[36px] ">
                   <img

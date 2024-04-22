@@ -179,6 +179,17 @@ const Home = () => {
       });
   };
 
+  const renderMinedSeed = () => {
+    if (minedSeed < 0) {
+      return Number(0).toFixed(6);
+    }
+    return !isFill
+      ? Number(minedSeed.toFixed(6)).toFixed(6)
+      : Number(minedSeed.toFixed(2)).toFixed(6);
+  };
+
+  console.log(minedSeed);
+
   return (
     <>
       {AcountData.isLoading ? (
@@ -195,9 +206,7 @@ const Home = () => {
                   height={44}
                   alt="token"
                 ></img>
-                <p className="text-[35px] font-black">
-                  {minedSeed < 0 ? Number(0).toFixed(6) : minedSeed.toFixed(6)}
-                </p>
+                <p className="text-[35px] font-black">{renderMinedSeed()}</p>
               </div>
               <div className="flex gap-2 items-center">
                 <p className="text-base font-normal">SEED Balance:</p>

@@ -7,4 +7,6 @@ export const storageLevelToSize = [
   24 * 3600,
 ];
 
-export const miningSpeedLevelToSize = [2778, 4167, 5556, 6944, 8333, 13889];
+export const miningSpeedLevelToSize = [
+  10000000, 15000000, 20000000, 25000000, 30000000, 50000000,
+];
