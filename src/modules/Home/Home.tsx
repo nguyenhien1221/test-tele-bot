@@ -170,7 +170,7 @@ const Home = () => {
         AcountBalnce.refetch();
         AcountData.refetch();
         setIsOpen(false);
-        toast.success("Claimed mission reward successfully", {
+        toast.success("Mission success", {
           autoClose: 2000,
         });
       })
