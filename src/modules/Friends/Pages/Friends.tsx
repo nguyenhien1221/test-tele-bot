@@ -55,11 +55,11 @@ const Friends = () => {
 
       {/* friends list */}
       {AcountReferees.data?.data.data.length > 0 && (
-        <p className="text-xl font-bold mb-4">My friends</p>
+        <p className="text-xl font-bold mb-4 mt-10">My friends</p>
       )}
       {AcountReferees.data?.data.data &&
         AcountReferees.data?.data.data.map((item: any) => (
-          <div className="mt-10">
+          <div className="">
             <div className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-4 drop-shadow-lg">
               <div className="col-span-2 flex ">
                 <img
