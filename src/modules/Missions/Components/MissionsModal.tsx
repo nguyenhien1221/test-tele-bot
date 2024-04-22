@@ -22,7 +22,7 @@ const MissionsModal = ({
   const missions = getMissionsByType(type, data);
   const isSmallScreen = window.innerHeight < 450 ? true : false;
   console.log(tele);
-  tele.setInactivityReceivingDisabled(true);
+
   const handleClickMission = (item: any) => {
     if (!item?.task_user?.completed) {
       handleDoMission(item.id);
