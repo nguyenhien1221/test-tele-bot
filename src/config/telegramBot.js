@@ -31,14 +31,20 @@ bot.start(async (ctx) => {
       caption,
       parse_mode: "HTML",
       reply_markup: {
-        inline_keyboard: [[{ text: "Open app", web_app: { url: web_link } }]],
+        inline_keyboard: [
+          [
+            { text: "Join the community", url: "t.me/seed_coin_bot" },
+            // { text: "Learn more about SEED coin", url: "" },
+            { text: "Open Wallet", web_app: { url: web_link } },
+          ],
+        ],
       },
     }
   );
 });
 
 //message when open box chat
-bot.on(async (ctx) => {
+bot.start(async (ctx) => {
   const imagePath = path.join(__dirname, "../../public/images/about.png");
   const imageBuffer = fs.readFileSync(imagePath);
   const imageStream = imageBuffer;

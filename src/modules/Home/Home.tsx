@@ -58,8 +58,6 @@ const Home = () => {
     )
   );
 
-  console.log(minedSeed);
-
   const firstLoginMission =
     MissionsData.data &&
     MissionsData.data.data.data.find(
@@ -80,8 +78,6 @@ const Home = () => {
   const tokenPerSec =
     boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data)]?.speed /
     10000;
-
-  const timeToAdd = 360 / getSpeedUpgradesLevel(AcountData.data?.data.data);
 
   const progressRef = useRef<any>();
   let countProgess: any;
@@ -133,7 +129,7 @@ const Home = () => {
 
         progressRef.current.style.width =
           (percentEnd >= 100 ? 100 : percentEnd) + "%";
-      }, 500);
+      }, 100);
     }
     return () => {
       clearInterval(countProgess);

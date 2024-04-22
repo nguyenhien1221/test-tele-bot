@@ -25,8 +25,6 @@ export function calculateMinedSeeds(
   });
 
   let from = new Date(lastClaim).getTime();
-  console.log("from", from);
-  console.log("to", now);
   let currentMiningSpeedLevel = 0;
   let currentStorageSizeLevel = 0;
   let minedSeed = 0;
@@ -63,6 +61,10 @@ export function calculateMinedSeeds(
         consumingStorageSize = maxStorageSize - consumedStorageSize;
       }
 
+      if (consumingStorageSize < 0) {
+        consumingStorageSize = 0;
+      }
+
       minedSeed += consumingStorageSize * miningSpeed;
 
       consumedStorageSize += consumingStorageSize;
@@ -81,10 +83,11 @@ export function calculateMinedSeeds(
     consumingStorageSize = maxStorageSize - consumedStorageSize;
   }
 
-  console.log("consumingStorageSize", consumingStorageSize);
-  console.log("miningSpeed", miningSpeed);
+  if (consumingStorageSize < 0) {
+    consumingStorageSize = 0;
+  }
+
   minedSeed += consumingStorageSize * miningSpeed;
-  console.log("minedSeed", minedSeed);
 
   return minedSeed / 3600000;
 }
