@@ -28,6 +28,7 @@ const MissionsModal = ({
       }
     });
   };
+  
   return (
     <>
       <div

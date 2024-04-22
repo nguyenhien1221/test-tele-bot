@@ -42,6 +42,7 @@ const Boots = () => {
     if (isOpen.type === bootTypeEnum.STORAGE) {
       UpgradeStorage.mutateAsync()
         .then(() => {
+          AcountData.refetch()
           toast.success("Upgraded Successfully", {
             style: { width: 272, borderRadius: 8 },
             autoClose: 2000,
@@ -61,6 +62,7 @@ const Boots = () => {
     if (isOpen.type === bootTypeEnum.SPEED) {
       UpgradeSpeed.mutateAsync()
         .then(() => {
+          AcountData.refetch()
           toast.success("Upgraded Successfully", {
             style: { width: 272, borderRadius: 8 },
             autoClose: 2000,
