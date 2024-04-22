@@ -39,8 +39,10 @@ const MissionsModal = ({
             <div className="flex flex-col items-center ">
               <p className="text-[24px] font-bold">Follow on {socials[type]}</p>
               <p className="text-center font-normal">
-                Every subscription +{formatDecimals(missions[0].reward_amount)}
-                SEED.
+                {`Every subscription +${formatDecimals(
+                  missions[0].reward_amount
+                )}
+                 SEED.`}
                 <br /> Tap to open {socials[type]} account.
               </p>
             </div>
