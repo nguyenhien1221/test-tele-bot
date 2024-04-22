@@ -90,12 +90,14 @@ const CreateAcount = () => {
           style={{ backgroundImage: `url(${registerImgs[tab]})` }}
         ></div>
         {renderContent()}
-        <Button
-          onClick={() => handleChangeTab()}
-          className="fixed bottom-[55px] left-4 right-4 capitalize font-extrabold  bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg"
-        >
-          {renderButtonText()}
-        </Button>
+        {tab <= 2 && (
+          <Button
+            onClick={() => handleChangeTab()}
+            className="fixed bottom-[55px] left-4 right-4 capitalize font-extrabold  bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg"
+          >
+            {renderButtonText()}
+          </Button>
+        )}
       </div>
     </div>
   );
