@@ -51,7 +51,7 @@ export function calculateMinedSeeds(
       let maxStorageSize = getStorageSizeByLevel(currentStorageSizeLevel);
       let miningSpeed = getMiningSpeedByLevel(currentMiningSpeedLevel);
 
-      let consumingStorageSize = Math.round((upgrade.timestamp - from) / 1000); // Convert milliseconds to seconds
+      let consumingStorageSize = upgrade.timestamp - from; // Convert milliseconds to seconds
 
       if (consumingStorageSize + consumedStorageSize > maxStorageSize) {
         consumingStorageSize = maxStorageSize - consumedStorageSize;
@@ -69,7 +69,7 @@ export function calculateMinedSeeds(
 
   let maxStorageSize = getStorageSizeByLevel(currentStorageSizeLevel);
   let miningSpeed = getMiningSpeedByLevel(currentMiningSpeedLevel);
-  let consumingStorageSize = Math.round((now - from) / 1000); // Convert milliseconds to seconds
+  let consumingStorageSize = now - from; // Convert milliseconds to seconds
 
   if (consumingStorageSize + consumedStorageSize > maxStorageSize) {
     consumingStorageSize = maxStorageSize - consumedStorageSize;
@@ -77,7 +77,7 @@ export function calculateMinedSeeds(
 
   minedSeed += consumingStorageSize * miningSpeed;
 
-  return minedSeed / 3600;
+  return minedSeed / 3600000;
 }
 
 export const getStorageUpgradesLevel = (data: any) => {
