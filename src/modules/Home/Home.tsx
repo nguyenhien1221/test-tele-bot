@@ -168,9 +168,6 @@ const Home = () => {
         AcountBalnce.refetch();
         AcountData.refetch();
         setIsOpen(false);
-        toast.success("Mission success", {
-          autoClose: 2000,
-        });
       })
       .catch((err) => {
         toast.error(err.response?.data?.message, { autoClose: 2000 });
