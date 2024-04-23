@@ -7,6 +7,13 @@ const TOKEN = process.env.REACT_APP_BOT_TOKEN;
 const bot = new Telegraf(TOKEN);
 const web_link = process.env.REACT_APP_WEB_URL;
 
+// Create buttons
+const button1 = { text: "Join the community", url: "t.me/Catia_Announcement" };
+const button2 = { text: "Open Wallet", web_app: { url: web_link } };
+
+// Create the inline keyboard markup
+const inlineKeyboard = [[button1], [button2]];
+
 bot.start(async (ctx) => {
   const imagePath = path.join(__dirname, "../../public/images/about.png");
   const imageBuffer = fs.readFileSync(imagePath);
@@ -21,13 +28,7 @@ bot.start(async (ctx) => {
       caption,
       parse_mode: "HTML",
       reply_markup: {
-        inline_keyboard: [
-          [
-            { text: "Join the community", url: "t.me/Catia_Announcement" },
-            // { text: "Learn more about SEED coin", url: "" },
-            { text: "Open Wallet", web_app: { url: web_link } },
-          ],
-        ],
+        inline_keyboard: inlineKeyboard,
       },
     }
   );
