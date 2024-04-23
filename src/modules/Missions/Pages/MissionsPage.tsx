@@ -133,7 +133,7 @@ const MissionsPage = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-span-1 flex">
+                  <div className="col-span-1 flex items-center">
                     {!isDone && (
                       <img
                         src="/images/icons/check.svg"

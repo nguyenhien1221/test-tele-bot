@@ -28,7 +28,7 @@ const MissionsModal = ({
       }
     });
   };
-  
+
   return (
     <>
       <div
