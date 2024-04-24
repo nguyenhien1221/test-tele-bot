@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from "@mui/material";
 import { socials } from "../../../constants/missions.constants";
 import { getMissionsByType } from "../Utils/missions";
 import clsx from "clsx";
 import { formatDecimals } from "../../../utils/formatNumber";
+import { useEffect, useState } from "react";
 
 interface ModalPropsType {
   data: any;
@@ -21,12 +23,20 @@ const MissionsModal = ({
   const missions = getMissionsByType(type, data);
   const isSmallScreen = window.innerHeight < 450 ? true : false;
 
+  const [missionItem, setMissionItem] = useState<any>();
+
+  useEffect(() => {
+    missionItem && handleClickLink(missionItem);
+
+    return () => {
+      window.removeEventListener("blur", handleClickLink);
+    };
+  }, [missionItem]);
+
   const handleClickLink = (item: any) => {
-    window.addEventListener("blur", () => {
-      if (!item?.task_user?.completed) {
-        handleDoMission(item.id);
-      }
-    });
+    if (!item?.task_user?.completed) {
+      handleDoMission(item.id);
+    }
   };
 
   return (
@@ -59,8 +69,9 @@ const MissionsModal = ({
           <div className="grid grid-cols-3 gap-x-[34px] gap-y-4 mb-[38px] mt-[42px]">
             {missions?.map((item: any, index: number) => (
               <a
+                key={item.id}
                 onClick={() => {
-                  handleClickLink(item);
+                  setMissionItem(item);
                 }}
                 href={item.metadata.url}
                 target="_blank"
