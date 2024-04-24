@@ -7,8 +7,12 @@ interface ModalPropsType {
   handleClaim: () => void;
 }
 
-const GetFirstTokenModal = ({ isLoading, reward, closeModal, handleClaim }: ModalPropsType) => {
-
+const GetFirstTokenModal = ({
+  isLoading,
+  reward,
+  closeModal,
+  handleClaim,
+}: ModalPropsType) => {
   return (
     <>
       <div
@@ -17,16 +21,18 @@ const GetFirstTokenModal = ({ isLoading, reward, closeModal, handleClaim }: Moda
       ></div>
       <div className="fixed z-20 pb-4 pt-10  bottom-0 left-0 flex flex-col items-center h-[75%] px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
         <div className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"></div>
-        <div className="max-h-[117px] w-full mb-2 flex flex-1 justify-center bg-no-repeat bg-contain bg-center"
-          style={{ backgroundImage: "url('/images/icons/token_icon.svg')" }}></div>
-        <div className="text-[32px] font-black">+{reward} SEED</div>
+        <div
+          className="max-h-[117px] w-full mb-2 flex flex-1 justify-center bg-no-repeat bg-contain bg-center"
+          style={{ backgroundImage: "url('/images/icons/token_icon.svg')" }}
+        ></div>
+        <div className="text-[32px] font-black">+{reward}SEED</div>
         <div className="text-center font-normal mt-4">
-          🌱 You're now part of SEED DAO!<br />
-          🌟 <span className="font-bold">{reward} SEED
-          </span> is gifted for <span className="font-black">Early Farmers.</span><br />
+          🌱 You're now part of SEED DAO!
+          <br />
+          🌟 <span className="font-bold">{reward} SEED</span> is gifted for{" "}
+          <span className="font-black">Early Farmers.</span>
+          <br />
           Let's grow together! Happy planting!
-
-
         </div>
 
         <LoadingButton

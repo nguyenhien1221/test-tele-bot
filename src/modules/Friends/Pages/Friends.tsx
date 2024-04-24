@@ -59,28 +59,27 @@ const Friends = () => {
       )}
       {AcountReferees.data?.data.data &&
         AcountReferees.data?.data.data.map((item: any) => (
-          <div className="">
-            <div className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-4 drop-shadow-lg">
-              <div className="col-span-2 flex ">
-                <img
-                  src="/images/icons/user.svg"
-                  width={48}
-                  height={48}
-                  alt="avt"
-                ></img>
-              </div>
-              <div className="col-span-5">
-                <p className="text-sm font-normal mb-2">{item.name}</p>
-                <div>
-                  <div className="flex items-center gap-1">
-                    <img
-                      src="/images/icons/token_icon.svg"
-                      width={18}
-                      height={18}
-                      alt="token"
-                    ></img>
-                    <p className="text-sm font-bold">0.2 SEED</p>
-                  </div>
+          <div className="grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-4 drop-shadow-lg">
+            <div className="col-span-2 flex ">
+              <img
+                src="/images/icons/user.svg"
+                width={48}
+                height={48}
+                alt="avt"
+              ></img>
+            </div>
+            <div className="col-span-8">
+              <p className="text-sm font-extrabold mb-1">{item.name}</p>
+              <div>
+                <div className="flex items-center gap-1">
+                  <span className="text-[#7D7D7D] text-sm">You recieved:</span>
+                  <img
+                    src="/images/icons/token_icon.svg"
+                    width={18}
+                    height={18}
+                    alt="token"
+                  ></img>
+                  <p className="text-sm font-bold">0.2 SEED</p>
                 </div>
               </div>
             </div>
