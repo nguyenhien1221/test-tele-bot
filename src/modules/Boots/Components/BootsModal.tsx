@@ -1,11 +1,11 @@
 import MissionsItem from "./MissionsItem";
-import { Button } from "@mui/material";
 import clsx from "clsx";
 import {
   boostSpeedLevel,
   bootTypeEnum,
   bootsStorageLevel,
 } from "../../../constants/boots.constants";
+import { LoadingButton } from "@mui/lab";
 
 interface ModalPropsType {
   isLoading: boolean;
@@ -73,7 +73,7 @@ const BootsModal = ({
       ></div>
       <div
         className={clsx(
-          "fixed py-4  bottom-0 left-0 flex flex-col items-center px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]",
+          "slide_in fixed py-4  bottom-0 left-0 flex flex-col items-center px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]",
           isSmallScreen ? "h-[90%]" : "h-[85%] max-h-[567px]"
         )}
       >
@@ -108,12 +108,13 @@ const BootsModal = ({
           </div>
         </div>
 
-        <Button
+        <LoadingButton
+          loading={isLoading}
           onClick={() => handleUpgrade()}
           className=" fixed bottom-10 left-4 right-4 font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg"
         >
           UPGRADE
-        </Button>
+        </LoadingButton>
       </div>
     </>
   );

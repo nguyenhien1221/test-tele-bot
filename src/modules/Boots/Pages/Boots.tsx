@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   boostSpeedLevel,
   bootOptions,
@@ -42,7 +42,8 @@ const Boots = () => {
     if (isOpen.type === bootTypeEnum.STORAGE) {
       UpgradeStorage.mutateAsync()
         .then(() => {
-          AcountData.refetch()
+          AcountData.refetch();
+          AcountBalnce.refetch();
           toast.success("Upgraded Successfully", {
             style: { width: 272, borderRadius: 8 },
             autoClose: 2000,
@@ -62,7 +63,8 @@ const Boots = () => {
     if (isOpen.type === bootTypeEnum.SPEED) {
       UpgradeSpeed.mutateAsync()
         .then(() => {
-          AcountData.refetch()
+          AcountData.refetch();
+          AcountBalnce.refetch();
           toast.success("Upgraded Successfully", {
             style: { width: 272, borderRadius: 8 },
             autoClose: 2000,
@@ -83,7 +85,27 @@ const Boots = () => {
     navigate("/");
   };
 
-  const handleOpenModal = (type: number) => {
+  // const handleOpenModal = (type: number) => {
+  //   if (type === bootTypeEnum.WATER) {
+  //     toast.info("Coming soon", {
+  //       position: "top-center",
+  //       style: { width: 272, borderRadius: 8 },
+  //       autoClose: 2000,
+  //       progressStyle: {
+  //         backgroundColor: "#FF8C21",
+  //       },
+  //       icon: <img src="/images/icons/clock.png" alt=""></img>,
+  //     });
+  //   } else {
+  //     setisOpen({ isOpen: true, type: type });
+  //   }
+  // };
+
+  const handleUpgrades = (type: number) => {
+    tele.showPopup("Upgrade", {}, (data: any) => updateHandler(data, type));
+  };
+  const updateHandler = (data: any, type: number) => {
+    // Handle the user's selection or action here
     if (type === bootTypeEnum.WATER) {
       toast.info("Coming soon", {
         position: "top-center",
@@ -97,6 +119,8 @@ const Boots = () => {
     } else {
       setisOpen({ isOpen: true, type: type });
     }
+    console.log("User data:", data);
+    setisOpen({ isOpen: true, type: 0 });
   };
 
   return (
@@ -192,7 +216,7 @@ const Boots = () => {
 
           return (
             <div
-              onClick={() => handleOpenModal(index)}
+              onClick={() => handleUpgrades(index)}
               key={index}
               className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
             >

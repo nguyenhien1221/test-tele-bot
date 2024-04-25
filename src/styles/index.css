@@ -72,3 +72,18 @@ code {
 .font-bowlby {
   font-family: "Bowlby One", sans-serif !important;
 }
+
+.slide_in {
+  bottom: 0 !important;
+  animation: slideUp 2s ease 0s 1 normal forwards !important;
+}
+
+@keyframes slideUp {
+  0% {
+    bottom: -567px !important;
+  }
+
+  100% {
+    bottom: 0px !important;
+  }
+}
