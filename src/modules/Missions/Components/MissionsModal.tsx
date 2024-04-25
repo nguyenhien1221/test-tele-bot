@@ -26,7 +26,9 @@ const MissionsModal = ({
   const [missionItem, setMissionItem] = useState<any>();
 
   useEffect(() => {
-    missionItem && handleClickLink(missionItem);
+    window.addEventListener("blur", () => {
+      missionItem && handleClickLink(missionItem);
+    });
 
     return () => {
       window.removeEventListener("blur", handleClickLink);
