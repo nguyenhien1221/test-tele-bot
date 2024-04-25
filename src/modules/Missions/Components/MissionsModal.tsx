@@ -32,7 +32,7 @@ const MissionsModal = ({
       }
     };
 
-    window.addEventListener("blur", missionItem && handleClickLink);
+    window.addEventListener("blur", handleClickLink);
 
     return () => {
       window.removeEventListener("blur", handleClickLink);
