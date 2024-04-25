@@ -102,7 +102,10 @@ const Boots = () => {
   // };
 
   const handleUpgrades = (type: number) => {
-    tele.showPopup("Upgrade", {}, (data: any) => updateHandler(data, type));
+    console.log(tele);
+    tele.showPopup({ message: "test" }, (data: any) =>
+      updateHandler(data, type)
+    );
   };
   const updateHandler = (data: any, type: number) => {
     // Handle the user's selection or action here
