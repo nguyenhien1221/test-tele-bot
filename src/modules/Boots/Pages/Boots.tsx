@@ -85,30 +85,7 @@ const Boots = () => {
     navigate("/");
   };
 
-  // const handleOpenModal = (type: number) => {
-  //   if (type === bootTypeEnum.WATER) {
-  //     toast.info("Coming soon", {
-  //       position: "top-center",
-  //       style: { width: 272, borderRadius: 8 },
-  //       autoClose: 2000,
-  //       progressStyle: {
-  //         backgroundColor: "#FF8C21",
-  //       },
-  //       icon: <img src="/images/icons/clock.png" alt=""></img>,
-  //     });
-  //   } else {
-  //     setisOpen({ isOpen: true, type: type });
-  //   }
-  // };
-
-  const handleUpgrades = (type: number) => {
-    console.log(tele);
-    tele.showPopup({ message: "test" }, (data: any) =>
-      updateHandler(data, type)
-    );
-  };
-  const updateHandler = (data: any, type: number) => {
-    // Handle the user's selection or action here
+  const handleOpenModal = (type: number) => {
     if (type === bootTypeEnum.WATER) {
       toast.info("Coming soon", {
         position: "top-center",
@@ -122,8 +99,6 @@ const Boots = () => {
     } else {
       setisOpen({ isOpen: true, type: type });
     }
-    console.log("User data:", data);
-    setisOpen({ isOpen: true, type: 0 });
   };
 
   return (
@@ -219,7 +194,7 @@ const Boots = () => {
 
           return (
             <div
-              onClick={() => handleUpgrades(index)}
+              onClick={() => handleOpenModal(index)}
               key={index}
               className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
             >
