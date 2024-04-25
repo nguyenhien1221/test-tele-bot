@@ -13,7 +13,7 @@ const GetFirstTokenModal = ({
   closeModal,
   handleClaim,
 }: ModalPropsType) => {
-  const isOver3days = new Date().getTime() - new Date("5/4/2024").getTime() > 0;
+  const isOver = new Date().getTime() - new Date("5/4/2024").getTime() > 0;
 
   return (
     <>
@@ -28,15 +28,27 @@ const GetFirstTokenModal = ({
           style={{ backgroundImage: "url('/images/icons/token_icon.svg')" }}
         ></div>
         <div className="text-[32px] font-black">+{reward}SEED</div>
-        <div className="text-center font-normal mt-4">
-          🌱 You're now part of SEED DAO!
-          <br />
-          🌟 <span className="font-bold">{reward} SEED</span> is gifted for
-          <span className="font-black">Early Farmers</span>
-          {!isOver3days && <span>during the first 3 days!</span>}
-          <br />
-          Let's grow together! Happy planting!
-        </div>
+        {isOver ? (
+          <div className="text-center font-normal mt-4">
+            🌱 You're now part of SEED DAO!
+            <br />
+            🌟 <span className="font-bold">{reward} SEED</span> is gifted for{" "}
+            <span className="font-black">Early Farmers.</span>
+            <br />
+            Let's grow together! Happy planting!
+          </div>
+        ) : (
+          <div className="text-center font-normal mt-4">
+            🌱 You're now part of SEED DAO!
+            <br />
+            🌟 <span className="font-bold">{reward} SEED</span> is gifted for{" "}
+            <span className="font-black">
+              Early Farmers during the first 3 days!
+            </span>
+            <br />
+            Let's grow together! Happy planting!
+          </div>
+        )}
 
         <LoadingButton
           loading={isLoading}

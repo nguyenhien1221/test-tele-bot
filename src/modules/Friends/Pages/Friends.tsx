@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useGetAcountReferees from "../Hooks/useGetAcountReferees";
 import { copyToClipboard } from "../../../utils/helper";
 import { ToastContainer, toast } from "react-toastify";
+import { formatDecimals } from "../../../utils/formatNumber";
 
 const Friends = () => {
   const navigate = useNavigate();
@@ -79,7 +80,9 @@ const Friends = () => {
                     height={18}
                     alt="token"
                   ></img>
-                  <p className="text-sm font-bold">0.2 SEED</p>
+                  <p className="text-sm font-bold">
+                    {item.received_amount.toFixed(6)} SEED
+                  </p>
                 </div>
               </div>
             </div>

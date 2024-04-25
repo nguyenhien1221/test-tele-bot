@@ -213,9 +213,11 @@ const Home = () => {
           </div>
           <div
             className={clsx(
-              "flex flex-1 justify-center bg-no-repeat bg-contain bg-center"
+              "flex flex-1 max-h-[560px] justify-center bg-no-repeat bg-contain bg-center"
             )}
-            style={{ backgroundImage: "url('/images/trees/6.png')" }}
+            style={{
+              backgroundImage: "url('/images/trees/6.png')",
+            }}
           ></div>
 
           {/* storage button */}

@@ -136,7 +136,7 @@ const MissionsPage = () => {
                   <div className="col-span-1 flex items-center">
                     {!isDone && (
                       <img
-                        src="/images/icons/check.svg"
+                        src="/images/icons/Check.svg"
                         alt="check"
                         width={22}
                         height={22}
