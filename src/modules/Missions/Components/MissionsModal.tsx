@@ -26,20 +26,18 @@ const MissionsModal = ({
   const [missionItem, setMissionItem] = useState<any>();
 
   useEffect(() => {
-    window.addEventListener("blur", () => {
-      missionItem && handleClickLink(missionItem);
-    });
+    const handleClickLink = () => {
+      if (!missionItem?.task_user?.completed) {
+        handleDoMission(missionItem.id);
+      }
+    };
+
+    window.addEventListener("blur", missionItem && handleClickLink);
 
     return () => {
       window.removeEventListener("blur", handleClickLink);
     };
   }, [missionItem]);
-
-  const handleClickLink = (item: any) => {
-    if (!item?.task_user?.completed) {
-      handleDoMission(item.id);
-    }
-  };
 
   return (
     <>

@@ -118,7 +118,7 @@ const BootsModal = ({
         <LoadingButton
           loading={isLoading}
           onClick={() => handleUpgrade()}
-          className="btn-slide-in fixed  left-4 right-4 font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg"
+          className="btn-slide-in fixed left-4 right-4 font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg"
         >
           UPGRADE
         </LoadingButton>
