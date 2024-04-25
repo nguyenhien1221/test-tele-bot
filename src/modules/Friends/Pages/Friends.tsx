@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import useGetAcountReferees from "../Hooks/useGetAcountReferees";
 import { copyToClipboard } from "../../../utils/helper";
 import { ToastContainer, toast } from "react-toastify";
-import { formatDecimals } from "../../../utils/formatNumber";
 
 const Friends = () => {
   const navigate = useNavigate();
