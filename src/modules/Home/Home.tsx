@@ -47,7 +47,7 @@ const Home = () => {
   const [isFill, setIsFill] = useState<boolean>(false);
   // const [expand, setExpand] = useState<any>(isExpanded);
 
-  const isSmallScreen = window.innerHeight < 450 ? true : false;
+  const isSmallScreen = window.innerHeight <= 520 ? true : false;
 
   const minedSeed = formatDecimals(
     calculateMinedSeeds(
@@ -223,11 +223,16 @@ const Home = () => {
           {/* storage button */}
           <div
             className={clsx(
-              isSmallScreen ? "mt-4 " : "",
-              "max-h-[90px] min-h-[90px]"
+              "max-h-[90px] min-h-[90px]",
+              isSmallScreen ? "mt-1" : ""
             )}
           >
-            <div className=" bg-white rounded-2xl p-4 w-full relative overflow-hidden">
+            <div
+              className={clsx(
+                "bg-white rounded-2xl w-full relative overflow-hidden",
+                isSmallScreen ? "p-2" : "p-4"
+              )}
+            >
               <div
                 ref={progressRef}
                 className="bg-[#E4FFCE]  h-full top-0 left-0 absolute z-0 "

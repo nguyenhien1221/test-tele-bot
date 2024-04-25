@@ -25,6 +25,7 @@ const BootsModal = ({
   speedLevel,
 }: ModalPropsType) => {
   const isDesktop = window.innerHeight < 610 ? true : false;
+  const isSmallScreen = window.innerHeight <= 520 ? true : false;
 
   const renderTitle = (type: number) => {
     if (type === 0) {
@@ -64,7 +65,7 @@ const BootsModal = ({
 
   const price =
     type === bootTypeEnum.STORAGE ? bootsStorageLevel : boostSpeedLevel;
-  const isSmallScreen = window.innerHeight < 450 ? true : false;
+
   return (
     <>
       <div
@@ -73,15 +74,21 @@ const BootsModal = ({
       ></div>
       <div
         className={clsx(
-          "fixed py-4  bottom-0 left-0 flex flex-col items-center px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]",
+          "slide-in fixed py-4 left-0 flex flex-col items-center px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]",
           isSmallScreen ? "h-[90%]" : "h-[85%] max-h-[567px]"
         )}
       >
         <div className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"></div>
         <div className="overflow-auto w-full ">
-          <div className="flex flex-col items-center ">{renderTitle(type)}</div>
+          <div className={clsx("flex flex-col items-center")}>
+            {renderTitle(type)}
+          </div>
           <div
-            className={clsx(" mb-[26px] w-full", isDesktop ? "mt-3" : "mt-8")}
+            className={clsx(
+              "w-full",
+              isDesktop ? "mt-3" : "mt-8",
+              isSmallScreen ? "mb-4" : "mb-[26px]"
+            )}
           >
             <MissionsItem type={type} level={level + 1} />
             <div className="flex justify-center">
@@ -111,7 +118,7 @@ const BootsModal = ({
         <LoadingButton
           loading={isLoading}
           onClick={() => handleUpgrade()}
-          className=" fixed bottom-10 left-4 right-4 font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg"
+          className="btn-slide-in fixed  left-4 right-4 font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg"
         >
           UPGRADE
         </LoadingButton>

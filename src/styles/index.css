@@ -73,17 +73,30 @@ code {
   font-family: "Bowlby One", sans-serif !important;
 }
 
-.slide_in {
-  bottom: 0 !important;
-  animation: slideUp 2s ease 0s 1 normal forwards !important;
+.slide-in {
+  animation: slideUp 0.3s ease 0s 1 normal forwards !important;
 }
 
 @keyframes slideUp {
   0% {
-    bottom: -567px !important;
+    bottom: -570px;
   }
 
   100% {
-    bottom: 0px !important;
+    bottom: 0;
+  }
+}
+
+.btn-slide-in {
+  animation: btnSlideUp 0.3s ease 0s 1 normal forwards !important;
+}
+
+@keyframes btnSlideUp {
+  0% {
+    bottom: -570px;
+  }
+
+  100% {
+    bottom: 40px;
   }
 }

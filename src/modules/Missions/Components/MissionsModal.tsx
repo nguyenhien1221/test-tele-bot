@@ -21,7 +21,7 @@ const MissionsModal = ({
   handleDoMission,
 }: ModalPropsType) => {
   const missions = getMissionsByType(type, data);
-  const isSmallScreen = window.innerHeight < 450 ? true : false;
+  const isSmallScreen = window.innerHeight <= 520 ? true : false;
 
   const [missionItem, setMissionItem] = useState<any>();
 
@@ -47,7 +47,7 @@ const MissionsModal = ({
       ></div>
       <div
         className={clsx(
-          "fixed py-4  bottom-0 left-0 flex flex-col items-center  px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]",
+          "slide-in fixed py-4  left-0 flex flex-col items-center  px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]",
           isSmallScreen ? "h-[90%]" : "h-[85%] max-h-[534px]"
         )}
       >
@@ -87,7 +87,10 @@ const MissionsModal = ({
                 )}
                 <div className={clsx("rounded-[16px] overflow-hidden")}>
                   <img
-                    className={item.task_user?.completed ? "brightness-50" : ""}
+                    className={clsx(
+                      item.task_user?.completed ? "brightness-50" : "",
+                      isSmallScreen ? "w-[65px]" : ""
+                    )}
                     src={item?.metadata.image_url}
                     width={80}
                     alt="logo"
@@ -103,7 +106,7 @@ const MissionsModal = ({
 
         <Button
           onClick={closeModal}
-          className="fixed bottom-10 w-[calc(100%-32px)] font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg "
+          className="btn-slide-in fixed w-[calc(100%-32px)] font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg "
         >
           got it
         </Button>

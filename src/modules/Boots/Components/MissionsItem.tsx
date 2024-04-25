@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import {
   boostSpeedLevel,
   bootTypeEnum,
@@ -10,9 +11,16 @@ interface MissionsItemPropType {
 }
 
 const MissionsItem = ({ level, type }: MissionsItemPropType) => {
+  const isSmallScreen = window.innerHeight <= 520 ? true : false;
+
   const renderStorageItems = () => {
     return (
-      <div className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full drop-shadow-lg">
+      <div
+        className={clsx(
+          "grid grid-cols-7 gap-3 bg-white rounded-2xl w-full drop-shadow-lg",
+          isSmallScreen ? "p-2" : " p-4"
+        )}
+      >
         <div className="col-span-2 flex ">
           <img
             src={`/images/storage/${level + 1}.png`}
