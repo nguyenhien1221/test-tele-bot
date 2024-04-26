@@ -28,7 +28,7 @@ const Boots = () => {
 
   const UpgradeStorage = useUpgradeStorage();
   const UpgradeSpeed = useUpgradeSpeed();
-  const AcountBalnce = useGetAcountBalance();
+  const AcountBalance = useGetAcountBalance();
   const AcountData = useGetAcountDetails();
 
   tele.BackButton.show();
@@ -43,7 +43,7 @@ const Boots = () => {
       UpgradeStorage.mutateAsync()
         .then(() => {
           AcountData.refetch();
-          AcountBalnce.refetch();
+          AcountBalance.refetch();
           toast.success("Upgraded Successfully", {
             style: { width: 272, borderRadius: 8 },
             autoClose: 2000,
@@ -64,7 +64,7 @@ const Boots = () => {
       UpgradeSpeed.mutateAsync()
         .then(() => {
           AcountData.refetch();
-          AcountBalnce.refetch();
+          AcountBalance.refetch();
           toast.success("Upgraded Successfully", {
             style: { width: 272, borderRadius: 8 },
             autoClose: 2000,
@@ -121,7 +121,7 @@ const Boots = () => {
           ></img>
           <p className="text-[40px] font-extrabold">
             {formatNumberFloatFix(
-              Number(formatDecimals(AcountBalnce.data?.data.data)) ?? 0,
+              Number(formatDecimals(AcountBalance.data?.data.data)) ?? 0,
               5
             )}
           </p>
