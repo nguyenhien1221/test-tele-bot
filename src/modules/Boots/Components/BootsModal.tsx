@@ -104,7 +104,7 @@ const BootsModal = ({
           </div>
           <div className="flex justify-center gap-2 mb-[17px]">
             <img
-              src="/images/icons/token_icon.svg"
+              src="/images/icons/token_icon.png"
               width={32}
               height={32}
               alt="token"

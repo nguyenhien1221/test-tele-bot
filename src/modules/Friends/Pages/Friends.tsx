@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import useGetAcountReferees from "../Hooks/useGetAcountReferees";
 import { copyToClipboard } from "../../../utils/helper";
 import { ToastContainer, toast } from "react-toastify";
+import clsx from "clsx";
 
 const Friends = () => {
   const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
 
   const userID = tele.initDataUnsafe?.user?.id;
+  const isSmallScreen = window.innerHeight <= 520 ? true : false;
 
   const AcountReferees = useGetAcountReferees();
 
@@ -27,7 +29,7 @@ const Friends = () => {
   };
 
   return (
-    <div className="pt-[42px] px-4 bg-gradient-to-b h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
+    <div className="pt-[42px] px-4 pb-[100px] bg-gradient-to-b h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
       <ToastContainer
         limit={1}
         stacked
@@ -55,38 +57,54 @@ const Friends = () => {
 
       {/* friends list */}
       {AcountReferees.data?.data.data.length > 0 && (
-        <p className="text-xl font-bold mb-4 mt-10">My friends</p>
+        <p
+          className={clsx(
+            " font-bold ",
+            isSmallScreen ? "text-base my-2" : "text-xl mb-4 mt-10"
+          )}
+        >
+          My friends
+        </p>
       )}
-      {AcountReferees.data?.data.data &&
-        AcountReferees.data?.data.data.map((item: any) => (
-          <div className="grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-4 drop-shadow-lg">
-            <div className="col-span-2 flex ">
-              <img
-                src="/images/icons/user.svg"
-                width={48}
-                height={48}
-                alt="avt"
-              ></img>
-            </div>
-            <div className="col-span-8">
-              <p className="text-sm font-extrabold mb-1">{item.name}</p>
-              <div>
-                <div className="flex items-center gap-1">
-                  <span className="text-[#7D7D7D] text-sm">You recieved:</span>
-                  <img
-                    src="/images/icons/token_icon.svg"
-                    width={18}
-                    height={18}
-                    alt="token"
-                  ></img>
-                  <p className="text-sm font-bold">
-                    {item.received_amount.toFixed(6)} SEED
-                  </p>
+      <div
+        className={clsx(
+          "overflow-auto ",
+          isSmallScreen ? "h-[calc(100%-227px)]" : "h-[calc(100%-271px)]"
+        )}
+      >
+        {AcountReferees.data?.data.data &&
+          AcountReferees.data?.data.data.map((item: any) => (
+            <div className="grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-4 drop-shadow-lg">
+              <div className="col-span-2 flex ">
+                <img
+                  src="/images/icons/user.svg"
+                  width={48}
+                  height={48}
+                  alt="avt"
+                ></img>
+              </div>
+              <div className="col-span-8">
+                <p className="text-sm font-extrabold mb-1">{item.name}</p>
+                <div>
+                  <div className="flex items-center gap-1">
+                    <span className="text-[#7D7D7D] text-sm">
+                      You recieved:
+                    </span>
+                    <img
+                      src="/images/icons/token_icon.png"
+                      width={18}
+                      height={18}
+                      alt="token"
+                    ></img>
+                    <p className="text-sm font-bold">
+                      {item.received_amount.toFixed(6)} SEED
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+      </div>
 
       <div className="absolute bottom-[30px] right-4 left-4">
         <Button

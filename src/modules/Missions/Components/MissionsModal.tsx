@@ -27,10 +27,9 @@ const MissionsModal = ({
 
   useEffect(() => {
     const handleClickLink = () => {
-      if (!missionItem?.task_user?.completed) {
-        handleDoMission(missionItem.id);
+      if (missionItem && !missionItem?.task_user?.completed) {
+        handleDoMission(missionItem?.id);
       }
-      console.log("object");
     };
 
     window.addEventListener("blur", handleClickLink);

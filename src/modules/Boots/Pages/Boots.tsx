@@ -114,7 +114,7 @@ const Boots = () => {
         <p className="text-sm font-normal">Your balance</p>
         <div className="flex items-center gap-2">
           <img
-            src="/images/icons/token_icon.svg"
+            src="/images/icons/token_icon.png"
             width={44}
             height={44}
             alt="token"
@@ -130,7 +130,7 @@ const Boots = () => {
           <p className=" font-normal">Storage size:</p>
           <div className="flex items-center gap-1">
             <img
-              src="/images/icons/token_icon.svg"
+              src="/images/icons/token_icon.png"
               width={17}
               height={17}
               alt="token"
@@ -150,7 +150,7 @@ const Boots = () => {
           <p className=" font-normal">Mining speed:</p>
           <div className="flex items-center gap-1">
             <img
-              src="/images/icons/token_icon.svg"
+              src="/images/icons/token_icon.png"
               width={17}
               height={17}
               alt="token"
@@ -217,7 +217,7 @@ const Boots = () => {
                 <div>
                   <div className="flex items-center gap-1">
                     <img
-                      src="/images/icons/token_icon.svg"
+                      src="/images/icons/token_icon.png"
                       width={14}
                       height={14}
                       alt="token"

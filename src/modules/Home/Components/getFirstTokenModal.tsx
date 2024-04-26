@@ -13,8 +13,6 @@ const GetFirstTokenModal = ({
   closeModal,
   handleClaim,
 }: ModalPropsType) => {
-  const isOver = new Date().getTime() - new Date("5/4/2024").getTime() > 0;
-
   return (
     <>
       <div
@@ -25,30 +23,18 @@ const GetFirstTokenModal = ({
         <div className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"></div>
         <div
           className="max-h-[117px] w-full mb-2 flex flex-1 justify-center bg-no-repeat bg-contain bg-center"
-          style={{ backgroundImage: "url('/images/icons/token_icon.svg')" }}
+          style={{ backgroundImage: "url('/images/icons/token_icon.png')" }}
         ></div>
         <div className="text-[32px] font-black">+{reward}SEED</div>
-        {isOver ? (
-          <div className="text-center font-normal mt-4">
-            🌱 You're now part of SEED DAO!
-            <br />
-            🌟 <span className="font-bold">{reward} SEED</span> is gifted for{" "}
-            <span className="font-black">Early Farmers.</span>
-            <br />
-            Let's grow together! Happy planting!
-          </div>
-        ) : (
-          <div className="text-center font-normal mt-4">
-            🌱 You're now part of SEED DAO!
-            <br />
-            🌟 <span className="font-bold">{reward} SEED</span> is gifted for{" "}
-            <span className="font-black">
-              Early Farmers during the first 3 days!
-            </span>
-            <br />
-            Let's grow together! Happy planting!
-          </div>
-        )}
+
+        <div className="text-center font-normal mt-4">
+          🌱 You're now part of SEED DAO!
+          <br />
+          🌟 <span className="font-bold">{reward} SEED</span> is gifted for
+          <span className="font-black">Early Farmers.</span>
+          <br />
+          Let's grow together! Happy planting!
+        </div>
 
         <LoadingButton
           loading={isLoading}

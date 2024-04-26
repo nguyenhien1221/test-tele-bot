@@ -23,6 +23,7 @@ import useGetMissions from "../Missions/Hooks/useGetMissions";
 import GetFirstTokenModal from "./Components/getFirstTokenModal";
 import useDoMissions from "../Missions/Hooks/useDoMissions";
 import { LoadingButton } from "@mui/lab";
+import { Button } from "@mui/material";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
@@ -185,7 +186,7 @@ const Home = () => {
               <p className="text-base font-normal">In Storage:</p>
               <div className="flex items-center gap-2">
                 <img
-                  src="/images/icons/token_icon.svg"
+                  src="/images/icons/token_icon.png"
                   width={44}
                   height={44}
                   alt="token"
@@ -196,7 +197,7 @@ const Home = () => {
                 <p className="text-base font-normal">SEED Balance:</p>
                 <div className="flex items-center gap-1">
                   <img
-                    src="/images/icons/token_icon.svg"
+                    src="/images/icons/token_icon.png"
                     width={17}
                     height={17}
                     alt="token"
@@ -229,28 +230,52 @@ const Home = () => {
           >
             <div
               className={clsx(
-                "bg-white rounded-2xl w-full relative overflow-hidden",
+                "bg-white rounded-2xl w-full relative overflow-hidden ",
                 isSmallScreen ? "p-2" : "p-4"
               )}
             >
+              {/* progess bar */}
               <div
                 ref={progressRef}
                 className="bg-[#E4FFCE]  h-full top-0 left-0 absolute z-0 "
               ></div>
-              <div className=" relative z-10 grid grid-cols-8 gap-1">
+
+              {/* blur when has news */}
+              {false && (
+                <div className="bg-[#000] opacity-60  w-full h-full top-0 left-0 absolute z-30 flex justify-center items-center">
+                  <Button className="text-white py-3 px-4 border-solid border-2 border-white rounded-2xl">
+                    Check New
+                  </Button>
+                </div>
+              )}
+
+              <div
+                className={clsx(
+                  "relative z-10 grid grid-cols-8 gap-1",
+                  false ? "blur-sm" : ""
+                )}
+              >
                 <div className="col-span-2 flex items-center">
                   <div>
                     <img
                       src={`/images/storage/${
                         getStorageUpgradesLevel(AcountData.data?.data.data) + 1
                       }.png`}
-                      width={62}
+                      width={isSmallScreen ? 52 : 62}
                       alt="storage"
                     ></img>
                   </div>
                 </div>
                 <div className="col-span-3">
-                  <p className="font-extrabold">Storage</p>
+                  <p
+                    className={
+                      isSmallScreen
+                        ? "font-extrabold  text-sm"
+                        : "font-extrabold"
+                    }
+                  >
+                    Storage
+                  </p>
                   <div className="flex gap-[7px]">
                     <img
                       src={
@@ -275,7 +300,7 @@ const Home = () => {
                   <div>
                     <div className="flex items-center gap-1">
                       <img
-                        src="/images/icons/token_icon.svg"
+                        src="/images/icons/token_icon.png"
                         width={14}
                         height={14}
                         alt="token"
@@ -293,7 +318,10 @@ const Home = () => {
                     loading={ClaimSeed.isPending}
                     disabled={!isFull}
                     onClick={handleClaim}
-                    className="w-[100px] h-40px py-3 rounded-lg bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold"
+                    className={clsx(
+                      "w-[100px] h-40px  rounded-lg bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold",
+                      isSmallScreen ? "py-2" : "py-3"
+                    )}
                   >
                     Claim
                   </LoadingButton>

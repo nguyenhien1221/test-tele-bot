@@ -76,7 +76,7 @@ const MissionsPage = () => {
           <div className="flex flex-col items-center">
             <div className="flex flex-col items-center gap-3">
               <img
-                src="/images/icons/token_icon.svg"
+                src="/images/icons/token_icon.png"
                 width={100}
                 height={100}
                 alt="token"
@@ -122,7 +122,7 @@ const MissionsPage = () => {
                     <div>
                       <div className="flex items-center gap-1">
                         <img
-                          src="/images/icons/token_icon.svg"
+                          src="/images/icons/token_icon.png"
                           width={14}
                           height={14}
                           alt="token"
