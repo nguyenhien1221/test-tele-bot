@@ -40,7 +40,7 @@ const NavBar = () => {
                 <div className="h-[36px] ">
                   <img
                     className="h-[36px]"
-                    width={36}
+                    width={index === 2 ? 43 : 36}
                     height={36}
                     src={item.icon}
                     alt={item.name}

@@ -243,7 +243,7 @@ const Home = () => {
               {/* blur when has news */}
               {false && (
                 <div className="bg-[#000] opacity-60  w-full h-full top-0 left-0 absolute z-30 flex justify-center items-center">
-                  <Button className="text-white py-3 px-4 border-solid border-2 border-white rounded-2xl">
+                  <Button className="capitalize font-extrabold text-white py-3 px-[14px] border-solid border-[1px] border-white rounded-2xl">
                     Check New
                   </Button>
                 </div>
