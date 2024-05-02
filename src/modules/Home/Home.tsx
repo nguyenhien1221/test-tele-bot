@@ -33,7 +33,7 @@ const Home = () => {
 
   tele.BackButton.hide();
 
-  tele.SettingButton.onClick(() => {
+  tele.SettingsButton.onClick(() => {
     console.log("object");
   });
 
