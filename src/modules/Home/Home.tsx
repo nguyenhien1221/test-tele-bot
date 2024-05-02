@@ -33,6 +33,10 @@ const Home = () => {
 
   tele.BackButton.hide();
 
+  tele.SettingButton.onClick(() => {
+    console.log("object");
+  });
+
   const AcountBalnce = useGetAcountBalance();
   const AcountData = useGetAcountDetails();
   const ClaimSeed = useClaimSeed();
