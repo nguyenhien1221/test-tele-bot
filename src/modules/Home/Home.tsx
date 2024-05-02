@@ -292,7 +292,7 @@ const Home = () => {
                       width={14} 
                       alt="clock"
                     ></img> */}
-                    <p className="text-xs">
+                    <p className="text-sm font-medium">
                       {isFill ? (
                         "Filled"
                       ) : (
