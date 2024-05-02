@@ -23,7 +23,7 @@ export default function Countdown({ date, onComplete }: CountdownProps) {
               <div className={descriptionClassName}>h</div>
             </div>
 
-            <div className={hours !== 0 ? containerClassName : "hidden"}>
+            <div className={minutes !== 0 ? containerClassName : "hidden"}>
               <div className={valueClassName}>{String(minutes)}</div>
               <div className={descriptionClassName}>m</div>
             </div>
