@@ -18,12 +18,12 @@ export default function Countdown({ date, onComplete }: CountdownProps) {
       renderer={({ hours, minutes }: any) => {
         return (
           <div className="grid grid-cols-[repeat(7,auto)] gap-[2px]">
-            <div className={containerClassName}>
+            <div className={hours !== 0 ? containerClassName : "hidden"}>
               <div className={valueClassName}>{String(hours)}</div>
               <div className={descriptionClassName}>h</div>
             </div>
 
-            <div className={containerClassName}>
+            <div className={hours !== 0 ? containerClassName : "hidden"}>
               <div className={valueClassName}>{String(minutes)}</div>
               <div className={descriptionClassName}>m</div>
             </div>

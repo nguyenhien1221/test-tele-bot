@@ -4,6 +4,7 @@ import { socials } from "../../../constants/missions.constants";
 import { getMissionsByType } from "../Utils/missions";
 import clsx from "clsx";
 import { formatDecimals } from "../../../utils/formatNumber";
+import { useState } from "react";
 
 interface ModalPropsType {
   data: any;
@@ -22,6 +23,7 @@ const MissionsModal = ({
   const tele = window.Telegram.WebApp;
   const missions = getMissionsByType(type, data);
   const isSmallScreen = window.innerHeight <= 520 ? true : false;
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleShowPopup = (item: any) => {
     tele.showPopup(
@@ -38,6 +40,7 @@ const MissionsModal = ({
             tele.openLink(item.metadata.url);
             setTimeout(() => {
               handleDoMission(item?.id);
+              setIsLoading(false);
             }, 5000);
             return;
           }
@@ -77,8 +80,10 @@ const MissionsModal = ({
           <div className="grid grid-cols-3 gap-x-[34px] gap-y-4 mb-[38px] mt-[42px]">
             {missions?.map((item: any, index: number) => (
               <button
+                disabled={isLoading}
                 key={item.id}
                 onClick={() => {
+                  setIsLoading(true);
                   handleShowPopup(item);
                 }}
                 rel="noreferrer"
