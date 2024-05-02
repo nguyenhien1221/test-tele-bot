@@ -4,7 +4,6 @@ import { socials } from "../../../constants/missions.constants";
 import { getMissionsByType } from "../Utils/missions";
 import clsx from "clsx";
 import { formatDecimals } from "../../../utils/formatNumber";
-import { useEffect, useState } from "react";
 
 interface ModalPropsType {
   data: any;
@@ -20,24 +19,31 @@ const MissionsModal = ({
   data,
   handleDoMission,
 }: ModalPropsType) => {
+  const tele = window.Telegram.WebApp;
   const missions = getMissionsByType(type, data);
   const isSmallScreen = window.innerHeight <= 520 ? true : false;
 
-  const [missionItem, setMissionItem] = useState<any>();
-
-  useEffect(() => {
-    const handleClickLink = () => {
-      if (missionItem && !missionItem?.task_user?.completed) {
-        handleDoMission(missionItem?.id);
+  const handleShowPopup = (item: any) => {
+    tele.showPopup(
+      {
+        message: "Do you want to open link",
+        buttons: [
+          { id: "link", type: "default", text: "Open" },
+          { type: "cancel" },
+        ],
+      },
+      function (btn: any) {
+        if (btn === "link") {
+          if (!item?.task_user?.completed) {
+            handleDoMission(item?.id);
+            tele.openLink(item.metadata.url);
+            return;
+          }
+          tele.openLink(item.metadata.url);
+        }
       }
-    };
-
-    window.addEventListener("blur", handleClickLink);
-
-    return () => {
-      window.removeEventListener("blur", handleClickLink);
-    };
-  }, [missionItem]);
+    );
+  };
 
   return (
     <>
@@ -68,13 +74,11 @@ const MissionsModal = ({
 
           <div className="grid grid-cols-3 gap-x-[34px] gap-y-4 mb-[38px] mt-[42px]">
             {missions?.map((item: any, index: number) => (
-              <a
+              <button
                 key={item.id}
                 onClick={() => {
-                  setMissionItem(item);
+                  handleShowPopup(item);
                 }}
-                href={item.metadata.url}
-                target="_blank"
                 rel="noreferrer"
                 className={clsx("text-center relative")}
               >
@@ -99,7 +103,7 @@ const MissionsModal = ({
                 <p className="mt-3 font-semibold text-sm">
                   {item?.metadata.name}
                 </p>
-              </a>
+              </button>
             ))}
           </div>
         </div>

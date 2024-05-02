@@ -24,6 +24,7 @@ import GetFirstTokenModal from "./Components/getFirstTokenModal";
 import useDoMissions from "../Missions/Hooks/useDoMissions";
 import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
+import useGetLatestMessage from "./Hooks/useGetLatestMessage";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
@@ -37,6 +38,7 @@ const Home = () => {
   const ClaimSeed = useClaimSeed();
   const MissionsData = useGetMissions();
   const doMission = useDoMissions();
+  const LatestMessage = useGetLatestMessage();
 
   const [isClaimed, setIsClaimed] = useState<any>(false);
   const [instorage, setInstorage] = useState<any>(() => {
@@ -49,6 +51,10 @@ const Home = () => {
   // const [expand, setExpand] = useState<any>(isExpanded);
 
   const isSmallScreen = window.innerHeight <= 520 ? true : false;
+  const LatestMessageTime = LatestMessage.data?.data.data;
+  const ReadMessageTime = localStorage.getItem("readMessageTime");
+
+  console.log(LatestMessageTime, ReadMessageTime);
 
   const minedSeed = formatDecimals(
     calculateMinedSeeds(
