@@ -45,6 +45,8 @@ const MissionsModal = ({
             return;
           }
           tele.openLink(item.metadata.url);
+        } else {
+          setIsLoading(false);
         }
       }
     );

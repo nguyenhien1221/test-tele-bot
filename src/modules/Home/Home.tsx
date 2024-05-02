@@ -54,7 +54,7 @@ const Home = () => {
   const LatestMessageTime = LatestMessage.data?.data.data;
   const ReadMessageTime = localStorage.getItem("readMessageTime");
 
-  console.log(LatestMessageTime, ReadMessageTime);
+  // console.log(LatestMessageTime, ReadMessageTime);
 
   const minedSeed = formatDecimals(
     calculateMinedSeeds(
