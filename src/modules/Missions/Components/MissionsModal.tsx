@@ -35,8 +35,10 @@ const MissionsModal = ({
       function (btn: any) {
         if (btn === "link") {
           if (!item?.task_user?.completed) {
-            handleDoMission(item?.id);
             tele.openLink(item.metadata.url);
+            setTimeout(() => {
+              handleDoMission(item?.id);
+            }, 5000);
             return;
           }
           tele.openLink(item.metadata.url);
