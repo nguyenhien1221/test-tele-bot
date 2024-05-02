@@ -1,9 +1,9 @@
 import Cd from "react-countdown";
-import NumberCycle from "./NumberCycle";
 
 const containerClassName = "flex gap-0.5 items-center",
-  valueClassName = "flex justify-center items-center text-sm tracking-tighter",
-  descriptionClassName = "text-sm ";
+  valueClassName =
+    "flex justify-center items-center text-sm font-medium tracking-tighter",
+  descriptionClassName = "text-sm font-medium ";
 
 interface CountdownProps {
   date: number | string;
@@ -17,29 +17,18 @@ export default function Countdown({ date, onComplete }: CountdownProps) {
       onComplete={onComplete}
       renderer={({ hours, minutes }: any) => {
         return (
-          <div className="grid grid-cols-[repeat(7,auto)] gap-[6px]">
+          <div className="grid grid-cols-[repeat(7,auto)] gap-[2px]">
             <div className={containerClassName}>
-              <div className={valueClassName}>
-                {String(hours)
-                  .padStart(2, "0")
-                  .split("")
-                  .map((item, idx) => (
-                    <NumberCycle value={+item} key={idx} />
-                  ))}
-              </div>
+              <div className={valueClassName}>{String(hours)}</div>
               <div className={descriptionClassName}>h</div>
             </div>
 
             <div className={containerClassName}>
-              <div className={valueClassName}>
-                {String(minutes)
-                  .padStart(2, "0")
-                  .split("")
-                  .map((item, idx) => (
-                    <NumberCycle value={+item} key={idx} />
-                  ))}
-              </div>
+              <div className={valueClassName}>{String(minutes)}</div>
               <div className={descriptionClassName}>m</div>
+            </div>
+            <div className="flex gap-0.5 items-center ml-[2px]">
+              <div className={descriptionClassName}>to fill</div>
             </div>
           </div>
         );

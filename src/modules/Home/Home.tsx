@@ -283,15 +283,15 @@ const Home = () => {
                     Storage
                   </p>
                   <div className="flex gap-[7px]">
-                    <img
+                    {/* <img
                       src={
                         isFill
                           ? "/images/icons/time_checked.svg"
                           : "/images/icons/clock.svg"
                       }
-                      width={14}
+                      width={14} 
                       alt="clock"
-                    ></img>
+                    ></img> */}
                     <p className="text-xs">
                       {isFill ? (
                         "Filled"
@@ -305,12 +305,12 @@ const Home = () => {
                   </div>
                   <div>
                     <div className="flex items-center gap-1">
-                      <img
+                      {/* <img
                         src="/images/icons/token_icon.png"
                         width={14}
                         height={14}
                         alt="token"
-                      ></img>
+                      ></img> */}
                       <p className="text-xs font-normal">{`${
                         boostSpeedLevel[
                           getSpeedUpgradesLevel(AcountData.data?.data.data)
