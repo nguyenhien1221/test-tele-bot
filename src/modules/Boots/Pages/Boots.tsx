@@ -196,7 +196,7 @@ const Boots = () => {
             <div
               onClick={() => handleOpenModal(index)}
               key={index}
-              className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
+              className="cursor-pointer grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
             >
               <div className="col-span-2 flex items-center ">
                 <div className="w-[73px] h-[67px]">

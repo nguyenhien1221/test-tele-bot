@@ -32,7 +32,9 @@ const MissionsPage = () => {
       copyToClipboard(
         `${process.env.REACT_APP_BOT_URL}startapp=${String(userID)}`
       );
-      handleDoMission(data[data.length - 1]?.id);
+      if (!data[data.length - 1]?.task_user?.completed) {
+        handleDoMission(data[data.length - 1]?.id);
+      }
       return;
     }
     setisOpen({ isOpen: true, type: index });
@@ -100,7 +102,7 @@ const MissionsPage = () => {
                 <div
                   onClick={() => handleChooseMission(index)}
                   key={index}
-                  className="grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
+                  className="cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
                 >
                   <div className="col-span-2 flex items-center">
                     <div>
