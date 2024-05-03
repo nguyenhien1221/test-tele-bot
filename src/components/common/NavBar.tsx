@@ -30,10 +30,10 @@ const NavBar = () => {
         stacked
         className="top-3 w-[272px] left-[50%] -translate-x-[50%]"
       />
-      <div className="rounded-[50px] dark:gradient-border-mask">
+      <div className="rounded-[50px] ">
         <div
           className={clsx(
-            "flex justify-between dark:bg-transparent bg-[#fff] shadow-lg rounded-[50px] py-[9px] px-[37px]"
+            "flex justify-between dark:gradient-border-mask dark:bg-transparent bg-[#fff] shadow-lg rounded-[50px] py-[9px] px-[37px]"
           )}
         >
           {navbarItems.map((item, index) => (

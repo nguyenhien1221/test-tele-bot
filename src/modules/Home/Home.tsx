@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import NavBar from "../../components/common/NavBar";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { formatDecimals, formatNumberFloatFix } from "../../utils/formatNumber";
 import useGetAcountBalance from "./Hooks/useGetAcountBalance";
 import useClaimSeed from "./Hooks/useClaimSeed";
@@ -25,6 +25,7 @@ import useDoMissions from "../Missions/Hooks/useDoMissions";
 import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
 import useGetLatestMessage from "./Hooks/useGetLatestMessage";
+import Stars from "../../components/common/Stars";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
@@ -149,7 +150,7 @@ const Home = () => {
   ]);
 
   const handleClaim = () => {
-    // document.documentElement.classList.add("dark");
+    document.documentElement.classList.add("dark");
     ClaimSeed.mutateAsync()
       .then(() => {
         progressRef.current.style.width = "0%";
@@ -198,7 +199,7 @@ const Home = () => {
       ) : (
         <div
           className={clsx(
-            "h-screen overflow-hidden flex flex-col flex-1 px-4 pb-[115px] relative ",
+            "h-screen overflow-hidden flex flex-col flex-1 px-4 pb-[140px] relative ",
             "dark:bg-[#000000]  dark:bg-gradient-to-b from-transparent via-transparent to-transparent ",
             "bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A]"
           )}
@@ -249,7 +250,7 @@ const Home = () => {
           </div>
           <div
             className={clsx(
-              "flex flex-1 max-h-[560px] justify-center bg-no-repeat bg-contain bg-center"
+              "flex flex-1 max-h-[560px] justify-center bg-no-repeat bg-contain bg-center z-30"
             )}
             style={{
               backgroundImage: "url('/images/trees/6.png')",
@@ -329,7 +330,7 @@ const Home = () => {
                           ? "/images/icons/time_checked.svg"
                           : "/images/icons/clock.svg"
                       }
-                      width={14} 
+                      width={14}
                       alt="clock"
                     ></img> */}
                       <p className="text-sm font-medium ">
@@ -379,11 +380,15 @@ const Home = () => {
             </div>
           </div>
 
-          <div className={clsx("fixed left-4 right-4", "bottom-6")}>
+          <div className={clsx("fixed left-4 right-4 z-30", "bottom-10 ")}>
             <NavBar />
           </div>
         </div>
       )}
+      {/* <div>
+        <div id="stars"></div>
+      </div> */}
+      <Stars />
 
       {isOpen && (
         <GetFirstTokenModal
