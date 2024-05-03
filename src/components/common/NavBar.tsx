@@ -1,6 +1,7 @@
 import { ToastContainer, toast } from "react-toastify";
 import { navbarItems } from "../../constants/navbar.constants";
 import { useNavigate } from "react-router-dom";
+import clsx from "clsx";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -29,28 +30,36 @@ const NavBar = () => {
         stacked
         className="top-3 w-[272px] left-[50%] -translate-x-[50%]"
       />
-      <div className="flex justify-between bg-[#fff] shadow-lg rounded-[50px] py-[9px] px-[37px]">
-        {navbarItems.map((item, index) => (
-          <div key={index}>
-            <div
-              className="cursor-pointer"
-              onClick={() => handleShowToast(index, item)}
-            >
-              <div className="flex flex-col items-center">
-                <div className="h-[36px] ">
-                  <img
-                    className="h-[36px]"
-                    width={index === 2 ? 43 : 36}
-                    height={36}
-                    src={item.icon}
-                    alt={item.name}
-                  ></img>
+      <div className="rounded-[50px] dark:gradient-border-mask">
+        <div
+          className={clsx(
+            "flex justify-between dark:bg-transparent bg-[#fff] shadow-lg rounded-[50px] py-[9px] px-[37px]"
+          )}
+        >
+          {navbarItems.map((item, index) => (
+            <div key={index}>
+              <div
+                className="cursor-pointer"
+                onClick={() => handleShowToast(index, item)}
+              >
+                <div className="flex flex-col items-center">
+                  <div className="h-[36px] ">
+                    <img
+                      className="h-[36px]"
+                      width={index === 2 ? 43 : 36}
+                      height={36}
+                      src={item.icon}
+                      alt={item.name}
+                    ></img>
+                  </div>
+                  <p className="dark:text-white text-xs font-medium">
+                    {item.name}
+                  </p>
                 </div>
-                <p className="text-xs font-medium">{item.name}</p>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

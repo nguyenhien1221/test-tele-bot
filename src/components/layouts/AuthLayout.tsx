@@ -7,7 +7,7 @@ import Loading from "../common/Loading";
 const AuthLayout = () => {
   const location = useLocation();
   const tele = window.Telegram.WebApp;
-  tele.setHeaderColor("#FFF5CF");
+  tele.setHeaderColor("#F7FFEB");
   tele.expand();
 
   const AcountData = useGetAcountDetails();

@@ -29,7 +29,7 @@ const Friends = () => {
   };
 
   return (
-    <div className="pt-[42px] px-4 pb-[100px] bg-gradient-to-b h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
+    <div className="pt-[42px] px-4 pb-[100px] bg-[#F2FFE0] h-screen ">
       <ToastContainer
         limit={1}
         stacked
@@ -110,7 +110,7 @@ const Friends = () => {
         <Button
           onClick={() => handleCopyLink()}
           startIcon={<img src="images/icons/copy.svg" alt="copy" />}
-          className="font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] w-full rounded-xl drop-shadow-lg "
+          className="font-bold capitalize bg-[#7AB32B] text-white py-[18px] w-full rounded-xl drop-shadow-lg "
         >
           Copy invite link
         </Button>

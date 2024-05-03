@@ -23,6 +23,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <ToastContainer
+          closeOnClick
           autoClose={2000}
           limit={1}
           stacked

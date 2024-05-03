@@ -74,7 +74,7 @@ const BootsModal = ({
       ></div>
       <div
         className={clsx(
-          "slide-in fixed py-4 left-0 flex flex-col items-center px-4 w-full rounded-t-2xl bg-gradient-to-b from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]",
+          "slide-in fixed py-4 left-0 flex flex-col items-center px-4 w-full rounded-t-2xl bg-[#F2FFE0]",
           isSmallScreen ? "h-[90%]" : "h-[85%] max-h-[567px]"
         )}
       >
@@ -118,9 +118,9 @@ const BootsModal = ({
         <LoadingButton
           loading={isLoading}
           onClick={() => handleUpgrade()}
-          className="btn-slide-in fixed left-4 right-4 font-bold bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg"
+          className="btn-slide-in capitalize fixed left-4 right-4 font-bold bg-[#7AB32B] text-white py-[18px] rounded-xl drop-shadow-lg"
         >
-          UPGRADE
+          Upgrade
         </LoadingButton>
       </div>
     </>

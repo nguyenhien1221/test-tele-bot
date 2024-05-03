@@ -2,6 +2,7 @@ FROM node:lts-alpine as build
 
 ARG REACT_APP_API_URL
 ARG REACT_APP_BOT_URL
+ARG REACT_APP_GROUP_URL
 
 WORKDIR /app
 

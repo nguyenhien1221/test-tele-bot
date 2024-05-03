@@ -5,7 +5,7 @@ import Loading from "../common/Loading";
 
 const HomeLayout = () => {
   return (
-    <div className="h-screen bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
+    <div className="h-screen bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A]">
       <div>
         <Suspense fallback={<Loading />}>
           <Outlet />

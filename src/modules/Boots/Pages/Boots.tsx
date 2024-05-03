@@ -102,7 +102,7 @@ const Boots = () => {
   };
 
   return (
-    <div className="overflow-auto pt-[42px] px-4 bg-gradient-to-b relative h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7]">
+    <div className="overflow-auto pt-[42px] px-4  relative h-screen bg-[#F2FFE0]">
       <ToastContainer
         limit={1}
         stacked

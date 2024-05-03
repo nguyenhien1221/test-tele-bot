@@ -149,6 +149,7 @@ const Home = () => {
   ]);
 
   const handleClaim = () => {
+    // document.documentElement.classList.add("dark");
     ClaimSeed.mutateAsync()
       .then(() => {
         progressRef.current.style.width = "0%";
@@ -187,7 +188,7 @@ const Home = () => {
       String(new Date().getTime() / 1000)
     );
 
-    tele.openLink("https://t.me/testmessagee");
+    tele.openLink(process.env.REACT_APP_GROUP_URL);
   };
 
   return (
@@ -195,10 +196,25 @@ const Home = () => {
       {AcountData.isLoading ? (
         <Loading />
       ) : (
-        <div className="h-screen overflow-hidden flex flex-col flex-1 px-4 pb-[115px] relative bg-gradient-to-b from-[#FFF5CF] via-[#FFCDAC] to-[#FF80A2]">
+        <div
+          className={clsx(
+            "h-screen overflow-hidden flex flex-col flex-1 px-4 pb-[115px] relative ",
+            "dark:bg-[#000000]  dark:bg-gradient-to-b from-transparent via-transparent to-transparent ",
+            "bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A]"
+          )}
+        >
+          <div className="hidden dark:block absolute z-0 bottom-0 left-0">
+            <img src="/images/darkmodebg.png" alt=""></img>
+          </div>
           <div>
             <div className="flex flex-col items-center flex-1 pt-[38px]">
-              <p className="text-base font-normal">In Storage:</p>
+              <p
+                className={
+                  "dark:text-white text-base font-normal ,dark:text-white"
+                }
+              >
+                In Storage:
+              </p>
               <div className="flex items-center gap-2">
                 <img
                   src="/images/icons/token_icon.png"
@@ -206,10 +222,14 @@ const Home = () => {
                   height={44}
                   alt="token"
                 ></img>
-                <p className="text-[35px] font-black">{minedSeed.toFixed(6)}</p>
+                <p className="dark:text-white text-[35px] font-black">
+                  {minedSeed.toFixed(6)}
+                </p>
               </div>
               <div className="flex gap-2 items-center">
-                <p className="text-base font-normal">SEED Balance:</p>
+                <p className="dark:text-white text-base font-normal">
+                  SEED Balance:
+                </p>
                 <div className="flex items-center gap-1">
                   <img
                     src="/images/icons/token_icon.png"
@@ -217,7 +237,7 @@ const Home = () => {
                     height={17}
                     alt="token"
                   ></img>
-                  <p className="text-base font-black">
+                  <p className="dark:text-white text-base font-black">
                     {formatNumberFloatFix(
                       Number(formatDecimals(AcountBalnce.data?.data.data)) ?? 0,
                       6
@@ -237,65 +257,73 @@ const Home = () => {
           ></div>
 
           {/* storage button */}
-          <div
-            className={clsx(
-              "max-h-[90px] min-h-[90px]",
-              isSmallScreen ? "mt-1" : ""
-            )}
-          >
+          <div className=" rounded-2xl dark:gradient-border-mask-storage">
             <div
               className={clsx(
-                "bg-white rounded-2xl w-full relative overflow-hidden ",
-                isSmallScreen ? "p-2" : "p-4"
+                "max-h-[90px] min-h-[90px]",
+                isSmallScreen ? "mt-1" : ""
               )}
             >
-              {/* progess bar */}
-              <div
-                ref={progressRef}
-                className="bg-[#E4FFCE]  h-full top-0 left-0 absolute z-0 "
-              ></div>
-
-              {/* blur when has news */}
-              {isReadNewMessage && (
-                <div className="bg-[#000] opacity-60  w-full h-full top-0 left-0 absolute z-30 flex justify-center items-center">
-                  <Button
-                    onClick={handleCheckNews}
-                    className="capitalize font-extrabold text-white py-3 px-[14px] border-solid border-[1px] border-white rounded-2xl"
-                  >
-                    Check New
-                  </Button>
-                </div>
-              )}
-
               <div
                 className={clsx(
-                  "relative z-10 grid grid-cols-8 gap-1",
-                  isReadNewMessage ? "blur-sm" : ""
+                  "rounded-2xl w-full relative overflow-hidden",
+                  "dark:bg-transparent",
+                  "bg-white",
+                  isSmallScreen ? "p-2" : "p-4"
                 )}
               >
-                <div className="col-span-2 flex items-center">
-                  <div>
-                    <img
-                      src={`/images/storage/${
-                        getStorageUpgradesLevel(AcountData.data?.data.data) + 1
-                      }.png`}
-                      width={isSmallScreen ? 52 : 62}
-                      alt="storage"
-                    ></img>
+                {/* progess bar */}
+                <div
+                  ref={progressRef}
+                  className={clsx(
+                    "h-full top-0 left-0 absolute z-10",
+                    "dark:bg-[#112C0D]",
+                    "bg-[#E4FFCE]"
+                  )}
+                ></div>
+
+                {/* blur when has news */}
+                {isReadNewMessage && (
+                  <div className="bg-[#000] opacity-60  w-full h-full top-0 left-0 absolute z-30 flex justify-center items-center">
+                    <Button
+                      onClick={handleCheckNews}
+                      className="capitalize font-extrabold text-white py-3 px-[14px] border-solid border-[1px] border-white rounded-2xl"
+                    >
+                      Check New
+                    </Button>
                   </div>
-                </div>
-                <div className="col-span-3">
-                  <p
-                    className={
-                      isSmallScreen
-                        ? "font-extrabold  text-sm"
-                        : "font-extrabold"
-                    }
-                  >
-                    Storage
-                  </p>
-                  <div className="flex gap-[7px]">
-                    {/* <img
+                )}
+
+                <div
+                  className={clsx(
+                    "relative z-10 grid grid-cols-8 gap-1",
+                    isReadNewMessage ? "blur-sm" : ""
+                  )}
+                >
+                  <div className="col-span-2 flex items-center">
+                    <div>
+                      <img
+                        src={`/images/storage/${
+                          getStorageUpgradesLevel(AcountData.data?.data.data) +
+                          1
+                        }.png`}
+                        width={isSmallScreen ? 52 : 62}
+                        alt="storage"
+                      ></img>
+                    </div>
+                  </div>
+                  <div className="col-span-3 dark:text-white">
+                    <p
+                      className={
+                        isSmallScreen
+                          ? "font-extrabold  text-sm"
+                          : "font-extrabold"
+                      }
+                    >
+                      Storage
+                    </p>
+                    <div className="flex gap-[7px]">
+                      {/* <img
                       src={
                         isFill
                           ? "/images/icons/time_checked.svg"
@@ -304,45 +332,48 @@ const Home = () => {
                       width={14} 
                       alt="clock"
                     ></img> */}
-                    <p className="text-sm font-medium">
-                      {isFill ? (
-                        "Filled"
-                      ) : (
-                        <Countdown
-                          date={endTime * 1000}
-                          onComplete={() => clearInterval(countProgess)}
-                        ></Countdown>
-                      )}
-                    </p>
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-1">
-                      {/* <img
+                      <p className="text-sm font-medium ">
+                        {isFill ? (
+                          "Filled"
+                        ) : (
+                          <Countdown
+                            date={endTime * 1000}
+                            onComplete={() => clearInterval(countProgess)}
+                          ></Countdown>
+                        )}
+                      </p>
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1">
+                        {/* <img
                         src="/images/icons/token_icon.png"
                         width={14}
                         height={14}
                         alt="token"
                       ></img> */}
-                      <p className="text-xs font-normal">{`${
-                        boostSpeedLevel[
-                          getSpeedUpgradesLevel(AcountData.data?.data.data)
-                        ]?.speed
-                      } SEED/hour`}</p>
+                        <p className="text-xs font-normal ">{`${
+                          boostSpeedLevel[
+                            getSpeedUpgradesLevel(AcountData.data?.data.data)
+                          ]?.speed
+                        } SEED/hour`}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex items-center justify-end col-span-3 ">
-                  <LoadingButton
-                    loading={ClaimSeed.isPending}
-                    disabled={!isFull}
-                    onClick={handleClaim}
-                    className={clsx(
-                      "w-[100px] h-40px  rounded-lg bg-gradient-to-r from-[#F9D52A] to-[#F54979] text-[#fff] text-sm font-bold",
-                      isSmallScreen ? "py-2" : "py-3"
-                    )}
-                  >
-                    Claim
-                  </LoadingButton>
+                  <div className="flex items-center justify-end col-span-3 ">
+                    <LoadingButton
+                      loading={ClaimSeed.isPending}
+                      disabled={!isFull}
+                      onClick={handleClaim}
+                      className={clsx(
+                        "w-[100px] h-40px capitalize rounded-lg text-sm font-bold",
+                        "dark:bg-[#fff] dark:text-[#000]",
+                        "bg-[#7AB32B] text-[#fff]",
+                        isSmallScreen ? "py-2" : "py-3"
+                      )}
+                    >
+                      Claim
+                    </LoadingButton>
+                  </div>
                 </div>
               </div>
             </div>
