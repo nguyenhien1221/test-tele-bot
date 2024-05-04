@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { memo, useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 
 const Star = ({ number }: any) => {
   const starRef = useRef<any>();
   useEffect(() => {
-    console.log(starRef);
     const staticPoistion = Math.floor(Math.random() * 2);
     const staticValue = Math.floor(Math.random() * 2);
     const flexValue = Math.floor(Math.random() * 101);
-    const delay = Math.random() * 4;
+    const delay = Math.random() * 5;
 
     let dynamicStyles: any = null;
 
@@ -27,6 +26,7 @@ const Star = ({ number }: any) => {
           top: 50%;
           left: 50%;
           transform:scale(0.5);
+          opacity: 0
         }
         to {
           top: ${
@@ -44,11 +44,12 @@ const Star = ({ number }: any) => {
               : `${flexValue}%`
           };
           transform:scale(1.5);
+          opacity: 0.6;
         }
       }
     `);
 
-    starRef.current.style.animation = `stars${number} 4s linear infinite `;
+    starRef.current.style.animation = `stars${number} 5s linear infinite `;
     starRef.current.style.animationDelay = `${delay}s`;
   }, [starRef]);
   return <div ref={starRef} className="star1"></div>;
@@ -57,7 +58,7 @@ const Star = ({ number }: any) => {
 const Stars = () => {
   return (
     <>
-      {[...Array(100)].map((item, index) => {
+      {[...Array(40)].map((item, index) => {
         return <Star key={index} number={index}></Star>;
       })}
     </>

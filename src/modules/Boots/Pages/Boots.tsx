@@ -102,7 +102,12 @@ const Boots = () => {
   };
 
   return (
-    <div className="overflow-auto pt-[42px] px-4  relative h-screen bg-[#F2FFE0]">
+    <div
+      className={clsx(
+        "overflow-auto pt-[42px] px-4  relative h-screen bg-[#F2FFE0]",
+        "dark:bg-transparent"
+      )}
+    >
       <ToastContainer
         limit={1}
         stacked
@@ -110,7 +115,7 @@ const Boots = () => {
       />
 
       {/* boot info */}
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center dark:text-white">
         <p className="text-sm font-normal">Your balance</p>
         <div className="flex items-center gap-2">
           <img
@@ -196,7 +201,10 @@ const Boots = () => {
             <div
               onClick={() => handleOpenModal(index)}
               key={index}
-              className="cursor-pointer grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
+              className={clsx(
+                "z-10 relative cursor-pointer grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg",
+                "dark:gradient-border-mask-mission dark:bg-transparent"
+              )}
             >
               <div className="col-span-2 flex items-center ">
                 <div className="w-[73px] h-[67px]">
@@ -209,7 +217,7 @@ const Boots = () => {
                   ></img>
                 </div>
               </div>
-              <div className="col-span-5">
+              <div className="col-span-5 dark:text-white">
                 <p className="font-bold mb-1">{item.title}</p>
                 <div className=" mb-1">
                   <p className="text-sm font-normal">{item.description}</p>

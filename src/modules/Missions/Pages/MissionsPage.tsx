@@ -68,14 +68,14 @@ const MissionsPage = () => {
       {missionsData.isLoading ? (
         <Loading />
       ) : (
-        <div className="overflow-auto pt-[42px] px-4 relative h-screen bg-[#F2FFE0]">
+        <div className="overflow-auto pt-[42px] px-4 relative h-screen bg-[#F2FFE0] dark:bg-transparent">
           <ToastContainer
             limit={1}
             stacked
             className="top-3 w-[272px] left-[50%] -translate-x-[50%]"
           />
           {/* boot info */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center dark:text-white">
             <div className="flex flex-col items-center gap-3">
               <img
                 src="/images/icons/token_icon.png"
@@ -102,7 +102,10 @@ const MissionsPage = () => {
                 <div
                   onClick={() => handleChooseMission(index)}
                   key={index}
-                  className="cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg"
+                  className={clsx(
+                    "z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg",
+                    "dark:gradient-border-mask-mission dark:bg-transparent"
+                  )}
                 >
                   <div className="col-span-2 flex items-center">
                     <div>
@@ -114,8 +117,8 @@ const MissionsPage = () => {
                       ></img>
                     </div>
                   </div>
-                  <div className="col-span-7">
-                    <p className="text-[13px] font-normal mb-2 text-[#7D7D7D]">
+                  <div className="col-span-7 dark:text-white">
+                    <p className="text-[13px] font-normal mb-2 dark:text-white text-[#7D7D7D]">
                       {item.title}
                     </p>
                     <div className="flex gap-[7px] mb-2">

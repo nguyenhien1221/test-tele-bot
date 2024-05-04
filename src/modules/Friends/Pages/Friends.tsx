@@ -29,13 +29,13 @@ const Friends = () => {
   };
 
   return (
-    <div className="pt-[42px] px-4 pb-[100px] bg-[#F2FFE0] h-screen ">
+    <div className="pt-[42px] px-4 pb-[100px] bg-[#F2FFE0] dark:bg-transparent h-screen relative z-30">
       <ToastContainer
         limit={1}
         stacked
         className="top-3 w-[272px] left-[50%] -translate-x-[50%]"
       />
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center dark:text-white">
         <div className="flex flex-col items-center gap-3">
           <img
             className="h-[99px]"
@@ -60,7 +60,8 @@ const Friends = () => {
         <p
           className={clsx(
             " font-bold ",
-            isSmallScreen ? "text-base my-2" : "text-xl mb-4 mt-10"
+            isSmallScreen ? "text-base my-2" : "text-xl mb-4 mt-10",
+            "dark:text-white"
           )}
         >
           My friends
@@ -74,7 +75,12 @@ const Friends = () => {
       >
         {AcountReferees.data?.data.data &&
           AcountReferees.data?.data.data.map((item: any) => (
-            <div className="grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-4 drop-shadow-lg">
+            <div
+              className={clsx(
+                "grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-4 drop-shadow-lg",
+                "dark:gradient-border-mask-mission dark:bg-transparent dark:text-white"
+              )}
+            >
               <div className="col-span-2 flex ">
                 <img
                   src="/images/icons/user.svg"
@@ -84,10 +90,10 @@ const Friends = () => {
                 ></img>
               </div>
               <div className="col-span-8">
-                <p className="text-sm font-extrabold mb-1">{item.name}</p>
+                <p className="text-sm font-extrabold mb-1">{"item.name"}</p>
                 <div>
                   <div className="flex items-center gap-1">
-                    <span className="text-[#7D7D7D] text-sm">
+                    <span className="text-[#7D7D7D] dark:text-white text-sm">
                       You recieved:
                     </span>
                     <img
@@ -97,7 +103,7 @@ const Friends = () => {
                       alt="token"
                     ></img>
                     <p className="text-sm font-bold">
-                      {item.received_amount.toFixed(6)} SEED
+                      {/* {item.received_amount.toFixed(6)} SEED */}
                     </p>
                   </div>
                 </div>
@@ -110,7 +116,10 @@ const Friends = () => {
         <Button
           onClick={() => handleCopyLink()}
           startIcon={<img src="images/icons/copy.svg" alt="copy" />}
-          className="font-bold capitalize bg-[#7AB32B] text-white py-[18px] w-full rounded-xl drop-shadow-lg "
+          className={clsx(
+            "font-bold capitalize bg-[#7AB32B] text-white py-[18px] w-full rounded-xl drop-shadow-lg ",
+            "dark:bg-white dark:text-black"
+          )}
         >
           Copy invite link
         </Button>

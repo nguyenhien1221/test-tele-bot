@@ -18,7 +18,8 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
       <div
         className={clsx(
           "grid grid-cols-7 gap-3 bg-white rounded-2xl w-full drop-shadow-lg",
-          isSmallScreen ? "p-2" : " p-4"
+          isSmallScreen ? "p-2" : " p-4",
+          "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent"
         )}
       >
         <div className="col-span-2 flex ">
@@ -40,7 +41,12 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
 
   const renderTreeItems = () => {
     return (
-      <div className="grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full drop-shadow-lg">
+      <div
+        className={clsx(
+          "grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full drop-shadow-lg",
+          "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent"
+        )}
+      >
         <div className="col-span-2 flex ">
           <img src={`/images/trees/${level + 1}.png`} width={60} alt=""></img>
         </div>

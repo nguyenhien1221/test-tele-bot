@@ -25,7 +25,7 @@ import useDoMissions from "../Missions/Hooks/useDoMissions";
 import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
 import useGetLatestMessage from "./Hooks/useGetLatestMessage";
-import Stars from "../../components/common/Stars";
+import { MaterialUISwitch } from "../../components/common/Switch";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
@@ -33,6 +33,8 @@ const Home = () => {
   // const viewHeight = tele.viewportHeight;
 
   tele.BackButton.hide();
+
+  const mode = localStorage.getItem("mode");
 
   const AcountBalnce = useGetAcountBalance();
   const AcountData = useGetAcountDetails();
@@ -50,6 +52,9 @@ const Home = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [isFill, setIsFill] = useState<boolean>(false);
   // const [expand, setExpand] = useState<any>(isExpanded);
+  const [checked, setChecked] = useState<boolean>(
+    mode === "dark" ? true : false
+  );
 
   const isSmallScreen = window.innerHeight <= 520 ? true : false;
   const LatestMessageTime = LatestMessage.data?.data.data;
@@ -150,7 +155,6 @@ const Home = () => {
   ]);
 
   const handleClaim = () => {
-    document.documentElement.classList.add("dark");
     ClaimSeed.mutateAsync()
       .then(() => {
         progressRef.current.style.width = "0%";
@@ -192,6 +196,16 @@ const Home = () => {
     tele.openLink(process.env.REACT_APP_GROUP_URL);
   };
 
+  const handleSwitchMode = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(e.target.checked);
+    localStorage.setItem("mode", e.target.checked ? "dark" : "light");
+    if (e.target.checked) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  };
+
   return (
     <>
       {AcountData.isLoading ? (
@@ -200,15 +214,17 @@ const Home = () => {
         <div
           className={clsx(
             "h-screen overflow-hidden flex flex-col flex-1 px-4 pb-[140px] relative ",
-            "dark:bg-[#000000]  dark:bg-gradient-to-b from-transparent via-transparent to-transparent ",
+            "dark:bg-transparent dark:bg-gradient-to-b from-transparent via-transparent to-transparent ",
             "bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A]"
           )}
         >
-          <div className="hidden dark:block absolute z-0 bottom-0 left-0">
-            <img src="/images/darkmodebg.png" alt=""></img>
-          </div>
           <div>
-            <div className="flex flex-col items-center flex-1 pt-[38px]">
+            <MaterialUISwitch
+              sx={{ m: 1 }}
+              checked={checked}
+              onChange={(e) => handleSwitchMode(e)}
+            />
+            <div className="flex flex-col items-center flex-1 ">
               <p
                 className={
                   "dark:text-white text-base font-normal ,dark:text-white"
@@ -258,7 +274,7 @@ const Home = () => {
           ></div>
 
           {/* storage button */}
-          <div className=" rounded-2xl dark:gradient-border-mask-storage">
+          <div className=" rounded-2xl dark:gradient-border-mask-storage z-10">
             <div
               className={clsx(
                 "max-h-[90px] min-h-[90px]",
@@ -385,10 +401,6 @@ const Home = () => {
           </div>
         </div>
       )}
-      {/* <div>
-        <div id="stars"></div>
-      </div> */}
-      <Stars />
 
       {isOpen && (
         <GetFirstTokenModal

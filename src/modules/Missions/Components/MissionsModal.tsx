@@ -60,12 +60,16 @@ const MissionsModal = ({
       ></div>
       <div
         className={clsx(
-          "slide-in fixed py-4  left-0 flex flex-col items-center  px-4 w-full rounded-t-2xl bg-[#F2FFE0]",
-          isSmallScreen ? "h-[90%]" : "h-[85%] max-h-[534px]"
+          "slide-in fixed py-4 z-30 left-0 flex flex-col items-center px-4 w-full rounded-t-2xl bg-[#F2FFE0]",
+          isSmallScreen ? "h-[90%]" : "h-[85%] max-h-[534px]",
+          "dark:bg-[#0a0c0a] dark:shadow-[0_-2px_8px_#FFFFFF40]"
         )}
       >
+        <div className="hidden dark:block absolute bottom-0 left-0 z-0">
+          <img src="/images/darkmodebg.png" alt=""></img>
+        </div>
         <div className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"></div>
-        <div className="">
+        <div className="dark:text-white">
           <div className=" w-full ">
             <div className="flex flex-col items-center ">
               <p className="text-[24px] font-bold">Follow on {socials[type]}</p>
@@ -98,7 +102,12 @@ const MissionsModal = ({
                     alt=""
                   ></img>
                 )}
-                <div className={clsx("rounded-[16px] overflow-hidden")}>
+                <div
+                  className={clsx(
+                    "rounded-[16px] overflow-hidden",
+                    "dark:gradient-border-mask-mission-item"
+                  )}
+                >
                   <img
                     className={clsx(
                       item.task_user?.completed ? "brightness-50" : "",
@@ -116,10 +125,12 @@ const MissionsModal = ({
             ))}
           </div>
         </div>
-
         <Button
           onClick={closeModal}
-          className="btn-slide-in capitalize fixed w-[calc(100%-32px)] font-bold bg-[#7AB32B] text-white py-[18px] rounded-xl drop-shadow-lg "
+          className={clsx(
+            "btn-slide-in capitalize fixed w-[calc(100%-32px)] font-bold bg-[#7AB32B] text-white py-[18px] rounded-xl drop-shadow-lg",
+            "dark:bg-white dark:text-black dark:font-black"
+          )}
         >
           got it
         </Button>
