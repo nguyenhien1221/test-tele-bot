@@ -135,8 +135,9 @@ const BootsModal = ({
           loading={isLoading}
           onClick={() => handleUpgrade()}
           className={clsx(
-            "btn-slide-in capitalize fixed left-4 right-4 font-bold bg-[#7AB32B] text-white py-[18px] rounded-xl drop-shadow-lg",
-            "dark:bg-white dark:text-black"
+            "btn-slide-in capitalize fixed left-4 right-4 font-bold  text-white py-[18px] rounded-xl",
+            "dark:bg-white dark:text-black",
+            "bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]"
           )}
         >
           Upgrade

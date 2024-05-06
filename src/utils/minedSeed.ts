@@ -107,7 +107,7 @@ export const getStorageUpgradesLevel = (data: any) => {
     );
 
     const level = storageUpgrades?.sort(
-      (a: any, b: any) => a.upgrade_level - b.upgrade_level
+      (a: any, b: any) => b.upgrade_level - a.upgrade_level
     )[0]?.upgrade_level;
 
     return level;
@@ -132,8 +132,9 @@ export const getSpeedUpgradesLevel = (data: any) => {
     );
 
     const level = storageUpgrades?.sort(
-      (a: any, b: any) => a.upgrade_level - b.upgrade_level
+      (a: any, b: any) => b.upgrade_level - a.upgrade_level
     )[0]?.upgrade_level;
+
     return level;
   } else {
     return speedLevel;

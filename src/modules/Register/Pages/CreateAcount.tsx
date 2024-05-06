@@ -83,7 +83,7 @@ const CreateAcount = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b h-screen from-[#FFFCEF] via-[#FFE9DB] to-[#FFC8D7] px-4 py-[120px]">
+    <div className="bg-[#F2FFE0] h-screen  px-4 py-[120px]">
       <div className="flex flex-col h-full">
         <div
           className="flex-1 h-28 max-h-[223px] bg-no-repeat bg-contain bg-center"
@@ -93,7 +93,7 @@ const CreateAcount = () => {
         {tab <= 2 && (
           <Button
             onClick={() => handleChangeTab()}
-            className="fixed bottom-[55px] left-4 right-4 capitalize font-extrabold  bg-gradient-to-r from-[#FBB500] to-[#FB2963] text-white py-[18px] rounded-xl drop-shadow-lg"
+            className="fixed bottom-[55px] left-4 right-4 capitalize font-extrabold   text-white py-[18px] rounded-xl bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]"
           >
             {renderButtonText()}
           </Button>

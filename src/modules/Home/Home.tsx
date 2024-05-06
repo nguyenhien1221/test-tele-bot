@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import NavBar from "../../components/common/NavBar";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formatDecimals, formatNumberFloatFix } from "../../utils/formatNumber";
 import useGetAcountBalance from "./Hooks/useGetAcountBalance";
 import useClaimSeed from "./Hooks/useClaimSeed";
@@ -62,19 +62,23 @@ const Home = () => {
 
   const isReadNewMessage = LatestMessageTime?.date > Number(ReadMessageTime);
 
-  const minedSeed = formatDecimals(
-    calculateMinedSeeds(
-      AcountData.data?.data.data.last_claim,
-      AcountData.data?.data.data.upgrades ?? [],
-      new Date().getTime()
-    )
-  );
-
   const firstLoginMission =
     MissionsData.data &&
     MissionsData.data.data.data.find(
       (item: any) => item.name === "Hello, world"
     );
+
+  let minedSeed = 0;
+
+  if (firstLoginMission?.task_user.completed) {
+    minedSeed = formatDecimals(
+      calculateMinedSeeds(
+        AcountData.data?.data.data.last_claim,
+        AcountData.data?.data.data.upgrades ?? [],
+        new Date().getTime()
+      )
+    );
+  }
 
   const currentTime = new Date().getTime() / 1000;
   const startTime =
@@ -219,11 +223,11 @@ const Home = () => {
           )}
         >
           <div>
-            <MaterialUISwitch
+            {/* <MaterialUISwitch
               sx={{ m: 1 }}
               checked={checked}
               onChange={(e) => handleSwitchMode(e)}
-            />
+            /> */}
             <div className="flex flex-col items-center flex-1 ">
               <p
                 className={
@@ -384,7 +388,7 @@ const Home = () => {
                       className={clsx(
                         "w-[100px] h-40px capitalize rounded-lg text-sm font-bold",
                         "dark:bg-[#fff] dark:text-[#000]",
-                        "bg-[#7AB32B] text-[#fff]",
+                        "text-[#fff] bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
                         isSmallScreen ? "py-2" : "py-3"
                       )}
                     >

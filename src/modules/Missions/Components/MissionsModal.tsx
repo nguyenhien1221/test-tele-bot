@@ -128,8 +128,9 @@ const MissionsModal = ({
         <Button
           onClick={closeModal}
           className={clsx(
-            "btn-slide-in capitalize fixed w-[calc(100%-32px)] font-bold bg-[#7AB32B] text-white py-[18px] rounded-xl drop-shadow-lg",
-            "dark:bg-white dark:text-black dark:font-black"
+            "btn-slide-in capitalize fixed w-[calc(100%-32px)] font-bold text-white py-[18px] rounded-xl ",
+            "dark:bg-white dark:text-black dark:font-black",
+            "bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]"
           )}
         >
           got it
