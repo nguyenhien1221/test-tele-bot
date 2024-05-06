@@ -17,9 +17,11 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
     return (
       <div
         className={clsx(
-          "grid grid-cols-7 gap-3 bg-white rounded-2xl w-full drop-shadow-lg",
+          "grid grid-cols-7 gap-3 bg-white rounded-2xl w-full",
           isSmallScreen ? "p-2" : " p-4",
-          "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent"
+          "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent",
+          "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#97C35B]",
+          "dark:border-0 dark:border-transparent dark:drop-shadow-none"
         )}
       >
         <div className="col-span-2 flex ">
@@ -43,8 +45,10 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
     return (
       <div
         className={clsx(
-          "grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full drop-shadow-lg",
-          "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent"
+          "grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full",
+          "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent",
+          "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#97C35B]",
+          "dark:border-0 dark:border-transparent dark:drop-shadow-none"
         )}
       >
         <div className="col-span-2 flex ">

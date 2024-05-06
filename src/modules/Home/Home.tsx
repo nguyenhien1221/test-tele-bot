@@ -25,7 +25,8 @@ import useDoMissions from "../Missions/Hooks/useDoMissions";
 import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
 import useGetLatestMessage from "./Hooks/useGetLatestMessage";
-import { MaterialUISwitch } from "../../components/common/Switch";
+import NotifiModal from "../../components/common/NotifiModal";
+import { useChangeMode } from "../../store/modeStore";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
@@ -35,6 +36,7 @@ const Home = () => {
   tele.BackButton.hide();
 
   const mode = localStorage.getItem("mode");
+  const changeMode = useChangeMode((state: any) => state.updateMode);
 
   const AcountBalnce = useGetAcountBalance();
   const AcountData = useGetAcountDetails();
@@ -52,9 +54,10 @@ const Home = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [isFill, setIsFill] = useState<boolean>(false);
   // const [expand, setExpand] = useState<any>(isExpanded);
-  const [checked, setChecked] = useState<boolean>(
-    mode === "dark" ? true : false
+  const [theme, setTheme] = useState<string>(
+    mode === "dark" ? "dark" : "light"
   );
+  const [isOpenNotifi, setIsOpenNotifi] = useState<boolean>(false);
 
   const isSmallScreen = window.innerHeight <= 520 ? true : false;
   const LatestMessageTime = LatestMessage.data?.data.data;
@@ -200,10 +203,11 @@ const Home = () => {
     tele.openLink(process.env.REACT_APP_GROUP_URL);
   };
 
-  const handleSwitchMode = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(e.target.checked);
-    localStorage.setItem("mode", e.target.checked ? "dark" : "light");
-    if (e.target.checked) {
+  const handleSwitchMode = () => {
+    setTheme(mode === "light" ? "dark" : "light");
+    localStorage.setItem("mode", mode === "light" ? "dark" : "light");
+    changeMode(mode === "light" ? "dark" : "light");
+    if (mode === "light") {
       document.body.classList.add("dark");
     } else {
       document.body.classList.remove("dark");
@@ -223,11 +227,6 @@ const Home = () => {
           )}
         >
           <div>
-            {/* <MaterialUISwitch
-              sx={{ m: 1 }}
-              checked={checked}
-              onChange={(e) => handleSwitchMode(e)}
-            /> */}
             <div className="flex flex-col items-center flex-1 ">
               <p
                 className={
@@ -270,81 +269,100 @@ const Home = () => {
           </div>
           <div
             className={clsx(
-              "flex flex-1 max-h-[560px] justify-center bg-no-repeat bg-contain bg-center z-30"
+              "flex flex-1 max-h-[560px] justify-center bg-no-repeat bg-contain bg-center z-30 ",
+              isSmallScreen ? "mb-2 mt-2" : "mb-5 mt-4"
             )}
             style={{
               backgroundImage: "url('/images/trees/6.png')",
             }}
-          ></div>
+          >
+            <button
+              onClick={handleSwitchMode}
+              className={clsx(
+                " absolute right-8 rounded-[50%] w-[48px] h-[48px] flex justify-center items-center",
+                "bg-[#7BB52C] border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]"
+              )}
+            >
+              <img
+                className="w-[30px] h-[30px]"
+                src={
+                  theme === "light" ? "/images/light.svg" : "/images/dark.svg"
+                }
+                alt=""
+              />
+            </button>
+          </div>
 
           {/* storage button */}
-          <div className=" rounded-2xl dark:gradient-border-mask-storage z-10">
+          <div className=" rounded-2xl  z-10">
             <div
               className={clsx(
-                "max-h-[90px] min-h-[90px]",
+                "max-h-[90px] min-h-[90px] ",
                 isSmallScreen ? "mt-1" : ""
               )}
             >
-              <div
-                className={clsx(
-                  "rounded-2xl w-full relative overflow-hidden",
-                  "dark:bg-transparent",
-                  "bg-white",
-                  isSmallScreen ? "p-2" : "p-4"
-                )}
-              >
-                {/* progess bar */}
-                <div
-                  ref={progressRef}
-                  className={clsx(
-                    "h-full top-0 left-0 absolute z-10",
-                    "dark:bg-[#112C0D]",
-                    "bg-[#E4FFCE]"
-                  )}
-                ></div>
-
-                {/* blur when has news */}
-                {isReadNewMessage && (
-                  <div className="bg-[#000] opacity-60  w-full h-full top-0 left-0 absolute z-30 flex justify-center items-center">
-                    <Button
-                      onClick={handleCheckNews}
-                      className="capitalize font-extrabold text-white py-3 px-[14px] border-solid border-[1px] border-white rounded-2xl"
-                    >
-                      Check New
-                    </Button>
-                  </div>
-                )}
-
+              <div className="dark:gradient-border-mask-storage">
                 <div
                   className={clsx(
-                    "relative z-10 grid grid-cols-8 gap-1",
-                    isReadNewMessage ? "blur-sm" : ""
+                    "rounded-2xl w-full relative overflow-hidden ",
+                    "dark:bg-transparent",
+                    "bg-white",
+                    isSmallScreen ? "p-2" : "p-4"
                   )}
                 >
-                  <div className="col-span-2 flex items-center">
-                    <div>
-                      <img
-                        src={`/images/storage/${
-                          getStorageUpgradesLevel(AcountData.data?.data.data) +
-                          1
-                        }.png`}
-                        width={isSmallScreen ? 52 : 62}
-                        alt="storage"
-                      ></img>
+                  {/* progess bar */}
+                  <div
+                    ref={progressRef}
+                    className={clsx(
+                      "h-full top-0 left-0 absolute z-10",
+                      "dark:bg-[#112C0D]",
+                      "bg-[#E4FFCE]"
+                    )}
+                  ></div>
+
+                  {/* blur when has news */}
+                  {isReadNewMessage && (
+                    <div className="bg-[#000] opacity-60  w-full h-full top-0 left-0 absolute z-30 flex justify-center items-center">
+                      <Button
+                        onClick={handleCheckNews}
+                        className="capitalize font-extrabold text-white py-3 px-[14px] border-solid border-[1px] border-white rounded-2xl"
+                      >
+                        Check New
+                      </Button>
                     </div>
-                  </div>
-                  <div className="col-span-3 dark:text-white">
-                    <p
-                      className={
-                        isSmallScreen
-                          ? "font-extrabold  text-sm"
-                          : "font-extrabold"
-                      }
-                    >
-                      Storage
-                    </p>
-                    <div className="flex gap-[7px]">
-                      {/* <img
+                  )}
+
+                  <div
+                    className={clsx(
+                      "relative z-10 grid grid-cols-8 gap-1",
+                      isReadNewMessage ? "blur-sm" : ""
+                    )}
+                  >
+                    <div className="col-span-2 flex items-center">
+                      <div>
+                        <img
+                          src={`/images/storage/${
+                            getStorageUpgradesLevel(
+                              AcountData.data?.data.data
+                            ) + 1
+                          }.png`}
+                          width={isSmallScreen ? 52 : 62}
+                          alt="storage"
+                        ></img>
+                      </div>
+                    </div>
+                    <div className="col-span-3 dark:text-white">
+                      <p
+                        className={
+                          isSmallScreen
+                            ? "font-extrabold  text-sm"
+                            : "font-extrabold"
+                        }
+                      >
+                        Storage
+                      </p>
+                      <div className="flex gap-[7px]">
+                        {/* <img
                       src={
                         isFill
                           ? "/images/icons/time_checked.svg"
@@ -353,47 +371,49 @@ const Home = () => {
                       width={14}
                       alt="clock"
                     ></img> */}
-                      <p className="text-sm font-medium ">
-                        {isFill ? (
-                          "Filled"
-                        ) : (
-                          <Countdown
-                            date={endTime * 1000}
-                            onComplete={() => clearInterval(countProgess)}
-                          ></Countdown>
-                        )}
-                      </p>
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1">
-                        {/* <img
+                        <p className="text-sm font-medium ">
+                          {isFill ? (
+                            "Filled"
+                          ) : (
+                            <Countdown
+                              date={endTime * 1000}
+                              onComplete={() => clearInterval(countProgess)}
+                            ></Countdown>
+                          )}
+                        </p>
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1">
+                          {/* <img
                         src="/images/icons/token_icon.png"
                         width={14}
                         height={14}
                         alt="token"
                       ></img> */}
-                        <p className="text-xs font-normal ">{`${
-                          boostSpeedLevel[
-                            getSpeedUpgradesLevel(AcountData.data?.data.data)
-                          ]?.speed
-                        } SEED/hour`}</p>
+                          <p className="text-xs font-normal ">{`${
+                            boostSpeedLevel[
+                              getSpeedUpgradesLevel(AcountData.data?.data.data)
+                            ]?.speed
+                          } SEED/hour`}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex items-center justify-end col-span-3 ">
-                    <LoadingButton
-                      loading={ClaimSeed.isPending}
-                      disabled={!isFull}
-                      onClick={handleClaim}
-                      className={clsx(
-                        "w-[100px] h-40px capitalize rounded-lg text-sm font-bold",
-                        "dark:bg-[#fff] dark:text-[#000]",
-                        "text-[#fff] bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
-                        isSmallScreen ? "py-2" : "py-3"
-                      )}
-                    >
-                      Claim
-                    </LoadingButton>
+                    <div className="flex items-center justify-end col-span-3 ">
+                      <LoadingButton
+                        variant="contained"
+                        loading={ClaimSeed.isPending}
+                        disabled={!isFull}
+                        onClick={handleClaim}
+                        className={clsx(
+                          "w-[100px] h-40px capitalize rounded-lg text-sm font-bold",
+                          "text-[#fff] bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B] ",
+                          "hover:drop-shadow-none disabled:bg-[#B1B1B1] disabled:drop-shadow-[0_4px_1px_#797979] disabled:border-[#C4C4C4]",
+                          isSmallScreen ? "py-2" : "py-3"
+                        )}
+                      >
+                        Claim
+                      </LoadingButton>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -414,6 +434,11 @@ const Home = () => {
           closeModal={() => setIsOpen(false)}
         />
       )}
+
+      <NotifiModal
+        isOpen={isOpenNotifi}
+        handleClose={() => setIsOpenNotifi(false)}
+      />
     </>
   );
 };

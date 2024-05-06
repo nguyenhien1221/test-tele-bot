@@ -202,14 +202,16 @@ const Boots = () => {
               onClick={() => handleOpenModal(index)}
               key={index}
               className={clsx(
-                "z-10 relative cursor-pointer grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg",
-                "dark:gradient-border-mask-mission dark:bg-transparent"
+                "z-10 relative cursor-pointer grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                "dark:gradient-border-mask-mission dark:bg-transparent",
+                "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#97C35B]",
+                "dark:border-0 dark:border-transparent dark:drop-shadow-none"
               )}
             >
               <div className="col-span-2 flex items-center ">
-                <div className="w-[73px] h-[67px]">
+                <div>
                   <img
-                    className="object-contain"
+                    className="object-contain w-[73px] h-[67px]"
                     src={item.icon}
                     width={73}
                     height={67}

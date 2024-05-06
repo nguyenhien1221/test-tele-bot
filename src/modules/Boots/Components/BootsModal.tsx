@@ -70,7 +70,7 @@ const BootsModal = ({
     <>
       <div
         onClick={closeModal}
-        className="fixed z-0 flex flex-col-reverse items-center w-full h-full top-0 left-0 bg-black bg-opacity-50"
+        className="fixed z-10 flex flex-col-reverse items-center w-full h-full top-0 left-0 bg-black bg-opacity-50"
       ></div>
       <div
         className={clsx(
@@ -137,7 +137,8 @@ const BootsModal = ({
           className={clsx(
             "btn-slide-in capitalize fixed left-4 right-4 font-bold  text-white py-[18px] rounded-xl",
             "dark:bg-white dark:text-black",
-            "bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]"
+            "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
+            "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-sm"
           )}
         >
           Upgrade

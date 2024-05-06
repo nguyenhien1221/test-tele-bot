@@ -119,7 +119,8 @@ const Friends = () => {
           className={clsx(
             "font-bold capitalize  text-white py-[18px] w-full rounded-xl ",
             "dark:bg-white dark:text-black",
-            "bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]"
+            "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
+            "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-none"
           )}
         >
           Copy invite link

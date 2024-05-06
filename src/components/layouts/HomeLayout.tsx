@@ -1,17 +1,21 @@
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 
 import { Outlet } from "react-router-dom";
 import Loading from "../common/Loading";
 import clsx from "clsx";
 import Stars from "../common/Stars";
+import { useChangeMode } from "../../store/modeStore";
 
 const HomeLayout = () => {
-  const mode = localStorage.getItem("mode");
-  if (mode === "dark") {
-    document.body.classList.add("dark");
-  } else {
-    document.body.classList.remove("dark");
-  }
+  const theme = useChangeMode((state: any) => state.mode);
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [theme]);
 
   return (
     <div
@@ -24,7 +28,7 @@ const HomeLayout = () => {
         <Suspense fallback={<Loading />}>
           <Outlet />
         </Suspense>
-        {mode === "dark" && <Stars />}
+        {theme === "dark" && <Stars />}
         <div className="hidden dark:block absolute bottom-0 left-0 z-0">
           <img src="/images/darkmodebg.png" alt=""></img>
         </div>

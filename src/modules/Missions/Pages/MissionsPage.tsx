@@ -103,8 +103,10 @@ const MissionsPage = () => {
                   onClick={() => handleChooseMission(index)}
                   key={index}
                   className={clsx(
-                    "z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] drop-shadow-lg",
-                    "dark:gradient-border-mask-mission dark:bg-transparent"
+                    "z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                    "dark:gradient-border-mask-mission dark:bg-transparent",
+                    "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#97C35B]",
+                    "dark:boder-0 dark:drop-shadow-none dark:border-transparent"
                   )}
                 >
                   <div className="col-span-2 flex items-center">
