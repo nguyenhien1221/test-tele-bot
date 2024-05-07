@@ -178,6 +178,7 @@ const Home = () => {
       })
       .catch((err) => {
         toast.error(err.response.data.message, { autoClose: 2000 });
+        AcountData.refetch();
       });
   };
 
