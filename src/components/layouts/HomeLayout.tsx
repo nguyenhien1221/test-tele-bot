@@ -8,27 +8,32 @@ import { useChangeMode } from "../../store/modeStore";
 
 const HomeLayout = () => {
   const theme = useChangeMode((state: any) => state.mode);
+  const mode = localStorage.getItem("mode");
 
   useEffect(() => {
-    if (theme === "dark") {
+    localStorage.setItem("mode", "light");
+  }, []);
+
+  useEffect(() => {
+    if (mode === "dark") {
       document.body.classList.add("dark");
     } else {
       document.body.classList.remove("dark");
     }
-  }, [theme]);
+  }, [mode, theme]);
 
   return (
     <div
       className={clsx(
         "h-screen bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A]",
-        "dark:bg-none dark:bg-[#0a0c0a]"
+        "dark:bg-none dark:bg-[#0d0f0d]"
       )}
     >
       <div>
         <Suspense fallback={<Loading />}>
           <Outlet />
         </Suspense>
-        {theme === "dark" && <Stars />}
+        {mode === "dark" && <Stars />}
         <div className="hidden dark:block absolute bottom-0 left-0 z-0">
           <img src="/images/darkmodebg.png" alt=""></img>
         </div>

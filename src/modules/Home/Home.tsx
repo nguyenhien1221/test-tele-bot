@@ -45,7 +45,7 @@ const Home = () => {
   const doMission = useDoMissions();
   const LatestMessage = useGetLatestMessage();
 
-  const [isClaimed, setIsClaimed] = useState<any>(false);
+  const [isClaimed, setIsClaimed] = useState<boolean>(false);
   const [instorage, setInstorage] = useState<any>(() => {
     const savedCount = Number(localStorage.getItem("count") as string);
     return isNaN(savedCount) ? 0 : savedCount;
@@ -73,7 +73,7 @@ const Home = () => {
 
   let minedSeed = 0;
 
-  if (firstLoginMission?.task_user.completed) {
+  if (firstLoginMission?.task_user?.completed) {
     minedSeed = formatDecimals(
       calculateMinedSeeds(
         AcountData.data?.data.data.last_claim,
@@ -85,7 +85,7 @@ const Home = () => {
 
   const currentTime = new Date().getTime() / 1000;
   const startTime =
-    new Date(AcountData.data?.data.data.last_claim).getTime() / 1000;
+    new Date(AcountData.data?.data?.data?.last_claim).getTime() / 1000;
   const endTime =
     startTime +
     bootsStorageLevel[getStorageUpgradesLevel(AcountData.data?.data.data)]
@@ -120,6 +120,7 @@ const Home = () => {
       setIsFull(true);
     } else {
       setIsFull(false);
+      setIsClaimed(false);
     }
   }, [timePassed]);
 
@@ -166,7 +167,7 @@ const Home = () => {
       .then(() => {
         progressRef.current.style.width = "0%";
         clearInterval(countProgess);
-        setIsClaimed(!isClaimed);
+        setIsClaimed(true);
         setInstorage(() => {
           localStorage.setItem("count", "0");
           return 0;
@@ -402,7 +403,7 @@ const Home = () => {
                       <LoadingButton
                         variant="contained"
                         loading={ClaimSeed.isPending}
-                        disabled={!isFull}
+                        disabled={!isFull || isClaimed}
                         onClick={handleClaim}
                         className={clsx(
                           "w-[100px] h-40px capitalize rounded-lg text-sm font-bold",
@@ -420,7 +421,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className={clsx("fixed left-4 right-4 z-30", "bottom-10 ")}>
+          <div className={clsx("fixed left-4 right-4 z-30", "bottom-[46px] ")}>
             <NavBar />
           </div>
         </div>

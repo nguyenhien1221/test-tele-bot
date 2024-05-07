@@ -234,3 +234,7 @@ code {
   background-color: #fff;
   border-radius: 50%;
 }
+
+.MuiLoadingButton-root {
+  background-color: #b1b1b1 !important;
+}
