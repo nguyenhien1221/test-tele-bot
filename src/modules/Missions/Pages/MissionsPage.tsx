@@ -15,7 +15,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Loading from "../../../components/common/Loading";
 import DailyMissonModal from "../Components/DailyMissonModal";
 import useGetDailyMissions from "../Hooks/useGetDaily";
-// import useDoDailyMissions from "../Hooks/useDoDaily";
+import useDoDailyMissions from "../Hooks/useDoDaily";
 
 const MissionsPage = () => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const MissionsPage = () => {
   const missionsData = useGetMissions();
   const doMission = useDoMissions();
   const dailyMissions = useGetDailyMissions()
-  // const doDailyMission = useDoDailyMissions()
+  const doDailyMission = useDoDailyMissions()
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
@@ -32,7 +32,7 @@ const MissionsPage = () => {
   const [isOpen, setisOpen] = useState({ isOpen: false, type: "" });
   const [isOpenDailyMission, setIsOpenDailyMission] = useState<any>({ isOpen: false, type: "", data: null });
 
-  const isDesktop = window.innerHeight < 610 ? true : false;
+  const isDesktop = window.innerHeight < 610 ;
 
   const handleChooseMission = (index: string) => {
     // const data = missionsData.data?.data.data;
@@ -68,14 +68,19 @@ const MissionsPage = () => {
       });
   };
 
-  // const handleDoDailyMission = () => { }
+
+  const handleDoDailyMission = () => {
+    doDailyMission.mutateAsync()
+    .then(()=>{console.log("success")})
+    .catch((err)=>{console.log(err?.respone?.data?.message)})
+  }
 
   const missionGroup = removeDuplicateItemsByType(
     missionsData.data?.data.data ?? []
   ).filter((item) => item.type !== missionsTypes.SIGN_IN);
 
   return (
-    <>
+    <>  
       {missionsData.isLoading ? (
         <Loading />
       ) : (
@@ -103,9 +108,10 @@ const MissionsPage = () => {
           </div>
 
           {/* options */}
+
+          {/* daily missions */}
           <div className={clsx(isDesktop ? "mt-2" : "mt-[49px]")}><div
             onClick={() => setIsOpenDailyMission({ isOpen: true, type: "", data: null })}
-            
             className={clsx(
               "z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
               "dark:gradient-border-mask-mission dark:bg-transparent",
@@ -136,7 +142,7 @@ const MissionsPage = () => {
                 )}
               >
                 <p className="text-[24px] font-extrabold text-white">
-                  {/* {countMission} */}
+                  { 7 -(dailyMissions?.data&&  dailyMissions?.data.data.data?.length) }
                 </p>
               </div>
             </div>
@@ -201,7 +207,7 @@ const MissionsPage = () => {
 
           {isOpenDailyMission.isOpen && dailyMissions?.data && (
             <DailyMissonModal
-              handleDoMission={(id: string) => handleDoMission(id)}
+              handleDoMission={() => handleDoDailyMission()}
               data={dailyMissions?.data.data.data ?? []}
               type={isOpen.type}
               closeModal={() => setIsOpenDailyMission({ isOpen: false, type: "", data: null })}

@@ -77,7 +77,7 @@ const MissionsModal = ({
             </div>
           </div>
 
-          <div className="pt-[30px]  h-[calc(100%-90px)] overflow-auto flex-1">
+          <div className="pt-[30px] max-h-[400px] overflow-auto flex-1">
             {missions?.map((item: any, index: number) => (
               <button
                 disabled={isLoading}
