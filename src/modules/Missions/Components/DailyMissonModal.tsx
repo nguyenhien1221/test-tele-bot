@@ -125,7 +125,7 @@ const DailyMissonModal = ({
             )})}
             <div
               className={clsx(
-                "col-span-3 w-full min-h-[150px] overflow-hidden pt-[22px] relative cursor-pointer bg-white rounded-xl mb-[18px] flex items-center justify-center",
+                "col-span-3 w-full pt-[22px] relative cursor-pointer bg-white rounded-xl mb-[18px] flex items-center justify-center",
                 "dark:gradient-border-mask-mission dark:bg-transparent",
                 "dark:boder-0 dark:drop-shadow-none dark:border-transparent",
                 "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
@@ -136,13 +136,16 @@ const DailyMissonModal = ({
               {true && (
                 <div className="absolute z-40 w-full h-full top-0 ">
                   <div className="absolute z-10 bg-black bg-opacity-50 w-full h-full rounded-lg"></div>
+                </div>
+              )}
+              {
+                true && 
                   <img
                     src="/images/daily/lock.svg"
                     className="z-50 absolute left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2"
                     alt=""
                   ></img>
-                </div>
-              )}
+              }
 
               <div className="absolute text-[11px] font-semibold left-0 top-0  text-white w-[53px] flex items-center h-[19px] bg-[#4E800D] px-[10px] rounded-br-xl rounded-tl-lg">
                 Day 7
