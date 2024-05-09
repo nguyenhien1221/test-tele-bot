@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from "@mui/material";
-import { socials } from "../../../constants/missions.constants";
+import { missionsTypes, socials } from "../../../constants/missions.constants";
 import { getMissionsByType } from "../Utils/missions";
 import clsx from "clsx";
 import { formatDecimals } from "../../../utils/formatNumber";
 import { useState } from "react";
+import Modal from "../../../components/common/Modal";
 
 interface ModalPropsType {
   data: any;
-  type: number;
+  type: string;
   isOpen: boolean;
   closeModal: () => void;
   handleDoMission: (id: string) => void;
@@ -52,38 +53,32 @@ const MissionsModal = ({
     );
   };
 
+  const renderModalTitle = () => {
+    switch (type) {
+      case missionsTypes.TELEGRAM__JOIN:
+        return "Join Telegram";
+      case missionsTypes.TWITTER_FOLLOW:
+        return "Follow on Twitter";
+      case missionsTypes.DAILY:
+        return "Login bonus!";
+    }
+  };
+
   return (
     <>
-      <div
-        onClick={closeModal}
-        className="fixed z-10 flex flex-col-reverse items-center w-full h-full top-0 left-0 bg-black bg-opacity-50"
-      ></div>
-      <div
-        className={clsx(
-          "slide-in fixed py-4 z-30 left-0 flex flex-col items-center px-4 w-full rounded-t-2xl bg-[#F2FFE0]",
-          isSmallScreen ? "h-[90%]" : "h-[85%] max-h-[534px]",
-          "dark:bg-[#0a0c0a] dark:shadow-[0_-2px_8px_#FFFFFF40]"
-        )}
-      >
+      <Modal closeModal={closeModal}>
         <div className="hidden dark:block absolute bottom-0 left-0 z-0">
           <img src="/images/darkmodebg.png" alt=""></img>
         </div>
-        <div className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"></div>
-        <div className="dark:text-white">
+
+        <div className="dark:text-white w-full overflow-auto flex flex-col h-[calc(100%-32px)]">
           <div className=" w-full ">
             <div className="flex flex-col items-center ">
-              <p className="text-[24px] font-bold">Follow on {socials[type]}</p>
-              <p className="text-center font-normal">
-                {`Every subscription +${formatDecimals(
-                  missions[0].reward_amount
-                )}
-                 SEED.`}
-                <br /> Tap to open {socials[type]} account.
-              </p>
+              <p className="text-[24px] font-bold">{renderModalTitle()}</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-x-[34px] gap-y-4 mb-[38px] mt-[42px]">
+          <div className="pt-[30px]  h-[calc(100%-90px)] overflow-auto flex-1">
             {missions?.map((item: any, index: number) => (
               <button
                 disabled={isLoading}
@@ -93,50 +88,86 @@ const MissionsModal = ({
                   handleShowPopup(item);
                 }}
                 rel="noreferrer"
-                className={clsx("text-center relative")}
+                className={clsx("text-center relative w-full")}
               >
                 {item.task_user != null && (
-                  <img
-                    className="absolute -right-3 z-10 -top-3"
-                    src="/images/icons/checkmark.svg"
-                    alt=""
-                  ></img>
+                  <div
+                    className={clsx(
+                      "w-[30px] h-[30px] rounded-[50%] flex items-center justify-center absolute right-4 -top-4 z-20",
+                      "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
+                    )}
+                  >
+                    <img
+                      src="/images/icons/checkmission.png"
+                      className="w-[13px] h-[9px]"
+                      alt=""
+                    ></img>
+                  </div>
                 )}
                 <div
+                  key={index}
                   className={clsx(
-                    "rounded-[16px] overflow-hidden",
-                    "dark:gradient-border-mask-mission-item"
+                    "z-10 py-3 px-4 relative cursor-pointer grid grid-cols-12 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                    "dark:gradient-border-mask-mission dark:bg-transparent",
+                    "dark:boder-0 dark:drop-shadow-none dark:border-transparent",
+                    item.task_user?.completed
+                      ? "border-[1px] border-solid border-[#000] drop-shadow-none brightness-50"
+                      : "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
                   )}
                 >
-                  <img
-                    className={clsx(
-                      item.task_user?.completed ? "brightness-50" : "",
-                      isSmallScreen ? "w-[65px]" : ""
-                    )}
-                    src={item?.metadata.image_url}
-                    width={80}
-                    alt="logo"
-                  ></img>
+                  <div className="col-span-2 flex items-center">
+                    <img
+                      src={`/images/icons/${item.type}.png`}
+                      className="w-8 h-8"
+                      alt=""
+                    ></img>
+                  </div>
+
+                  <div className="col-span-7 flex items-center justify-start text-[15px]">
+                    {item.name}
+                  </div>
+                  <div className="col-span-3 flex items-center justify-start">
+                    <img
+                      src="/images/icons/token_icon.png"
+                      className="w-4 h-4"
+                      alt=""
+                    ></img>
+                    <span className="font-semibold text-sm ml-1">{`+${formatDecimals(
+                      item.reward_amount ?? 0
+                    )}`}</span>
+                  </div>
                 </div>
-                <p className="mt-3 font-semibold text-sm">
-                  {item?.metadata.name}
-                </p>
               </button>
             ))}
+            <div
+              className={clsx(
+                " py-3 px-4 relative cursor-pointer bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                "dark:gradient-border-mask-mission dark:bg-transparent",
+                "dark:boder-0 dark:drop-shadow-none dark:border-transparent",
+                "border-[1px] border-[#C2C2C2] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
+              )}
+            >
+              <div className="text-[15px] font-semibold">Coming soon...</div>
+              <div className="text-sm font-normal text-[#000] opacity-60 dark:text-white">
+                Follow the news so you don't miss new missions!
+              </div>
+            </div>
+          </div>
+          <div className="pt-3 h-[85px]">
+            <Button
+              onClick={closeModal}
+              className={clsx(
+                "capitalize  w-full font-bold text-white py-[18px] rounded-xl ",
+                "dark:bg-white dark:text-black dark:font-black",
+                "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
+                "dark:boder-0 dark:border-transparent dark:bg-none dark:drop-shadow-none"
+              )}
+            >
+              got it
+            </Button>
           </div>
         </div>
-        <Button
-          onClick={closeModal}
-          className={clsx(
-            "btn-slide-in capitalize fixed w-[calc(100%-32px)] font-bold text-white py-[18px] rounded-xl ",
-            "dark:bg-white dark:text-black dark:font-black",
-            "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
-            "dark:boder-0 dark:border-transparent dark:bg-none dark:drop-shadow-none"
-          )}
-        >
-          got it
-        </Button>
-      </div>
+      </Modal>
     </>
   );
 };

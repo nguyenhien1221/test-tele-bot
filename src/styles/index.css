@@ -196,6 +196,37 @@ code {
   mask-composite: exclude;
 }
 
+/* gradient for leaderboard */
+.dark\:gradient-border-mask-leaderboard:where(.dark, .dark *) {
+  display: flow-root;
+  position: relative;
+  backdrop-filter: blur(10px) brightness(50%);
+}
+.dark\:gradient-border-mask-leaderboard:where(.dark, .dark *)::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: linear-gradient(
+      90deg,
+      #606060,
+      #ffffff,
+      #636363,
+      #ffffff,
+      #454545
+    )
+    border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+}
+
 .slide-in {
   animation: slideUp 0.3s ease 0s 1 normal forwards !important;
 }
@@ -237,4 +268,31 @@ code {
 
 .MuiLoadingButton-root {
   background-color: #b1b1b1 !important;
+}
+.Toastify__toast {
+  display: flex;
+  align-items: center;
+}
+
+.Toastify__toast-body {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-weight: 600;
+  color: #000;
+  height: 17px !important;
+}
+
+.Toastify__close-button {
+  height: 48px;
+  font-size: 17px;
+  opacity: 1 !important;
+}
+
+.dark\:radial-bg:where(.dark, .dark *) {
+  /* background: rgb(99, 209, 104); */
+  background: radial-gradient(
+    circle,
+    rgba(99, 209, 104, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
 }

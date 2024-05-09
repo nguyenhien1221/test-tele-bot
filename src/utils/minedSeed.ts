@@ -1,4 +1,6 @@
 import {
+  BoostType,
+  holyWaterLevelToSize,
   miningSpeedLevelToSize,
   storageLevelToSize,
 } from "../constants/minedSeed.constants";
@@ -10,6 +12,10 @@ export function getStorageSizeByLevel(level: any) {
 export function getMiningSpeedByLevel(level: number) {
   return miningSpeedLevelToSize[level];
 }
+
+export const getHolyWaterByLevel = (level: number) => {
+  return holyWaterLevelToSize[level];
+};
 
 export function calculateMinedSeeds(
   lastClaim: string,
@@ -140,3 +146,146 @@ export const getSpeedUpgradesLevel = (data: any) => {
     return speedLevel;
   }
 };
+
+// new caculate mined seeds
+export const boardingEventStart = new Date("05/07/2024").getTime();
+export const boardingEventNextStage = new Date("05/27/2024").getTime();
+export const boardingEventEnd = new Date("06/10/2024").getTime();
+interface Boost {
+  type: string;
+  val: number;
+  timestamp: number;
+}
+
+function boardingBoosts(): Boost[] {
+  return [
+    {
+      timestamp: boardingEventStart,
+      type: BoostType.BoostTypeMiningSpeedScaleUp,
+      val: 400,
+    },
+    {
+      timestamp: boardingEventNextStage,
+      type: BoostType.BoostTypeMiningSpeedScaleDown,
+      val: 200,
+    },
+    {
+      timestamp: boardingEventEnd,
+      type: BoostType.BoostTypeMiningSpeedScaleDown,
+      val: 200,
+    },
+  ];
+}
+
+export function calculateMinedSeeds2(
+  lastClaim: Date,
+  initialMiningSpeed: number,
+  initialStorageSize: number,
+  upgrades: any,
+  now: number
+) {
+  const boosts = boardingBoosts();
+  for (const upgrade of upgrades) {
+    switch (upgrade.upgrade_type) {
+      case "storage-size":
+        boosts.push({
+          timestamp: upgrade.timestamp,
+          type: BoostType.BoostTypeStorageSizeBaseUpgrade,
+          val: getStorageSizeByLevel(upgrade.upgrade_level),
+        });
+        break;
+      case "mining-speed":
+        boosts.push({
+          timestamp: upgrade.timestamp,
+          type: BoostType.BoostTypeMiningSpeedBaseUpgrade,
+          val: getMiningSpeedByLevel(upgrade.upgrade_level),
+        });
+        break;
+      case "holy-water":
+        boosts.push({
+          timestamp: upgrade.timestamp,
+          type: BoostType.BoostTypeMiningSpeedBonus,
+          val: getHolyWaterByLevel(upgrade.upgrade_level),
+        });
+        break;
+    }
+  }
+
+  let copied = boosts.slice(); // Creating a shallow copy of the boosts array
+
+  copied.sort((a: any, b: any) => {
+    return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+  });
+
+  let previousScale = 100;
+  let previousBaseMiningSpeed = initialMiningSpeed;
+  let previousMiningSpeedBonus = 0;
+  let previousBaseStorageSize = initialStorageSize;
+  let from = new Date(lastClaim).getTime();
+  let minedSeed = 0;
+  let consumedStorageSize = 0;
+
+  for (let boost of copied) {
+    let currentScale = previousScale;
+    let currentBaseMiningSpeed = previousBaseMiningSpeed;
+    let currentMiningSpeedBonus = previousMiningSpeedBonus;
+    let currentBaseStorageSize = previousBaseStorageSize;
+
+    switch (boost.type) {
+      case BoostType.BoostTypeMiningSpeedBaseUpgrade:
+        currentBaseMiningSpeed = boost.val;
+        break;
+      case BoostType.BoostTypeMiningSpeedBonus:
+        currentMiningSpeedBonus = boost.val;
+        break;
+      case BoostType.BoostTypeMiningSpeedScaleUp:
+        currentScale *= boost.val / 100;
+        break;
+      case BoostType.BoostTypeMiningSpeedScaleDown:
+        currentScale = (currentScale * 100) / boost.val;
+        break;
+      case BoostType.BoostTypeStorageSizeBaseUpgrade:
+        currentBaseStorageSize = boost.val;
+        break;
+    }
+
+    if (boost.timestamp > now) {
+      break;
+    }
+
+    if (boost.timestamp > from) {
+      let consumingStorageSize = boost.timestamp - from; // in milliseconds
+
+      if (consumingStorageSize + consumedStorageSize > currentBaseStorageSize) {
+        consumingStorageSize = currentBaseStorageSize - consumedStorageSize;
+      }
+
+      minedSeed +=
+        (consumingStorageSize *
+          currentBaseMiningSpeed *
+          (100 + currentMiningSpeedBonus) *
+          currentScale) /
+        10000;
+      consumedStorageSize += consumingStorageSize;
+      from = boost.timestamp;
+    }
+
+    previousScale = currentScale;
+    previousBaseMiningSpeed = currentBaseMiningSpeed;
+    previousMiningSpeedBonus = currentMiningSpeedBonus;
+    previousBaseStorageSize = currentBaseStorageSize;
+  }
+
+  let consumingStorageSize = now - from; // in milliseconds
+  if (consumingStorageSize + consumedStorageSize > previousBaseStorageSize) {
+    consumingStorageSize = previousBaseStorageSize - consumedStorageSize;
+  }
+  minedSeed +=
+    (consumingStorageSize *
+      previousBaseMiningSpeed *
+      (100 + previousMiningSpeedBonus) *
+      previousScale) /
+    10000;
+
+  return minedSeed / 3600000; // Converting mined seeds to per hour
+}

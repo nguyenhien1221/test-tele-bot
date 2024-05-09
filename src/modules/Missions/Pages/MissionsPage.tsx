@@ -1,20 +1,24 @@
 import { useState } from "react";
-import { missionsOptions } from "../../../constants/missions.constants";
+import {
+  missionsOptions,
+  missionsTypes,
+} from "../../../constants/missions.constants";
 import MissionsModal from "../Components/MissionsModal";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import useGetMissions from "../Hooks/useGetMissions";
-import { formatDecimals } from "../../../utils/formatNumber";
-import { getMissionsByType, getToltalReward } from "../Utils/missions";
+import {
+  getMissionsByType,
+  removeDuplicateItemsByType,
+} from "../Utils/missions";
 import useDoMissions from "../Hooks/useDoMissions";
 import { ToastContainer, toast } from "react-toastify";
 import Loading from "../../../components/common/Loading";
-import { copyToClipboard } from "../../../utils/helper";
+import DailyMissonModal from "../Components/DailyMissonModal";
 
 const MissionsPage = () => {
   const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
-  const userID = tele.initDataUnsafe?.user?.id;
 
   const missionsData = useGetMissions();
   const doMission = useDoMissions();
@@ -22,27 +26,25 @@ const MissionsPage = () => {
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
 
-  const [isOpen, setisOpen] = useState({ isOpen: false, type: 0 });
+  const [isOpen, setisOpen] = useState({ isOpen: false, type: "" });
+  const [isOpenDailyMission, setIsOpenDailyMission] = useState<boolean>(false);
 
   const isDesktop = window.innerHeight < 610 ? true : false;
 
-  const handleChooseMission = (index: number) => {
-    const data = missionsData.data?.data.data;
-    if (index === 2) {
-      copyToClipboard(
-        `${process.env.REACT_APP_BOT_URL}startapp=${String(userID)}`
-      );
-      if (!data[data.length - 1]?.task_user?.completed) {
-        handleDoMission(data[data.length - 1]?.id);
-      }
-      return;
-    }
+  const handleChooseMission = (index: string) => {
+    // const data = missionsData.data?.data.data;
+    // if (index === missionsTypes.TWITTER_FOLLOW) {
+    //   if (!data[data.length - 1]?.task_user?.completed) {
+    //     handleDoMission(data[data.length - 1]?.id);
+    //   }
+    //   return;
+    // }
     setisOpen({ isOpen: true, type: index });
   };
 
   const handleBackBtn = () => {
     navigate("/");
-    setisOpen({ isOpen: false, type: 0 });
+    setisOpen({ isOpen: false, type: "" });
   };
 
   const handleDoMission = (id: string) => {
@@ -50,18 +52,22 @@ const MissionsPage = () => {
       .mutateAsync(id)
       .then(() => {
         toast.success("Mission completed", {
-          style: { width: 272, borderRadius: 8 },
+          style: { width: 237, borderRadius: 8 },
           autoClose: 2000,
         });
         missionsData.refetch();
       })
       .catch(() => {
         toast.error("mission is not completed", {
-          style: { width: 272, borderRadius: 8 },
+          style: { width: 237, borderRadius: 8 },
           autoClose: 2000,
         });
       });
   };
+
+  const missionGroup = removeDuplicateItemsByType(
+    missionsData.data?.data.data ?? []
+  ).filter((item) => item.type !== missionsTypes.SIGN_IN);
 
   return (
     <>
@@ -70,9 +76,10 @@ const MissionsPage = () => {
       ) : (
         <div className="overflow-auto pt-[42px] px-4 relative h-screen bg-[#F2FFE0] dark:bg-transparent">
           <ToastContainer
+            hideProgressBar
             limit={1}
             stacked
-            className="top-3 w-[272px] left-[50%] -translate-x-[50%]"
+            className="top-3 w-[237px] left-[50%] -translate-x-[50%]"
           />
           {/* boot info */}
           <div className="flex flex-col items-center dark:text-white">
@@ -83,7 +90,7 @@ const MissionsPage = () => {
                 height={100}
                 alt="token"
               ></img>
-              <p className="text-[24px] font-extrabold">{`${missionsOptions.length} missions available`}</p>
+              <p className="text-[24px] font-extrabold">{`${missionGroup.length} missions available`}</p>
             </div>
             <p className="text-sm font-normal">
               Complete the mission to get golden seed
@@ -92,63 +99,49 @@ const MissionsPage = () => {
 
           {/* options */}
           <div className={clsx(isDesktop ? "mt-2" : "mt-[49px]")}>
-            {missionsOptions.map((item, index) => {
-              const isDone = getMissionsByType(
-                index,
-                missionsData.data?.data.data
-              )?.some((item: any) => item.task_user === null);
+            {missionGroup.map((item, index) => {
+              const countMission = getMissionsByType(
+                item.type,
+                missionsData.data?.data.data ?? []
+              ).filter((mission: any) => mission.task_user === null).length;
 
               return (
                 <div
-                  onClick={() => handleChooseMission(index)}
+                  onClick={() => handleChooseMission(item.type)}
                   key={index}
                   className={clsx(
                     "z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
                     "dark:gradient-border-mask-mission dark:bg-transparent",
-                    "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#97C35B]",
+                    "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
                     "dark:boder-0 dark:drop-shadow-none dark:border-transparent"
                   )}
                 >
                   <div className="col-span-2 flex items-center">
                     <div>
                       <img
-                        src={item.icon}
+                        src={`/images/icons/${item.type}.png`}
                         width={48}
                         height={48}
                         alt="storage"
                       ></img>
                     </div>
                   </div>
-                  <div className="col-span-7 dark:text-white">
-                    <p className="text-[13px] font-normal mb-2 dark:text-white text-[#7D7D7D]">
-                      {item.title}
-                    </p>
-                    <div className="flex gap-[7px] mb-2">
-                      <p className="font-normal">{item.description}</p>
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1">
-                        <img
-                          src="/images/icons/token_icon.png"
-                          width={14}
-                          height={14}
-                          alt="token"
-                        ></img>
-                        <p className="text-xs font-extrabold">{`${formatDecimals(
-                          getToltalReward(index, missionsData.data?.data.data)
-                        )} SEED`}</p>
-                      </div>
+                  <div className="col-span-6 flex items-center dark:text-white">
+                    <div className=" text-lg font-semibold">
+                      <p className="font-semibold">{item.name}</p>
                     </div>
                   </div>
-                  <div className="col-span-1 flex items-center">
-                    {!isDone && (
-                      <img
-                        src="/images/icons/Check.svg"
-                        alt="check"
-                        width={22}
-                        height={22}
-                      ></img>
-                    )}
+                  <div className="col-span-2 flex items-center">
+                    <div
+                      className={clsx(
+                        "w-10 h-10 rounded-[50%] flex items-center justify-center",
+                        "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
+                      )}
+                    >
+                      <p className="text-[24px] font-extrabold text-white">
+                        {countMission}
+                      </p>
+                    </div>
                   </div>
                 </div>
               );
@@ -159,9 +152,18 @@ const MissionsPage = () => {
               handleDoMission={(id: string) => handleDoMission(id)}
               data={missionsData.data?.data.data ?? []}
               type={isOpen.type}
-              closeModal={() => setisOpen({ isOpen: false, type: 0 })}
+              closeModal={() => setisOpen({ isOpen: false, type: "" })}
               isOpen={isOpen.isOpen}
             ></MissionsModal>
+          )}
+
+          {isOpenDailyMission && (
+            <DailyMissonModal
+              handleDoMission={(id: string) => handleDoMission(id)}
+              data={missionsData.data?.data.data ?? []}
+              type={isOpen.type}
+              closeModal={() => setisOpen({ isOpen: false, type: "" })}
+            />
           )}
         </div>
       )}

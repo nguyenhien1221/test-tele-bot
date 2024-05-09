@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Suspense, useEffect } from "react";
 
 import { Outlet } from "react-router-dom";
@@ -11,7 +12,7 @@ const HomeLayout = () => {
   const mode = localStorage.getItem("mode");
 
   useEffect(() => {
-    localStorage.setItem("mode", "light");
+    localStorage.setItem("mode", mode === "dark" ? "dark" : "light");
   }, []);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const HomeLayout = () => {
   return (
     <div
       className={clsx(
-        "h-screen bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A]",
+        "h-screen bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A] overflow-hidden",
         "dark:bg-none dark:bg-[#0d0f0d]"
       )}
     >

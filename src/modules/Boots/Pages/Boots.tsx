@@ -21,6 +21,7 @@ import {
   getSpeedUpgradesLevel,
   getStorageUpgradesLevel,
 } from "../../../utils/minedSeed";
+import HolyWaterModal from "../Components/HolyWaterModal";
 
 const Boots = () => {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ const Boots = () => {
   tele.BackButton.onClick(() => handleBackBtn());
 
   const [isOpen, setisOpen] = useState<any>({ isOpen: false, type: 0 });
+  const [isOpenWater, setIsOpenWater] = useState<boolean>(false);
 
   const isDesktop = window.innerHeight < 610 ? true : false;
 
@@ -45,14 +47,14 @@ const Boots = () => {
           AcountData.refetch();
           AcountBalance.refetch();
           toast.success("Upgraded Successfully", {
-            style: { width: 272, borderRadius: 8 },
+            style: { width: 237, borderRadius: 8 },
             autoClose: 2000,
           });
           setisOpen({ isOpen: false, type: 0 });
         })
         .catch((err) => {
           toast.error("not enough balance", {
-            style: { width: 272, borderRadius: 8 },
+            style: { width: 237, borderRadius: 8 },
             autoClose: 2000,
           });
           // setisOpen({ isOpen: false, type: 0 });
@@ -66,14 +68,14 @@ const Boots = () => {
           AcountData.refetch();
           AcountBalance.refetch();
           toast.success("Upgraded Successfully", {
-            style: { width: 272, borderRadius: 8 },
+            style: { width: 237, borderRadius: 8 },
             autoClose: 2000,
           });
           setisOpen({ isOpen: false, type: 0 });
         })
         .catch((err) => {
           toast.error("not enough balance", {
-            style: { width: 272, borderRadius: 8 },
+            style: { width: 237, borderRadius: 8 },
             autoClose: 2000,
           });
           // setisOpen({ isOpen: false, type: 0 });
@@ -87,15 +89,7 @@ const Boots = () => {
 
   const handleOpenModal = (type: number) => {
     if (type === bootTypeEnum.WATER) {
-      toast.info("Coming soon", {
-        position: "top-center",
-        style: { width: 272, borderRadius: 8 },
-        autoClose: 2000,
-        progressStyle: {
-          backgroundColor: "#FF8C21",
-        },
-        icon: <img src="/images/icons/clock.png" alt=""></img>,
-      });
+      setIsOpenWater(true);
     } else {
       setisOpen({ isOpen: true, type: type });
     }
@@ -109,11 +103,11 @@ const Boots = () => {
       )}
     >
       <ToastContainer
+        hideProgressBar
         limit={1}
         stacked
-        className="top-3 w-[272px] left-[50%] -translate-x-[50%]"
+        className="top-3 w-[237px] left-[50%] -translate-x-[50%]"
       />
-
       {/* boot info */}
       <div className="flex flex-col items-center dark:text-white">
         <p className="text-sm font-normal">Your balance</p>
@@ -171,7 +165,6 @@ const Boots = () => {
           </div>
         </div>
       </div>
-
       {/* options */}
       <div className={clsx(isDesktop ? "mt-2" : "mt-[49px]")}>
         {bootOptions.map((item, index) => {
@@ -252,6 +245,19 @@ const Boots = () => {
           speedLevel={getSpeedUpgradesLevel(AcountData.data?.data.data) ?? 0}
           type={isOpen.type}
           closeModal={() => setisOpen({ isOpen: false, type: 0 })}
+          handleUpgrade={() => handleUpgrade()}
+        />
+      )}
+
+      {isOpenWater && (
+        <HolyWaterModal
+          isLoading={UpgradeStorage.isPending || UpgradeSpeed.isPending}
+          storageLevel={
+            getStorageUpgradesLevel(AcountData.data?.data.data) ?? 0
+          }
+          speedLevel={getSpeedUpgradesLevel(AcountData.data?.data.data) ?? 0}
+          type={2}
+          closeModal={() => setIsOpenWater(true)}
           handleUpgrade={() => handleUpgrade()}
         />
       )}

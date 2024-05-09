@@ -1,29 +1,36 @@
-export const missionsOptions = [
-  {
-    icon: "/images/icons/twitter.png",
-    title: "Follow on Twitter",
-    description: "SEED ecosystem",
-    seed: 0.02,
-  },
-  {
-    icon: "/images/icons/telegram.png",
-    title: "Join Telegram",
-    description: "Be a member",
-    seed: 0.02,
-  },
-  {
-    icon: "/images/icons/discord.png",
-    title: "Invite a friend",
-    description: "Be a referral",
-    seed: 0.05,
-  },
-];
-
-export const socials = ["Twitter", "Telegram", "Discord"];
-
 export const missionsTypes = {
   SIGN_IN: "sign-in",
   TWITTER_FOLLOW: "twitter-follow",
   TELEGRAM__JOIN: "telegram-join",
-  REFER: "refer",
+  DAILY: "daily",
+};
+
+export const missionsOptions = [
+  {
+    icon: "/images/icons/daily.png",
+    title: "Invite a friend",
+    description: "Daily",
+    seed: 0.05,
+    type: missionsTypes.DAILY,
+  },
+  {
+    icon: "/images/icons/twitter.png",
+    title: "Follow on Twitter",
+    description: "Twitter",
+    seed: 0.02,
+    type: missionsTypes.TWITTER_FOLLOW,
+  },
+  {
+    icon: "/images/icons/telegram.png",
+    title: "Telegram",
+    description: "Telegram",
+    seed: 0.02,
+    type: missionsTypes.TELEGRAM__JOIN,
+  },
+];
+
+export const socials: { [key: string]: string } = {
+  [missionsTypes.TWITTER_FOLLOW]: "Twitter",
+  [missionsTypes.TELEGRAM__JOIN]: "Telegram",
+  Discord: "Discord",
 };

@@ -4,8 +4,10 @@ import useGetAcountReferees from "../Hooks/useGetAcountReferees";
 import { copyToClipboard } from "../../../utils/helper";
 import { ToastContainer, toast } from "react-toastify";
 import clsx from "clsx";
+import { navPaths } from "../../../constants/navbar.constants";
 
 const Friends = () => {
+  const mode = localStorage.getItem("mode");
   const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
 
@@ -28,13 +30,51 @@ const Friends = () => {
     toast.success("link copied to clipboard", { autoClose: 2000 });
   };
 
+  const handleNavigateLeaderBoard = () => {
+    navigate(navPaths.LEADERBOARD);
+  };
+
   return (
     <div className="pt-[42px] px-4 pb-[100px] bg-[#F2FFE0] dark:bg-transparent h-screen relative z-30">
       <ToastContainer
+        hideProgressBar
         limit={1}
         stacked
-        className="top-3 w-[272px] left-[50%] -translate-x-[50%]"
+        className="top-3 w-[237px] left-[50%] -translate-x-[50%]"
       />
+      <div className="mb-5">
+        <button
+          onClick={handleNavigateLeaderBoard}
+          className="w-full border-[1px] border-[#79B22A] py-[6px] px-[7px] rounded-[30px]"
+        >
+          <div className="grid grid-cols-10">
+            <img
+              src="/images/leaderboard/leaderboardicon.png"
+              className="w-[30px] h-[30px] col-span-1"
+              alt=""
+            ></img>
+            <span className="col-span-8 text-left flex items-center pl-2">
+              <p className="text-sm font-semibold dark:text-white">
+                Top 100 Leaders
+              </p>
+            </span>
+            <div className="col-span-1 flex items-center justify-center">
+              <svg
+                width="8"
+                height="16"
+                viewBox="0 0 6 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1.6875 1.3125L5.6875 5.28125C5.875 5.5 6 5.75 6 6C6 6.21875 5.875 6.5 5.6875 6.6875L1.6875 10.6562C1.40625 10.9375 0.96875 11.0312 0.59375 10.875C0.21875 10.7188 0 10.4062 0 10V2C0 1.625 0.21875 1.25 0.59375 1.09375C0.96875 0.9375 1.40625 1.03125 1.6875 1.3125Z"
+                  fill={mode === "dark" ? "white" : "black"}
+                />
+              </svg>
+            </div>
+          </div>
+        </button>
+      </div>
       <div className="flex flex-col items-center dark:text-white">
         <div className="flex flex-col items-center gap-3">
           <img
@@ -103,7 +143,7 @@ const Friends = () => {
                       alt="token"
                     ></img>
                     <p className="text-sm font-bold">
-                      {/* {item.received_amount.toFixed(6)} SEED */}
+                      {`${item.received_amount.toFixed(6)} SEED`}
                     </p>
                   </div>
                 </div>

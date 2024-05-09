@@ -8,8 +8,14 @@ import useClaimSeed from "./Hooks/useClaimSeed";
 import { toast } from "react-toastify";
 import clsx from "clsx";
 import {
+  boardingEventEnd,
+  boardingEventNextStage,
+  boardingEventStart,
   calculateMinedSeeds,
+  calculateMinedSeeds2,
+  getMiningSpeedByLevel,
   getSpeedUpgradesLevel,
+  getStorageSizeByLevel,
   getStorageUpgradesLevel,
 } from "../../utils/minedSeed";
 import useGetAcountDetails from "../../components/Hooks/useRegister";
@@ -27,6 +33,11 @@ import { Button } from "@mui/material";
 import useGetLatestMessage from "./Hooks/useGetLatestMessage";
 import NotifiModal from "../../components/common/NotifiModal";
 import { useChangeMode } from "../../store/modeStore";
+import RecieveGiftModal from "./Components/RecieveGiftModal";
+import WinPriceModal from "./Components/WinPriceModal";
+import useGetHappyDay from "./Hooks/useGetHappyDay";
+import useClaimHappyDay from "./Hooks/useClaimHappyDay";
+import useGetHappyDayHistory from "./Hooks/useGetHistoyHappyday";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
@@ -44,6 +55,9 @@ const Home = () => {
   const MissionsData = useGetMissions();
   const doMission = useDoMissions();
   const LatestMessage = useGetLatestMessage();
+  const HappyDay = useGetHappyDay();
+  const ClaimHappyDay = useClaimHappyDay();
+  const HappyDayHistory = useGetHappyDayHistory();
 
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
   const [instorage, setInstorage] = useState<any>(() => {
@@ -58,6 +72,16 @@ const Home = () => {
     mode === "dark" ? "dark" : "light"
   );
   const [isOpenNotifi, setIsOpenNotifi] = useState<boolean>(false);
+  const [isGuideModalOpen, setIsGuideModalOpen] = useState<boolean>(false);
+  const [isWinHappyDay, setIsWinHappyDay] = useState<{
+    isOpen: boolean;
+    data: any;
+  }>({
+    isOpen: false,
+    data: null,
+  });
+  const [count, setCount] = useState<number>(0);
+  const [isClaimHappyDay, setIsClaimHappyDay] = useState<boolean>(false);
 
   const isSmallScreen = window.innerHeight <= 520 ? true : false;
   const LatestMessageTime = LatestMessage.data?.data.data;
@@ -75,8 +99,10 @@ const Home = () => {
 
   if (firstLoginMission?.task_user?.completed) {
     minedSeed = formatDecimals(
-      calculateMinedSeeds(
+      calculateMinedSeeds2(
         AcountData.data?.data.data.last_claim,
+        getMiningSpeedByLevel(0),
+        getStorageSizeByLevel(0),
         AcountData.data?.data.data.upgrades ?? [],
         new Date().getTime()
       )
@@ -98,8 +124,17 @@ const Home = () => {
     boostSpeedLevel[getSpeedUpgradesLevel(AcountData.data?.data.data)]?.speed /
     10000;
 
+  const treeRef = useRef<any>();
   const progressRef = useRef<any>();
   let countProgess: any;
+
+  const isX4 =
+    boardingEventStart < new Date().getTime() &&
+    new Date().getTime() < boardingEventNextStage;
+
+  const isX2 =
+    boardingEventNextStage < new Date().getTime() &&
+    new Date().getTime() < boardingEventEnd;
 
   // useEffect(() => {
   //   window.Telegram.WebApp.onEvent("viewportChanged", () => {
@@ -189,6 +224,7 @@ const Home = () => {
         MissionsData.refetch();
         AcountBalnce.refetch();
         AcountData.refetch();
+        setIsOpenNotifi(true);
         setIsOpen(false);
       })
       .catch((err) => {
@@ -216,6 +252,50 @@ const Home = () => {
     }
   };
 
+  const getMultiple = () => {
+    if (isX4) return 4;
+    if (isX2) return 2;
+    return 1;
+  };
+
+  const getHappyDay = () => {
+    if (HappyDay.data) {
+      const isHappyDay = Object.keys(
+        HappyDay.data?.data.data.happy_days
+      ).includes(String(new Date().getDay()));
+
+      return isHappyDay;
+    }
+    return false;
+  };
+
+  const handleTapTree = () => {
+    if (count < 20) {
+      setCount(count + 1);
+      treeRef.current.style.transform = "scale(0.95)";
+      setTimeout(() => {
+        treeRef.current.style.transform = "scale(1)";
+      }, 100);
+      return;
+    }
+    if (count >= 20) {
+      ClaimHappyDay.mutateAsync()
+        .then((data) => {
+          setIsWinHappyDay({ isOpen: true, data: data });
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
+      setIsClaimHappyDay(true);
+      setCount(0);
+    }
+  };
+
+  const handleClaimHappyDay = () => {
+    setIsWinHappyDay({ isOpen: false, data: null });
+    setIsClaimHappyDay(true);
+  };
+
   return (
     <>
       {AcountData.isLoading ? (
@@ -223,7 +303,7 @@ const Home = () => {
       ) : (
         <div
           className={clsx(
-            "h-screen overflow-hidden flex flex-col flex-1 px-4 pb-[140px] relative ",
+            "h-screen overflow-hidden flex flex-col  flex-1 px-4 pb-[140px] relative ",
             "dark:bg-transparent dark:bg-gradient-to-b from-transparent via-transparent to-transparent ",
             "bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A]"
           )}
@@ -269,31 +349,52 @@ const Home = () => {
               </div>
             </div>
           </div>
+          <div className="flex justify-center mt-3">
+            {isX2 && (
+              <img
+                src="/images/x2.png"
+                className="w-[143px] h-[38px]"
+                alt=""
+              ></img>
+            )}
+            {isX4 && (
+              <img
+                src="/images/x4.png"
+                className="w-[143px] h-[38px]"
+                alt=""
+              ></img>
+            )}
+          </div>
+          <button
+            onClick={handleSwitchMode}
+            className={clsx(
+              " fixed right-8 top-[150px] z-40  rounded-[50%] w-[48px] h-[48px] flex justify-center items-center",
+              "bg-[#7BB52C] border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
+              "dark:radial-bg"
+            )}
+          >
+            <img
+              className="w-[30px] h-[30px]"
+              src={theme === "light" ? "/images/light.png" : "/images/dark.png"}
+              alt=""
+            />
+          </button>
+
           <div
+            onClick={() => {
+              (getHappyDay() || !isClaimHappyDay) && handleTapTree();
+            }}
+            ref={treeRef}
             className={clsx(
               "flex flex-1 max-h-[560px] justify-center bg-no-repeat bg-contain bg-center z-30 ",
               isSmallScreen ? "mb-2 mt-2" : "mb-5 mt-4"
             )}
             style={{
-              backgroundImage: "url('/images/trees/6.png')",
+              backgroundImage: `url('/images/trees/${
+                getHappyDay() && isClaimHappyDay ? 7 : 6
+              }.png')`,
             }}
-          >
-            <button
-              onClick={handleSwitchMode}
-              className={clsx(
-                " absolute right-8 rounded-[50%] w-[48px] h-[48px] flex justify-center items-center",
-                "bg-[#7BB52C] border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]"
-              )}
-            >
-              <img
-                className="w-[30px] h-[30px]"
-                src={
-                  theme === "light" ? "/images/light.svg" : "/images/dark.svg"
-                }
-                alt=""
-              />
-            </button>
-          </div>
+          ></div>
 
           {/* storage button */}
           <div className=" rounded-2xl  z-10">
@@ -395,7 +496,7 @@ const Home = () => {
                           <p className="text-xs font-normal ">{`${
                             boostSpeedLevel[
                               getSpeedUpgradesLevel(AcountData.data?.data.data)
-                            ]?.speed
+                            ]?.speed * getMultiple()
                           } SEED/hour`}</p>
                         </div>
                       </div>
@@ -441,6 +542,17 @@ const Home = () => {
         isOpen={isOpenNotifi}
         handleClose={() => setIsOpenNotifi(false)}
       />
+
+      {isGuideModalOpen && (
+        <RecieveGiftModal handleClose={() => setIsGuideModalOpen(false)} />
+      )}
+
+      {isWinHappyDay.isOpen && isWinHappyDay.data && (
+        <WinPriceModal
+          data={isWinHappyDay.data}
+          handleClose={() => handleClaimHappyDay()}
+        />
+      )}
     </>
   );
 };

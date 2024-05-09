@@ -11,7 +11,7 @@ const NavBar = () => {
       toast.info("Coming soon", {
         autoClose: 2000,
         position: "top-center",
-        style: { width: 272, borderRadius: 8 },
+        style: { width: 237, borderRadius: 8 },
         progressStyle: {
           backgroundColor: "#FF8C21",
         },
@@ -26,9 +26,10 @@ const NavBar = () => {
   return (
     <div>
       <ToastContainer
+        hideProgressBar
         limit={1}
         stacked
-        className="top-3 w-[272px] left-[50%] -translate-x-[50%]"
+        className="top-3 w-[237px] left-[50%] -translate-x-[50%]"
       />
       <div className="rounded-[50px] ">
         <div
