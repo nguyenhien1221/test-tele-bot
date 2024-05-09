@@ -97,7 +97,7 @@ const BootsModal = ({
       const distance = startY - clientY;
       modalRef.current.style = `height: ${startHeight + distance + "px"}`;
       if (
-        typeof window !== undefined &&
+        typeof window !== "undefined" &&
         window?.innerHeight - clientY <= window?.innerHeight * 0.15
       ) {
         getMouseUp();
