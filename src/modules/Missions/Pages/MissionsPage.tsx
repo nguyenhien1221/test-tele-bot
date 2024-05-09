@@ -71,11 +71,21 @@ const MissionsPage = () => {
 
   const handleDoDailyMission = () => {
     doDailyMission.mutateAsync()
-    .then(()=>{console.log("success")})
-    .catch((err)=>{console.log(err?.respone?.data?.message)})
+    .then(()=>{
+      toast.success("Mission completed", {
+        style: { width: 237, borderRadius: 8 },
+        autoClose: 2000,
+      });
+      dailyMissions.refetch()
+    })
+    .catch((err)=>{
+      toast.error(err?.respone?.data?.message, {  
+       style: { width: 237, borderRadius: 8 },
+       autoClose: 2000,
+    });})
   }
 
-  const missionGroup = removeDuplicateItemsByType(
+    const missionGroup = removeDuplicateItemsByType(
     missionsData.data?.data.data ?? []
   ).filter((item) => item.type !== missionsTypes.SIGN_IN);
 

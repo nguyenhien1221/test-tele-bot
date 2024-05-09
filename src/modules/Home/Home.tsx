@@ -284,7 +284,7 @@ const Home = () => {
           setIsWinHappyDay({ isOpen: true, data: data });
         })
         .catch((error) => {
-          toast.error(error.message);
+          toast.error(error?.response?.data?.message);
         });
       setIsClaimHappyDay(true);
       setCount(0);
@@ -370,7 +370,7 @@ const Home = () => {
             className={clsx(
               " fixed right-8 top-[150px] z-40  rounded-[50%] w-[48px] h-[48px] flex justify-center items-center",
               "bg-[#7BB52C] border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
-              "dark:radial-bg"
+              "dark:radial-bg",
             )}
           >
             <img
@@ -382,16 +382,16 @@ const Home = () => {
 
           <div
             onClick={() => {
-              (getHappyDay() || !isClaimHappyDay) && handleTapTree();
+              (getHappyDay() && !isClaimHappyDay) && handleTapTree();
             }}
             ref={treeRef}
             className={clsx(
               "flex flex-1 max-h-[520px] justify-center bg-no-repeat bg-contain bg-center z-30 ",
-              isSmallScreen ? "mb-2 mt-2" : "mb-5 mt-4 scale-[0.85]"
+              isSmallScreen ? "mb-2 mt-2" : "mb-5 mt-4 ", (getHappyDay() && !isClaimHappyDay) ? "scale-[1.25]":"scale-[0.85]"
             )}
             style={{
               backgroundImage: `url('/images/trees/${
-                getHappyDay() && isClaimHappyDay ? 7 : 6
+                getHappyDay() && !isClaimHappyDay ? 7 : 6
               }.png')`,
             }}
           ></div>
