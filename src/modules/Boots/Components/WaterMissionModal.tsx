@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from "@mui/material";
-import { missionsTypes } from "../../../constants/missions.constants";
 import clsx from "clsx";
 import { useState } from "react";
 import Modal from "../../../components/common/Modal";
-import { formatDecimals } from "../../../utils/formatNumber";
 
 interface ModalPropsType {
  
