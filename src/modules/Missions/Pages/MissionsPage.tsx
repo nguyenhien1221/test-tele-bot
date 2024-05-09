@@ -25,8 +25,6 @@ const MissionsPage = () => {
   const doMission = useDoMissions();
   const dailyMissions = useGetDailyMissions()
   // const doDailyMission = useDoDailyMissions()
-  const dailyMissionsData = dailyMissions.data?.data.data
-
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());

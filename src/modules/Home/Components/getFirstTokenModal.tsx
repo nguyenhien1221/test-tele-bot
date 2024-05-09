@@ -14,7 +14,7 @@ const GetFirstTokenModal = ({
   closeModal,
   handleClaim,
 }: ModalPropsType) => {
-  const isSmallScreen = window.innerHeight <= 520 ? true : false;
+  const isSmallScreen = window.innerHeight <= 520 ;
 
   return (
     <>

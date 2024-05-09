@@ -25,8 +25,8 @@ const BootsModal = ({
   storageLevel,
   speedLevel,
 }: ModalPropsType) => {
-  const isDesktop = window.innerHeight < 610 ? true : false;
-  const isSmallScreen = window.innerHeight <= 520 ? true : false;
+  const isDesktop = window.innerHeight < 610 ;
+  const isSmallScreen = window.innerHeight <= 520 ;
 
   const renderTitle = (type: number) => {
     if (type === 0) {

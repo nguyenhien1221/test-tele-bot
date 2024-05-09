@@ -12,7 +12,7 @@ const Friends = () => {
   const tele = window.Telegram.WebApp;
 
   const userID = tele.initDataUnsafe?.user?.id;
-  const isSmallScreen = window.innerHeight <= 520 ? true : false;
+  const isSmallScreen = window.innerHeight <= 520 ;
 
   const AcountReferees = useGetAcountReferees();
 

@@ -12,7 +12,7 @@ interface MissionsItemPropType {
 }
 
 const MissionsItem = ({ level, type }: MissionsItemPropType) => {
-  const isSmallScreen = window.innerHeight <= 520 ? true : false;
+  const isSmallScreen = window.innerHeight <= 520;
 
   const renderStorageItems = () => {
     return (
@@ -46,7 +46,7 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
     return (
       <div
         className={clsx(
-          "grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full",
+          "grid grid-cols-7 gap-3 bg-white rounded-2xl w-full",isSmallScreen ? "p-2" : " p-4",
           "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent",
           "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#97C35B]",
           "dark:border-0 dark:border-transparent dark:drop-shadow-none"
@@ -69,7 +69,7 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
     return (
       <div
         className={clsx(
-          "grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full",
+          "grid grid-cols-7 gap-3 bg-white rounded-2xl  w-full",isSmallScreen ? "p-2" : " p-4",
           "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent",
           "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#97C35B]",
           "dark:border-0 dark:border-transparent dark:drop-shadow-none"

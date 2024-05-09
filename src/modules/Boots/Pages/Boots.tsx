@@ -22,6 +22,9 @@ import {
   getStorageUpgradesLevel,
 } from "../../../utils/minedSeed";
 import HolyWaterModal from "../Components/HolyWaterModal";
+import useGetWaterMissions from "../Hooks/useGetHolyTask";
+import useDoWaterMissions from "../Hooks/useDoWaterMission";
+import WaterMissionsModal from "../Components/WaterMissionModal";
 
 const Boots = () => {
   const navigate = useNavigate();
@@ -31,12 +34,15 @@ const Boots = () => {
   const UpgradeSpeed = useUpgradeSpeed();
   const AcountBalance = useGetAcountBalance();
   const AcountData = useGetAcountDetails();
+  const WaterMission = useGetWaterMissions()
+  const DoWaterMission = useDoWaterMissions()
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
 
   const [isOpen, setisOpen] = useState<any>({ isOpen: false, type: 0 });
   const [isOpenWater, setIsOpenWater] = useState<boolean>(false);
+  const [isWaterMissionOpen, setIsWaterMissionOpen] = useState(false)
 
   const isDesktop = window.innerHeight < 610 ? true : false;
 
@@ -94,6 +100,25 @@ const Boots = () => {
       setisOpen({ isOpen: true, type: type });
     }
   };
+
+  const handleDoWaterMision = (id:string) => {
+    DoWaterMission
+    .mutateAsync(id)
+    .then(() => {
+      toast.success("Mission completed", {
+        style: { width: 237, borderRadius: 8 },
+        autoClose: 2000,
+      });
+      WaterMission.refetch();
+    })
+    .catch(() => {
+      toast.error("mission is not completed", {
+        style: { width: 237, borderRadius: 8 },
+        autoClose: 2000,
+      });
+    });}
+
+  const handleOpenWaterMissionModal = () => { setIsWaterMissionOpen(true) }
 
   return (
     <div
@@ -257,10 +282,15 @@ const Boots = () => {
           }
           speedLevel={getSpeedUpgradesLevel(AcountData.data?.data.data) ?? 0}
           type={2}
-          closeModal={() => setIsOpenWater(true)}
-          handleUpgrade={() => handleUpgrade()}
+          closeModal={() => setIsOpenWater(false)}
+          handleUpgrade={() => handleOpenWaterMissionModal()}
         />
       )}
+
+      {isWaterMissionOpen && WaterMission.data && <WaterMissionsModal 
+      data={WaterMission.data?.data.data ?? []} 
+      handleDoMission={(id:string) => handleDoWaterMision(id)} 
+      closeModal={() => setIsWaterMissionOpen(false)} />}
     </div>
   );
 };

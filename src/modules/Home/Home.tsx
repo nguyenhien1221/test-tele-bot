@@ -83,7 +83,7 @@ const Home = () => {
   const [count, setCount] = useState<number>(0);
   const [isClaimHappyDay, setIsClaimHappyDay] = useState<boolean>(false);
 
-  const isSmallScreen = window.innerHeight <= 520 ? true : false;
+  const isSmallScreen = window.innerHeight <= 520 ;
   const LatestMessageTime = LatestMessage.data?.data.data;
   const ReadMessageTime = localStorage.getItem("readMessageTime");
 
@@ -386,8 +386,8 @@ const Home = () => {
             }}
             ref={treeRef}
             className={clsx(
-              "flex flex-1 max-h-[560px] justify-center bg-no-repeat bg-contain bg-center z-30 ",
-              isSmallScreen ? "mb-2 mt-2" : "mb-5 mt-4"
+              "flex flex-1 max-h-[520px] justify-center bg-no-repeat bg-contain bg-center z-30 ",
+              isSmallScreen ? "mb-2 mt-2" : "mb-5 mt-4 scale-[0.85]"
             )}
             style={{
               backgroundImage: `url('/images/trees/${

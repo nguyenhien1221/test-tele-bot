@@ -5,7 +5,7 @@ interface RecieveGiftModalProps {
 }
 
 const RecieveGiftModal = ({ handleClose }: RecieveGiftModalProps) => {
-  const isSmallScreen = window.innerHeight <= 520 ? true : false;
+  const isSmallScreen = window.innerHeight <= 520 ;
   return (
     <div
       onClick={handleClose}
