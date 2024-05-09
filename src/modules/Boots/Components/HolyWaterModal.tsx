@@ -1,9 +1,7 @@
 import MissionsItem from "./MissionsItem";
 import clsx from "clsx";
 import {
-  boostSpeedLevel,
   bootTypeEnum,
-  bootsStorageLevel,
 } from "../../../constants/boots.constants";
 import { LoadingButton } from "@mui/lab";
 import Modal from "../../../components/common/Modal";
@@ -25,8 +23,8 @@ const HolyWaterModal = ({
   storageLevel,
   speedLevel,
 }: ModalPropsType) => {
-  const isDesktop = window.innerHeight < 610 ? true : false;
-  const isSmallScreen = window.innerHeight <= 520 ? true : false;
+  const isDesktop = window.innerHeight < 610 ;
+  const isSmallScreen = window.innerHeight <= 520 ;
 
   const renderTitle = (type: number) => {
     if (type === 0) {
@@ -111,7 +109,7 @@ const HolyWaterModal = ({
               </div>
               <MissionsItem type={type} level={level} />
             </div>
-            <div className="flex relative z-30 justify-center gap-2 mb-[17px]"></div>
+            <div className="flex relative z-30 justify-center gap-2 mb-[17px] dark:text-white"><p>Complete 1 mission to upgrade</p></div>
           </div>
           <LoadingButton
             loading={isLoading}

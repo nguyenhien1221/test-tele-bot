@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from "@mui/material";
-import { missionsTypes, socials } from "../../../constants/missions.constants";
+import { missionsTypes } from "../../../constants/missions.constants";
 import { getMissionsByType } from "../Utils/missions";
 import clsx from "clsx";
 import { formatDecimals } from "../../../utils/formatNumber";
@@ -23,7 +23,6 @@ const MissionsModal = ({
 }: ModalPropsType) => {
   const tele = window.Telegram.WebApp;
   const missions = getMissionsByType(type, data);
-  const isSmallScreen = window.innerHeight <= 520 ? true : false;
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleShowPopup = (item: any) => {

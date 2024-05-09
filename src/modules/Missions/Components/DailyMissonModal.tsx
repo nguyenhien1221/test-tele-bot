@@ -16,7 +16,6 @@ const DailyMissonModal = ({
   data,
   handleDoMission,
 }: ModalPropsType) => {
-  const isSmallScreen = window.innerHeight <= 520 ? true : false;
 
   return (
     <>
@@ -29,7 +28,7 @@ const DailyMissonModal = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 pt-5 h-[calc(100%-120px)] overflow-auto">
+          <div className="grid grid-cols-3 gap-4 pt-5 h-[calc(100%-170px)] overflow-auto">
             <div
               className={clsx(
                 "w-[100px] h-[114px] pt-[22px] relative cursor-pointer bg-white rounded-xl mb-[18px] flex items-center justify-center",
