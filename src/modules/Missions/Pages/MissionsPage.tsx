@@ -68,7 +68,7 @@ const MissionsPage = () => {
       });
   };
 
-  const handleDoDailyMission = () => { }
+  // const handleDoDailyMission = () => { }
 
   const missionGroup = removeDuplicateItemsByType(
     missionsData.data?.data.data ?? []
