@@ -35,13 +35,13 @@ const MissionsPage = () => {
   const isDesktop = window.innerHeight < 610 ? true : false;
 
   const handleChooseMission = (index: string) => {
-    const data = missionsData.data?.data.data;
-    if (index === missionsTypes.TWITTER_FOLLOW) {
-      if (!data[data.length - 1]?.task_user?.completed) {
-        handleDoMission(data[data.length - 1]?.id);
-      }
-      return;
-    }
+    // const data = missionsData.data?.data.data;
+    // if (index === missionsTypes.TWITTER_FOLLOW) {
+    //   if (!data[data.length - 1]?.task_user?.completed) {
+    //     handleDoMission(data[data.length - 1]?.id);
+    //   }
+    //   return;
+    // }
     setisOpen({ isOpen: true, type: index });
   };
 
