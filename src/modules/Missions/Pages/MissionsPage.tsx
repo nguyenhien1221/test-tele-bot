@@ -14,8 +14,8 @@ import useDoMissions from "../Hooks/useDoMissions";
 import { ToastContainer, toast } from "react-toastify";
 import Loading from "../../../components/common/Loading";
 import DailyMissonModal from "../Components/DailyMissonModal";
-// import useDoDailyMissions from "../Hooks/useDoDaily";
 import useGetDailyMissions from "../Hooks/useGetDaily";
+// import useDoDailyMissions from "../Hooks/useDoDaily";
 
 const MissionsPage = () => {
   const navigate = useNavigate();
@@ -25,7 +25,8 @@ const MissionsPage = () => {
   const doMission = useDoMissions();
   const dailyMissions = useGetDailyMissions()
   // const doDailyMission = useDoDailyMissions()
-  // const dailyMissionsData = dailyMissions.data?.data.data
+  const dailyMissionsData = dailyMissions.data?.data.data
+
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
@@ -203,7 +204,7 @@ const MissionsPage = () => {
           {isOpenDailyMission.isOpen && dailyMissions?.data && (
             <DailyMissonModal
               handleDoMission={(id: string) => handleDoMission(id)}
-              data={missionsData.data?.data.data ?? []}
+              data={dailyMissions?.data.data.data ?? []}
               type={isOpen.type}
               closeModal={() => setIsOpenDailyMission({ isOpen: false, type: "", data: null })}
             />
