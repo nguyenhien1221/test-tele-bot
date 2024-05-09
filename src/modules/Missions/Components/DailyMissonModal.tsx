@@ -134,15 +134,15 @@ const DailyMissonModal = ({
             >
              
               {true && (
-                <div className="fixed z-40 w-full h-full top-0 ">
+                <div className="absolute z-40 w-full h-full top-0 ">
                   <div className="absolute z-10 bg-black bg-opacity-50 w-full h-full rounded-lg"></div>
-                  <img
-                    src="/images/daily/lock.svg"
-                    className="z-50 absolute left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2"
-                    alt=""
-                  ></img>
                 </div>
               )}
+              <img
+                src="/images/daily/lock.svg"
+                className="z-50 absolute left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2"
+                alt=""
+              ></img>
 
               <div className="absolute text-[11px] font-semibold left-0 top-0  text-white w-[53px] flex items-center h-[19px] bg-[#4E800D] px-[10px] rounded-br-xl rounded-tl-lg">
                 Day 7
