@@ -6,6 +6,7 @@ import {
   bootsStorageLevel,
 } from "../../../constants/boots.constants";
 import { LoadingButton } from "@mui/lab";
+import { useRef } from "react";
 
 interface ModalPropsType {
   isLoading: boolean;
@@ -27,6 +28,8 @@ const BootsModal = ({
   const isDesktop = window.innerHeight < 610 ? true : false;
   const isSmallScreen = window.innerHeight <= 520 ? true : false;
 
+  const modalRef = useRef<any>();
+  const pageRef = useRef<any>();
   const renderTitle = (type: number) => {
     if (type === 0) {
       return (
@@ -54,7 +57,8 @@ const BootsModal = ({
         <>
           <p className="text-[24px] font-bold">Holy Water</p>
           <p className="text-center font-normal">
-            Increase passive mining speed.
+            Better water give you a multiplier to SEED mining. Mining speed is
+            Storage Tree
           </p>
         </>
       );
@@ -66,24 +70,85 @@ const BootsModal = ({
   const price =
     type === bootTypeEnum.STORAGE ? bootsStorageLevel : boostSpeedLevel;
 
+  let startY: number | null = null;
+  let startHeight: number | null = null;
+
+  const getMouseDown = (clientY: any) => {
+    startY = clientY;
+    console.log(clientY);
+    if (modalRef?.current) {
+      startHeight = modalRef?.current?.offsetHeight as number;
+    }
+    if (pageRef?.current) {
+      pageRef.current.style = "pointer-events: auto";
+    }
+  };
+
+  const getMouseUp = () => {
+    startY = null;
+    startHeight = null;
+    if (pageRef?.current) {
+      pageRef.current.style = "pointer-events: none";
+    }
+  };
+  const resizeChart = (clientY: number) => {
+    console.log(clientY);
+    if (startY !== null && modalRef?.current && startHeight !== null) {
+      const distance = startY - clientY;
+      modalRef.current.style = `height: ${startHeight + distance + "px"}`;
+      if (
+        typeof window !== undefined &&
+        window?.innerHeight - clientY <= window?.innerHeight * 0.15
+      ) {
+        getMouseUp();
+        modalRef.current.style = `height: 0px`;
+      }
+    }
+  };
   return (
     <>
+      <div
+        ref={pageRef}
+        style={{ pointerEvents: "none" }}
+        className="fixed w-[100vw] h-[100vh] top-0 left-0 cursor-ns-resize z-[100]"
+        onMouseMove={(e) => resizeChart(e?.clientY)}
+        onTouchMove={(e) => {
+          console.log(e);
+          resizeChart(
+            e?.changedTouches?.[e?.changedTouches?.length - 1]?.clientY
+          );
+        }}
+        onMouseUpCapture={() => getMouseUp()}
+        onTouchEnd={() => getMouseUp()}
+      />
       <div
         onClick={closeModal}
         className="fixed z-10 flex flex-col-reverse items-center w-full h-full top-0 left-0 bg-black bg-opacity-50"
       ></div>
       <div
+        onMouseUpCapture={() => getMouseUp()}
+        onTouchEnd={() => getMouseUp()}
+        ref={modalRef}
         className={clsx(
-          "slide-in fixed py-4 z-30 left-0 flex flex-col items-center px-4 w-full rounded-t-2xl bg-[#F2FFE0]",
-          isSmallScreen ? "h-[90%]" : "h-[85%] max-h-[567px]",
+          "slide-in fixed py-4 pb-[20] px-4 z-30 left-0 flex flex-col items-center  w-full rounded-t-2xl bg-[#F2FFE0]",
+          // isSmallScreen ? "h-[90%]" : "h-[90%] max-h-[567px]",
           "dark:bg-[#0a0c0a] dark:shadow-[0_-2px_8px_#FFFFFF40]"
         )}
+        style={{ height: "90%" }}
       >
         <div className="hidden dark:block absolute bottom-0 left-0 z-0">
           <img src="/images/darkmodebg.png" alt=""></img>
         </div>
-        <div className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"></div>
-        <div className="overflow-auto w-full ">
+        <div
+          onMouseDownCapture={(e) => getMouseDown(e?.clientY)}
+          onTouchStartCapture={(e) =>
+            getMouseDown(
+              e?.changedTouches?.[e?.changedTouches?.length - 1]?.clientY
+            )
+          }
+          className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"
+        ></div>
+        <div className="overflow-auto w-full h-[calc(100%-90px)]  ">
           <div className={clsx("flex flex-col items-center dark:text-white ")}>
             {renderTitle(type)}
           </div>
