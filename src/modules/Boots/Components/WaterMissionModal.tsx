@@ -91,7 +91,7 @@ const WaterMissionsModal = ({
                         ></img>
                       </div>
 
-                      <div className="col-span-8 flex items-center justify-start text-[15px]">
+                      <div className="col-span-8 flex items-center justify-start text-start text-[15px]">
                         {item.name}
                       </div>
                     </div>

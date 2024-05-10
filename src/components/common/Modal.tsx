@@ -40,7 +40,7 @@ const Modal = ({ closeModal, children }: ModalPropsType) => {
 
       if (
         typeof window !== "undefined" &&
-        window?.innerHeight - clientY <= window?.innerHeight * 0.15
+        window?.innerHeight - clientY <= window?.innerHeight * 0.4
       ) {
         getMouseUp();
         closeModal();
@@ -96,7 +96,21 @@ const Modal = ({ closeModal, children }: ModalPropsType) => {
         <div className="hidden dark:block absolute bottom-0 left-0 right-0 z-0">
           <img src="/images/darkmodebg.png" alt=""></img>
         </div>
-        <div className="min-h-[calc(90vh-32px)] w-full relative">
+        <div
+          onMouseDownCapture={(e) => getMouseDown(e?.clientY)}
+          onTouchStartCapture={(e) => {
+            getMouseDown(
+              e?.changedTouches?.[e?.changedTouches?.length - 1]?.clientY
+            );
+          }}
+          onTouchMove={(e) => {
+            resizeChart(
+              e?.changedTouches?.[e?.changedTouches?.length - 1]?.clientY
+            );
+          }}
+          onTouchEnd={() => getMouseUp()}
+          className="min-h-[calc(90vh-32px)] w-full relative"
+        >
           {children}
         </div>
       </div>

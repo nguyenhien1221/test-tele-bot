@@ -319,7 +319,7 @@ export function calculateMinedSeeds2(
 
 export function HappyDaysUserRewardsToBoosts(rewards: any) {
   var boosts: Boost[] = [];
-  console.log("rewasr", rewards);
+
   for (var i = 0; i < rewards.length; i++) {
     var reward = rewards[i];
     switch (reward.type) {
@@ -355,7 +355,7 @@ export function calculateMiningSpeed(
 ) {
   let boosts = boardingBoosts();
   const rewardBoosts = HappyDaysUserRewardsToBoosts(rewards);
- 
+
   boosts = boosts.concat(rewardBoosts);
 
   for (const upgrade of upgrades) {
@@ -389,7 +389,6 @@ export function calculateMiningSpeed(
   copied.sort((a: any, b: any) => {
     return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
   });
-
 
   let previousScale = 100;
   let previousBaseMiningSpeed = initialMiningSpeed;

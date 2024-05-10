@@ -254,11 +254,6 @@ const Home = () => {
     }
   };
 
-  const getMultiple = () => {
-    if (isX2) return 2;
-    return 1;
-  };
-
   const getHappyDay = () => {
     if (HappyDay.data) {
       const isHappyDay = Object.keys(
@@ -271,6 +266,9 @@ const Home = () => {
   };
 
   const handleTapTree = () => {
+    if (HappyDayHistory.data?.data.data?.length === 0 && count === 0) {
+      setIsGuideModalOpen(true);
+    }
     if (count < 20) {
       setCount(count + 1);
       treeRef.current.style.transform = "scale(0.95)";
@@ -380,7 +378,7 @@ const Home = () => {
 
           <div
             onClick={() => {
-              getHappyDay() && !isClaimedHappyDay && handleTapTree();
+              getHappyDay() && isClaimedHappyDay && handleTapTree();
             }}
             ref={treeRef}
             className={clsx(

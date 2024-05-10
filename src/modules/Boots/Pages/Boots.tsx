@@ -41,8 +41,6 @@ const Boots = () => {
   const DoWaterMission = useDoWaterMissions();
   const UpgradeWater = useUpgradeWater();
 
-  console.log(WaterMission.data?.data.data);
-
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
 
@@ -308,9 +306,12 @@ const Boots = () => {
                   <p className="text-sm font-normal">{item.description}</p>
                 </div>
                 <div>
-                  <div className="flex items-center gap-1">
+                  <div className={clsx("flex items-center gap-1")}>
                     <img
-                      src="/images/icons/token_icon.png"
+                      className={clsx(index === 2 ? "w-[21px] h-5" : "")}
+                      src={`/images/icons/${
+                        index === 2 ? "holy" : "token_icon"
+                      }.png`}
                       width={14}
                       height={14}
                       alt="token"
