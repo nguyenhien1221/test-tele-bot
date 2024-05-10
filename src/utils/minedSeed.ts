@@ -206,9 +206,12 @@ export function calculateMinedSeeds2(
   initialMiningSpeed: number,
   initialStorageSize: number,
   upgrades: any,
+  rewards: any,
   now: number
 ) {
-  const boosts = boardingBoosts();
+  let boosts = boardingBoosts();
+  boosts = boosts.concat(HappyDaysUserRewardsToBoosts(rewards));
+
   for (const upgrade of upgrades) {
     switch (upgrade.upgrade_type) {
       case "storage-size":
@@ -312,4 +315,125 @@ export function calculateMinedSeeds2(
     10000;
 
   return minedSeed / 3600000; // Converting mined seeds to per hour
+}
+
+export function HappyDaysUserRewardsToBoosts(rewards: any) {
+  var boosts: Boost[] = [];
+  console.log("rewasr", rewards);
+  for (var i = 0; i < rewards.length; i++) {
+    var reward = rewards[i];
+    switch (reward.type) {
+      case "mining-speed":
+        boosts.push({
+          timestamp: new Date(reward.timestamp).getTime(),
+          type: BoostType.BoostTypeMiningSpeedScaleUp,
+          val: reward.amount,
+        });
+
+        if (reward.expired_in > 0) {
+          var expirationTime =
+            new Date(reward.timestamp).getTime() + reward.expired_in * 3600000;
+
+          boosts.push({
+            timestamp: expirationTime,
+            type: BoostType.BoostTypeMiningSpeedScaleDown,
+            val: reward.amount,
+          });
+        }
+        break;
+      // Add cases for other reward types if needed
+    }
+  }
+  return boosts;
+}
+
+export function calculateMiningSpeed(
+  initialMiningSpeed: number,
+  upgrades: any,
+  rewards: any,
+  now: number
+) {
+  let boosts = boardingBoosts();
+  const rewardBoosts = HappyDaysUserRewardsToBoosts(rewards);
+ 
+  boosts = boosts.concat(rewardBoosts);
+
+  for (const upgrade of upgrades) {
+    switch (upgrade.upgrade_type) {
+      case "storage-size":
+        boosts.push({
+          timestamp: upgrade.timestamp,
+          type: BoostType.BoostTypeStorageSizeBaseUpgrade,
+          val: getStorageSizeByLevel(upgrade.upgrade_level),
+        });
+        break;
+      case "mining-speed":
+        boosts.push({
+          timestamp: upgrade.timestamp,
+          type: BoostType.BoostTypeMiningSpeedBaseUpgrade,
+          val: getMiningSpeedByLevel(upgrade.upgrade_level),
+        });
+        break;
+      case "holy-water":
+        boosts.push({
+          timestamp: upgrade.timestamp,
+          type: BoostType.BoostTypeMiningSpeedBonus,
+          val: getHolyWaterByLevel(upgrade.upgrade_level),
+        });
+        break;
+    }
+  }
+
+  let copied = boosts.slice(); // Creating a shallow copy of the boosts array
+
+  copied.sort((a: any, b: any) => {
+    return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+  });
+
+
+  let previousScale = 100;
+  let previousBaseMiningSpeed = initialMiningSpeed;
+  let previousMiningSpeedBonus = 0;
+  let from = 0;
+
+  for (let boost of copied) {
+    let currentScale = previousScale;
+    let currentBaseMiningSpeed = previousBaseMiningSpeed;
+    let currentMiningSpeedBonus = previousMiningSpeedBonus;
+
+    switch (boost.type) {
+      case BoostType.BoostTypeMiningSpeedBaseUpgrade:
+        currentBaseMiningSpeed = boost.val;
+        break;
+      case BoostType.BoostTypeMiningSpeedBonus:
+        currentMiningSpeedBonus = boost.val;
+        break;
+      case BoostType.BoostTypeMiningSpeedScaleUp:
+        currentScale *= boost.val / 100;
+        break;
+      case BoostType.BoostTypeMiningSpeedScaleDown:
+        currentScale = (currentScale * 100) / boost.val;
+        break;
+    }
+
+    if (boost.timestamp > now) {
+      break;
+    }
+
+    if (boost.timestamp > from) {
+      from = boost.timestamp;
+    }
+
+    previousScale = currentScale;
+    previousBaseMiningSpeed = currentBaseMiningSpeed;
+    previousMiningSpeedBonus = currentMiningSpeedBonus;
+  }
+
+  const speed =
+    (previousBaseMiningSpeed *
+      (100 + previousMiningSpeedBonus) *
+      previousScale) /
+    10000;
+
+  return speed;
 }

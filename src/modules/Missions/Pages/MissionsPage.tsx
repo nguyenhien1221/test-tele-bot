@@ -31,7 +31,7 @@ const MissionsPage = () => {
 
   const [isOpen, setisOpen] = useState({ isOpen: false, type: "" });
   const [isOpenDailyMission, setIsOpenDailyMission] = useState<any>({
-    isOpen: location.state.isOpenDailyModal ?? false,
+    isOpen: location?.state?.isOpenDailyModal ?? false,
     type: "",
     data: null,
   });

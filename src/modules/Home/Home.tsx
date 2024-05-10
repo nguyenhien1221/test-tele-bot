@@ -11,16 +11,15 @@ import {
   boardingEventEnd,
   boardingEventStart,
   calculateMinedSeeds2,
+  calculateMiningSpeed,
   getMiningSpeedByLevel,
   getSpeedUpgradesLevel,
   getStorageSizeByLevel,
   getStorageUpgradesLevel,
-  getWaterUpgradesLevel,
 } from "../../utils/minedSeed";
 import useGetAcountDetails from "../../components/Hooks/useRegister";
 import {
   boostSpeedLevel,
-  boostWaterLevel,
   bootsStorageLevel,
 } from "../../constants/boots.constants";
 import Countdown from "../../components/common/Countdown";
@@ -104,6 +103,7 @@ const Home = () => {
         getMiningSpeedByLevel(0),
         getStorageSizeByLevel(0),
         AcountData.data?.data.data.upgrades ?? [],
+        HappyDayHistory.data?.data.data ?? [],
         new Date().getTime()
       )
     );
@@ -134,6 +134,15 @@ const Home = () => {
 
   const isClaimedHappyDay =
     HappyDayHistory.data && checkSameDay(HappyDayHistory.data.data.data);
+
+  const miningSpeed =
+    HappyDayHistory.data &&
+    calculateMiningSpeed(
+      getMiningSpeedByLevel(0),
+      AcountData.data?.data.data.upgrades ?? [],
+      HappyDayHistory.data.data.data,
+      new Date().getTime()
+    );
 
   useEffect(() => {
     if (firstLoginMission?.task_user === null) {
@@ -463,15 +472,9 @@ const Home = () => {
                       </div>
                       <div>
                         <div className="flex items-center gap-1">
-                          <p className="text-xs font-normal ">{`${
-                            boostSpeedLevel[
-                              getSpeedUpgradesLevel(AcountData.data?.data.data)
-                            ]?.speed *
-                            getMultiple() *
-                            boostWaterLevel[
-                              getWaterUpgradesLevel(AcountData.data?.data.data)
-                            ].speed
-                          } SEED/hour`}</p>
+                          <p className="text-xs font-normal ">{`${formatDecimals(
+                            miningSpeed ?? 0
+                          )} SEED/hour`}</p>
                         </div>
                       </div>
                     </div>
