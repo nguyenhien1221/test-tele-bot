@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   boostSpeedLevel,
-  boostWaterLevel,
   bootOptions,
   bootTypeEnum,
   bootsStorageLevel,
@@ -25,9 +24,7 @@ import {
 } from "../../../utils/minedSeed";
 import HolyWaterModal from "../Components/HolyWaterModal";
 import useGetWaterMissions from "../Hooks/useGetHolyTask";
-import useDoWaterMissions, {
-  doWaterMissions,
-} from "../Hooks/useDoWaterMission";
+import useDoWaterMissions from "../Hooks/useDoWaterMission";
 import WaterMissionsModal from "../Components/WaterMissionModal";
 import useUpgradeWater from "../Hooks/useUpgradeHolyWater";
 
