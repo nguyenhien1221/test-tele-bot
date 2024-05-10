@@ -46,7 +46,8 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
     return (
       <div
         className={clsx(
-          "grid grid-cols-7 gap-3 bg-white rounded-2xl w-full",isSmallScreen ? "p-2" : " p-4",
+          "grid grid-cols-7 gap-3 bg-white rounded-2xl w-full",
+          isSmallScreen ? "p-2" : " p-4",
           "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent",
           "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#97C35B]",
           "dark:border-0 dark:border-transparent dark:drop-shadow-none"
@@ -69,14 +70,20 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
     return (
       <div
         className={clsx(
-          "grid grid-cols-7 gap-3 bg-white rounded-2xl  w-full",isSmallScreen ? "p-2" : " p-4",
+          "grid grid-cols-7 gap-3 bg-white rounded-2xl  w-full",
+          isSmallScreen ? "p-2" : " p-4",
           "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent",
           "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#97C35B]",
           "dark:border-0 dark:border-transparent dark:drop-shadow-none"
         )}
       >
         <div className="col-span-2 flex ">
-          <img src={`/images/holy/${level + 1}.png`} width={60} alt=""></img>
+          <img
+            src={`/images/holy/${level + 1}.png`}
+            className="h-[60px] w-[50px]"
+            width={60}
+            alt=""
+          ></img>
         </div>
         <div className="col-span-5">
           <p className="font-normal text-sm mb-2">{`Level ${level + 1}`}</p>

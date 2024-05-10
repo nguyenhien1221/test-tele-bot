@@ -1,30 +1,31 @@
 import MissionsItem from "./MissionsItem";
 import clsx from "clsx";
-import {
-  bootTypeEnum,
-} from "../../../constants/boots.constants";
+import { boostWaterLevel } from "../../../constants/boots.constants";
 import { LoadingButton } from "@mui/lab";
 import Modal from "../../../components/common/Modal";
 
 interface ModalPropsType {
+  userData: any;
   isLoading: boolean;
   storageLevel: number;
   speedLevel: number;
   type: number;
   closeModal: () => void;
+  handleOpenMission: () => void;
   handleUpgrade: () => void;
 }
 
 const HolyWaterModal = ({
+  userData,
   isLoading,
   closeModal,
+  handleOpenMission,
   handleUpgrade,
   type,
   storageLevel,
-  speedLevel,
 }: ModalPropsType) => {
-  const isDesktop = window.innerHeight < 610 ;
-  const isSmallScreen = window.innerHeight <= 520 ;
+  const isDesktop = window.innerHeight < 610;
+  const isSmallScreen = window.innerHeight <= 520;
 
   const renderTitle = (type: number) => {
     if (type === 0) {
@@ -61,17 +62,56 @@ const HolyWaterModal = ({
     }
   };
 
-  const level = type === bootTypeEnum.STORAGE ? storageLevel : speedLevel;
+  const renderButton = () => {
+    const doneMission = userData.filter(
+      (item: any) =>
+        item?.task_user != null && item?.task_user?.repeats >= item?.repeats
+    );
+
+    if (doneMission.length >= boostWaterLevel[storageLevel].missions) {
+      return (
+        <LoadingButton
+          loading={isLoading}
+          onClick={() => handleUpgrade()}
+          className={clsx(
+            "mt-4 capitalize  w-full font-bold  text-white py-[18px] rounded-xl",
+            "dark:bg-white dark:text-black",
+            "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
+            "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-sm"
+          )}
+        >
+          Upgrade
+        </LoadingButton>
+      );
+    }
+    return (
+      <div>
+        <div className="flex relative z-30 justify-center gap-2 mb-[17px] dark:text-white">
+          <p>Complete 1 mission to upgrade</p>
+        </div>
+        <LoadingButton
+          loading={isLoading}
+          onClick={() => handleOpenMission()}
+          className={clsx(
+            " capitalize  w-full font-bold  text-white py-[18px] rounded-xl",
+            "dark:bg-white dark:text-black",
+            "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
+            "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-sm"
+          )}
+        >
+          Open missions
+        </LoadingButton>
+      </div>
+    );
+  };
+
+  const level = storageLevel;
 
   return (
     <>
       <Modal closeModal={closeModal}>
         <div>
-          <div className="hidden dark:block absolute bottom-0 left-0 z-0">
-            <img src="/images/darkmodebg.png" alt=""></img>
-          </div>
-
-          <div className="overflow-auto w-full h-[calc(100%-90px)] mb-7 ">
+          <div className="overflow-auto w-full h-[calc(100%-90px)]">
             <div
               className={clsx("flex flex-col items-center dark:text-white ")}
             >
@@ -109,20 +149,8 @@ const HolyWaterModal = ({
               </div>
               <MissionsItem type={type} level={level} />
             </div>
-            <div className="flex relative z-30 justify-center gap-2 mb-[17px] dark:text-white"><p>Complete 1 mission to upgrade</p></div>
           </div>
-          <LoadingButton
-            loading={isLoading}
-            onClick={() => handleUpgrade()}
-            className={clsx(
-              "btn-slide-in capitalize  w-full font-bold  text-white py-[18px] rounded-xl",
-              "dark:bg-white dark:text-black",
-              "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
-              "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-sm"
-            )}
-          >
-            Open missions
-          </LoadingButton>
+          {renderButton()}
         </div>
       </Modal>
     </>

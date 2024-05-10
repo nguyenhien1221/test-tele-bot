@@ -147,10 +147,39 @@ export const getSpeedUpgradesLevel = (data: any) => {
   }
 };
 
+export const getWaterUpgradesLevel = (data: any) => {
+  let waterLevel = 0;
+  const hasUpgradeSpeed = data?.upgrades?.some(
+    (item: any) => item.upgrade_type === "holy-water"
+  );
+
+  if (data?.upgrades?.length === 0) {
+    return waterLevel;
+  }
+
+  if (data?.upgrades?.length && hasUpgradeSpeed) {
+    const storageUpgrades = data?.upgrades?.filter(
+      (item: any) => item.upgrade_type === "holy-water"
+    );
+
+    const level = storageUpgrades?.sort(
+      (a: any, b: any) => b.upgrade_level - a.upgrade_level
+    )[0]?.upgrade_level;
+
+    return level;
+  } else {
+    return waterLevel;
+  }
+};
+
 // new caculate mined seeds
-export const boardingEventStart = new Date("05/07/2024").getTime();
-export const boardingEventNextStage = new Date("05/27/2024").getTime();
-export const boardingEventEnd = new Date("06/10/2024").getTime();
+export const boardingEventStart = new Date(
+  Date.UTC(2024, 4, 7, 0, 0, 0)
+).getTime();
+export const boardingEventEnd = new Date(
+  Date.UTC(2024, 5, 10, 0, 0, 0)
+).getTime();
+
 interface Boost {
   type: string;
   val: number;
@@ -162,11 +191,6 @@ function boardingBoosts(): Boost[] {
     {
       timestamp: boardingEventStart,
       type: BoostType.BoostTypeMiningSpeedScaleUp,
-      val: 400,
-    },
-    {
-      timestamp: boardingEventNextStage,
-      type: BoostType.BoostTypeMiningSpeedScaleDown,
       val: 200,
     },
     {

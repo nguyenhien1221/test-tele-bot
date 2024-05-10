@@ -9,18 +9,18 @@ import { toast } from "react-toastify";
 import clsx from "clsx";
 import {
   boardingEventEnd,
-  boardingEventNextStage,
   boardingEventStart,
-  calculateMinedSeeds,
   calculateMinedSeeds2,
   getMiningSpeedByLevel,
   getSpeedUpgradesLevel,
   getStorageSizeByLevel,
   getStorageUpgradesLevel,
+  getWaterUpgradesLevel,
 } from "../../utils/minedSeed";
 import useGetAcountDetails from "../../components/Hooks/useRegister";
 import {
   boostSpeedLevel,
+  boostWaterLevel,
   bootsStorageLevel,
 } from "../../constants/boots.constants";
 import Countdown from "../../components/common/Countdown";
@@ -38,6 +38,7 @@ import WinPriceModal from "./Components/WinPriceModal";
 import useGetHappyDay from "./Hooks/useGetHappyDay";
 import useClaimHappyDay from "./Hooks/useClaimHappyDay";
 import useGetHappyDayHistory from "./Hooks/useGetHistoyHappyday";
+import { checkSameDay } from "../../utils/helper";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
@@ -81,9 +82,8 @@ const Home = () => {
     data: null,
   });
   const [count, setCount] = useState<number>(0);
-  const [isClaimHappyDay, setIsClaimHappyDay] = useState<boolean>(false);
 
-  const isSmallScreen = window.innerHeight <= 520 ;
+  const isSmallScreen = window.innerHeight <= 520;
   const LatestMessageTime = LatestMessage.data?.data.data;
   const ReadMessageTime = localStorage.getItem("readMessageTime");
 
@@ -128,19 +128,12 @@ const Home = () => {
   const progressRef = useRef<any>();
   let countProgess: any;
 
-  const isX4 =
-    boardingEventStart < new Date().getTime() &&
-    new Date().getTime() < boardingEventNextStage;
-
   const isX2 =
-    boardingEventNextStage < new Date().getTime() &&
+    boardingEventStart < new Date().getTime() &&
     new Date().getTime() < boardingEventEnd;
 
-  // useEffect(() => {
-  //   window.Telegram.WebApp.onEvent("viewportChanged", () => {
-  //     setExpand(isExpanded);
-  //   });
-  // }, [viewHeight]);
+  const isClaimedHappyDay =
+    HappyDayHistory.data && checkSameDay(HappyDayHistory.data.data.data);
 
   useEffect(() => {
     if (firstLoginMission?.task_user === null) {
@@ -253,7 +246,6 @@ const Home = () => {
   };
 
   const getMultiple = () => {
-    if (isX4) return 4;
     if (isX2) return 2;
     return 1;
   };
@@ -286,14 +278,13 @@ const Home = () => {
         .catch((error) => {
           toast.error(error?.response?.data?.message);
         });
-      setIsClaimHappyDay(true);
+
       setCount(0);
     }
   };
 
   const handleClaimHappyDay = () => {
     setIsWinHappyDay({ isOpen: false, data: null });
-    setIsClaimHappyDay(true);
   };
 
   return (
@@ -303,13 +294,13 @@ const Home = () => {
       ) : (
         <div
           className={clsx(
-            "h-screen overflow-hidden flex flex-col  flex-1 px-4 pb-[140px] relative ",
+            "h-screen overflow-hidden flex flex-col  flex-1 px-4 pb-[130px] relative ",
             "dark:bg-transparent dark:bg-gradient-to-b from-transparent via-transparent to-transparent ",
             "bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A]"
           )}
         >
           <div>
-            <div className="flex flex-col items-center flex-1 ">
+            <div className="flex flex-col items-center flex-1 pt-3">
               <p
                 className={
                   "dark:text-white text-base font-normal ,dark:text-white"
@@ -317,14 +308,16 @@ const Home = () => {
               >
                 In Storage:
               </p>
-              <div className="flex items-center gap-2">
-                <img
-                  src="/images/icons/token_icon.png"
-                  width={44}
-                  height={44}
-                  alt="token"
-                ></img>
-                <p className="dark:text-white text-[35px] font-black">
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-[50px]">
+                  <img
+                    src="/images/icons/token_icon.png"
+                    width={44}
+                    height={44}
+                    alt="token"
+                  ></img>
+                </div>
+                <p className="dark:text-white text-[35px] w-[182px] font-black">
                   {minedSeed.toFixed(6)}
                 </p>
               </div>
@@ -357,20 +350,13 @@ const Home = () => {
                 alt=""
               ></img>
             )}
-            {isX4 && (
-              <img
-                src="/images/x4.png"
-                className="w-[143px] h-[38px]"
-                alt=""
-              ></img>
-            )}
           </div>
           <button
             onClick={handleSwitchMode}
             className={clsx(
-              " fixed right-8 top-[150px] z-40  rounded-[50%] w-[48px] h-[48px] flex justify-center items-center",
+              " fixed right-8 top-[160px] z-40  rounded-[50%] w-[48px] h-[48px] flex justify-center items-center",
               "bg-[#7BB52C] border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
-              "dark:radial-bg",
+              "dark:radial-bg"
             )}
           >
             <img
@@ -382,28 +368,24 @@ const Home = () => {
 
           <div
             onClick={() => {
-              (getHappyDay() && !isClaimHappyDay) && handleTapTree();
+              getHappyDay() && !isClaimedHappyDay && handleTapTree();
             }}
             ref={treeRef}
             className={clsx(
-              "flex flex-1 max-h-[520px] justify-center bg-no-repeat bg-contain bg-center z-30 ",
-              isSmallScreen ? "mb-2 mt-2" : "mb-5 mt-4 ", (getHappyDay() && !isClaimHappyDay) ? "scale-[1.25]":"scale-[0.85]"
+              "flex flex-1 max-h-[550px] justify-center bg-no-repeat bg-contain bg-center z-30 ",
+              isSmallScreen ? "mb-2 mt-2" : "mb-5 mt-4 "
+              // getHappyDay() && !isClaimedHappyDay ? "" : " mt-0 mb-0"
             )}
             style={{
               backgroundImage: `url('/images/trees/${
-                getHappyDay() && !isClaimHappyDay ? 7 : 6
+                getHappyDay() && !isClaimedHappyDay ? 7 : 6
               }.png')`,
             }}
           ></div>
 
           {/* storage button */}
           <div className=" rounded-2xl  z-10">
-            <div
-              className={clsx(
-                "max-h-[90px] min-h-[90px] ",
-                isSmallScreen ? "mt-1" : ""
-              )}
-            >
+            <div className={clsx("max-h-[90px] ", isSmallScreen ? "mt-1" : "")}>
               <div className="dark:gradient-border-mask-storage">
                 <div
                   className={clsx(
@@ -465,15 +447,6 @@ const Home = () => {
                         Storage
                       </p>
                       <div className="flex gap-[7px]">
-                        {/* <img
-                      src={
-                        isFill
-                          ? "/images/icons/time_checked.svg"
-                          : "/images/icons/clock.svg"
-                      }
-                      width={14}
-                      alt="clock"
-                    ></img> */}
                         <p className="text-sm font-medium ">
                           {isFill ? (
                             "Filled"
@@ -487,16 +460,14 @@ const Home = () => {
                       </div>
                       <div>
                         <div className="flex items-center gap-1">
-                          {/* <img
-                        src="/images/icons/token_icon.png"
-                        width={14}
-                        height={14}
-                        alt="token"
-                      ></img> */}
                           <p className="text-xs font-normal ">{`${
                             boostSpeedLevel[
                               getSpeedUpgradesLevel(AcountData.data?.data.data)
-                            ]?.speed * getMultiple()
+                            ]?.speed *
+                            getMultiple() *
+                            boostWaterLevel[
+                              getWaterUpgradesLevel(AcountData.data?.data.data)
+                            ].speed
                           } SEED/hour`}</p>
                         </div>
                       </div>
@@ -523,7 +494,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className={clsx("fixed left-4 right-4 z-30", "bottom-[46px] ")}>
+          <div className={clsx("fixed left-4 right-4 z-30", "bottom-[40px] ")}>
             <NavBar />
           </div>
         </div>

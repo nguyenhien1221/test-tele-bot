@@ -35,7 +35,7 @@ const HomeLayout = () => {
           <Outlet />
         </Suspense>
         {mode === "dark" && <Stars />}
-        <div className="hidden dark:block absolute bottom-0 left-0 z-0">
+        <div className="hidden dark:block fixed bottom-0 left-0 z-0">
           <img src="/images/darkmodebg.png" alt=""></img>
         </div>
       </div>

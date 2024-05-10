@@ -45,12 +45,12 @@ export const boostSpeedLevel: {
 };
 
 export const boostWaterLevel: {
-  [key: string]: { speed: number; price: number };
+  [key: string]: { speed: number; missions: number };
 } = {
-  "0": { speed: 1, price: 0 },
-  "1": { speed: 1.2, price: 0.4 },
-  "2": { speed: 1.4, price: 2 },
-  "3": { speed: 1.6, price: 4 },
-  "4": { speed: 2, price: 10 },
-  "5": { speed: 2.5, price: 30 },
+  "0": { speed: 1, missions: 1 },
+  "1": { speed: 1.2, missions: 2 },
+  "2": { speed: 1.4, missions: 3 },
+  "3": { speed: 1.6, missions: 4 },
+  "4": { speed: 2, missions: 5 },
+  "5": { speed: 2.5, missions: 6 },
 };

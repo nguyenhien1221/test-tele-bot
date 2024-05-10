@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   boostSpeedLevel,
+  boostWaterLevel,
   bootOptions,
   bootTypeEnum,
   bootsStorageLevel,
@@ -20,11 +21,15 @@ import useGetAcountDetails from "../../../components/Hooks/useRegister";
 import {
   getSpeedUpgradesLevel,
   getStorageUpgradesLevel,
+  getWaterUpgradesLevel,
 } from "../../../utils/minedSeed";
 import HolyWaterModal from "../Components/HolyWaterModal";
 import useGetWaterMissions from "../Hooks/useGetHolyTask";
-import useDoWaterMissions from "../Hooks/useDoWaterMission";
+import useDoWaterMissions, {
+  doWaterMissions,
+} from "../Hooks/useDoWaterMission";
 import WaterMissionsModal from "../Components/WaterMissionModal";
+import useUpgradeWater from "../Hooks/useUpgradeHolyWater";
 
 const Boots = () => {
   const navigate = useNavigate();
@@ -34,15 +39,18 @@ const Boots = () => {
   const UpgradeSpeed = useUpgradeSpeed();
   const AcountBalance = useGetAcountBalance();
   const AcountData = useGetAcountDetails();
-  const WaterMission = useGetWaterMissions()
-  const DoWaterMission = useDoWaterMissions()
+  const WaterMission = useGetWaterMissions();
+  const DoWaterMission = useDoWaterMissions();
+  const UpgradeWater = useUpgradeWater();
+
+  console.log(WaterMission.data?.data.data);
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
 
   const [isOpen, setisOpen] = useState<any>({ isOpen: false, type: 0 });
   const [isOpenWater, setIsOpenWater] = useState<boolean>(false);
-  const [isWaterMissionOpen, setIsWaterMissionOpen] = useState(false)
+  const [isWaterMissionOpen, setIsWaterMissionOpen] = useState(false);
 
   const isDesktop = window.innerHeight < 610 ? true : false;
 
@@ -101,24 +109,46 @@ const Boots = () => {
     }
   };
 
-  const handleDoWaterMision = (id:string) => {
-    DoWaterMission
-    .mutateAsync(id)
-    .then(() => {
-      toast.success("Mission completed", {
-        style: { width: 237, borderRadius: 8 },
-        autoClose: 2000,
+  const handleDoWaterMision = (id: string) => {
+    DoWaterMission.mutateAsync(id)
+      .then(() => {
+        toast.success("Mission completed", {
+          style: { width: 237, borderRadius: 8 },
+          autoClose: 2000,
+        });
+        WaterMission.refetch();
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message, {
+          style: { width: 237, borderRadius: 8 },
+          autoClose: 2000,
+        });
       });
-      WaterMission.refetch();
-    })
-    .catch(() => {
-      toast.error("mission is not completed", {
-        style: { width: 237, borderRadius: 8 },
-        autoClose: 2000,
-      });
-    });}
+  };
 
-  const handleOpenWaterMissionModal = () => { setIsWaterMissionOpen(true) }
+  const handleOpenWaterMissionModal = () => {
+    setIsWaterMissionOpen(true);
+  };
+
+  const handleUpgradeWater = () => {
+    UpgradeWater.mutateAsync()
+      .then(() => {
+        AcountData.refetch();
+        AcountBalance.refetch();
+        toast.success("Upgraded Successfully", {
+          style: { width: 237, borderRadius: 8 },
+          autoClose: 2000,
+        });
+        setisOpen({ isOpen: false, type: 0 });
+      })
+      .catch((err) => {
+        toast.error("not enough balance", {
+          style: { width: 237, borderRadius: 8 },
+          autoClose: 2000,
+        });
+        // setisOpen({ isOpen: false, type: 0 });
+      });
+  };
 
   return (
     <div
@@ -251,7 +281,11 @@ const Boots = () => {
                       alt="token"
                     ></img>
                     <p className="text-xs font-normal">
-                      {price} SEED . Lv{level + 1}
+                      {`
+                      ${index === 2 ? "" : price} ${
+                        index === 2 ? "Mission" : "SEED"
+                      }. Lv${level + 1}
+                      `}
                     </p>
                   </div>
                 </div>
@@ -276,21 +310,24 @@ const Boots = () => {
 
       {isOpenWater && (
         <HolyWaterModal
+          userData={WaterMission.data?.data.data ?? []}
           isLoading={UpgradeStorage.isPending || UpgradeSpeed.isPending}
-          storageLevel={
-            getStorageUpgradesLevel(AcountData.data?.data.data) ?? 0
-          }
-          speedLevel={getSpeedUpgradesLevel(AcountData.data?.data.data) ?? 0}
+          storageLevel={getWaterUpgradesLevel(AcountData.data?.data.data) ?? 0}
+          speedLevel={getWaterUpgradesLevel(AcountData.data?.data.data) ?? 0}
           type={2}
           closeModal={() => setIsOpenWater(false)}
-          handleUpgrade={() => handleOpenWaterMissionModal()}
+          handleUpgrade={() => handleUpgradeWater()}
+          handleOpenMission={() => handleOpenWaterMissionModal()}
         />
       )}
 
-      {isWaterMissionOpen && WaterMission.data && <WaterMissionsModal 
-      data={WaterMission.data?.data.data ?? []} 
-      handleDoMission={(id:string) => handleDoWaterMision(id)} 
-      closeModal={() => setIsWaterMissionOpen(false)} />}
+      {isWaterMissionOpen && WaterMission.data && (
+        <WaterMissionsModal
+          data={WaterMission.data?.data.data ?? []}
+          handleDoMission={(id: string) => handleDoWaterMision(id)}
+          closeModal={() => setIsWaterMissionOpen(false)}
+        />
+      )}
     </div>
   );
 };

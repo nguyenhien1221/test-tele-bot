@@ -25,8 +25,8 @@ const BootsModal = ({
   storageLevel,
   speedLevel,
 }: ModalPropsType) => {
-  const isDesktop = window.innerHeight < 610 ;
-  const isSmallScreen = window.innerHeight <= 520 ;
+  const isDesktop = window.innerHeight < 610;
+  const isSmallScreen = window.innerHeight <= 520;
 
   const renderTitle = (type: number) => {
     if (type === 0) {
@@ -72,10 +72,6 @@ const BootsModal = ({
     <>
       <Modal closeModal={closeModal}>
         <div>
-          <div className="hidden dark:block absolute bottom-0 left-0 z-0">
-            <img src="/images/darkmodebg.png" alt=""></img>
-          </div>
-
           <div className="overflow-auto w-full h-[calc(100%-90px)] mb-7 ">
             <div
               className={clsx("flex flex-col items-center dark:text-white ")}

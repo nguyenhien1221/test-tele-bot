@@ -23,12 +23,16 @@ const WinPriceModal = ({ handleClose, data }: RecieveGiftModalProps) => {
           <img
             className="h-[220px] w-[278px] absolute  -top-[125px]"
             src={`/images/${
-              data?.type === "seed" ? "winprice" : "winprice2"
+              data?.data.data?.type === "seed" ? "winprice" : "winprice2"
             }.png`}
             alt=""
           ></img>
           <div className="text-center pb-[26px]">
-            <p className="mb-2 text-[32px] font-extrabold">{data.name}</p>
+            <p className="mb-2 text-[32px] font-extrabold">
+              {`${data?.data.data?.type === "seed" ? "+" : "x"}${
+                data?.data.data.name
+              }`}
+            </p>
             <p className="mb-6">
               The reward will be added to your
               <br /> account as soon as possible!

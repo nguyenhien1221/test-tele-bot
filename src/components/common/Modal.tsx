@@ -93,6 +93,9 @@ const Modal = ({ closeModal, children }: ModalPropsType) => {
         >
           <div className="h-[5px] w-10 bg-white rounded-2xl"></div>
         </div>
+        <div className="hidden dark:block absolute bottom-0 left-0 right-0 z-0">
+          <img src="/images/darkmodebg.png" alt=""></img>
+        </div>
         <div className="min-h-[calc(90vh-32px)] w-full relative">
           {children}
         </div>

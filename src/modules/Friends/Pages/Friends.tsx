@@ -5,6 +5,7 @@ import { copyToClipboard } from "../../../utils/helper";
 import { ToastContainer, toast } from "react-toastify";
 import clsx from "clsx";
 import { navPaths } from "../../../constants/navbar.constants";
+import { formatDecimals } from "../../../utils/formatNumber";
 
 const Friends = () => {
   const mode = localStorage.getItem("mode");
@@ -12,7 +13,7 @@ const Friends = () => {
   const tele = window.Telegram.WebApp;
 
   const userID = tele.initDataUnsafe?.user?.id;
-  const isSmallScreen = window.innerHeight <= 520 ;
+  const isSmallScreen = window.innerHeight <= 520;
 
   const AcountReferees = useGetAcountReferees();
 
@@ -130,7 +131,7 @@ const Friends = () => {
                 ></img>
               </div>
               <div className="col-span-8">
-                <p className="text-sm font-extrabold mb-1">{"item.name"}</p>
+                <p className="text-sm font-extrabold mb-1">{item.name}</p>
                 <div>
                   <div className="flex items-center gap-1">
                     <span className="text-[#7D7D7D] dark:text-white text-sm">
@@ -143,7 +144,9 @@ const Friends = () => {
                       alt="token"
                     ></img>
                     <p className="text-sm font-bold">
-                      {`${item.received_amount.toFixed(6)} SEED`}
+                      {`${formatDecimals(item.received_amount).toFixed(
+                        2
+                      )} SEED`}
                     </p>
                   </div>
                 </div>
