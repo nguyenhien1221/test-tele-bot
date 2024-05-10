@@ -27,6 +27,7 @@ import useGetWaterMissions from "../Hooks/useGetHolyTask";
 import useDoWaterMissions from "../Hooks/useDoWaterMission";
 import WaterMissionsModal from "../Components/WaterMissionModal";
 import useUpgradeWater from "../Hooks/useUpgradeHolyWater";
+import { navPaths } from "../../../constants/navbar.constants";
 
 const Boots = () => {
   const navigate = useNavigate();
@@ -106,21 +107,58 @@ const Boots = () => {
     }
   };
 
-  const handleDoWaterMision = (id: string) => {
-    DoWaterMission.mutateAsync(id)
-      .then(() => {
-        toast.success("Mission completed", {
-          style: { width: 237, borderRadius: 8 },
-          autoClose: 2000,
+  const handleDoWaterMision = (item: any) => {
+    if (item.type === "Share and tag") {
+      tele.openLink(item.metadata.url);
+      setTimeout(() => {
+        DoWaterMission.mutateAsync(item.id)
+          .then(() => {
+            toast.success("Mission completed", {
+              style: { width: 237, borderRadius: 8 },
+              autoClose: 2000,
+            });
+            WaterMission.refetch();
+          })
+          .catch((err) => {
+            toast.error(err?.response?.data?.message, {
+              style: { width: 237, borderRadius: 8 },
+              autoClose: 2000,
+            });
+          });
+      }, 5000);
+      return;
+    }
+    if (item.type === "check-in") {
+      DoWaterMission.mutateAsync(item.id)
+        .then(() => {
+          toast.success("Mission completed", {
+            style: { width: 237, borderRadius: 8 },
+            autoClose: 2000,
+          });
+          WaterMission.refetch();
+        })
+        .catch((err) => {
+          if (err.response?.data?.message === "incomplete task") {
+            navigate(navPaths.MISSIONS, { state: { isOpenDailyModal: true } });
+          }
         });
-        WaterMission.refetch();
-      })
-      .catch((err) => {
-        toast.error(err?.response?.data?.message, {
-          style: { width: 237, borderRadius: 8 },
-          autoClose: 2000,
+    }
+    if (item.type === "refer") {
+      DoWaterMission.mutateAsync(item.id)
+        .then(() => {
+          toast.success("Mission completed", {
+            style: { width: 237, borderRadius: 8 },
+            autoClose: 2000,
+          });
+          WaterMission.refetch();
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message, {
+            style: { width: 237, borderRadius: 8 },
+            autoClose: 2000,
+          });
         });
-      });
+    }
   };
 
   const handleOpenWaterMissionModal = () => {
@@ -320,8 +358,9 @@ const Boots = () => {
 
       {isWaterMissionOpen && WaterMission.data && (
         <WaterMissionsModal
+          isPending={DoWaterMission.isPending}
           data={WaterMission.data?.data.data ?? []}
-          handleDoMission={(id: string) => handleDoWaterMision(id)}
+          handleDoMission={(item: any) => handleDoWaterMision(item)}
           closeModal={() => setIsWaterMissionOpen(false)}
         />
       )}

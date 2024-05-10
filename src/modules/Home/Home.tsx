@@ -274,6 +274,9 @@ const Home = () => {
       ClaimHappyDay.mutateAsync()
         .then((data) => {
           setIsWinHappyDay({ isOpen: true, data: data });
+          AcountData.refetch();
+          MissionsData.refetch();
+          HappyDayHistory.refetch();
         })
         .catch((error) => {
           toast.error(error?.response?.data?.message);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { missionsTypes } from "../../../constants/missions.constants";
 import MissionsModal from "../Components/MissionsModal";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import useGetMissions from "../Hooks/useGetMissions";
 import {
@@ -17,6 +17,7 @@ import useDoDailyMissions from "../Hooks/useDoDaily";
 import { isSameDay } from "../../../utils/helper";
 
 const MissionsPage = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
 
@@ -30,7 +31,7 @@ const MissionsPage = () => {
 
   const [isOpen, setisOpen] = useState({ isOpen: false, type: "" });
   const [isOpenDailyMission, setIsOpenDailyMission] = useState<any>({
-    isOpen: false,
+    isOpen: location.state.isOpenDailyModal ?? false,
     type: "",
     data: null,
   });

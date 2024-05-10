@@ -11,7 +11,7 @@ export const isSameDay = (data: any) => {
     "-" +
     new Date(data[0]?.timestamp).getUTCDate();
 
-  return now > new Date(claimedDate).getTime() + 86400000;
+  return new Date(now).getTime() > new Date(claimedDate).getTime() + 86400000;
 };
 
 export const checkSameDay = (data: any) => {
