@@ -17,6 +17,14 @@ const DailyMissonModal = ({
   data,
   handleDoMission,
 }: ModalPropsType) => {
+  const canClaim = (index: number) => {
+    if (!data?.length) {
+      return index === 0;
+    }
+    if (isSameDay(data)) return index <= data.length;
+    return index < data.length;
+  };
+
   return (
     <>
       <Modal closeModal={closeModal}>
@@ -47,12 +55,8 @@ const DailyMissonModal = ({
                     "dark:gradient-border-mask-mission dark:bg-transparent",
                     "dark:boder-0 dark:drop-shadow-none dark:border-transparent",
                     "border-[3px] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
-                    isCheck
-                      ? "border-[#B0D381] pointer-events-none"
-                      : "border-[#00000080]",
-                    !isCheck && (index !== data.length || !isSameDay(data))
-                      ? "pointer-events-none"
-                      : "",
+                    canClaim(index) ? "border-[#B0D381]" : "border-[#00000080]",
+                    isCheck || !canClaim(index) ? "pointer-events-none" : "",
                     index === 6 ? "col-span-3" : ""
                   )}
                 >
@@ -70,7 +74,7 @@ const DailyMissonModal = ({
                       ></img>
                     </div>
                   )}
-                  {!isCheck && (index !== data.length || !isSameDay(data)) && (
+                  {!canClaim(index) && (
                     <div className="absolute z-40 w-full h-full top-0 ">
                       <div className="absolute z-10 bg-black bg-opacity-50 w-full h-full rounded-lg"></div>
                       <img
