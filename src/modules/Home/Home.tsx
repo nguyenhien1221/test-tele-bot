@@ -201,6 +201,11 @@ const Home = () => {
     AcountData.isLoading,
   ]);
 
+  useEffect(()=>{ 
+    if (HappyDayHistory.data?.data.data?.length === 0 && count === 0) {
+    setIsGuideModalOpen(true);
+  }},[HappyDayHistory.data])
+
   const handleClaim = () => {
     ClaimSeed.mutateAsync()
       .then(() => {
@@ -268,9 +273,6 @@ const Home = () => {
   };
 
   const handleTapTree = () => {
-    if (HappyDayHistory.data?.data.data?.length === 0 && count === 0) {
-      setIsGuideModalOpen(true);
-    }
     if (count < 20) {
       setCount(count + 1);
       treeRef.current.style.transform = "scale(0.95)";

@@ -309,18 +309,16 @@ const Boots = () => {
                   <div className={clsx("flex items-center gap-1")}>
                     <img
                       className={clsx(index === 2 ? "w-[21px] h-5" : "")}
-                      src={`/images/icons/${
-                        index === 2 ? "holy" : "token_icon"
-                      }.png`}
+                      src={`/images/icons/${index === 2 ? "holy" : "token_icon"
+                        }.png`}
                       width={14}
                       height={14}
                       alt="token"
                     ></img>
                     <p className="text-xs font-normal">
                       {`
-                      ${index === 2 ? "" : price} ${
-                        index === 2 ? "Mission" : "SEED"
-                      }. Lv${level + 1}
+                      ${index === 2 ? "" : price} ${index === 2 ? "Mission" : "SEED"
+                        }. Lv${level + 1}
                       `}
                     </p>
                   </div>
@@ -362,7 +360,7 @@ const Boots = () => {
           isPending={DoWaterMission.isPending}
           data={WaterMission.data?.data.data ?? []}
           handleDoMission={(item: any) => handleDoWaterMision(item)}
-          closeModal={() => setIsWaterMissionOpen(false)}
+          closeModal={() => { setIsWaterMissionOpen(false); setIsOpenWater(false) }}
         />
       )}
     </div>

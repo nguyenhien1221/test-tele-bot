@@ -4,8 +4,10 @@ import { Button } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 import { formatDecimals } from "../../../utils/formatNumber";
 import { isSameDay } from "../../../utils/helper";
+import Loading from "../../../components/common/Loading";
 
 interface ModalPropsType {
+  isLoading:boolean
   data: any;
   type: string;
   closeModal: () => void;
@@ -15,7 +17,7 @@ interface ModalPropsType {
 const DailyMissonModal = ({
   closeModal,
   data,
-  handleDoMission,
+  handleDoMission,isLoading
 }: ModalPropsType) => {
   const canClaim = (index: number) => {
     if (!data?.length) {
@@ -34,14 +36,16 @@ const DailyMissonModal = ({
           stacked
           className="top-3 w-[237px] left-[50%] -translate-x-[50%]"
         />
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full ">
           <div className="w-full ">
             <div className="flex flex-col items-center dark:text-white">
               <p className="text-[24px] font-bold">Login Bonus!</p>
               <p>Login every day to claim your rewards!</p>
             </div>
           </div>
-
+          {isLoading && <div className="bg-black w-screen opacity-[0.5] fixed z-40 left-[50%] -translate-x-[50%] top-[50%] -translate-y-[50%]">
+            <Loading />
+          </div>}
           <div className="grid grid-cols-3 gap-x-4 gap-y-0 pt-5 max-h-[390px] flex-1 overflow-auto">
             {/* row 1 */}
             {[...Array(7)].map((item: any, index: number) => {
@@ -104,6 +108,7 @@ const DailyMissonModal = ({
               );
             })}
           </div>
+
           <div className="pt-2">
             <Button
               onClick={closeModal}

@@ -74,7 +74,7 @@ const HolyWaterModal = ({
           loading={isLoading}
           onClick={() => handleUpgrade()}
           className={clsx(
-            "mt-4 capitalize  w-full font-bold  text-white py-[18px] rounded-xl",
+            "mt-4 capitalize  w-full font-bold text-white py-[18px] rounded-xl",
             "dark:bg-white dark:text-black",
             "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
             "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-sm"
@@ -150,7 +150,9 @@ const HolyWaterModal = ({
               <MissionsItem type={type} level={level} />
             </div>
           </div>
-          {renderButton()}
+          <div className="h-[68px]">
+            {renderButton()}
+          </div>
         </div>
       </Modal>
     </>

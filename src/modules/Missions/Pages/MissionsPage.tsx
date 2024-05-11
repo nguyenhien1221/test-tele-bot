@@ -161,7 +161,7 @@ const MissionsPage = () => {
                 >
                   <p className="text-[24px] font-extrabold text-white">
                     {dailyMissions?.data &&
-                    isSameDay(dailyMissions?.data.data.data ?? [])
+                      isSameDay(dailyMissions?.data.data.data ?? [])
                       ? 1
                       : 0}
                   </p>
@@ -228,6 +228,7 @@ const MissionsPage = () => {
 
           {isOpenDailyMission.isOpen && dailyMissions?.data && (
             <DailyMissonModal
+              isLoading={doDailyMission.isPending}
               handleDoMission={() => handleDoDailyMission()}
               data={dailyMissions?.data.data.data ?? []}
               type={isOpen.type}
