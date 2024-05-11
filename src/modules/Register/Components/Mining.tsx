@@ -7,8 +7,7 @@ const Mining = () => {
         <div className="text-center mt-6 h-[120px]">
           <p className="text-[32px] font-extrabold">What is SEED?</p>
           <p>
-            SEED is the heart of our next-gen <br /> Ecosystem. Harvested by
-            Early Farmers and <br /> through Passive Cultivating.
+            SEED is the native token for top-tier <br /> projects in ecosystem. First allocation of <br /> SEED will be distributed to Early Farmers.
           </p>
         </div>
       </div>

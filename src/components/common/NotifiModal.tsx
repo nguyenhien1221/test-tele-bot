@@ -16,7 +16,7 @@ const NotifiModal = ({ isOpen, handleClose }: ModalProps) => {
     >
       <div className="w-[277px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#F2FFE0] p-[25px] rounded-3xl">
         <h2 className="text-2xl font-extrabold text-center mb-2">
-          Notification
+          Congratulations 🥳
         </h2>
         <p className="text-center font-normal mb-6">
           You created an account during the event so you will get x2 seed speed
@@ -30,7 +30,7 @@ const NotifiModal = ({ isOpen, handleClose }: ModalProps) => {
               "hover:drop-shadow-none"
             )}
           >
-            understand
+            Got it
           </Button>
         </div>
       </div>

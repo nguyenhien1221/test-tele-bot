@@ -59,14 +59,14 @@ const MissionsPage = () => {
       .mutateAsync(id)
       .then(() => {
         toast.success("Mission completed", {
-          style: { width: 237, borderRadius: 8 },
+          style: { maxWidth: 337, height: 40, borderRadius: 8 },
           autoClose: 2000,
         });
         missionsData.refetch();
       })
       .catch(() => {
         toast.error("mission is not completed", {
-          style: { width: 237, borderRadius: 8 },
+          style: { maxWidth: 337, height: 40, borderRadius: 8 },
           autoClose: 2000,
         });
       });
@@ -77,14 +77,14 @@ const MissionsPage = () => {
       .mutateAsync()
       .then(() => {
         toast.success("Mission completed", {
-          style: { width: 237, borderRadius: 8 },
+          style: { maxWidth: 337, height: 40, borderRadius: 8 },
           autoClose: 2000,
         });
         dailyMissions.refetch();
       })
       .catch((err) => {
         toast.error(err?.respone?.data?.message, {
-          style: { width: 237, borderRadius: 8 },
+          style: { maxWidth: 337, height: 40, borderRadius: 8 },
           autoClose: 2000,
         });
       });

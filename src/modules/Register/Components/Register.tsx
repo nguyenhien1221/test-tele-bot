@@ -5,8 +5,8 @@ const Register = () => {
         <div className="text-center mt-6 h-[120px]">
           <p className="text-[32px] font-extrabold">SEED COIN</p>
           <p>
-            Sow Your Own Seeds With One Click
-            <br /> Yield Multichain Rewards
+            Nurture Web3 Hidden Gems
+            <br /> Right Within Telegram
           </p>
         </div>
       </div>

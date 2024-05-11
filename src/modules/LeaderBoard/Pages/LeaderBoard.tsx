@@ -8,7 +8,7 @@ const LeaderBoard = () => {
       <div className="flex items-center justify-center flex-col mb-5">
         <img
           src="/images/leaderboard/mainicon.png"
-          className="w-[105px] h-[90px] mb-[14px]"
+          className="w-[103px] h-[103px] mb-[14px]"
           alt=""
         ></img>
         <div className="text-center">

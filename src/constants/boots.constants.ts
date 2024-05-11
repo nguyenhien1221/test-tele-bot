@@ -8,17 +8,17 @@ export const bootOptions = [
   {
     icon: "/images/storage/1.png",
     title: "Storage",
-    description: "Increase the storage capacity of the mined",
+    description: "Extend the filled time to claim less often",
   },
   {
-    icon: "/images/trees/6.png",
+    icon: "/images/trees/1.png",
     title: "Tree",
-    description: "Increase mining speed",
+    description: "Increase passive planting speed",
   },
   {
     icon: "/images/icons/water.png",
     title: "Holy Water",
-    description: "Boost mining speed by 1.25x, 1.5x, 2x times",
+    description: "Superboost planting speed 1.2x.. 2x.. 2.5x times",
   },
 ];
 

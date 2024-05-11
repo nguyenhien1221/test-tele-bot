@@ -33,9 +33,7 @@ const HolyWaterModal = ({
         <>
           <p className="text-[24px] font-bold">Storage</p>
           <p className="text-center font-normal">
-            Increase the storage capacity
-            <br />
-            of the mined
+          Extend the filled time to claim less often
           </p>
         </>
       );
@@ -45,7 +43,7 @@ const HolyWaterModal = ({
         <>
           <p className="text-[24px] font-bold">Tree</p>
           <p className="text-center font-normal">
-            Increase passive mining speed.
+          Increase passive planting speed
           </p>
         </>
       );
@@ -53,9 +51,8 @@ const HolyWaterModal = ({
       return (
         <>
           <p className="text-[24px] font-bold">Holy Water</p>
-          <p className="text-center font-normal">
-            Better water give you a multiplier to SEED mining. Mining speed is
-            Storage Tree
+          <p className="text-center font-normal ">
+          <span>Upgraded water boosts SEED planting. Planting speed is Tree </span><i className='bx bx-x text-[15px]'></i> <span>Water</span>
           </p>
         </>
       );

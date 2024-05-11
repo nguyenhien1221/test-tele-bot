@@ -11,7 +11,7 @@ const NavBar = () => {
       toast.info("Coming soon", {
         autoClose: 2000,
         position: "top-center",
-        style: { width: 237, borderRadius: 8 },
+        style: { maxWidth: 337, height: 40, borderRadius: 8 },
         progressStyle: {
           backgroundColor: "#FF8C21",
         },

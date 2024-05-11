@@ -5,10 +5,9 @@ const About = () => {
     <>
       <div className="flex flex-col items-center">
         <div className="text-center mt-6 h-[120px]">
-          <p className="text-[32px] font-extrabold">Harvesting</p>
+          <p className="text-[32px] font-extrabold">Planting</p>
           <p>
-            The more you cultivate, the more SEED to harvest. Accumulate SEED to
-            earn airdrop and convert points on other web3 platforms.
+            Everyone can get SEED from planting or <br/>Missions. Create account to start nurturing <br/> SEED and boost your Tree to mine faster.
           </p>
         </div>
       </div>

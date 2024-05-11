@@ -60,7 +60,7 @@ const CreateAcount = () => {
       return "Next";
     }
     if (tab === 2) {
-      return "Start Sowing";
+      return "Start Planting";
     }
   };
 

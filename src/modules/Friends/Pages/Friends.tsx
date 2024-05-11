@@ -41,7 +41,7 @@ const Friends = () => {
         hideProgressBar
         limit={1}
         stacked
-        className="top-3 w-[237px] left-[50%] -translate-x-[50%]"
+        className="top-3  left-[50%] -translate-x-[50%]"
       />
       <div className="mb-5">
         <button
@@ -90,9 +90,7 @@ const Friends = () => {
           } Friends`}</p>
         </div>
         <p className="text-sm font-normal text-center">
-          Every time your friend claims SEED
-          <br />
-          you get 20% cashback.
+        You will receive 20% cashback of all your referrals income  
         </p>
       </div>
 

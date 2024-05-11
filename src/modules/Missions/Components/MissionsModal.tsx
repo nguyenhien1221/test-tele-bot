@@ -162,7 +162,7 @@ const MissionsModal = ({
                 "dark:boder-0 dark:border-transparent dark:bg-none dark:drop-shadow-none"
               )}
             >
-              got it
+              Got it
             </Button>
           </div>
         </div>

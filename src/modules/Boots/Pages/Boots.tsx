@@ -57,14 +57,14 @@ const Boots = () => {
           AcountData.refetch();
           AcountBalance.refetch();
           toast.success("Upgraded Successfully", {
-            style: { width: 237, borderRadius: 8 },
+            style: { maxWidth: 337, height: 40, borderRadius: 8 },
             autoClose: 2000,
           });
           setisOpen({ isOpen: false, type: 0 });
         })
         .catch((err) => {
           toast.error("not enough balance", {
-            style: { width: 237, borderRadius: 8 },
+            style: { maxWidth: 337, height: 40, borderRadius: 8 },
             autoClose: 2000,
           });
           // setisOpen({ isOpen: false, type: 0 });
@@ -78,14 +78,14 @@ const Boots = () => {
           AcountData.refetch();
           AcountBalance.refetch();
           toast.success("Upgraded Successfully", {
-            style: { width: 237, borderRadius: 8 },
+            style: { maxWidth: 337, height: 40, borderRadius: 8 },
             autoClose: 2000,
           });
           setisOpen({ isOpen: false, type: 0 });
         })
         .catch((err) => {
           toast.error("not enough balance", {
-            style: { width: 237, borderRadius: 8 },
+            style: { maxWidth: 337, height: 40, borderRadius: 8 },
             autoClose: 2000,
           });
           // setisOpen({ isOpen: false, type: 0 });
@@ -112,14 +112,14 @@ const Boots = () => {
         DoWaterMission.mutateAsync(item.id)
           .then(() => {
             toast.success("Mission completed", {
-              style: { width: 237, borderRadius: 8 },
+              style: { maxWidth: 337, height: 40, borderRadius: 8 },
               autoClose: 2000,
             });
             WaterMission.refetch();
           })
           .catch((err) => {
             toast.error(err?.response?.data?.message, {
-              style: { width: 237, borderRadius: 8 },
+              style: { maxWidth: 337, height: 40, borderRadius: 8 },
               autoClose: 2000,
             });
           });
@@ -130,7 +130,7 @@ const Boots = () => {
       DoWaterMission.mutateAsync(item.id)
         .then(() => {
           toast.success("Mission completed", {
-            style: { width: 237, borderRadius: 8 },
+            style: { maxWidth: 337, height: 40, borderRadius: 8 },
             autoClose: 2000,
           });
           WaterMission.refetch();
@@ -145,14 +145,14 @@ const Boots = () => {
       DoWaterMission.mutateAsync(item.id)
         .then(() => {
           toast.success("Mission completed", {
-            style: { width: 237, borderRadius: 8 },
+            style: { maxWidth: 337, height: 40, borderRadius: 8 },
             autoClose: 2000,
           });
           WaterMission.refetch();
         })
         .catch((err) => {
           toast.error(err?.response?.data?.message, {
-            style: { width: 237, borderRadius: 8 },
+            style: { maxWidth: 337, height: 40, borderRadius: 8 },
             autoClose: 2000,
           });
         });
@@ -169,14 +169,14 @@ const Boots = () => {
         AcountData.refetch();
         AcountBalance.refetch();
         toast.success("Upgraded Successfully", {
-          style: { width: 237, borderRadius: 8 },
+          style: { maxWidth: 337, height: 40, borderRadius: 8 },
           autoClose: 2000,
         });
         setisOpen({ isOpen: false, type: 0 });
       })
       .catch((err) => {
         toast.error("not enough balance", {
-          style: { width: 237, borderRadius: 8 },
+          style: { maxWidth: 337, height: 40, borderRadius: 8 },
           autoClose: 2000,
         });
         // setisOpen({ isOpen: false, type: 0 });
@@ -234,7 +234,7 @@ const Boots = () => {
           </div>
         </div>
         <div className="flex gap-2 items-center text-sm mt-3">
-          <p className=" font-normal">Mining speed:</p>
+          <p className=" font-normal">Planting speed:</p>
           <div className="flex items-center gap-1">
             <img
               src="/images/icons/token_icon.png"
@@ -258,6 +258,7 @@ const Boots = () => {
         {bootOptions.map((item, index) => {
           let price = 0.2;
           let level = 0;
+          let icon = '';
           const storagePrice =
             bootsStorageLevel[
               getStorageUpgradesLevel(AcountData.data?.data.data) + 1
@@ -270,14 +271,17 @@ const Boots = () => {
           if (index === 0) {
             price = storagePrice;
             level = getStorageUpgradesLevel(AcountData.data?.data.data);
+            icon = `/images/storage/${getStorageUpgradesLevel(AcountData.data?.data.data) +1}.png`
           } else if (index === 1) {
             price = speedPrice;
             level = getSpeedUpgradesLevel(AcountData.data?.data.data);
+            icon = `/images/trees/${getSpeedUpgradesLevel(AcountData.data?.data.data)+ 1}.png`
           } else {
             price = 0.2;
             level = 1;
+            icon = `/images/holy/${getWaterUpgradesLevel(AcountData.data?.data.data) +1}.png`
           }
-
+          
           return (
             <div
               onClick={() => handleOpenModal(index)}
@@ -293,7 +297,7 @@ const Boots = () => {
                 <div>
                   <img
                     className="object-contain w-[73px] h-[67px]"
-                    src={item.icon}
+                    src={icon}
                     width={73}
                     height={67}
                     alt="storage"
@@ -361,6 +365,7 @@ const Boots = () => {
           data={WaterMission.data?.data.data ?? []}
           handleDoMission={(item: any) => handleDoWaterMision(item)}
           closeModal={() => { setIsWaterMissionOpen(false); setIsOpenWater(false) }}
+          closeWaterMissionModal={() => { setIsWaterMissionOpen(false) }}
         />
       )}
     </div>

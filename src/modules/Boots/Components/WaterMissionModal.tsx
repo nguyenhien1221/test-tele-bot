@@ -10,13 +10,14 @@ interface ModalPropsType {
   data: any;
   closeModal: () => void;
   handleDoMission: (id: string) => void;
+  closeWaterMissionModal: ()=> void
 }
 
 const WaterMissionsModal = ({
   isPending,
   data,
   closeModal,
-  handleDoMission,
+  handleDoMission,closeWaterMissionModal
 }: ModalPropsType) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -34,7 +35,12 @@ const WaterMissionsModal = ({
     <>
       <Modal closeModal={closeModal}>
         <div className="dark:text-white w-full overflow-auto flex flex-col h-[calc(100%-32px)]">
-          <div className=" w-full ">
+          <div className=" w-full">
+            <button onClick={closeWaterMissionModal} className={clsx("absolute -left-4 -top-[6px]  text-xl flex items-center justify-center", 
+              "capitalize font-bold text-white rounded-xl w-8 h-8 p-0",
+              "dark:bg-white dark:text-black ",
+              "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
+              "dark:boder-0 dark:border-transparent dark:bg-none dark:drop-shadow-none")}>{`<`}</button>
             <div className="flex flex-col items-center ">
               <p className="text-[24px] font-bold">{`${isDone.length} Missions Available`}</p>
               <p className="text-center text-[15px]">
@@ -119,13 +125,13 @@ const WaterMissionsModal = ({
             <Button
               onClick={closeModal}
               className={clsx(
-                "capitalize  w-full font-bold text-white py-[18px] rounded-xl ",
+                "capitalize w-full font-bold text-white py-[18px] rounded-xl ",
                 "dark:bg-white dark:text-black dark:font-black",
                 "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
                 "dark:boder-0 dark:border-transparent dark:bg-none dark:drop-shadow-none"
               )}
             >
-              got it
+              Got it
             </Button>
           </div>
         </div>

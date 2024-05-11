@@ -39,7 +39,6 @@ const GetFirstTokenModal = ({
           🌟 <span className="font-bold">{reward} SEED</span> is gifted for
           <span className="font-black">Early Farmers.</span>
           <br />
-          Let's grow together! Happy planting!
         </div>
 
         <LoadingButton

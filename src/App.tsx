@@ -28,7 +28,8 @@ function App() {
           autoClose={2000}
           limit={1}
           stacked
-          className="top-3 w-[237px] h-10 left-[50%] rounded-lg -translate-x-[50%]"
+          className="top-3 h-10  left-[50%] rounded-lg -translate-x-[50%]"
+          style={{height:40, width: "fit-content"}}
         />
         <RouterProvider router={router}></RouterProvider>
       </QueryClientProvider>
