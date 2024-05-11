@@ -33,7 +33,7 @@ const WaterMissionsModal = ({
   return (
     <>
       <Modal closeModal={closeModal}>
-        <div className="dark:text-white w-full  flex flex-col ">
+        <div className="dark:text-white w-full overflow-auto flex flex-col h-[calc(100%-32px)]">
           <div className=" w-full ">
             <div className="flex flex-col items-center ">
               <p className="text-[24px] font-bold">{`${isDone.length} Missions Available`}</p>
@@ -46,7 +46,7 @@ const WaterMissionsModal = ({
           {isPending ? (
             <Loading />
           ) : (
-            <div className="pt-[20px] h-[calc(100%-166px)] overflow-auto flex-1">
+            <div className="pt-[20px]  h-[calc(100%-166px)] overflow-auto flex-1">
               {data?.map((item: any, index: number) => {
                 return (
                   <button
