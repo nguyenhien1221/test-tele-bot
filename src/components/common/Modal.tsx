@@ -97,18 +97,6 @@ const Modal = ({ closeModal, children }: ModalPropsType) => {
           <img src="/images/darkmodebg.png" alt=""></img>
         </div>
         <div
-          onMouseDownCapture={(e) => getMouseDown(e?.clientY)}
-          onTouchStartCapture={(e) => {
-            getMouseDown(
-              e?.changedTouches?.[e?.changedTouches?.length - 1]?.clientY
-            );
-          }}
-          onTouchMove={(e) => {
-            resizeChart(
-              e?.changedTouches?.[e?.changedTouches?.length - 1]?.clientY
-            );
-          }}
-          onTouchEnd={() => getMouseUp()}
           className="min-h-[calc(90vh-32px)] w-full relative"
         >
           {children}

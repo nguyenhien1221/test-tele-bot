@@ -135,6 +135,8 @@ const Home = () => {
   const isClaimedHappyDay =
     HappyDayHistory.data && checkSameDay(HappyDayHistory.data.data.data);
 
+    console.log(isClaimedHappyDay)
+
   const miningSpeed =
     HappyDayHistory.data &&
     calculateMiningSpeed(
@@ -378,7 +380,7 @@ const Home = () => {
 
           <div
             onClick={() => {
-              getHappyDay() && isClaimedHappyDay && handleTapTree();
+              getHappyDay() && !isClaimedHappyDay && handleTapTree();
             }}
             ref={treeRef}
             className={clsx(
