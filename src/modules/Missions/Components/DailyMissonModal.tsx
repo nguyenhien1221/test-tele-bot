@@ -46,7 +46,7 @@ const DailyMissonModal = ({
           {isLoading && <div className="bg-black w-screen opacity-[0.5] fixed z-40 left-[50%] -translate-x-[50%] top-[50%] -translate-y-[50%]">
             <Loading />
           </div>}
-          <div className="grid grid-cols-3 gap-x-4 gap-y-0 pt-5 max-h-[340px] flex-1 overflow-auto">
+          <div className="grid grid-cols-3 gap-x-4 gap-y-0 pt-5 max-h-[340px] flex-1 px-2 overflow-auto">
             {/* row 1 */}
             {[...Array(7)].map((item: any, index: number) => {
               const day = index + 1;

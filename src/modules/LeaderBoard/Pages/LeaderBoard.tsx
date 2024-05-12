@@ -15,7 +15,7 @@ const LeaderBoard = () => {
           <p className="text-2xl font-extrabold mb-2 dark:text-white">
             Leaderboard
           </p>
-          <p className="dark:text-white">Update content</p>
+          <p className="dark:text-white">Invite more friends to get here</p>
         </div>
       </div>
       {LeaderBoardData.data?.data.data.length > 0 ? (
@@ -91,7 +91,7 @@ const LeaderBoard = () => {
           </div>
         </div>
       ) : (
-        <p className="dark:text-white text-center mt-10 font-black">No data</p>
+        <p className="dark:text-white text-center mt-10 font-black"></p>
       )}
     </div>
   );

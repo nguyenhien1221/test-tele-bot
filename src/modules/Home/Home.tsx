@@ -91,7 +91,7 @@ const Home = () => {
   const firstLoginMission =
     MissionsData.data &&
     MissionsData.data.data.data.find(
-      (item: any) => item.name === "Hello, world"
+      (item: any) => item.type === "sign-in"
     );
 
   let minedSeed = 0;
@@ -150,7 +150,7 @@ const Home = () => {
     } else {
       setIsOpen(false);
     }
-  }, [MissionsData.data]);
+  }, [MissionsData.data, firstLoginMission ]);
 
   useEffect(() => {
     if (timePassed >= 120) {
@@ -271,7 +271,7 @@ const Home = () => {
   };
 
   const handleTapTree = () => {
-    if (count < 20) {
+    if (count < 10) {
       setCount(count + 1);
       treeRef.current.style.transform = "scale(0.95)";
       setTimeout(() => {
@@ -279,7 +279,7 @@ const Home = () => {
       }, 100);
       return;
     }
-    if (count >= 20) {
+    if (count >= 10) {
       ClaimHappyDay.mutateAsync()
         .then((data) => {
           setIsWinHappyDay({ isOpen: true, data: data });
@@ -396,9 +396,9 @@ const Home = () => {
           ></div>
 
           {/* storage button */}
-          <div className=" rounded-2xl  z-10">
+          <div className=" dark:rounded-2xl z-10">
             <div className={clsx("max-h-[90px] ", isSmallScreen ? "mt-1" : "")}>
-              <div className="dark:gradient-border-mask-storage">
+              <div className="dark:gradient-border-mask-storage dark:rounded-2xl">
                 <div
                   className={clsx(
                     "rounded-2xl w-full relative overflow-hidden ",
@@ -506,7 +506,7 @@ const Home = () => {
         </div>
       )}
 
-      {isOpen && (
+      {isOpen && firstLoginMission?.task_user === null && (
         <GetFirstTokenModal
           isLoading={doMission.isPending}
           handleClaim={() => handleClaimMissionReward()}

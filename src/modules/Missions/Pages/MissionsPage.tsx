@@ -156,12 +156,14 @@ const MissionsPage = () => {
                 <div
                   className={clsx(
                     "w-10 h-10 rounded-[50%] flex items-center justify-center",
-                    "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
+                    "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]",
+                    dailyMissions?.data && (isSameDay(dailyMissions?.data.data.data ?? [] ) || dailyMissions?.data.data.data?.length === 0 )
+                      ? 1
+                      : "hidden"
                   )}
                 >
-                  <p className="text-[24px] font-extrabold text-white">
-                    {dailyMissions?.data &&
-                      isSameDay(dailyMissions?.data.data.data ?? [])
+                  <p className={clsx("text-[24px] font-extrabold text-white")}>
+                    {dailyMissions?.data && (isSameDay(dailyMissions?.data.data.data ?? [] ) || dailyMissions?.data.data.data?.length === 0 )
                       ? 1
                       : 0}
                   </p>
@@ -173,6 +175,14 @@ const MissionsPage = () => {
                 item.type,
                 missionsData.data?.data.data ?? []
               ).filter((mission: any) => mission.task_user === null).length;
+
+              let name =""
+
+              if(index === 0  ){
+                name = "Follow core ecosystem"
+              } else {
+                name = "Join our community"
+              }
 
               return (
                 <div
@@ -197,7 +207,7 @@ const MissionsPage = () => {
                   </div>
                   <div className="col-span-6 flex items-center dark:text-white">
                     <div className=" text-lg font-semibold">
-                      <p className="font-semibold">{item.name}</p>
+                      <p className="font-semibold">{name}</p>
                     </div>
                   </div>
                   <div className="col-span-2 flex items-center">

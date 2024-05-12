@@ -27,7 +27,7 @@ const HomeLayout = () => {
     <div
       className={clsx(
         "h-screen bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A] overflow-hidden",
-        "dark:bg-none dark:bg-[#0d0f0d]"
+        "dark:bg-none dark:bg-[#030C02]"
       )}
     >
       <div>
@@ -36,7 +36,7 @@ const HomeLayout = () => {
         </Suspense>
         {mode === "dark" && <Stars />}
         <div className="hidden dark:block fixed bottom-0 left-0 z-0">
-          <img src="/images/darkmodebg.png" alt=""></img>
+          <img src="/images/darkmodebg.png" className="object-fill w-full" alt=""></img>
         </div>
       </div>
     </div>

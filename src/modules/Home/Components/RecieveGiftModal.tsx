@@ -67,8 +67,8 @@ const RecieveGiftModal = ({ handleClose }: RecieveGiftModalProps) => {
             alt=""
           ></img>
           <div className="text-white text-center font-semibold absolute -bottom-[55px]">
-            Tap on the tree to <br />
-            receive the gift
+            Tap 10 times to <br />
+            unbox special gift
           </div>
         </div>
 

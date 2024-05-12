@@ -28,7 +28,7 @@ const Friends = () => {
       `${process.env.REACT_APP_BOT_URL}startapp=${String(userID)}`
     );
 
-    toast.success("link copied to clipboard", { autoClose: 2000 });
+    toast.success("Link copied to clipboard", { autoClose: 2000,position: "top-center", style: { maxWidth: 337, height: 40, borderRadius: 8 }, });
   };
 
   const handleNavigateLeaderBoard = () => {
@@ -40,8 +40,7 @@ const Friends = () => {
       <ToastContainer
         hideProgressBar
         limit={1}
-        stacked
-        className="top-3  left-[50%] -translate-x-[50%]"
+        className="top-3 max-w-[337px] left-[50%] -translate-x-[50%]"
       />
       <div className="mb-5">
         <button
