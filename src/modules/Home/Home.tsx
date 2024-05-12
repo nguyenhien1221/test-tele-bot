@@ -135,8 +135,6 @@ const Home = () => {
   const isClaimedHappyDay =
     HappyDayHistory.data && checkSameDay(HappyDayHistory.data.data.data);
 
-    console.log(isClaimedHappyDay)
-
   const miningSpeed =
     HappyDayHistory.data &&
     calculateMiningSpeed(

@@ -36,10 +36,10 @@ const WaterMissionsModal = ({
       <Modal closeModal={closeModal}>
         <div className="dark:text-white w-full overflow-auto flex flex-col h-[calc(100%-32px)]">
           <div className=" w-full">
-            <button onClick={closeWaterMissionModal} className={clsx("absolute -left-4 -top-[6px]  text-xl flex items-center justify-center", 
+            <button onClick={closeWaterMissionModal} className={clsx("absolute left-0 -top-[6px]  text-xl flex items-center justify-center", 
               "capitalize font-bold text-white rounded-xl w-8 h-8 p-0",
               "dark:bg-white dark:text-black ",
-              "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
+              "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700] border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
               "dark:boder-0 dark:border-transparent dark:bg-none dark:drop-shadow-none")}>{`<`}</button>
             <div className="flex flex-col items-center ">
               <p className="text-[24px] font-bold">{`${isDone.length} Missions Available`}</p>
@@ -52,7 +52,7 @@ const WaterMissionsModal = ({
           {isPending ? (
             <Loading />
           ) : (
-            <div className="pt-[20px] h-[calc(100%-200px)] overflow-auto flex-1">
+            <div className="pt-[20px] max-h-[340px] flex-1 overflow-auto">
               {data?.map((item: any, index: number) => {
                 return (
                   <button
