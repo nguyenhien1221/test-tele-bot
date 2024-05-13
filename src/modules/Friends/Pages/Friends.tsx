@@ -146,7 +146,7 @@ const Friends = () => {
                     ></img>
                     <p className="text-sm font-bold">
                       {`${formatDecimals(item.received_amount).toFixed(
-                        2
+                        6
                       )} SEED`}
                     </p>
                   </div>

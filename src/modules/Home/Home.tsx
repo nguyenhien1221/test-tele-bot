@@ -474,7 +474,7 @@ const Home = () => {
                         <div className="flex items-center gap-1">
                           <p className="text-xs font-normal ">{`${formatDecimals(
                             miningSpeed ?? 0
-                          ).toFixed(2)} SEED/hour`}</p>
+                          ).toFixed(3)} SEED/hour`}</p>
                         </div>
                       </div>
                     </div>
