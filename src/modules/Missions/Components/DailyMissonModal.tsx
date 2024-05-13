@@ -3,7 +3,6 @@ import Modal from "../../../components/common/Modal";
 import { Button } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 import { formatDecimals } from "../../../utils/formatNumber";
-import { isSameDay } from "../../../utils/helper";
 import Loading from "../../../components/common/Loading";
 
 interface ModalPropsType {
@@ -20,12 +19,46 @@ const DailyMissonModal = ({
   handleDoMission,
   isLoading,
 }: ModalPropsType) => {
-  const canClaim = (index: number) => {
-    if (!data?.length) {
-      return index === 0;
+  const claimed = (no: number) => {
+    if (!data || !data.length) {
+      return false;
     }
-    if (isSameDay(data)) return index <= data.length;
-    return index < data.length;
+
+    return data.some((v: { no: number }) => v.no === no);
+  };
+
+  const unlocked = (no: number) => {
+    if (!data || !data.length) {
+      return no === 1;
+    }
+
+    // data.length is the number of days claimed.
+    // claimed means the reward is already unlocked;
+    if (no <= data.length) {
+      return true;
+    }
+
+    // suppose the last claim days is n. then n+2 should be locked
+    if (no > data.length + 1) {
+      return false;
+    }
+
+    // now compare the last claim; if last claim on yesterday or before that, today reward is unlocked;
+    const lastClaim = new Date(data[0].timestamp);
+    const truncatedLastClaim = new Date(
+      lastClaim.getUTCFullYear(),
+      lastClaim.getUTCMonth(),
+      lastClaim.getUTCDate()
+    );
+
+    const now = new Date();
+    const truncatedNow = new Date(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate()
+    );
+
+    return truncatedLastClaim.getTime() < truncatedNow.getTime();
   };
 
   return (
@@ -65,12 +98,12 @@ const DailyMissonModal = ({
                     "dark:gradient-border-mask-mission dark:bg-transparent",
                     "dark:boder-0 dark:drop-shadow-none dark:border-transparent",
                     "border-[3px] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
-                    canClaim(index) ? "border-[#B0D381]" : "border-[#00000080]",
-                    isCheck || !canClaim(index) ? "pointer-events-none" : "",
+                    unlocked(day) ? "border-[#B0D381]" : "border-[#00000080]",
+                    claimed(day) || !unlocked(day) ? "pointer-events-none" : "",
                     index === 6 ? "col-span-3" : ""
                   )}
                 >
-                  {isCheck && (
+                  {claimed(day) && (
                     <div
                       className={clsx(
                         "w-[30px] h-[30px] rounded-[50%] flex items-center justify-center absolute -right-2 -top-4 z-30",
@@ -84,7 +117,7 @@ const DailyMissonModal = ({
                       ></img>
                     </div>
                   )}
-                  {!canClaim(index) && (
+                  {!unlocked(day) && (
                     <div className="absolute z-40 w-full h-full top-0 ">
                       <div className="absolute z-10 bg-black bg-opacity-50 w-full h-full rounded-lg"></div>
                       <img

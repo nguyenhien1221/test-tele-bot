@@ -14,7 +14,7 @@ import Loading from "../../../components/common/Loading";
 import DailyMissonModal from "../Components/DailyMissonModal";
 import useGetDailyMissions from "../Hooks/useGetDaily";
 import useDoDailyMissions from "../Hooks/useDoDaily";
-import { isSameDay } from "../../../utils/helper";
+import { checkSameDay } from "../../../utils/helper";
 
 const MissionsPage = () => {
   const location = useLocation();
@@ -158,8 +158,8 @@ const MissionsPage = () => {
                     "w-10 h-10 rounded-[50%] flex items-center justify-center",
                     "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]",
                     dailyMissions?.data &&
-                      (isSameDay(dailyMissions?.data.data.data ?? []) ||
-                        dailyMissions?.data.data.data?.length === 0)
+                      ((dailyMissions?.data.data.data?.length || 0) === 0 ||
+                        !checkSameDay(dailyMissions?.data.data.data))
                       ? ""
                       : "hidden"
                   )}
