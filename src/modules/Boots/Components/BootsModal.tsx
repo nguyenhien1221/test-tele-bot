@@ -34,7 +34,7 @@ const BootsModal = ({
         <>
           <p className="text-[24px] font-bold">Storage</p>
           <p className="text-center font-normal">
-          Extend the filled time to claim less often
+            Extend the filled time to claim less often
           </p>
         </>
       );
@@ -44,7 +44,7 @@ const BootsModal = ({
         <>
           <p className="text-[24px] font-bold">Tree</p>
           <p className="text-center font-normal">
-          Increase passive planting speed
+            Increase passive planting speed
           </p>
         </>
       );
@@ -53,7 +53,7 @@ const BootsModal = ({
         <>
           <p className="text-[24px] font-bold">Holy Water</p>
           <p className="text-center font-normal">
-          Upgraded water boosts SEED planting. Planting speed is Tree x Water
+            Upgraded water boosts SEED planting. Planting speed is Tree x Water
           </p>
         </>
       );
@@ -123,7 +123,7 @@ const BootsModal = ({
             loading={isLoading}
             onClick={() => handleUpgrade()}
             className={clsx(
-              "btn-slide-in capitalize  w-full font-bold  text-white py-[18px] rounded-xl",
+              "btn-slide-in capitalize text-[16px] w-full font-bold  text-white py-[18px] rounded-xl",
               "dark:bg-white dark:text-black",
               "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
               "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-sm"

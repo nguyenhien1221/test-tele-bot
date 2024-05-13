@@ -28,7 +28,11 @@ const Friends = () => {
       `${process.env.REACT_APP_BOT_URL}startapp=${String(userID)}`
     );
 
-    toast.success("Link copied to clipboard", { autoClose: 2000,position: "top-center", style: { maxWidth: 337, height: 40, borderRadius: 8 }, });
+    toast.success("Link copied to clipboard", {
+      autoClose: 2000,
+      position: "top-center",
+      style: { maxWidth: 337, height: 40, borderRadius: 8 },
+    });
   };
 
   const handleNavigateLeaderBoard = () => {
@@ -89,7 +93,7 @@ const Friends = () => {
           } Friends`}</p>
         </div>
         <p className="text-sm font-normal text-center">
-        You will receive 20% cashback of all your referrals income  
+          You will receive 20% cashback of all your referrals income
         </p>
       </div>
 
@@ -98,7 +102,7 @@ const Friends = () => {
         <p
           className={clsx(
             " font-bold ",
-            isSmallScreen ? "text-base my-2" : "text-xl mb-4 mt-10",
+            isSmallScreen ? "text-base my-2" : "text-xl mb-4 mt-2",
             "dark:text-white"
           )}
         >
@@ -108,7 +112,7 @@ const Friends = () => {
       <div
         className={clsx(
           "overflow-auto ",
-          isSmallScreen ? "h-[calc(100%-227px)]" : "h-[calc(100%-271px)]"
+          isSmallScreen ? "h-[calc(100%-293px)]" : "h-[calc(100%-300px)]"
         )}
       >
         {AcountReferees.data?.data.data &&
@@ -157,7 +161,7 @@ const Friends = () => {
           onClick={() => handleCopyLink()}
           startIcon={<img src="images/icons/copy.svg" alt="copy" />}
           className={clsx(
-            "font-bold capitalize  text-white py-[18px] w-full rounded-xl ",
+            "font-bold capitalize text-[16px] text-white py-[18px] w-full rounded-xl ",
             "dark:bg-white dark:text-black",
             "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
             "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-none"

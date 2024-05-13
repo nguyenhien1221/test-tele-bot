@@ -33,7 +33,7 @@ const HolyWaterModal = ({
         <>
           <p className="text-[24px] font-bold">Storage</p>
           <p className="text-center font-normal">
-          Extend the filled time to claim less often
+            Extend the filled time to claim less often
           </p>
         </>
       );
@@ -43,7 +43,7 @@ const HolyWaterModal = ({
         <>
           <p className="text-[24px] font-bold">Tree</p>
           <p className="text-center font-normal">
-          Increase passive planting speed
+            Increase passive planting speed
           </p>
         </>
       );
@@ -52,7 +52,10 @@ const HolyWaterModal = ({
         <>
           <p className="text-[24px] font-bold">Holy Water</p>
           <p className="text-center font-normal ">
-          <span>Upgraded water boosts SEED planting. Planting speed is Tree </span><i className='bx bx-x text-[15px]'></i> <span>Water</span>
+            <span>
+              Upgraded water boosts SEED planting. Planting speed is Tree{" "}
+            </span>
+            <i className="bx bx-x text-[15px]"></i> <span>Water</span>
           </p>
         </>
       );
@@ -71,7 +74,7 @@ const HolyWaterModal = ({
           loading={isLoading}
           onClick={() => handleUpgrade()}
           className={clsx(
-            "mt-4 capitalize  w-full font-bold text-white py-[18px] rounded-xl",
+            "mt-4 capitalize text-[16px]  w-full font-bold text-white py-[18px] rounded-xl",
             "dark:bg-white dark:text-black",
             "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
             "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-sm"
@@ -90,7 +93,7 @@ const HolyWaterModal = ({
           loading={isLoading}
           onClick={() => handleOpenMission()}
           className={clsx(
-            " capitalize  w-full font-bold  text-white py-[18px] rounded-xl",
+            " capitalize text-[16px] w-full font-bold  text-white py-[18px] rounded-xl",
             "dark:bg-white dark:text-black",
             "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
             "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-sm"
@@ -147,9 +150,7 @@ const HolyWaterModal = ({
               <MissionsItem type={type} level={level} />
             </div>
           </div>
-          <div className="h-[68px]">
-            {renderButton()}
-          </div>
+          <div className="h-[68px]">{renderButton()}</div>
         </div>
       </Modal>
     </>

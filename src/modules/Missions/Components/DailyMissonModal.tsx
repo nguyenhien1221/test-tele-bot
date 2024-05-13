@@ -7,7 +7,7 @@ import { isSameDay } from "../../../utils/helper";
 import Loading from "../../../components/common/Loading";
 
 interface ModalPropsType {
-  isLoading: boolean
+  isLoading: boolean;
   data: any;
   type: string;
   closeModal: () => void;
@@ -17,7 +17,8 @@ interface ModalPropsType {
 const DailyMissonModal = ({
   closeModal,
   data,
-  handleDoMission, isLoading
+  handleDoMission,
+  isLoading,
 }: ModalPropsType) => {
   const canClaim = (index: number) => {
     if (!data?.length) {
@@ -40,12 +41,17 @@ const DailyMissonModal = ({
           <div className="w-full ">
             <div className="flex flex-col items-center dark:text-white">
               <p className="text-[24px] font-bold">Login Bonus!</p>
-              <p className="text-center">With every missions done, your Holy Water levels up. You can complete the missions in any order.</p>
+              <p className="text-center">
+                With every missions done, your Holy Water levels up. You can
+                complete the missions in any order.
+              </p>
             </div>
           </div>
-          {isLoading && <div className="bg-black w-screen opacity-[0.5] fixed z-40 left-[50%] -translate-x-[50%] top-[50%] -translate-y-[50%]">
-            <Loading />
-          </div>}
+          {isLoading && (
+            <div className="bg-black w-screen opacity-[0.5] fixed z-40 left-[50%] -translate-x-[50%] top-[50%] -translate-y-[50%]">
+              <Loading />
+            </div>
+          )}
           <div className="grid grid-cols-3 gap-x-4 gap-y-0 pt-5 max-h-[340px] flex-1 px-2 overflow-auto">
             {/* row 1 */}
             {[...Array(7)].map((item: any, index: number) => {
@@ -113,7 +119,7 @@ const DailyMissonModal = ({
             <Button
               onClick={closeModal}
               className={clsx(
-                "capitalize w-full font-bold text-white py-[18px] rounded-xl ",
+                "capitalize text-[16px]  w-full font-bold text-white py-[18px] rounded-xl ",
                 "dark:bg-white dark:text-black dark:font-black",
                 "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
                 "dark:boder-0 dark:border-transparent dark:bg-none dark:drop-shadow-none"

@@ -30,7 +30,7 @@ const LeaderBoard = () => {
               LeaderBoardData.data?.data.data.map(
                 (item: any, index: number) => {
                   return (
-                    <div className="grid grid-cols-10  py-2 dark:gradient-border-mask-leaderboard">
+                    <div className="grid grid-cols-10 mt-2 p-2 dark:gradient-border-mask-leaderboard">
                       <div className="col-span-1 flex items-center">
                         {item.rank < 4 ? (
                           <img

@@ -156,7 +156,7 @@ const MissionsModal = ({
             <Button
               onClick={closeModal}
               className={clsx(
-                "capitalize  w-full font-bold text-white py-[18px] rounded-xl ",
+                "capitalize text-[16px]  w-full font-bold text-white py-[18px] rounded-xl ",
                 "dark:bg-white dark:text-black dark:font-black",
                 "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
                 "dark:boder-0 dark:border-transparent dark:bg-none dark:drop-shadow-none"
