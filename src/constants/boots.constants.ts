@@ -27,7 +27,7 @@ export const bootsStorageLevel: {
 } = {
   "0": { duration: 2, price: 0 },
   "1": { duration: 3, price: 0.4 },
-  "2": { duration: 4, price: 0.1 },
+  "2": { duration: 4, price: 1 },
   "3": { duration: 6, price: 2 },
   "4": { duration: 12, price: 8 },
   "5": { duration: 24, price: 16 },

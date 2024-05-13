@@ -194,7 +194,7 @@ const Boots = () => {
         hideProgressBar
         limit={1}
         stacked
-        className="top-3 w-[237px] left-[50%] -translate-x-[50%]"
+        className="top-3 max-w-[337px] left-[50%] -translate-x-[50%]"
       />
       {/* boot info */}
       <div className="flex flex-col items-center dark:text-white">
@@ -209,7 +209,7 @@ const Boots = () => {
           <p className="text-[40px] font-extrabold">
             {formatNumberFloatFix(
               Number(formatDecimals(AcountBalance.data?.data.data)) ?? 0,
-              5
+              6
             )}
           </p>
         </div>
@@ -258,7 +258,7 @@ const Boots = () => {
         {bootOptions.map((item, index) => {
           let price = 0.2;
           let level = 0;
-          let icon = '';
+          let icon = "";
           const storagePrice =
             bootsStorageLevel[
               getStorageUpgradesLevel(AcountData.data?.data.data) + 1
@@ -271,17 +271,23 @@ const Boots = () => {
           if (index === 0) {
             price = storagePrice;
             level = getStorageUpgradesLevel(AcountData.data?.data.data);
-            icon = `/images/storage/${getStorageUpgradesLevel(AcountData.data?.data.data) +1}.png`
+            icon = `/images/storage/${
+              getStorageUpgradesLevel(AcountData.data?.data.data) + 1
+            }.png`;
           } else if (index === 1) {
             price = speedPrice;
             level = getSpeedUpgradesLevel(AcountData.data?.data.data);
-            icon = `/images/trees/${getSpeedUpgradesLevel(AcountData.data?.data.data)+ 1}.png`
+            icon = `/images/trees/${
+              getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
+            }.png`;
           } else {
             price = 0.2;
             level = 1;
-            icon = `/images/holy/${getWaterUpgradesLevel(AcountData.data?.data.data) +1}.png`
+            icon = `/images/holy/${
+              getWaterUpgradesLevel(AcountData.data?.data.data) + 1
+            }.png`;
           }
-          
+
           return (
             <div
               onClick={() => handleOpenModal(index)}
@@ -313,16 +319,18 @@ const Boots = () => {
                   <div className={clsx("flex items-center gap-1")}>
                     <img
                       className={clsx(index === 2 ? "w-[21px] h-5" : "")}
-                      src={`/images/icons/${index === 2 ? "holy" : "token_icon"
-                        }.png`}
+                      src={`/images/icons/${
+                        index === 2 ? "holy" : "token_icon"
+                      }.png`}
                       width={14}
                       height={14}
                       alt="token"
                     ></img>
                     <p className="text-xs font-normal">
                       {`
-                      ${index === 2 ? "" : price} ${index === 2 ? "Mission" : "SEED"
-                        }. Lv${level + 1}
+                      ${index === 2 ? "" : price} ${
+                        index === 2 ? "Mission" : "SEED"
+                      }. Lv${level + 1}
                       `}
                     </p>
                   </div>
@@ -364,8 +372,13 @@ const Boots = () => {
           isPending={DoWaterMission.isPending}
           data={WaterMission.data?.data.data ?? []}
           handleDoMission={(item: any) => handleDoWaterMision(item)}
-          closeModal={() => { setIsWaterMissionOpen(false); setIsOpenWater(false) }}
-          closeWaterMissionModal={() => { setIsWaterMissionOpen(false) }}
+          closeModal={() => {
+            setIsWaterMissionOpen(false);
+            setIsOpenWater(false);
+          }}
+          closeWaterMissionModal={() => {
+            setIsWaterMissionOpen(false);
+          }}
         />
       )}
     </div>

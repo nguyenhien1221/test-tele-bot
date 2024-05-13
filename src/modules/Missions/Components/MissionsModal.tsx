@@ -112,13 +112,15 @@ const MissionsModal = ({
                     )}
                   >
                     <div className="col-span-2 flex items-center">
-                      <img
-                        src={item.metadata.image_url}
-                        className="w-8 h-8"
-                        alt=""
-                      ></img>
+                      <div className="rounded-lg drop-shadow-lg overflow-hidden w-8 h-8">
+                        <img
+                          src={item.metadata.image_url}
+                          className="w-8 h-8"
+                          alt=""
+                        ></img>
+                      </div>
                     </div>
-  
+
                     <div className="col-span-7 flex items-center text-start justify-start text-[15px]">
                       {item.name}
                     </div>
@@ -134,7 +136,7 @@ const MissionsModal = ({
                     </div>
                   </div>
                 </button>
-              )
+              );
             })}
             <div
               className={clsx(

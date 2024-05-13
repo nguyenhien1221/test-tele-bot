@@ -104,7 +104,7 @@ const MissionsPage = () => {
             hideProgressBar
             limit={1}
             stacked
-            className="top-3 w-[237px] left-[50%] -translate-x-[50%]"
+            className="top-3 max-w-[337px] left-[50%] -translate-x-[50%]"
           />
           {/* boot info */}
           <div className="flex flex-col items-center dark:text-white">
@@ -157,16 +157,18 @@ const MissionsPage = () => {
                   className={clsx(
                     "w-10 h-10 rounded-[50%] flex items-center justify-center",
                     "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]",
-                    dailyMissions?.data && (isSameDay(dailyMissions?.data.data.data ?? [] ) || dailyMissions?.data.data.data?.length === 0 )
-                      ? 1
+                    dailyMissions?.data &&
+                      (isSameDay(dailyMissions?.data.data.data ?? []) ||
+                        dailyMissions?.data.data.data?.length === 0)
+                      ? ""
                       : "hidden"
                   )}
                 >
-                  <p className={clsx("text-[24px] font-extrabold text-white")}>
-                    {dailyMissions?.data && (isSameDay(dailyMissions?.data.data.data ?? [] ) || dailyMissions?.data.data.data?.length === 0 )
-                      ? 1
-                      : 0}
-                  </p>
+                  <img
+                    src="/images/icons/checkmission.png"
+                    className="w-[20px] h-[18px]"
+                    alt=""
+                  ></img>
                 </div>
               </div>
             </div>
@@ -176,12 +178,12 @@ const MissionsPage = () => {
                 missionsData.data?.data.data ?? []
               ).filter((mission: any) => mission.task_user === null).length;
 
-              let name =""
+              let name = "";
 
-              if(index === 0  ){
-                name = "Follow core ecosystem"
+              if (index === 0) {
+                name = "Follow core ecosystem";
               } else {
-                name = "Join our community"
+                name = "Join our community";
               }
 
               return (
@@ -211,16 +213,18 @@ const MissionsPage = () => {
                     </div>
                   </div>
                   <div className="col-span-2 flex items-center">
-                    <div
-                      className={clsx(
-                        "w-10 h-10 rounded-[50%] flex items-center justify-center",
-                        "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
-                      )}
-                    >
-                      <p className="text-[24px] font-extrabold text-white">
-                        {countMission}
-                      </p>
-                    </div>
+                    {countMission > 0 && (
+                      <div
+                        className={clsx(
+                          "w-10 h-10 rounded-[50%] flex items-center justify-center",
+                          "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
+                        )}
+                      >
+                        <p className="text-[24px] font-extrabold text-white">
+                          {countMission}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
               );

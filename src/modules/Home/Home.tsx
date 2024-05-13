@@ -90,9 +90,7 @@ const Home = () => {
 
   const firstLoginMission =
     MissionsData.data &&
-    MissionsData.data.data.data.find(
-      (item: any) => item.type === "sign-in"
-    );
+    MissionsData.data.data.data.find((item: any) => item.type === "sign-in");
 
   let minedSeed = 0;
 
@@ -150,7 +148,7 @@ const Home = () => {
     } else {
       setIsOpen(false);
     }
-  }, [MissionsData.data, firstLoginMission ]);
+  }, [MissionsData.data, firstLoginMission]);
 
   useEffect(() => {
     if (timePassed >= 120) {
@@ -199,10 +197,11 @@ const Home = () => {
     AcountData.isLoading,
   ]);
 
-  useEffect(()=>{ 
+  useEffect(() => {
     if (HappyDayHistory.data?.data.data?.length === 0 && count === 0) {
-    setIsGuideModalOpen(true);
-  }},[HappyDayHistory.data])
+      setIsGuideModalOpen(true);
+    }
+  }, [HappyDayHistory.data]);
 
   const handleClaim = () => {
     ClaimSeed.mutateAsync()
@@ -288,9 +287,10 @@ const Home = () => {
           HappyDayHistory.refetch();
         })
         .catch((error) => {
-          toast.error(error?.response?.data?.message);
+          toast.error(error?.response?.data?.message, {
+            style: { borderRadius: 8 },
+          });
         });
-
       setCount(0);
     }
   };
@@ -330,7 +330,7 @@ const Home = () => {
                   ></img>
                 </div>
                 <p className="dark:text-white text-[35px] w-[182px] font-black">
-                  {minedSeed.toFixed(6)}
+                  {minedSeed < 0 ? Number(0).toFixed(6) : minedSeed.toFixed(6)}
                 </p>
               </div>
               <div className="flex gap-2 items-center">
@@ -385,12 +385,12 @@ const Home = () => {
             ref={treeRef}
             className={clsx(
               "flex flex-1 max-h-[550px] justify-center bg-no-repeat bg-contain bg-center z-30 ",
-              isSmallScreen ? "mb-2 mt-2" : "mb-5 mt-4 "
-              // getHappyDay() && !isClaimedHappyDay ? "" : " mt-0 mb-0"
+              // isSmallScreen ? "mb-2 mt-2" : "mb-5 mt-4 ",
+              getHappyDay() && !isClaimedHappyDay ? "mt-0 mb-0" : "mt-0 mb-0"
             )}
             style={{
               backgroundImage: `url('/images/trees/${
-                getHappyDay() && !isClaimedHappyDay ? 7 : 6
+                getHappyDay() && !isClaimedHappyDay ? 7 : 8
               }.png')`,
             }}
           ></div>
@@ -474,7 +474,7 @@ const Home = () => {
                         <div className="flex items-center gap-1">
                           <p className="text-xs font-normal ">{`${formatDecimals(
                             miningSpeed ?? 0
-                          )} SEED/hour`}</p>
+                          ).toFixed(2)} SEED/hour`}</p>
                         </div>
                       </div>
                     </div>

@@ -91,12 +91,14 @@ const CreateAcount = () => {
         ></div>
         {renderContent()}
         {tab <= 2 && (
-          <Button
-            onClick={() => handleChangeTab()}
-            className="fixed bottom-[55px] text-[20px] left-4 right-4 capitalize font-extrabold text-white py-[16px] rounded-xl bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B] hover:drop-shadow-none"
-          >
-            {renderButtonText()}
-          </Button>
+          <div className="pt-3">
+            <Button
+              onClick={() => handleChangeTab()}
+              className="fixed bottom-[55px] text-[20px] left-4 right-4 capitalize font-extrabold text-white py-[16px] rounded-xl bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B] hover:drop-shadow-none"
+            >
+              {renderButtonText()}
+            </Button>
+          </div>
         )}
       </div>
     </div>

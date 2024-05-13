@@ -29,7 +29,7 @@ const NavBar = () => {
         hideProgressBar
         limit={1}
         stacked
-        className="top-3 w-[237px] left-[50%] -translate-x-[50%]"
+        className="top-3 max-w-[337px] left-[50%] -translate-x-[50%]"
       />
       <div className="rounded-[50px] ">
         <div

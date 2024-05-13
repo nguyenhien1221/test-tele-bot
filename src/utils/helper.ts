@@ -3,7 +3,13 @@ export const copyToClipboard = (text: string) => {
 };
 
 export const isSameDay = (data: any) => {
-  const now = new Date().getTime();
+  const date = new Date();
+  const now =
+    date.getUTCFullYear() +
+    "-" +
+    (date.getUTCMonth() + 1) +
+    "-" +
+    date.getUTCDate();
   const claimedDate =
     new Date(data[0]?.timestamp).getUTCFullYear() +
     "-" +
