@@ -153,23 +153,31 @@ const MissionsPage = () => {
                 </div>
               </div>
               <div className="col-span-2 flex items-center">
-                <div
-                  className={clsx(
-                    "w-10 h-10 rounded-[50%] flex items-center justify-center",
-                    "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]",
-                    dailyMissions?.data &&
-                      ((dailyMissions?.data.data.data?.length || 0) === 0 ||
-                        !checkSameDay(dailyMissions?.data.data.data))
-                      ? ""
-                      : "hidden"
-                  )}
-                >
-                  <img
-                    src="/images/icons/checkmission.png"
-                    className="w-[20px] h-[18px]"
-                    alt=""
-                  ></img>
-                </div>
+                {dailyMissions?.data &&
+                ((dailyMissions?.data.data.data?.length || 0) === 0 ||
+                  !checkSameDay(dailyMissions?.data.data.data)) ? (
+                  <div
+                    className={clsx(
+                      "w-10 h-10 rounded-[50%] flex items-center justify-center",
+                      "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
+                    )}
+                  >
+                    <p className="text-[24px] font-extrabold text-white">{1}</p>
+                  </div>
+                ) : (
+                  <div
+                    className={clsx(
+                      "w-10 h-10 rounded-[50%] flex items-center justify-center",
+                      "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
+                    )}
+                  >
+                    <img
+                      src="/images/icons/checkmission.png"
+                      className="w-[20px] h-[18px]"
+                      alt=""
+                    ></img>
+                  </div>
+                )}
               </div>
             </div>
             {missionGroup.map((item, index) => {
@@ -181,9 +189,9 @@ const MissionsPage = () => {
               let name = "";
 
               if (index === 0) {
-                name = "Follow core ecosystem";
+                name = "Our ecosystem";
               } else {
-                name = "Join our community";
+                name = "Our community";
               }
 
               return (

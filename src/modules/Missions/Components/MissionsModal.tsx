@@ -29,7 +29,7 @@ const MissionsModal = ({
   const handleShowPopup = (item: any, url: string) => {
     tele.showPopup(
       {
-        message: "Do you want to open link",
+        message: `Do you want to open twitter ${item.metadata.name}}`,
         buttons: [
           { id: "link", type: "default", text: "Open" },
           { type: "cancel" },
@@ -55,6 +55,16 @@ const MissionsModal = ({
         }
       }
     );
+  };
+
+  const handleOpenLink = (item: any) => {
+    if (!item?.task_user?.completed) {
+      setTimeout(() => {
+        handleDoMission(item?.id);
+        setIsLoading(false);
+      }, 2000);
+      return;
+    }
   };
 
   const renderModalTitle = () => {
@@ -95,16 +105,16 @@ const MissionsModal = ({
                     getMobileOS() === "Android" &&
                     item.type === "twitter-follow"
                   ) {
-                    return item.metadata.url;
+                    return item.metadata?.url;
                   } else if (
                     getMobileOS() === "iOS" &&
                     item.type === "twitter-follow"
                   ) {
-                    return item.metadata.ios_url;
+                    return item.metadata?.ios_url;
                   }
                 };
 
-                return (
+                return item.type === "twitter-follow" ? (
                   <button
                     disabled={isLoading}
                     key={item.id}
@@ -165,6 +175,68 @@ const MissionsModal = ({
                       </div>
                     </div>
                   </button>
+                ) : (
+                  <a
+                    href={item?.metadata?.url}
+                    target="blank"
+                    key={item?.id}
+                    onClick={() => {
+                      setIsLoading(true);
+                      handleOpenLink(item);
+                    }}
+                    rel="noreferrer"
+                    className={clsx("text-center relative w-full")}
+                  >
+                    {item.task_user != null && (
+                      <div
+                        className={clsx(
+                          "w-[30px] h-[30px] rounded-[50%] flex items-center justify-center absolute right-4 -top-4 z-20",
+                          "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
+                        )}
+                      >
+                        <img
+                          src="/images/icons/checkmission.png"
+                          className="w-[13px] h-[9px]"
+                          alt=""
+                        ></img>
+                      </div>
+                    )}
+                    <div
+                      key={index}
+                      className={clsx(
+                        "z-10 py-3 px-4 relative cursor-pointer grid grid-cols-12 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                        "dark:gradient-border-mask-mission dark:bg-transparent",
+                        "dark:boder-0 dark:drop-shadow-none dark:border-transparent",
+                        item.task_user?.completed
+                          ? "border-[1px] border-solid border-[#000] drop-shadow-none brightness-50"
+                          : "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
+                      )}
+                    >
+                      <div className="col-span-2 flex items-center">
+                        <div className="rounded-lg drop-shadow-lg overflow-hidden w-8 h-8">
+                          <img
+                            src={item.metadata.image_url}
+                            className="w-8 h-8"
+                            alt=""
+                          ></img>
+                        </div>
+                      </div>
+
+                      <div className="col-span-7 flex items-center text-start justify-start text-[15px]">
+                        {item.name}
+                      </div>
+                      <div className="col-span-3 flex items-center justify-start">
+                        <img
+                          src="/images/icons/token_icon.png"
+                          className="w-4 h-4"
+                          alt=""
+                        ></img>
+                        <span className="font-semibold text-sm ml-1">{`+${formatDecimals(
+                          item.reward_amount ?? 0
+                        )}`}</span>
+                      </div>
+                    </div>
+                  </a>
                 );
               })}
             <div
