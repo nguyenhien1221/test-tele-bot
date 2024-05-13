@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from "@mui/material";
 import { missionsTypes } from "../../../constants/missions.constants";
@@ -116,7 +117,6 @@ const MissionsModal = ({
 
                 return item.type === "twitter-follow" ? (
                   <button
-                    disabled={isLoading}
                     key={item.id}
                     onClick={() => {
                       setIsLoading(true);
