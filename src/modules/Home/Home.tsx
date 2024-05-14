@@ -49,7 +49,7 @@ const Home = () => {
   const mode = localStorage.getItem("mode");
   const changeMode = useChangeMode((state: any) => state.updateMode);
 
-  const AcountBalnce = useGetAcountBalance();
+  const AcountBalance = useGetAcountBalance();
   const AcountData = useGetAcountDetails();
   const ClaimSeed = useClaimSeed();
   const MissionsData = useGetMissions();
@@ -214,7 +214,7 @@ const Home = () => {
           return 0;
         });
 
-        AcountBalnce.refetch();
+        AcountBalance.refetch();
         AcountData.refetch();
       })
       .catch((err) => {
@@ -228,7 +228,7 @@ const Home = () => {
       .mutateAsync(firstLoginMission.id)
       .then(() => {
         MissionsData.refetch();
-        AcountBalnce.refetch();
+        AcountBalance.refetch();
         AcountData.refetch();
         setIsOpenNotifi(true);
         setIsOpen(false);
@@ -282,6 +282,7 @@ const Home = () => {
       ClaimHappyDay.mutateAsync()
         .then((data) => {
           setIsWinHappyDay({ isOpen: true, data: data });
+          AcountBalance.refetch();
           AcountData.refetch();
           MissionsData.refetch();
           HappyDayHistory.refetch();
@@ -346,7 +347,8 @@ const Home = () => {
                   ></img>
                   <p className="dark:text-white text-base font-black">
                     {formatNumberFloatFix(
-                      Number(formatDecimals(AcountBalnce.data?.data.data)) ?? 0,
+                      Number(formatDecimals(AcountBalance.data?.data.data)) ??
+                        0,
                       6
                     )}
                   </p>
@@ -485,7 +487,7 @@ const Home = () => {
                         disabled={!isFull || isClaimed}
                         onClick={handleClaim}
                         className={clsx(
-                          "w-[100px] h-40px capitalize rounded-lg text-sm font-bold",
+                          "w-[100px] h-40px capitalize rounded-lg text-base font-bold",
                           "text-[#fff] bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B] ",
                           "hover:drop-shadow-none disabled:bg-[#B1B1B1] disabled:drop-shadow-[0_4px_1px_#797979] disabled:border-[#C4C4C4]",
                           isSmallScreen ? "py-2" : "py-3"

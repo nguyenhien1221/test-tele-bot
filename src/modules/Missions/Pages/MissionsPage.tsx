@@ -221,7 +221,7 @@ const MissionsPage = () => {
                     </div>
                   </div>
                   <div className="col-span-2 flex items-center">
-                    {countMission > 0 && (
+                    {countMission > 0 ? (
                       <div
                         className={clsx(
                           "w-10 h-10 rounded-[50%] flex items-center justify-center",
@@ -231,6 +231,19 @@ const MissionsPage = () => {
                         <p className="text-[24px] font-extrabold text-white">
                           {countMission}
                         </p>
+                      </div>
+                    ) : (
+                      <div
+                        className={clsx(
+                          "w-10 h-10 rounded-[50%] flex items-center justify-center",
+                          "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
+                        )}
+                      >
+                        <img
+                          src="/images/icons/checkmission.png"
+                          className="w-[20px] h-[18px]"
+                          alt=""
+                        ></img>
                       </div>
                     )}
                   </div>

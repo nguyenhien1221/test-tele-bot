@@ -69,7 +69,7 @@ const DailyMissonModal = ({
           hideProgressBar
           limit={1}
           stacked
-          className="top-3  left-[50%] -translate-x-[50%]"
+          className="top-3 max-w-[337px] left-[50%] -translate-x-[50%]"
         />
         <div className="flex flex-col h-full ">
           <div className="w-full ">

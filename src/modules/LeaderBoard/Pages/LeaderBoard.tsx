@@ -31,16 +31,18 @@ const LeaderBoard = () => {
                 (item: any, index: number) => {
                   return (
                     <div className="grid grid-cols-10 mt-2 p-2 dark:gradient-border-mask-leaderboard">
-                      <div className="col-span-1 flex items-center">
-                        {item.rank < 4 ? (
-                          <img
-                            src={`/images/leaderboard/${item.rank}.png`}
-                            className="w-[395px] h-[44px] "
-                            alt=""
-                          ></img>
-                        ) : (
-                          <p className="text-sm font-semibold">{item.rank}</p>
-                        )}
+                      <div className="col-span-1">
+                        <div className="w-full h-full flex items-center justify-center">
+                          {item.rank < 4 ? (
+                            <img
+                              src={`/images/leaderboard/${item.rank}.png`}
+                              className="w-[395px] h-[44px] "
+                              alt=""
+                            ></img>
+                          ) : (
+                            <p className=" font-semibold">{item.rank}</p>
+                          )}
+                        </div>
                       </div>
 
                       <div className="col-span-9 flex items-center">
@@ -52,7 +54,7 @@ const LeaderBoard = () => {
                           ></img>
                         </div>
                         <div className="ml-2">
-                          <p className="text-sm font-semibold dark:text-white">
+                          <p className="font-semibold dark:text-white">
                             {item.name}
                           </p>
                           <div className="flex">
