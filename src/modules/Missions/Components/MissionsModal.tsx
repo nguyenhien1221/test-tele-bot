@@ -60,12 +60,13 @@ const MissionsModal = ({
   };
 
   const handleOpenLink = (item: any) => {
-    window.location.href = item.metadata.url;
-    // if (!item?.task_user?.completed) {
-    //   handleDoMission(item?.id);
-    //   setIsLoading(false);
-    //   return;
-    // }
+    // window.location.href = item.metadata.url;
+    if (!item?.task_user?.completed) {
+      handleDoMission(item?.id);
+      setIsLoading(false);
+      return;
+    }
+    tele.openLink(item?.metadata?.url);
   };
 
   const renderModalTitle = () => {
