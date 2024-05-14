@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import useGetLeaderBoard from "../Hooks/useGetaLeaderBoard";
+// import { formatDecimals, getNumberFormatUs } from "../../../utils/formatNumber";
 
 const LeaderBoard = () => {
   const LeaderBoardData = useGetLeaderBoard();
@@ -30,7 +31,10 @@ const LeaderBoard = () => {
               LeaderBoardData.data?.data.data.map(
                 (item: any, index: number) => {
                   return (
-                    <div className="grid grid-cols-10 mt-2 p-2 dark:gradient-border-mask-leaderboard">
+                    <div
+                      key={item.id}
+                      className="grid grid-cols-10 mt-2 p-2 dark:gradient-border-mask-leaderboard"
+                    >
                       <div className="col-span-1">
                         <div className="w-full h-full flex items-center justify-center">
                           {item.rank < 4 ? (
@@ -76,14 +80,19 @@ const LeaderBoard = () => {
                                 className="w-[4px] h-[4px] mr-1"
                                 alt=""
                               ></img>
-                            </div> */}
-                            {/* <span className="flex items-center">
+                            </div>
+                            <span className="flex items-center">
                               <img
                                 src="/images/icons/token_icon.png"
                                 className="w-[16px] h-[17px] mr-1"
                                 alt=""
                               ></img>
-                              <span className="text-sm font-medium dark:text-white">{`+120.5`}</span>
+                              <span className="text-sm font-medium dark:text-white">
+                                {getNumberFormatUs(
+                                  formatDecimals(item.referral_balance),
+                                  6
+                                )}
+                              </span>
                             </span> */}
                           </div>
                         </div>

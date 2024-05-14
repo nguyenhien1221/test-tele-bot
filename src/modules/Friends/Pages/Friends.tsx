@@ -1,11 +1,12 @@
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useGetAcountReferees from "../Hooks/useGetAcountReferees";
-import { copyToClipboard } from "../../../utils/helper";
+// import { copyToClipboard } from "../../../utils/helper";
 import { ToastContainer, toast } from "react-toastify";
 import clsx from "clsx";
 import { navPaths } from "../../../constants/navbar.constants";
 import { formatDecimals } from "../../../utils/formatNumber";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const Friends = () => {
   const mode = localStorage.getItem("mode");
@@ -24,10 +25,6 @@ const Friends = () => {
   };
 
   const handleCopyLink = () => {
-    copyToClipboard(
-      `${process.env.REACT_APP_BOT_URL}startapp=${String(userID)}`
-    );
-
     toast.success("Link copied to clipboard", {
       autoClose: 2000,
       position: "top-center",
@@ -157,18 +154,22 @@ const Friends = () => {
       </div>
 
       <div className="absolute bottom-[30px] right-4 left-4">
-        <Button
-          onClick={() => handleCopyLink()}
-          startIcon={<img src="images/icons/copy.svg" alt="copy" />}
-          className={clsx(
-            "font-bold capitalize text-[16px] text-white py-[18px] w-full rounded-xl ",
-            "dark:bg-white dark:text-black",
-            "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
-            "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-none"
-          )}
+        <CopyToClipboard
+          text={`${process.env.REACT_APP_BOT_URL}startapp=${String(userID)}`}
         >
-          Copy invite link
-        </Button>
+          <Button
+            onClick={() => handleCopyLink()}
+            startIcon={<img src="images/icons/copy.svg" alt="copy" />}
+            className={clsx(
+              "font-bold capitalize text-[16px] text-white py-[18px] w-full rounded-xl ",
+              "dark:bg-white dark:text-black",
+              "hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
+              "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-none"
+            )}
+          >
+            Copy invite link
+          </Button>
+        </CopyToClipboard>
       </div>
     </div>
   );

@@ -20,7 +20,6 @@ const MissionsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
-
   const missionsData = useGetMissions();
   const doMission = useDoMissions();
   const dailyMissions = useGetDailyMissions();
@@ -189,9 +188,9 @@ const MissionsPage = () => {
               let name = "";
 
               if (index === 0) {
-                name = "Our ecosystem";
+                name = "Follow Our ecosystem";
               } else {
-                name = "Our community";
+                name = "Follow Our community";
               }
 
               return (

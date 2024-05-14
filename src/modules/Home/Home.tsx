@@ -2,7 +2,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import NavBar from "../../components/common/NavBar";
 import { useEffect, useRef, useState } from "react";
-import { formatDecimals, formatNumberFloatFix } from "../../utils/formatNumber";
+import {
+  formatDecimals,
+  formatNumberFloatFix,
+  getNumberFormatUs,
+} from "../../utils/formatNumber";
 import useGetAcountBalance from "./Hooks/useGetAcountBalance";
 import useClaimSeed from "./Hooks/useClaimSeed";
 import { toast } from "react-toastify";
@@ -461,7 +465,7 @@ const Home = () => {
                         Storage
                       </p>
                       <div className="flex gap-[7px]">
-                        <p className="text-sm font-medium ">
+                        <div className="text-sm font-medium ">
                           {isFill ? (
                             "Filled"
                           ) : (
@@ -470,13 +474,14 @@ const Home = () => {
                               onComplete={() => clearInterval(countProgess)}
                             ></Countdown>
                           )}
-                        </p>
+                        </div>
                       </div>
                       <div>
                         <div className="flex items-center gap-1">
-                          <p className="text-xs font-normal ">{`${formatDecimals(
-                            miningSpeed ?? 0
-                          ).toFixed(3)} SEED/hour`}</p>
+                          <p className="text-xs font-normal ">{`${getNumberFormatUs(
+                            formatDecimals(miningSpeed ?? 0),
+                            3
+                          )} SEED/hour`}</p>
                         </div>
                       </div>
                     </div>

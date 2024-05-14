@@ -181,7 +181,7 @@ const MissionsModal = ({
                 ) : (
                   <a
                     href={item?.metadata?.url}
-                    target="blank"
+                    // target="blank"
                     key={item?.id}
                     onClick={() => {
                       setIsLoading(true);

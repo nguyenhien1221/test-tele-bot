@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 import { formatDecimals } from "../../../utils/formatNumber";
 import Loading from "../../../components/common/Loading";
+import { dailyBonusValue } from "../../../constants/missions.constants";
 
 interface ModalPropsType {
   isLoading: boolean;
@@ -93,6 +94,7 @@ const DailyMissonModal = ({
               const isCheck = index < data.length;
               return (
                 <div
+                  key={index}
                   onClick={() => handleDoMission()}
                   className={clsx(
                     "w-full h-[120px] pt-[22px] relative cursor-pointer bg-white rounded-xl mb-[18px] flex items-center justify-center",
@@ -139,9 +141,7 @@ const DailyMissonModal = ({
                       alt=""
                     ></img>
                     <p className="font-semibold dark:text-white text-center">
-                      {data[index]?.amount
-                        ? formatDecimals(data[data.length - 1 - index]?.amount)
-                        : undefined}
+                      {formatDecimals(dailyBonusValue[index])}
                     </p>
                   </div>
                 </div>

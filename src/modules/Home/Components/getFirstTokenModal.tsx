@@ -34,10 +34,10 @@ const GetFirstTokenModal = ({
         <div className="text-[32px] font-black">{`+${reward} SEED`}</div>
 
         <div className="text-center font-normal mt-4">
-          🌱 You're now part of SEED DAO!
-          <br />
-          🌟 <span className="font-bold">{reward} SEED</span> is gifted for
-          <span className="font-black">Early Farmers.</span>
+          🌱 <span>{`${reward} SEED is added to your balance as `}</span>
+          <b>Special Gift</b>
+          {` for `}
+          <b>New Farmers!</b>
           <br />
         </div>
 

@@ -34,3 +34,7 @@ export const socials: { [key: string]: string } = {
   [missionsTypes.TELEGRAM__JOIN]: "Telegram",
   Discord: "Discord",
 };
+
+export const dailyBonusValue = [
+  10000000, 20000000, 70000000, 30000000, 20000000, 50000000, 100000000,
+];
