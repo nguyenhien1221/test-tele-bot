@@ -244,10 +244,10 @@ const MissionsModal = ({
               })}
             <div
               className={clsx(
-                " py-3 px-4 relative cursor-pointer bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                "py-3 px-4 relative bg-white rounded-2xl p-4 w-full mb-[18px] ",
                 "dark:gradient-border-mask-mission dark:bg-transparent",
                 "dark:boder-0 dark:drop-shadow-none dark:border-transparent",
-                "border-[1px] border-[#C2C2C2] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
+                "border-[1px] border-[#C2C2C2] border-solid"
               )}
             >
               <div className="text-[15px] font-semibold">Coming soon...</div>

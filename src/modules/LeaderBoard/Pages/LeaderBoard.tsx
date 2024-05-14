@@ -40,7 +40,9 @@ const LeaderBoard = () => {
                               alt=""
                             ></img>
                           ) : (
-                            <p className=" font-semibold">{item.rank}</p>
+                            <p className="dark:text-white font-semibold">
+                              {item.rank}
+                            </p>
                           )}
                         </div>
                       </div>
