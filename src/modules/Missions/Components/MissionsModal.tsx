@@ -61,10 +61,8 @@ const MissionsModal = ({
 
   const handleOpenLink = (item: any) => {
     if (!item?.task_user?.completed) {
-      setTimeout(() => {
-        handleDoMission(item?.id);
-        setIsLoading(false);
-      }, 2000);
+      handleDoMission(item?.id);
+      setIsLoading(false);
       return;
     }
   };
@@ -181,7 +179,7 @@ const MissionsModal = ({
                 ) : (
                   <a
                     href={item?.metadata?.url}
-                    // target="blank"
+                    target="blank"
                     key={item?.id}
                     onClick={() => {
                       setIsLoading(true);
