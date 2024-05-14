@@ -62,6 +62,7 @@ const MissionsModal = ({
   const handleOpenLink = (item: any) => {
     // window.location.href = item.metadata.url;
     if (!item?.task_user?.completed) {
+      tele.openLink(item?.metadata?.url);
       handleDoMission(item?.id);
       setIsLoading(false);
       return;
