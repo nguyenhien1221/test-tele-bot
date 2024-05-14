@@ -92,7 +92,7 @@ const MissionsPage = () => {
 
   const missionGroup = removeDuplicateItemsByType(
     missionsData.data?.data.data ?? []
-  ).filter((item) => item.type !== missionsTypes.SIGN_IN);
+  ).filter((item) => item?.type !== missionsTypes.SIGN_IN);
 
   return (
     <>
@@ -155,7 +155,7 @@ const MissionsPage = () => {
               <div className="col-span-2 flex items-center">
                 {dailyMissions?.data &&
                 ((dailyMissions?.data.data.data?.length || 0) === 0 ||
-                  !checkSameDay(dailyMissions?.data.data.data)) ? (
+                  !checkSameDay(dailyMissions?.data.data.data ?? [])) ? (
                   <div
                     className={clsx(
                       "w-10 h-10 rounded-[50%] flex items-center justify-center",

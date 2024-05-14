@@ -30,7 +30,7 @@ const MissionsModal = ({
   const handleShowPopup = (item: any, url: string) => {
     tele.showPopup(
       {
-        message: `Do you want to open twitter ${item.metadata.name}}`,
+        message: `Do you want to open twitter ${item.metadata.name}`,
         buttons: [
           { id: "link", type: "default", text: "Open" },
           { type: "cancel" },
@@ -51,6 +51,7 @@ const MissionsModal = ({
           tele.openLink(
             item.type === "twitter-follow" ? url : item.metadata.url
           );
+          setIsLoading(false);
         } else {
           setIsLoading(false);
         }
@@ -112,6 +113,8 @@ const MissionsModal = ({
                     item.type === "twitter-follow"
                   ) {
                     return item.metadata?.ios_url;
+                  } else {
+                    return item.metadata?.url;
                   }
                 };
 
