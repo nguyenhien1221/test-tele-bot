@@ -62,12 +62,12 @@ const MissionsModal = ({
   const handleOpenLink = (item: any) => {
     // window.location.href = item.metadata.url;
     if (!item?.task_user?.completed) {
-      tele.openLink(item?.metadata?.url);
+      tele.openTelegramLink(item?.metadata?.url);
       handleDoMission(item?.id);
       setIsLoading(false);
       return;
     }
-    tele.openLink(item?.metadata?.url);
+    tele.openTelegramLink(item?.metadata?.url);
   };
 
   const renderModalTitle = () => {
