@@ -60,11 +60,12 @@ const MissionsModal = ({
   };
 
   const handleOpenLink = (item: any) => {
-    if (!item?.task_user?.completed) {
-      handleDoMission(item?.id);
-      setIsLoading(false);
-      return;
-    }
+    window.location.href = item.metadata.url;
+    // if (!item?.task_user?.completed) {
+    //   handleDoMission(item?.id);
+    //   setIsLoading(false);
+    //   return;
+    // }
   };
 
   const renderModalTitle = () => {
@@ -177,14 +178,14 @@ const MissionsModal = ({
                     </div>
                   </button>
                 ) : (
-                  <a
-                    href={item?.metadata?.url}
-                    target="blank"
-                    key={item?.id}
+                  <button
                     onClick={() => {
                       setIsLoading(true);
                       handleOpenLink(item);
                     }}
+                    // href={item?.metadata?.url}
+                    // target="blank"
+                    key={item?.id}
                     rel="noreferrer"
                     className={clsx("text-center relative w-full")}
                   >
@@ -237,7 +238,7 @@ const MissionsModal = ({
                         )}`}</span>
                       </div>
                     </div>
-                  </a>
+                  </button>
                 );
               })}
             <div
