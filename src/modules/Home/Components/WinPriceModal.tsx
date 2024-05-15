@@ -48,8 +48,8 @@ const WinPriceModal = ({ handleClose, data }: RecieveGiftModalProps) => {
             <Button
               onClick={handleClose}
               className={clsx(
-                " capitalize text-[#fff] text-[16px] w-full bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B] ",
-                "hover:drop-shadow-none disabled:bg-[#B1B1B1] disabled:drop-shadow-[0_4px_1px_#797979] disabled:border-[#C4C4C4]"
+                " capitalize text-[#fff] text-[16px] w-full bg-gradient-to-r from-[#97C35B] to-[#61A700]     drop-shadow-[0_4px_0px_#4C7E0B] ",
+                "btn-hover hover:drop-shadow-none disabled:bg-[#B1B1B1] disabled:drop-shadow-[0_4px_1px_#797979] disabled:border-[#C4C4C4]"
               )}
             >
               Got it

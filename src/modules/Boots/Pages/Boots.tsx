@@ -15,12 +15,12 @@ import useGetAcountBalance from "../../Home/Hooks/useGetAcountBalance";
 import {
   formatDecimals,
   formatNumberFloatFix,
-  getNumberFormatUs,
+  // getNumberFormatUs,
 } from "../../../utils/formatNumber";
 import useGetAcountDetails from "../../../components/Hooks/useRegister";
 import {
-  calculateMiningSpeed,
-  getMiningSpeedByLevel,
+  // calculateMiningSpeed,
+  // getMiningSpeedByLevel,
   getSpeedUpgradesLevel,
   getStorageUpgradesLevel,
   getWaterUpgradesLevel,
@@ -31,7 +31,7 @@ import useDoWaterMissions from "../Hooks/useDoWaterMission";
 import WaterMissionsModal from "../Components/WaterMissionModal";
 import useUpgradeWater from "../Hooks/useUpgradeHolyWater";
 import { navPaths } from "../../../constants/navbar.constants";
-import useGetHappyDayHistory from "../../Home/Hooks/useGetHistoyHappyday";
+// import useGetHappyDayHistory from "../../Home/Hooks/useGetHistoyHappyday";
 
 const Boots = () => {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ const Boots = () => {
   const WaterMission = useGetWaterMissions();
   const DoWaterMission = useDoWaterMissions();
   const UpgradeWater = useUpgradeWater();
-  const HappyDayHistory = useGetHappyDayHistory();
+  // const HappyDayHistory = useGetHappyDayHistory();
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
@@ -55,14 +55,14 @@ const Boots = () => {
 
   const isDesktop = window.innerHeight < 610 ? true : false;
 
-  const miningSpeed =
-    HappyDayHistory.data &&
-    calculateMiningSpeed(
-      getMiningSpeedByLevel(0),
-      AcountData.data?.data.data.upgrades ?? [],
-      HappyDayHistory.data.data.data,
-      new Date().getTime()
-    );
+  // const miningSpeed =
+  //   HappyDayHistory.data &&
+  //   calculateMiningSpeed(
+  //     getMiningSpeedByLevel(0),
+  //     AcountData.data?.data.data.upgrades ?? [],
+  //     HappyDayHistory.data.data.data,
+  //     new Date().getTime()
+  //   );
 
   const handleUpgrade = () => {
     if (isOpen.type === bootTypeEnum.STORAGE) {
@@ -227,7 +227,7 @@ const Boots = () => {
             )}
           </p>
         </div>
-        <div className="flex gap-2 items-center text-sm">
+        {/* <div className="flex gap-2 items-center text-sm">
           <p className=" font-normal">Storage size:</p>
           <div className="flex items-center gap-1">
             <img
@@ -246,8 +246,8 @@ const Boots = () => {
             </p>
             <p>SEED</p>
           </div>
-        </div>
-        <div className="flex gap-2 items-center text-sm mt-3">
+        </div> */}
+        {/* <div className="flex gap-2 items-center text-sm mt-3">
           <p className=" font-normal">Planting speed:</p>
           <div className="flex items-center gap-1">
             <img
@@ -261,7 +261,7 @@ const Boots = () => {
             </p>
             <p>SEED/hour</p>
           </div>
-        </div>
+        </div> */}
       </div>
       {/* options */}
       <div className={clsx(isDesktop ? "mt-2" : "mt-[49px]")}>
@@ -292,7 +292,7 @@ const Boots = () => {
             }.png`;
           } else {
             price = 0.2;
-            level = 1;
+            level = getWaterUpgradesLevel(AcountData.data?.data.data);
             icon = `/images/holy/${
               getWaterUpgradesLevel(AcountData.data?.data.data) + 1
             }.png`;

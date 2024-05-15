@@ -190,7 +190,7 @@ const MissionsPage = () => {
               if (index === 0) {
                 name = "Follow Our ecosystem";
               } else {
-                name = "Follow Our community";
+                name = "Join Our community";
               }
 
               return (

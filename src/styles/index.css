@@ -315,3 +315,16 @@ code {
     rgba(0, 0, 0, 1) 100%
   );
 }
+
+.btn-hover:hover {
+  animation: hoverBtn 0s ease 0s 1 normal forwards !important;
+}
+
+@keyframes hoverBtn {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}

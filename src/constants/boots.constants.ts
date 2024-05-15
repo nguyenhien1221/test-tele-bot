@@ -47,10 +47,11 @@ export const boostSpeedLevel: {
 export const boostWaterLevel: {
   [key: string]: { speed: number; missions: number };
 } = {
-  "0": { speed: 1, missions: 1 },
-  "1": { speed: 1.2, missions: 2 },
-  "2": { speed: 1.4, missions: 3 },
-  "3": { speed: 1.6, missions: 4 },
-  "4": { speed: 2, missions: 5 },
-  "5": { speed: 2.5, missions: 6 },
+  "0": { speed: 1, missions: 0 },
+  "1": { speed: 1.2, missions: 1 },
+  "2": { speed: 1.4, missions: 2 },
+  "3": { speed: 1.6, missions: 3 },
+  "4": { speed: 1.8, missions: 4 },
+  "5": { speed: 2, missions: 5 },
+  "6": { speed: 2.5, missions: 6 },
 };

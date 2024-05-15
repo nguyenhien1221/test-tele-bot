@@ -26,7 +26,7 @@ const NotifiModal = ({ isOpen, handleClose }: ModalProps) => {
             onClick={handleClose}
             className={clsx(
               "capitalize text-white py-3 px-8",
-              "bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
+              "bg-gradient-to-r from-[#97C35B] to-[#61A700]     drop-shadow-[0_4px_0px_#4C7E0B]",
               "hover:drop-shadow-none"
             )}
           >

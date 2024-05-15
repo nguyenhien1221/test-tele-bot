@@ -44,7 +44,7 @@ const GetFirstTokenModal = ({
         <LoadingButton
           loading={isLoading}
           onClick={() => handleClaim()}
-          className="capitalize text-[16px]  fixed bottom-10 left-4 right-4 font-bold bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B] hover:drop-shadow-none text-white py-[18px] rounded-xl "
+          className="btn-hover capitalize text-[16px]  fixed bottom-10 left-4 right-4 font-bold bg-gradient-to-r from-[#97C35B] to-[#61A700]     drop-shadow-[0_4px_0px_#4C7E0B] hover:drop-shadow-none text-white py-[18px] rounded-xl "
         >
           Claim
         </LoadingButton>

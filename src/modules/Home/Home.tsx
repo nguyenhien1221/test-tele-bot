@@ -372,8 +372,8 @@ const Home = () => {
           <button
             onClick={handleSwitchMode}
             className={clsx(
-              " fixed right-8 top-[160px] z-40  rounded-[50%] w-[48px] h-[48px] flex justify-center items-center",
-              "bg-[#7BB52C] border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B]",
+              "btn-hover hover:drop-shadow-none fixed right-8 top-[160px] z-40  rounded-[50%] w-[48px] h-[48px] flex justify-center items-center",
+              "bg-[#7BB52C]  drop-shadow-[0_3px_0px_#4C7E0B]",
               "dark:radial-bg"
             )}
           >
@@ -493,8 +493,8 @@ const Home = () => {
                         onClick={handleClaim}
                         className={clsx(
                           "w-[100px] h-40px capitalize rounded-lg text-base font-bold",
-                          "text-[#fff] bg-gradient-to-r from-[#97C35B] to-[#61A700]  border-[3px] border-solid border-[#B0D381] drop-shadow-[0_4px_1px_#4C7E0B] ",
-                          "hover:drop-shadow-none disabled:bg-[#B1B1B1] disabled:drop-shadow-[0_4px_1px_#797979] disabled:border-[#C4C4C4]",
+                          "text-[#fff] bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B] ",
+                          "btn-hover hover:drop-shadow-none disabled:bg-[#B1B1B1] disabled:drop-shadow-[0_4px_0px_#797979] disabled:border-[#C4C4C4]",
                           isSmallScreen ? "py-2" : "py-3"
                         )}
                       >
