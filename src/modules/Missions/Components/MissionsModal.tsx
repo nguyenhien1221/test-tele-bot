@@ -46,7 +46,7 @@ const MissionsModal = ({
             );
             setTimeout(() => {
               handleDoMission(item?.id);
-            }, 5000);
+            }, 3000);
             return;
           }
           tele.openLink(
