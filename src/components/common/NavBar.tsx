@@ -1,4 +1,4 @@
-import { ToastContainer, toast } from "react-toastify";
+import { Slide, ToastContainer, toast } from "react-toastify";
 import { navbarItems } from "../../constants/navbar.constants";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
@@ -10,7 +10,6 @@ const NavBar = () => {
     if (index === 3) {
       toast.info("Coming soon", {
         autoClose: 2000,
-        position: "top-center",
         style: { maxWidth: 337, height: 40, borderRadius: 8 },
         progressStyle: {
           backgroundColor: "#FF8C21",
@@ -26,21 +25,23 @@ const NavBar = () => {
   return (
     <div>
       <ToastContainer
+        position="top-left"
+        closeOnClick
+        transition={Slide}
         hideProgressBar
         limit={1}
         stacked
         className="top-3 max-w-[337px] left-[50%] -translate-x-[50%]"
       />
-      <div className="rounded-[50px] ">
-        <div
-          className={clsx(
-            "flex justify-between dark:gradient-border-mask dark:bg-transparent bg-[#fff] shadow-lg rounded-[50px] py-[9px] px-[37px]"
-          )}
-        >
+      <div className="">
+        <div className={clsx("grid grid-cols-4 gap-2 ")}>
           {navbarItems.map((item, index) => (
-            <div key={index}>
+            <div className="grid-cols-1" key={index}>
               <div
-                className="cursor-pointer"
+                className={clsx(
+                  "btn-hover cursor-pointer w-full h-full p-[9px] rounded-[16px] bg-[#fff] drop-shadow-[0_3px_0px_#4D7F0C]",
+                  "dark:gradient-border-mask dark:bg-transparent dark:drop-shadow-none"
+                )}
                 onClick={() => handleShowToast(index, item)}
               >
                 <div className="flex flex-col items-center">

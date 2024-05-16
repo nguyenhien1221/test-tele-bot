@@ -75,9 +75,7 @@ const HolyWaterModal = ({
           onClick={() => handleUpgrade()}
           className={clsx(
             "mt-4 capitalize text-[16px]  w-full font-bold text-white py-[18px] rounded-xl",
-            "dark:bg-white dark:text-black",
-            "btn-hover hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]",
-            "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-sm"
+            "btn-hover  bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
           )}
         >
           Upgrade
@@ -94,9 +92,7 @@ const HolyWaterModal = ({
           onClick={() => handleOpenMission()}
           className={clsx(
             "capitalize text-[16px] w-full font-bold  text-white py-[18px] rounded-xl",
-            "dark:bg-white dark:text-black",
-            "btn-hover hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]",
-            "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-sm"
+            "btn-hover  bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
           )}
         >
           Open missions

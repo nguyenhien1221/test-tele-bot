@@ -19,7 +19,7 @@ const NotifiModal = ({ isOpen, handleClose }: ModalProps) => {
           Congratulations
         </h2>
         <p className="text-center font-normal mb-6">
-          You created an account during the event so you will get x2 seed speed
+          You got x2 SPEED 🧭 Exclusive for accounts created before June 21st.
         </p>
         <div className="flex justify-center ">
           <Button

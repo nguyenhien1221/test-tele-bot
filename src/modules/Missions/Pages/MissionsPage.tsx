@@ -9,12 +9,14 @@ import {
   removeDuplicateItemsByType,
 } from "../Utils/missions";
 import useDoMissions from "../Hooks/useDoMissions";
-import { ToastContainer, toast } from "react-toastify";
+import { Slide, ToastContainer, toast } from "react-toastify";
 import Loading from "../../../components/common/Loading";
 import DailyMissonModal from "../Components/DailyMissonModal";
 import useGetDailyMissions from "../Hooks/useGetDaily";
 import useDoDailyMissions from "../Hooks/useDoDaily";
 import { checkSameDay } from "../../../utils/helper";
+import { CircularProgress, circularProgressClasses } from "@mui/material";
+import Progress from "../../../components/common/Progress";
 
 const MissionsPage = () => {
   const location = useLocation();
@@ -63,8 +65,8 @@ const MissionsPage = () => {
         });
         missionsData.refetch();
       })
-      .catch(() => {
-        toast.error("mission is not completed", {
+      .catch((err) => {
+        toast.error(err?.response?.data?.message, {
           style: { maxWidth: 337, height: 40, borderRadius: 8 },
           autoClose: 2000,
         });
@@ -100,6 +102,9 @@ const MissionsPage = () => {
       ) : (
         <div className="overflow-auto pt-[42px] px-4 relative h-screen bg-[#F2FFE0] dark:bg-transparent">
           <ToastContainer
+            position="top-left"
+            closeOnClick
+            transition={Slide}
             hideProgressBar
             limit={1}
             stacked
@@ -130,10 +135,10 @@ const MissionsPage = () => {
                 setIsOpenDailyMission({ isOpen: true, type: "", data: null })
               }
               className={clsx(
-                "z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                "btn-hover z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
                 "dark:gradient-border-mask-mission dark:bg-transparent",
                 "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
-                "dark:boder-0 dark:drop-shadow-none dark:border-transparent"
+                "dark:boder-0 dark:drop-shadow-none "
               )}
             >
               <div className="col-span-2 flex items-center">
@@ -146,44 +151,43 @@ const MissionsPage = () => {
                   ></img>
                 </div>
               </div>
-              <div className="col-span-6 flex items-center dark:text-white">
-                <div className=" text-lg font-semibold">
-                  <p className="font-semibold">Login Bonus</p>
+              <div className="col-span-8 flex items-center dark:text-white">
+                <div className="">
+                  <p className="font-semibold text-lg">Login Bonus</p>
+                  {dailyMissions?.data &&
+                  ((dailyMissions?.data.data.data?.length || 0) === 0 ||
+                    !checkSameDay(dailyMissions?.data.data.data ?? [])) ? (
+                    <div className="flex items-center">
+                      <Progress className="mr-1" value={(0 / 1) * 100} />
+                      <span>{`In progress (0/1)`}</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center">
+                      <img
+                        src="/images/daily/mission_complete.png"
+                        className="dark:hidden inline-block w-4 mr-1"
+                        alt=""
+                      ></img>
+                      <img
+                        src="/images/daily/dark_mission_complete.png"
+                        className="hidden dark:inline-block w-4 mr-1"
+                        alt=""
+                      ></img>
+                      <span>{`Completed (1/1)`}</span>
+                    </div>
+                  )}
                 </div>
-              </div>
-              <div className="col-span-2 flex items-center">
-                {dailyMissions?.data &&
-                ((dailyMissions?.data.data.data?.length || 0) === 0 ||
-                  !checkSameDay(dailyMissions?.data.data.data ?? [])) ? (
-                  <div
-                    className={clsx(
-                      "w-10 h-10 rounded-[50%] flex items-center justify-center",
-                      "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
-                    )}
-                  >
-                    <p className="text-[24px] font-extrabold text-white">{1}</p>
-                  </div>
-                ) : (
-                  <div
-                    className={clsx(
-                      "w-10 h-10 rounded-[50%] flex items-center justify-center",
-                      "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
-                    )}
-                  >
-                    <img
-                      src="/images/icons/checkmission.png"
-                      className="w-[20px] h-[18px]"
-                      alt=""
-                    ></img>
-                  </div>
-                )}
               </div>
             </div>
             {missionGroup.map((item, index) => {
-              const countMission = getMissionsByType(
+              const totalMission = getMissionsByType(
                 item.type,
                 missionsData.data?.data.data ?? []
-              ).filter((mission: any) => mission.task_user === null).length;
+              );
+              const doneMission = getMissionsByType(
+                item.type,
+                missionsData.data?.data.data ?? []
+              ).filter((mission: any) => mission.task_user !== null).length;
 
               let name = "";
 
@@ -198,10 +202,10 @@ const MissionsPage = () => {
                   onClick={() => handleChooseMission(item.type)}
                   key={index}
                   className={clsx(
-                    "z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                    "btn-hover z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
                     "dark:gradient-border-mask-mission dark:bg-transparent",
                     "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
-                    "dark:boder-0 dark:drop-shadow-none dark:border-transparent"
+                    "dark:drop-shadow-none"
                   )}
                 >
                   <div className="col-span-2 flex items-center">
@@ -214,37 +218,33 @@ const MissionsPage = () => {
                       ></img>
                     </div>
                   </div>
-                  <div className="col-span-6 flex items-center dark:text-white">
-                    <div className=" text-lg font-semibold">
-                      <p className="font-semibold">{name}</p>
+                  <div className="col-span-8 flex items-center dark:text-white">
+                    <div className="">
+                      <p className="font-semibold text-lg">{name}</p>
+                      {doneMission === totalMission.length ? (
+                        <div className="flex items-center">
+                          <img
+                            src="/images/daily/mission_complete.png"
+                            className="dark:hidden inline-block w-4 mr-1"
+                            alt=""
+                          ></img>
+                          <img
+                            src="/images/daily/dark_mission_complete.png"
+                            className="hidden dark:inline-block w-4 mr-1"
+                            alt=""
+                          ></img>
+                          <span>{`Completed (${doneMission}/${totalMission.length})`}</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center">
+                          <Progress
+                            className="mr-1"
+                            value={(doneMission / totalMission.length) * 100}
+                          />
+                          <span>{`In progress (${doneMission}/${totalMission.length})`}</span>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                  <div className="col-span-2 flex items-center">
-                    {countMission > 0 ? (
-                      <div
-                        className={clsx(
-                          "w-10 h-10 rounded-[50%] flex items-center justify-center",
-                          "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
-                        )}
-                      >
-                        <p className="text-[24px] font-extrabold text-white">
-                          {countMission}
-                        </p>
-                      </div>
-                    ) : (
-                      <div
-                        className={clsx(
-                          "w-10 h-10 rounded-[50%] flex items-center justify-center",
-                          "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
-                        )}
-                      >
-                        <img
-                          src="/images/icons/checkmission.png"
-                          className="w-[20px] h-[18px]"
-                          alt=""
-                        ></img>
-                      </div>
-                    )}
                   </div>
                 </div>
               );

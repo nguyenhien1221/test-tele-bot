@@ -94,7 +94,7 @@ const CreateAcount = () => {
           <div className="pt-3">
             <Button
               onClick={() => handleChangeTab()}
-              className="btn-hover fixed bottom-[55px] text-[20px] left-4 right-4 capitalize font-extrabold text-white py-[16px] rounded-xl bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B] hover:drop-shadow-none"
+              className="btn-hover fixed bottom-[55px] text-[20px] left-4 right-4 capitalize font-extrabold text-white py-[16px] rounded-xl bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
             >
               {renderButtonText()}
             </Button>

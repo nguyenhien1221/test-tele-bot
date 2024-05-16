@@ -18,11 +18,10 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
     return (
       <div
         className={clsx(
-          "grid grid-cols-7 gap-3 bg-white rounded-2xl w-full",
+          "grid grid-cols-7 gap-0 bg-white rounded-2xl w-full",
           isSmallScreen ? "p-2" : " p-4",
-          "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent",
-          "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#97C35B]",
-          "dark:border-0 dark:border-transparent dark:drop-shadow-none"
+          "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent dark:drop-shadow-none",
+          "border-[1px] border-[#4D7F0C] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
         )}
       >
         <div className="col-span-2 flex ">
@@ -33,9 +32,9 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
           ></img>
         </div>
         <div className="col-span-5">
-          <p className="font-normal text-sm mb-2">{`Level ${level + 1}`}</p>
+          <p className="font-semibold text-base mb-2">{`Level ${level + 1}`}</p>
           <div className="flex gap-[7px] mb-2">
-            <p className="text-base font-extrabold">{`Claim every ${bootsStorageLevel[level]?.duration}h`}</p>
+            <p className="text-sm ">{`Claim every ${bootsStorageLevel[level]?.duration}h`}</p>
           </div>
         </div>
       </div>
@@ -48,18 +47,17 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
         className={clsx(
           "grid grid-cols-7 gap-3 bg-white rounded-2xl w-full",
           isSmallScreen ? "p-2" : " p-4",
-          "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent",
-          "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#97C35B]",
-          "dark:border-0 dark:border-transparent dark:drop-shadow-none"
+          "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent dark:drop-shadow-none",
+          "border-[1px] border-[#4D7F0C] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
         )}
       >
         <div className="col-span-2 flex ">
           <img src={`/images/trees/${level + 1}.png`} width={60} alt=""></img>
         </div>
         <div className="col-span-5">
-          <p className="font-normal text-sm mb-2">{`Level ${level + 1}`}</p>
+          <p className="font-semibold text-base mb-2">{`Level ${level + 1}`}</p>
           <div className="flex gap-[7px] mb-2">
-            <p className="text-base font-extrabold">{`Mine ${boostSpeedLevel[level]?.speed} SEED/hour`}</p>
+            <p className="text-sm">{`Mine ${boostSpeedLevel[level]?.speed} SEED/hour`}</p>
           </div>
         </div>
       </div>
@@ -72,9 +70,8 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
         className={clsx(
           "grid grid-cols-7 gap-3 bg-white rounded-2xl  w-full",
           isSmallScreen ? "p-2" : " p-4",
-          "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent",
-          "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#97C35B]",
-          "dark:border-0 dark:border-transparent dark:drop-shadow-none"
+          "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent dark:drop-shadow-none",
+          "border-[1px] border-[#4D7F0C] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
         )}
       >
         <div className="col-span-2 flex ">
@@ -86,9 +83,9 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
           ></img>
         </div>
         <div className="col-span-5">
-          <p className="font-normal text-sm mb-2">{`Level ${level + 1}`}</p>
+          <p className="font-semibold text-base mb-2">{`Level ${level + 1}`}</p>
           <div className="flex gap-[7px] mb-2">
-            <p className="text-base font-extrabold">{`x${boostWaterLevel[level]?.speed} per hour`}</p>
+            <p className="text-sm">{`x${boostWaterLevel[level]?.speed} per hour`}</p>
           </div>
         </div>
       </div>

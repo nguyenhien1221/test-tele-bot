@@ -18,7 +18,7 @@ export const bootOptions = [
   {
     icon: "/images/icons/water.png",
     title: "Holy Water",
-    description: "Superboost planting speed 1.2x.. 2x.. 2.5x times",
+    description: "Superboost speed 1.2x.. 2.5x times",
   },
 ];
 

@@ -1,9 +1,17 @@
 import clsx from "clsx";
 import useGetLeaderBoard from "../Hooks/useGetaLeaderBoard";
-// import { formatDecimals, getNumberFormatUs } from "../../../utils/formatNumber";
+import { formatDecimals, getNumberFormatUs } from "../../../utils/formatNumber";
+import { useNavigate } from "react-router-dom";
 
 const LeaderBoard = () => {
+  const navigate = useNavigate();
+  const tele = window.Telegram.WebApp;
   const LeaderBoardData = useGetLeaderBoard();
+
+  tele.BackButton.onClick(() => handleBackBtn());
+  const handleBackBtn = () => {
+    navigate("/");
+  };
   return (
     <div className="pt-[42px] px-4 pb-[100px] bg-[#F2FFE0] dark:bg-transparent h-screen relative z-30">
       <div className="flex items-center justify-center flex-col mb-5">
@@ -16,14 +24,18 @@ const LeaderBoard = () => {
           <p className="text-2xl font-extrabold mb-2 dark:text-white">
             Leaderboard
           </p>
-          <p className="dark:text-white">Invite more friends to get here</p>
+          <p className="dark:text-white">
+            This leaderboard ranks players by the number of seeds earned from
+            referral bonuses
+          </p>
         </div>
       </div>
       {LeaderBoardData.data?.data.data.length > 0 ? (
         <div
           className={clsx(
-            "bg-white p-4 rounded-lg drop-shadow-lg h-[calc(100%-160px)]",
-            "dark:bg-transparent"
+            "bg-white p-4 rounded-lg  h-[calc(100%-160px)]",
+            "dark:bg-transparent",
+            "border-[1px] border-[#4D7F0C] border-solid "
           )}
         >
           <div className="h-full overflow-auto">
@@ -60,11 +72,11 @@ const LeaderBoard = () => {
                           ></img>
                         </div>
                         <div className="ml-2">
-                          <p className="font-semibold dark:text-white">
+                          <p className="font-medium text-sm dark:text-white">
                             {item.name}
                           </p>
                           <div className="flex">
-                            <span className="flex items-center mr-1">
+                            {/* <span className="flex items-center mr-1">
                               <img
                                 src="/images/leaderboard/amount.png"
                                 className="w-[16px] h-[17px] mr-1"
@@ -74,26 +86,27 @@ const LeaderBoard = () => {
                                 {item.total_referred}
                               </span>
                             </span>
-                            {/* <div className="w-3 h-[17px] flex items-center justify-center">
+                            <div className="w-3 h-[17px] flex items-center justify-center">
                               <img
                                 src="/images/leaderboard/dot.png"
                                 className="w-[4px] h-[4px] mr-1"
                                 alt=""
                               ></img>
-                            </div>
+                            </div> */}
                             <span className="flex items-center">
                               <img
                                 src="/images/icons/token_icon.png"
                                 className="w-[16px] h-[17px] mr-1"
                                 alt=""
                               ></img>
-                              <span className="text-sm font-medium dark:text-white">
+                              <span className="text-sm  dark:text-white">
+                                +
                                 {getNumberFormatUs(
                                   formatDecimals(item.referral_balance),
                                   6
                                 )}
                               </span>
-                            </span> */}
+                            </span>
                           </div>
                         </div>
                       </div>

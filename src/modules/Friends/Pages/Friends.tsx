@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useGetAcountReferees from "../Hooks/useGetAcountReferees";
 // import { copyToClipboard } from "../../../utils/helper";
-import { ToastContainer, toast } from "react-toastify";
+import { Slide, ToastContainer, toast } from "react-toastify";
 import clsx from "clsx";
 import { navPaths } from "../../../constants/navbar.constants";
 import { formatDecimals } from "../../../utils/formatNumber";
@@ -24,10 +24,14 @@ const Friends = () => {
     navigate("/");
   };
 
+  const totalRefAmount = AcountReferees.data?.data.data.reduce(
+    (total: any, item: any) => (total += item.received_amount),
+    0
+  );
+
   const handleCopyLink = () => {
     toast.success("Link copied to clipboard", {
       autoClose: 2000,
-      position: "top-center",
       style: { maxWidth: 337, height: 40, borderRadius: 8 },
     });
   };
@@ -39,6 +43,9 @@ const Friends = () => {
   return (
     <div className="pt-[42px] px-4 pb-[100px] bg-[#F2FFE0] dark:bg-transparent h-screen relative z-30">
       <ToastContainer
+        position="top-left"
+        closeOnClick
+        transition={Slide}
         hideProgressBar
         limit={1}
         className="top-3 max-w-[337px] left-[50%] -translate-x-[50%]"
@@ -46,18 +53,16 @@ const Friends = () => {
       <div className="mb-5">
         <button
           onClick={handleNavigateLeaderBoard}
-          className="w-full border-[1px] border-[#79B22A] py-[6px] px-[7px] rounded-[30px]"
+          className="btn-hover bg-white w-full border-[1px] border-[#4D7F0C] drop-shadow-[0_4px_0px_#4D7F0C] py-[6px] px-[7px] rounded-[30px]"
         >
           <div className="grid grid-cols-10">
             <img
               src="/images/leaderboard/leaderboardicon.png"
-              className="w-[30px] h-[30px] col-span-1"
+              className="w-[37px] h-[34px] col-span-1"
               alt=""
             ></img>
             <span className="col-span-8 text-left flex items-center pl-2">
-              <p className="text-sm font-semibold dark:text-white">
-                Top 100 Leaders
-              </p>
+              <p className="text-sm font-semibold ">Referral leaderboard</p>
             </span>
             <div className="col-span-1 flex items-center justify-center">
               <svg
@@ -69,7 +74,7 @@ const Friends = () => {
               >
                 <path
                   d="M1.6875 1.3125L5.6875 5.28125C5.875 5.5 6 5.75 6 6C6 6.21875 5.875 6.5 5.6875 6.6875L1.6875 10.6562C1.40625 10.9375 0.96875 11.0312 0.59375 10.875C0.21875 10.7188 0 10.4062 0 10V2C0 1.625 0.21875 1.25 0.59375 1.09375C0.96875 0.9375 1.40625 1.03125 1.6875 1.3125Z"
-                  fill={mode === "dark" ? "white" : "black"}
+                  fill={mode === "dark" ? "black" : "black"}
                 />
               </svg>
             </div>
@@ -77,20 +82,20 @@ const Friends = () => {
         </button>
       </div>
       <div className="flex flex-col items-center dark:text-white">
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex items-center gap-3">
           <img
-            className="h-[99px]"
-            src="/images/navbar/friends.png"
+            className="h-[31px] w-[31px]"
+            src="/images/icons/token_icon.png"
             width={119}
             height={99}
             alt="token"
           ></img>
-          <p className="text-[24px] font-bold">{`${
-            AcountReferees.data?.data.data.length ?? 0
-          } Friends`}</p>
+          <p className="text-[32px] font-extrabold">
+            {`${formatDecimals(totalRefAmount ?? 0).toFixed(6)}`}
+          </p>
         </div>
         <p className="text-sm font-normal text-center">
-          You will receive 20% cashback of all your referrals income
+          Total seeds earned from your referrals
         </p>
       </div>
 
@@ -98,60 +103,65 @@ const Friends = () => {
       {AcountReferees.data?.data.data.length > 0 && (
         <p
           className={clsx(
-            " font-bold ",
-            isSmallScreen ? "text-base my-2" : "text-xl mb-4 mt-2",
+            "font-bold ",
+            isSmallScreen ? "text-base my-2" : "text-base mb-4 mt-2",
             "dark:text-white"
           )}
         >
-          My friends
+          {`Friend list (${AcountReferees.data?.data.data.length})`}
         </p>
       )}
-      <div
-        className={clsx(
-          "overflow-auto ",
-          isSmallScreen ? "h-[calc(100%-293px)]" : "h-[calc(100%-300px)]"
-        )}
-      >
-        {AcountReferees.data?.data.data &&
-          AcountReferees.data?.data.data.map((item: any) => (
-            <div
-              className={clsx(
-                "grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-4 drop-shadow-lg",
-                "dark:gradient-border-mask-mission dark:bg-transparent dark:text-white"
-              )}
-            >
-              <div className="col-span-2 flex ">
-                <img
-                  src="/images/icons/user.svg"
-                  width={48}
-                  height={48}
-                  alt="avt"
-                ></img>
-              </div>
-              <div className="col-span-8">
-                <p className="text-sm font-extrabold mb-1">{item.name}</p>
-                <div>
-                  <div className="flex items-center gap-1">
-                    <span className="text-[#7D7D7D] dark:text-white text-sm">
-                      You recieved:
-                    </span>
-                    <img
-                      src="/images/icons/token_icon.png"
-                      width={18}
-                      height={18}
-                      alt="token"
-                    ></img>
-                    <p className="text-sm font-bold">
-                      {`${formatDecimals(item.received_amount).toFixed(
-                        6
-                      )} SEED`}
-                    </p>
+      {AcountReferees.data?.data.data.length > 0 && (
+        <div
+          className={clsx(
+            "overflow-auto bg-white p-3 rounded-lg",
+            isSmallScreen
+              ? "max-h-[calc(100%-293px)]"
+              : "max-h-[calc(100%-300px)]",
+            "border-[1px] border-[#97C35B] border-solid dark:bg-transparent"
+          )}
+        >
+          {AcountReferees.data?.data.data &&
+            AcountReferees.data?.data.data.map((item: any) => (
+              <div
+                className={clsx(
+                  "grid grid-cols-10 gap-3 bg-white rounded-2xl py-4 px-2 w-full  ",
+                  " dark:bg-transparent dark:text-white"
+                )}
+              >
+                <div className="col-span-2 flex ">
+                  <img
+                    src="/images/icons/user.svg"
+                    width={48}
+                    height={48}
+                    alt="avt"
+                  ></img>
+                </div>
+                <div className="col-span-8">
+                  {/* <p className="text-sm font-extrabold mb-1">{item.name}</p> */}
+                  <div>
+                    <div className="flex items-center gap-1">
+                      <span className="text-[#7D7D7D] dark:text-white text-sm">
+                        You recieved:
+                      </span>
+                      <img
+                        src="/images/icons/token_icon.png"
+                        width={18}
+                        height={18}
+                        alt="token"
+                      ></img>
+                      <p className="text-sm font-bold">
+                        {/* {`${formatDecimals(item.received_amount).toFixed(
+                          6
+                        )} SEED`} */}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-      </div>
+            ))}
+        </div>
+      )}
 
       <div className="absolute bottom-[30px] right-4 left-4">
         <CopyToClipboard
@@ -162,9 +172,7 @@ const Friends = () => {
             startIcon={<img src="images/icons/copy.svg" alt="copy" />}
             className={clsx(
               "font-bold capitalize text-[16px] text-white py-[18px] w-full rounded-xl ",
-              "dark:bg-white dark:text-black",
-              "btn-hover hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]     drop-shadow-[0_4px_0px_#4C7E0B]",
-              "dark:bg-none dark:border-0 dark:border-transparent dark:drop-shadow-none"
+              "btn-hover  bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
             )}
           >
             Copy invite link

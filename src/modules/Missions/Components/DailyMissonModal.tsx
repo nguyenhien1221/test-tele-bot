@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import Modal from "../../../components/common/Modal";
 import { Button } from "@mui/material";
-import { ToastContainer } from "react-toastify";
+import { Slide, ToastContainer } from "react-toastify";
 import { formatDecimals } from "../../../utils/formatNumber";
 import Loading from "../../../components/common/Loading";
 import { dailyBonusValue } from "../../../constants/missions.constants";
@@ -67,6 +67,9 @@ const DailyMissonModal = ({
     <>
       <Modal closeModal={closeModal}>
         <ToastContainer
+          position="top-left"
+          closeOnClick
+          transition={Slide}
           hideProgressBar
           limit={1}
           stacked
@@ -97,9 +100,8 @@ const DailyMissonModal = ({
                   key={index}
                   onClick={() => handleDoMission()}
                   className={clsx(
-                    "w-full h-[120px] pt-[22px] relative cursor-pointer bg-white rounded-xl mb-[18px] flex items-center justify-center",
-                    "dark:gradient-border-mask-mission dark:bg-transparent",
-                    "dark:boder-0 dark:drop-shadow-none dark:border-transparent",
+                    "btn-hover w-full h-[120px] pt-[22px] relative cursor-pointer bg-white rounded-[16px] mb-[18px] flex items-center justify-center",
+                    "dark:gradient-border-mask dark:bg-transparent dark:drop-shadow-none dark:border-[#fff]",
                     "border-[3px] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
                     unlocked(day) ? "border-[#B0D381]" : "border-[#00000080]",
                     claimed(day) || !unlocked(day) ? "pointer-events-none" : "",
@@ -109,13 +111,12 @@ const DailyMissonModal = ({
                   {claimed(day) && (
                     <div
                       className={clsx(
-                        "w-[30px] h-[30px] rounded-[50%] flex items-center justify-center absolute -right-2 -top-4 z-30",
-                        "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
+                        "w-[30px] h-[30px] rounded-[50%] flex items-center justify-center absolute -right-2 -top-4 z-30"
                       )}
                     >
                       <img
-                        src="/images/icons/checkmission.png"
-                        className="w-[13px] h-[9px]"
+                        src="/images/holy/check_mark.png"
+                        className="w-[31px] h-[31px]"
                         alt=""
                       ></img>
                     </div>
@@ -130,8 +131,7 @@ const DailyMissonModal = ({
                       ></img>
                     </div>
                   )}
-
-                  <div className="absolute text-[11px] font-semibold left-0 top-0  text-white w-[53px] flex items-center h-[19px] bg-[#4E800D] px-[10px] rounded-br-xl rounded-tl-lg">
+                  <div className="absolute text-[11px] font-semibold left-0 top-0  text-white w-[53px] flex items-center h-[19px] bg-[#4E800D] px-[10px] rounded-br-xl rounded-tl-[12px]">
                     {`Day ${day}`}
                   </div>
                   <div>
@@ -154,9 +154,7 @@ const DailyMissonModal = ({
               onClick={closeModal}
               className={clsx(
                 "capitalize text-[16px]  w-full font-bold text-white py-[18px] rounded-xl ",
-                "dark:bg-white dark:text-black dark:font-black",
-                "btn-hover hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]     drop-shadow-[0_4px_0px_#4C7E0B]",
-                "dark:boder-0 dark:border-transparent dark:bg-none dark:drop-shadow-none"
+                "btn-hover  bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
               )}
             >
               Got it

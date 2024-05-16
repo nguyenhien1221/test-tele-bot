@@ -210,14 +210,12 @@ const Home = () => {
   const handleClaim = () => {
     ClaimSeed.mutateAsync()
       .then(() => {
-        progressRef.current.style.width = "0%";
         clearInterval(countProgess);
         setIsClaimed(true);
         setInstorage(() => {
           localStorage.setItem("count", "0");
           return 0;
         });
-
         AcountBalance.refetch();
         AcountData.refetch();
       })
@@ -248,7 +246,8 @@ const Home = () => {
       String(new Date().getTime() / 1000)
     );
 
-    tele.openLink(process.env.REACT_APP_GROUP_URL);
+    tele.openTelegramLink(process.env.REACT_APP_GROUP_URL);
+    LatestMessage.refetch();
   };
 
   const handleSwitchMode = () => {
@@ -372,9 +371,10 @@ const Home = () => {
           <button
             onClick={handleSwitchMode}
             className={clsx(
-              "btn-hover hover:drop-shadow-none fixed right-8 top-[160px] z-40  rounded-[50%] w-[48px] h-[48px] flex justify-center items-center",
+              "btn-hover  fixed right-8  z-40  rounded-[50%] w-[48px] h-[48px] flex justify-center items-center",
               "bg-[#7BB52C]  drop-shadow-[0_3px_0px_#4C7E0B]",
-              "dark:radial-bg"
+              "dark:radial-bg dark:border-[3px] dark:border-[#B0D381]",
+              isSmallScreen ? "top-[160px]" : "top-[200px]"
             )}
           >
             <img
@@ -410,7 +410,7 @@ const Home = () => {
                     "rounded-2xl w-full relative overflow-hidden ",
                     "dark:bg-transparent",
                     "bg-white",
-                    isSmallScreen ? "p-2" : "p-4"
+                    isSmallScreen ? "p-2" : "p-3"
                   )}
                 >
                   {/* progess bar */}
@@ -418,7 +418,7 @@ const Home = () => {
                     ref={progressRef}
                     className={clsx(
                       "h-full top-0 left-0 absolute z-10",
-                      "dark:bg-[#112C0D]",
+                      "dark:bg-[#2E2E2E]",
                       "bg-[#E4FFCE]"
                     )}
                   ></div>
@@ -428,9 +428,9 @@ const Home = () => {
                     <div className="bg-[#000] opacity-60  w-full h-full top-0 left-0 absolute z-30 flex justify-center items-center">
                       <Button
                         onClick={handleCheckNews}
-                        className="capitalize font-extrabold text-white py-3 px-[14px] border-solid border-[1px] border-white rounded-2xl"
+                        className=" font-extrabold text-white py-3 px-[14px] border-solid border-[1px] border-white rounded-2xl"
                       >
-                        Check New
+                        CHECK NEWS
                       </Button>
                     </div>
                   )}
@@ -494,7 +494,7 @@ const Home = () => {
                         className={clsx(
                           "w-[100px] h-40px capitalize rounded-lg text-base font-bold",
                           "text-[#fff] bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B] ",
-                          "btn-hover hover:drop-shadow-none disabled:bg-[#B1B1B1] disabled:drop-shadow-[0_4px_0px_#797979] disabled:border-[#C4C4C4]",
+                          "btn-hover  disabled:bg-[#B1B1B1] disabled:drop-shadow-[0_4px_0px_#797979] disabled:border-[#C4C4C4]",
                           isSmallScreen ? "py-2" : "py-3"
                         )}
                       >
@@ -527,7 +527,7 @@ const Home = () => {
         handleClose={() => setIsOpenNotifi(false)}
       />
 
-      {isGuideModalOpen && (
+      {isGuideModalOpen && getHappyDay() && !isClaimedHappyDay && (
         <RecieveGiftModal handleClose={() => setIsGuideModalOpen(false)} />
       )}
 

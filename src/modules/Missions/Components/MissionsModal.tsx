@@ -127,18 +127,17 @@ const MissionsModal = ({
                       handleShowPopup(item, twitterUrl());
                     }}
                     rel="noreferrer"
-                    className={clsx("text-center relative w-full")}
+                    className={clsx("text-center relative w-full mt-1")}
                   >
                     {item.task_user != null && (
                       <div
                         className={clsx(
-                          "w-[30px] h-[30px] rounded-[50%] flex items-center justify-center absolute right-4 -top-4 z-20",
-                          "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
+                          "w-[30px] h-[30px] rounded-[50%] flex items-center justify-center absolute right-4 -top-4 z-20"
                         )}
                       >
                         <img
-                          src="/images/icons/checkmission.png"
-                          className="w-[13px] h-[9px]"
+                          src="/images/holy/check_mark.png"
+                          className="w-[31px] h-[31px]"
                           alt=""
                         ></img>
                       </div>
@@ -148,10 +147,10 @@ const MissionsModal = ({
                       className={clsx(
                         "z-10 py-3 px-4 relative cursor-pointer grid grid-cols-12 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
                         "dark:gradient-border-mask-mission dark:bg-transparent",
-                        "dark:boder-0 dark:drop-shadow-none dark:border-transparent",
+                        " dark:drop-shadow-none ",
                         item.task_user?.completed
                           ? "border-[1px] border-solid border-[#000] drop-shadow-none brightness-50"
-                          : "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
+                          : "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C] btn-hover"
                       )}
                     >
                       <div className="col-span-2 flex items-center">
@@ -185,22 +184,19 @@ const MissionsModal = ({
                       setIsLoading(true);
                       handleOpenLink(item);
                     }}
-                    // href={item?.metadata?.url}
-                    // target="blank"
                     key={item?.id}
                     rel="noreferrer"
-                    className={clsx("text-center relative w-full")}
+                    className={clsx("text-center relative w-full mt-1 ")}
                   >
                     {item.task_user != null && (
                       <div
                         className={clsx(
-                          "w-[30px] h-[30px] rounded-[50%] flex items-center justify-center absolute right-4 -top-4 z-20",
-                          "border-[3px] border-[#B0D381] border-solid drop-shadow-[0_4px_0px_#4D7F0C] bg-[#7BB52C]"
+                          "w-[30px] h-[30px] rounded-[50%] flex items-center justify-center absolute right-4 -top-4 z-20"
                         )}
                       >
                         <img
-                          src="/images/icons/checkmission.png"
-                          className="w-[13px] h-[9px]"
+                          src="/images/holy/check_mark.png"
+                          className="w-[31px] h-[31px]"
                           alt=""
                         ></img>
                       </div>
@@ -210,10 +206,10 @@ const MissionsModal = ({
                       className={clsx(
                         "z-10 py-3 px-4 relative cursor-pointer grid grid-cols-12 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
                         "dark:gradient-border-mask-mission dark:bg-transparent",
-                        "dark:boder-0 dark:drop-shadow-none dark:border-transparent",
+                        "dark:drop-shadow-none ",
                         item.task_user?.completed
                           ? "border-[1px] border-solid border-[#000] drop-shadow-none brightness-50"
-                          : "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
+                          : "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C] btn-hover"
                       )}
                     >
                       <div className="col-span-2 flex items-center">
@@ -246,8 +242,7 @@ const MissionsModal = ({
             <div
               className={clsx(
                 "py-3 px-4 relative bg-white rounded-2xl p-4 w-full mb-[18px] ",
-                "dark:gradient-border-mask-mission dark:bg-transparent",
-                "dark:boder-0 dark:drop-shadow-none dark:border-transparent",
+                "dark:boder-1 dark:border-[#fff] dark:bg-transparent",
                 "border-[1px] border-[#C2C2C2] border-solid"
               )}
             >
@@ -262,9 +257,7 @@ const MissionsModal = ({
               onClick={closeModal}
               className={clsx(
                 "capitalize text-[16px]  w-full font-bold text-white py-[18px] rounded-xl ",
-                "dark:bg-white dark:text-black dark:font-black",
-                "btn-hover hover:drop-shadow-none bg-gradient-to-r from-[#97C35B] to-[#61A700]     drop-shadow-[0_4px_0px_#4C7E0B]",
-                "dark:boder-0 dark:border-transparent dark:bg-none dark:drop-shadow-none"
+                "btn-hover bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
               )}
             >
               Got it

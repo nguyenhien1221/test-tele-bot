@@ -5,7 +5,7 @@ import {
   bootTypeEnum,
   bootsStorageLevel,
 } from "../../../constants/boots.constants";
-import { ToastContainer, toast } from "react-toastify";
+import { Slide, ToastContainer, toast } from "react-toastify";
 import BootsModal from "../Components/BootsModal";
 import { useNavigate } from "react-router-dom";
 import useUpgradeStorage from "../Hooks/useUpgradeStoarage";
@@ -77,7 +77,7 @@ const Boots = () => {
           setisOpen({ isOpen: false, type: 0 });
         })
         .catch((err) => {
-          toast.error("not enough balance", {
+          toast.error(err?.response?.data?.message, {
             style: { maxWidth: 337, height: 40, borderRadius: 8 },
             autoClose: 2000,
           });
@@ -98,7 +98,7 @@ const Boots = () => {
           setisOpen({ isOpen: false, type: 0 });
         })
         .catch((err) => {
-          toast.error("not enough balance", {
+          toast.error(err?.response?.data?.message, {
             style: { maxWidth: 337, height: 40, borderRadius: 8 },
             autoClose: 2000,
           });
@@ -189,7 +189,7 @@ const Boots = () => {
         setisOpen({ isOpen: false, type: 0 });
       })
       .catch((err) => {
-        toast.error("not enough balance", {
+        toast.error(err?.response?.data?.message, {
           style: { maxWidth: 337, height: 40, borderRadius: 8 },
           autoClose: 2000,
         });
@@ -205,6 +205,9 @@ const Boots = () => {
       )}
     >
       <ToastContainer
+        position="top-left"
+        closeOnClick
+        transition={Slide}
         hideProgressBar
         limit={1}
         stacked
@@ -212,7 +215,7 @@ const Boots = () => {
       />
       {/* boot info */}
       <div className="flex flex-col items-center dark:text-white">
-        <p className="text-sm font-normal">Your balance</p>
+        <p className="text-base font-normal">Your balance</p>
         <div className="flex items-center gap-2">
           <img
             src="/images/icons/token_icon.png"
@@ -227,41 +230,6 @@ const Boots = () => {
             )}
           </p>
         </div>
-        {/* <div className="flex gap-2 items-center text-sm">
-          <p className=" font-normal">Storage size:</p>
-          <div className="flex items-center gap-1">
-            <img
-              src="/images/icons/token_icon.png"
-              width={17}
-              height={17}
-              alt="token"
-            ></img>
-            <p className="font-bold">
-              {boostSpeedLevel[
-                getSpeedUpgradesLevel(AcountData.data?.data.data)
-              ]?.speed *
-                bootsStorageLevel[
-                  getStorageUpgradesLevel(AcountData.data?.data.data)
-                ]?.duration}
-            </p>
-            <p>SEED</p>
-          </div>
-        </div> */}
-        {/* <div className="flex gap-2 items-center text-sm mt-3">
-          <p className=" font-normal">Planting speed:</p>
-          <div className="flex items-center gap-1">
-            <img
-              src="/images/icons/token_icon.png"
-              width={17}
-              height={17}
-              alt="token"
-            ></img>
-            <p className="font-bold">
-              {getNumberFormatUs(formatDecimals(miningSpeed ?? 0), 3)}
-            </p>
-            <p>SEED/hour</p>
-          </div>
-        </div> */}
       </div>
       {/* options */}
       <div className={clsx(isDesktop ? "mt-2" : "mt-[49px]")}>
@@ -303,14 +271,13 @@ const Boots = () => {
               onClick={() => handleOpenModal(index)}
               key={index}
               className={clsx(
-                "z-10 relative cursor-pointer grid grid-cols-7 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
-                "dark:gradient-border-mask-mission dark:bg-transparent",
-                "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#97C35B]",
-                "dark:border-0 dark:border-transparent dark:drop-shadow-none"
+                "btn-hover z-10 relative cursor-pointer grid grid-cols-7 gap-0 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                "dark:gradient-border-mask-mission dark:bg-transparent dark:drop-shadow-none",
+                "border-[1px] border-[#4D7F0C] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
               )}
             >
-              <div className="col-span-2 flex items-center ">
-                <div>
+              <div className="col-span-2 flex items-center justify-center">
+                <div className="">
                   <img
                     className="object-contain w-[73px] h-[67px]"
                     src={icon}
@@ -321,7 +288,9 @@ const Boots = () => {
                 </div>
               </div>
               <div className="col-span-5 dark:text-white">
-                <p className="font-bold mb-1">{item.title}</p>
+                <p className="font-semibold mb-1">{`${item.title} Level ${
+                  level + 1
+                }`}</p>
                 <div className=" mb-1">
                   <p className="text-sm font-normal">{item.description}</p>
                 </div>
@@ -339,8 +308,8 @@ const Boots = () => {
                     <p className="text-xs font-normal">
                       {`
                       ${index === 2 ? "" : price} ${
-                        index === 2 ? "Mission" : "SEED"
-                      }. Lv${level + 1}
+                        index === 2 ? "Complete mission" : ""
+                      } to upgrade
                       `}
                     </p>
                   </div>
