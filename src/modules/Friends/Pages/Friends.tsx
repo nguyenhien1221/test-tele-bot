@@ -138,7 +138,7 @@ const Friends = () => {
                   ></img>
                 </div>
                 <div className="col-span-8">
-                  {/* <p className="text-sm font-extrabold mb-1">{item.name}</p> */}
+                  <p className="text-sm font-extrabold mb-1">{item.name}</p>
                   <div>
                     <div className="flex items-center gap-1">
                       <span className="text-[#7D7D7D] dark:text-white text-sm">
@@ -151,9 +151,9 @@ const Friends = () => {
                         alt="token"
                       ></img>
                       <p className="text-sm font-bold">
-                        {/* {`${formatDecimals(item.received_amount).toFixed(
+                        {`${formatDecimals(item.received_amount).toFixed(
                           6
-                        )} SEED`} */}
+                        )} SEED`}
                       </p>
                     </div>
                   </div>

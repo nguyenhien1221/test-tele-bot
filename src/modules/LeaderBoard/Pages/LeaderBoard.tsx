@@ -2,6 +2,7 @@ import clsx from "clsx";
 import useGetLeaderBoard from "../Hooks/useGetaLeaderBoard";
 import { formatDecimals, getNumberFormatUs } from "../../../utils/formatNumber";
 import { useNavigate } from "react-router-dom";
+import { navPaths } from "../../../constants/navbar.constants";
 
 const LeaderBoard = () => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const LeaderBoard = () => {
 
   tele.BackButton.onClick(() => handleBackBtn());
   const handleBackBtn = () => {
-    navigate("/");
+    navigate(navPaths.FRIENDS);
   };
   return (
     <div className="pt-[42px] px-4 pb-[100px] bg-[#F2FFE0] dark:bg-transparent h-screen relative z-30">

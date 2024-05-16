@@ -15,7 +15,6 @@ import DailyMissonModal from "../Components/DailyMissonModal";
 import useGetDailyMissions from "../Hooks/useGetDaily";
 import useDoDailyMissions from "../Hooks/useDoDaily";
 import { checkSameDay } from "../../../utils/helper";
-import { CircularProgress, circularProgressClasses } from "@mui/material";
 import Progress from "../../../components/common/Progress";
 
 const MissionsPage = () => {
@@ -252,6 +251,7 @@ const MissionsPage = () => {
           </div>
           {isOpen.isOpen && (
             <MissionsModal
+              isLoading={doMission.isPending}
               handleDoMission={(id: string) => handleDoMission(id)}
               data={missionsData.data?.data.data ?? []}
               type={isOpen.type}

@@ -276,7 +276,7 @@ const Boots = () => {
                 "border-[1px] border-[#4D7F0C] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
               )}
             >
-              <div className="col-span-2 flex items-center justify-center">
+              <div className="col-span-2 flex items-center ">
                 <div className="">
                   <img
                     className="object-contain w-[73px] h-[67px]"

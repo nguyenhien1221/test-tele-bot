@@ -9,5 +9,7 @@ export default function useDoMissions() {
   return useMutation({
     mutationKey: ["doMissions"],
     mutationFn: doMissions,
+    retry: 5,
+    retryDelay: 3000,
   });
 }
