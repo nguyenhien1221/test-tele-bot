@@ -418,7 +418,7 @@ const Home = () => {
                     ref={progressRef}
                     className={clsx(
                       "h-full top-0 left-0 absolute z-10",
-                      "dark:bg-[#2E2E2E]",
+                      "dark:bg-[#152613]",
                       "bg-[#E4FFCE]"
                     )}
                   ></div>

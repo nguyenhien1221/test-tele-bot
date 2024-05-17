@@ -50,7 +50,7 @@ const Friends = () => {
         limit={1}
         className="top-3 max-w-[337px] left-[50%] -translate-x-[50%]"
       />
-      <div className="mb-5">
+      <div className="mb-5 pb-1">
         <button
           onClick={handleNavigateLeaderBoard}
           className="btn-hover bg-white w-full border-[1px] border-[#4D7F0C] drop-shadow-[0_4px_0px_#4D7F0C] py-[6px] px-[7px] rounded-[30px]"
@@ -151,9 +151,7 @@ const Friends = () => {
                         alt="token"
                       ></img>
                       <p className="text-sm font-bold">
-                        {`${formatDecimals(item.received_amount).toFixed(
-                          6
-                        )} SEED`}
+                        {formatDecimals(item.received_amount).toFixed(6)}
                       </p>
                     </div>
                   </div>

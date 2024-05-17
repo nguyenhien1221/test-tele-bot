@@ -31,9 +31,9 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
             alt="storage"
           ></img>
         </div>
-        <div className="col-span-5">
+        <div className="col-span-5 flex flex-col justify-center items-start">
           <p className="font-semibold text-base mb-2">{`Level ${level + 1}`}</p>
-          <div className="flex gap-[7px] mb-2">
+          <div className="flex gap-[7px] ">
             <p className="text-sm ">{`Claim every ${bootsStorageLevel[level]?.duration}h`}</p>
           </div>
         </div>
@@ -54,9 +54,9 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
         <div className="col-span-2 flex ">
           <img src={`/images/trees/${level + 1}.png`} width={60} alt=""></img>
         </div>
-        <div className="col-span-5">
+        <div className="col-span-5 flex flex-col justify-center items-start">
           <p className="font-semibold text-base mb-2">{`Level ${level + 1}`}</p>
-          <div className="flex gap-[7px] mb-2">
+          <div className="flex gap-[7px] ">
             <p className="text-sm">{`Mine ${boostSpeedLevel[level]?.speed} SEED/hour`}</p>
           </div>
         </div>
@@ -68,7 +68,7 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
     return (
       <div
         className={clsx(
-          "grid grid-cols-7 gap-3 bg-white rounded-2xl  w-full",
+          "grid grid-cols-8 gap-3 bg-white rounded-2xl  w-full",
           isSmallScreen ? "p-2" : " p-4",
           "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent dark:drop-shadow-none",
           "border-[1px] border-[#4D7F0C] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
@@ -77,14 +77,14 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
         <div className="col-span-2 flex ">
           <img
             src={`/images/holy/${level + 1}.png`}
-            className="h-[60px] w-[50px]"
+            className="h-[60px] w-[60px]"
             width={60}
             alt=""
           ></img>
         </div>
-        <div className="col-span-5">
+        <div className="col-span-6 flex items-start flex-col justify-center">
           <p className="font-semibold text-base mb-2">{`Level ${level + 1}`}</p>
-          <div className="flex gap-[7px] mb-2">
+          <div className="flex gap-[7px] ">
             <p className="text-sm">{`x${boostWaterLevel[level]?.speed} per hour`}</p>
           </div>
         </div>

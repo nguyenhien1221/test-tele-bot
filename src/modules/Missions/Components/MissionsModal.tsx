@@ -156,18 +156,20 @@ const MissionsModal = ({
                               : "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C] btn-hover"
                           )}
                         >
-                          <div className="col-span-2 flex items-center">
-                            <div className="rounded-lg drop-shadow-lg overflow-hidden w-8 h-8">
-                              <img
-                                src={item.metadata.image_url}
-                                className="w-8 h-8"
-                                alt=""
-                              ></img>
+                          <div className="col-span-9 flex">
+                            <div className=" flex items-center mr-4">
+                              <div className="rounded-lg drop-shadow-lg overflow-hidden w-8 h-8">
+                                <img
+                                  src={item.metadata.image_url}
+                                  className="w-8 h-8"
+                                  alt=""
+                                ></img>
+                              </div>
                             </div>
-                          </div>
 
-                          <div className="col-span-7 flex items-center text-start justify-start text-[15px]">
-                            {item.name}
+                            <div className=" flex items-center text-start justify-start text-[15px]">
+                              {item.name}
+                            </div>
                           </div>
                           <div className="col-span-3 flex items-center justify-start">
                             <img
@@ -214,18 +216,20 @@ const MissionsModal = ({
                               : "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C] btn-hover"
                           )}
                         >
-                          <div className="col-span-2 flex items-center">
-                            <div className="rounded-lg drop-shadow-lg overflow-hidden w-8 h-8">
-                              <img
-                                src={item.metadata.image_url}
-                                className="w-8 h-8"
-                                alt=""
-                              ></img>
+                          <div className="col-span-9 flex">
+                            <div className=" flex items-center mr-4">
+                              <div className="rounded-lg drop-shadow-lg overflow-hidden w-8 h-8">
+                                <img
+                                  src={item.metadata.image_url}
+                                  className="w-8 h-8"
+                                  alt=""
+                                ></img>
+                              </div>
                             </div>
-                          </div>
 
-                          <div className="col-span-7 flex items-center text-start justify-start text-[15px]">
-                            {item.name}
+                            <div className=" flex items-center text-start justify-start text-[15px]">
+                              {item.name}
+                            </div>
                           </div>
                           <div className="col-span-3 flex items-center justify-start">
                             <img
@@ -259,7 +263,7 @@ const MissionsModal = ({
             )}
           </div>
 
-          <div className="pt-3">
+          <div className="pt-3 pb-1">
             <Button
               onClick={closeModal}
               className={clsx(

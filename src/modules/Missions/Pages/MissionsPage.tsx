@@ -152,11 +152,12 @@ const MissionsPage = () => {
               </div>
               <div className="col-span-8 flex items-center dark:text-white">
                 <div className="">
-                  <p className="font-semibold text-lg">Login Bonus</p>
+                  <p className="font-semibold text-base">Login Bonus</p>
                   {dailyMissions?.data &&
                   ((dailyMissions?.data.data.data?.length || 0) === 0 ||
-                    !checkSameDay(dailyMissions?.data.data.data ?? [])) ? (
-                    <div className="flex items-center">
+                    (!checkSameDay(dailyMissions?.data.data.data ?? []) &&
+                      dailyMissions?.data.data.data?.length < 7)) ? (
+                    <div className="flex items-center text-sm">
                       <Progress className="mr-1" value={(0 / 1) * 100} />
                       <span>{`In progress (0/1)`}</span>
                     </div>
@@ -191,9 +192,9 @@ const MissionsPage = () => {
               let name = "";
 
               if (index === 0) {
-                name = "Follow Our ecosystem";
+                name = "Follow our Ecosystem";
               } else {
-                name = "Join Our community";
+                name = "Join our Community";
               }
 
               return (
@@ -219,9 +220,9 @@ const MissionsPage = () => {
                   </div>
                   <div className="col-span-8 flex items-center dark:text-white">
                     <div className="">
-                      <p className="font-semibold text-lg">{name}</p>
+                      <p className="font-semibold text-base">{name}</p>
                       {doneMission === totalMission.length ? (
-                        <div className="flex items-center">
+                        <div className="flex items-center text-sm">
                           <img
                             src="/images/daily/mission_complete.png"
                             className="dark:hidden inline-block w-4 mr-1"
@@ -235,7 +236,7 @@ const MissionsPage = () => {
                           <span>{`Completed (${doneMission}/${totalMission.length})`}</span>
                         </div>
                       ) : (
-                        <div className="flex items-center">
+                        <div className="flex items-center text-sm">
                           <Progress
                             className="mr-1"
                             value={(doneMission / totalMission.length) * 100}

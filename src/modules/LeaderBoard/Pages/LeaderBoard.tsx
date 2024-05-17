@@ -46,14 +46,14 @@ const LeaderBoard = () => {
                   return (
                     <div
                       key={item.id}
-                      className="grid grid-cols-10 mt-2 p-2 dark:gradient-border-mask-leaderboard"
+                      className="grid grid-cols-9 mt-2 p-2 dark:gradient-border-mask-leaderboard"
                     >
                       <div className="col-span-1">
-                        <div className="w-full h-full flex items-center justify-center">
+                        <div className="w-[30px] h-full flex items-center justify-center">
                           {item.rank < 4 ? (
                             <img
                               src={`/images/leaderboard/${item.rank}.png`}
-                              className="w-[395px] h-[44px] "
+                              className="w-[30px] h-[44px] "
                               alt=""
                             ></img>
                           ) : (
@@ -64,8 +64,8 @@ const LeaderBoard = () => {
                         </div>
                       </div>
 
-                      <div className="col-span-9 flex items-center">
-                        <div className="ml-2 flex items-center">
+                      <div className="col-span-8 flex items-center">
+                        <div className="ml-2 flex items-center w-[46px] h-[48px]">
                           <img
                             src="/images/icons/user.svg"
                             className="w-[46px] h-[48px] "

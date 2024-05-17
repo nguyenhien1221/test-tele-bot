@@ -104,16 +104,18 @@ const WaterMissionsModal = ({
                             : "border-[1px] border-[#4D7F0C] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
                         )}
                       >
-                        <div className="col-span-2 flex items-center">
-                          <img
-                            src={`/images/holy/${item.type}.png`}
-                            className="w-8 h-8"
-                            alt=""
-                          ></img>
-                        </div>
+                        <div className="col-span-10 flex">
+                          <div className=" flex items-center mr-4">
+                            <img
+                              src={`/images/holy/${item.type}.png`}
+                              className="w-8 h-8"
+                              alt=""
+                            ></img>
+                          </div>
 
-                        <div className="col-span-8 flex items-center justify-start text-start text-[15px]">
-                          {item.name}
+                          <div className=" flex items-center justify-start text-start text-[15px]">
+                            {item.name}
+                          </div>
                         </div>
                       </div>
                     </button>
@@ -135,7 +137,7 @@ const WaterMissionsModal = ({
             </div>
           )}
 
-          <div className="pt-3">
+          <div className="pt-3 pb-1">
             <Button
               onClick={closeModal}
               className={clsx(
