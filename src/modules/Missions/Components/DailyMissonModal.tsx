@@ -123,7 +123,7 @@ const DailyMissonModal = ({
                   )}
                   {!unlocked(day) && (
                     <div className="absolute z-40 w-full h-full top-0 ">
-                      <div className="absolute z-10 bg-black bg-opacity-50 w-full h-full rounded-lg"></div>
+                      <div className="absolute z-10 bg-black bg-opacity-50 w-full h-full rounded-[13px]"></div>
                       <img
                         src="/images/daily/lock.svg"
                         className="z-50 absolute left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2"

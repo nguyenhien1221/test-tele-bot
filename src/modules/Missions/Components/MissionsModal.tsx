@@ -263,7 +263,7 @@ const MissionsModal = ({
             )}
           </div>
 
-          <div className="pt-3 h-[80px]">
+          <div className="pt-3 pb-1 h-[80px]">
             <Button
               onClick={closeModal}
               className={clsx(
