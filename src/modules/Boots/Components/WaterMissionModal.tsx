@@ -35,7 +35,7 @@ const WaterMissionsModal = ({
   return (
     <>
       <Modal closeModal={closeModal}>
-        <div className="dark:text-white w-full overflow-auto flex flex-col h-[calc(100%-32px)]">
+        <div className="dark:text-white w-full flex flex-col h-[calc(100%-32px)]">
           <div className=" w-full">
             <button
               onClick={closeWaterMissionModal}
