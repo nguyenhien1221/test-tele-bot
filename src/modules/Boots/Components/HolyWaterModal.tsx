@@ -146,7 +146,7 @@ const HolyWaterModal = ({
               <MissionsItem type={type} level={level} />
             </div>
           </div>
-          <div className="h-[68px]">{renderButton()}</div>
+          <div className="h-[68px] ">{renderButton()}</div>
         </div>
       </Modal>
     </>

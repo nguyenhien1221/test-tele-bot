@@ -268,7 +268,7 @@ const MissionsModal = ({
               onClick={closeModal}
               className={clsx(
                 "capitalize text-[16px]  w-full font-bold text-white py-[18px] rounded-xl ",
-                "btn-hover bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
+                "btn-hover bg-gradient-to-r from-[#97C35B] to-[#61A700] shadow-[0_4px_0px_#4C7E0B]"
               )}
             >
               Got it
