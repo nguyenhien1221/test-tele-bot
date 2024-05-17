@@ -39,7 +39,7 @@ const NavBar = () => {
             <div className="grid-cols-1" key={index}>
               <div
                 className={clsx(
-                  "btn-hover cursor-pointer w-full h-full p-[9px] rounded-[16px] bg-[#fff] drop-shadow-[0_3px_0px_#4D7F0C]",
+                  "btn-hover dark:btn-click cursor-pointer w-full h-full p-[9px] rounded-[16px] bg-[#fff] drop-shadow-[0_3px_0px_#4D7F0C]",
                   "dark:gradient-border-mask dark:bg-transparent dark:drop-shadow-none"
                 )}
                 onClick={() => handleShowToast(index, item)}

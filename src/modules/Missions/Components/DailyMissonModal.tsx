@@ -100,7 +100,7 @@ const DailyMissonModal = ({
                   key={index}
                   onClick={() => handleDoMission()}
                   className={clsx(
-                    "btn-hover w-full h-[120px] pt-[22px] relative cursor-pointer bg-white rounded-[16px] mb-[18px] flex items-center justify-center",
+                    "btn-hover dark:btn-click w-full h-[120px] pt-[22px] relative cursor-pointer bg-white rounded-[16px] mb-[18px] flex items-center justify-center",
                     "dark:gradient-border-mask dark:bg-transparent dark:drop-shadow-none dark:border-[#fff]",
                     "border-[3px] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
                     unlocked(day) ? "border-[#B0D381]" : "border-[#00000080]",
@@ -154,7 +154,7 @@ const DailyMissonModal = ({
               onClick={closeModal}
               className={clsx(
                 "capitalize text-[16px]  w-full font-bold text-white py-[18px] rounded-xl ",
-                "btn-hover bg-gradient-to-r from-[#97C35B] to-[#61A700] shadow-[0_4px_0px_#4C7E0B]"
+                "btn-hover dark:btn-click bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
               )}
             >
               Got it

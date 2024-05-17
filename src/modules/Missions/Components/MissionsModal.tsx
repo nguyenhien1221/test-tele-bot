@@ -153,7 +153,7 @@ const MissionsModal = ({
                             " dark:drop-shadow-none ",
                             item.task_user?.completed
                               ? "border-[1px] border-solid border-[#000] drop-shadow-none brightness-50"
-                              : "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C] btn-hover"
+                              : "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C] btn-hover dark:btn-click"
                           )}
                         >
                           <div className="col-span-9 flex">
@@ -213,7 +213,7 @@ const MissionsModal = ({
                             "dark:drop-shadow-none ",
                             item.task_user?.completed
                               ? "border-[1px] border-solid border-[#000] drop-shadow-none brightness-50"
-                              : "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C] btn-hover"
+                              : "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C] btn-hover dark:btn-click"
                           )}
                         >
                           <div className="col-span-9 flex">
@@ -268,7 +268,7 @@ const MissionsModal = ({
               onClick={closeModal}
               className={clsx(
                 "capitalize text-[16px]  w-full font-bold text-white py-[18px] rounded-xl ",
-                "btn-hover bg-gradient-to-r from-[#97C35B] to-[#61A700] shadow-[0_4px_0px_#4C7E0B]"
+                "btn-hover dark:btn-click  bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
               )}
             >
               Got it

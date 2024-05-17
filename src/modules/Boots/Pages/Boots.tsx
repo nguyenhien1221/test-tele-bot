@@ -271,7 +271,7 @@ const Boots = () => {
               onClick={() => handleOpenModal(index)}
               key={index}
               className={clsx(
-                "btn-hover z-10 relative cursor-pointer grid grid-cols-7 gap-0 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-7 gap-0 bg-white rounded-2xl p-4 w-full mb-[18px] ",
                 "dark:gradient-border-mask-mission dark:bg-transparent dark:drop-shadow-none",
                 "border-[1px] border-[#4D7F0C] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
               )}

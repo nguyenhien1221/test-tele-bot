@@ -56,7 +56,7 @@ const Friends = () => {
           className="btn-hover bg-white w-full border-[1px] border-[#4D7F0C] drop-shadow-[0_4px_0px_#4D7F0C] py-[6px] px-[7px] rounded-[30px]"
         >
           <div className="grid grid-cols-10">
-            <span className="col-span-8 text-left flex items-center">
+            <span className="col-span-9 text-left flex items-center">
               <img
                 src="/images/leaderboard/leaderboardicon.png"
                 className="w-[37px] h-[34px] col-span-1"

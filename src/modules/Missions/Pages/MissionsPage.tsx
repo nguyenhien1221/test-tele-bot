@@ -134,7 +134,7 @@ const MissionsPage = () => {
                 setIsOpenDailyMission({ isOpen: true, type: "", data: null })
               }
               className={clsx(
-                "btn-hover z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
                 "dark:gradient-border-mask-mission dark:bg-transparent",
                 "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
                 "dark:boder-0 dark:drop-shadow-none "
@@ -202,7 +202,7 @@ const MissionsPage = () => {
                   onClick={() => handleChooseMission(item.type)}
                   key={index}
                   className={clsx(
-                    "btn-hover z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                    "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
                     "dark:gradient-border-mask-mission dark:bg-transparent",
                     "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
                     "dark:drop-shadow-none"

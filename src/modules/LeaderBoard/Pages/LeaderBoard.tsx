@@ -22,9 +22,6 @@ const LeaderBoard = () => {
           alt=""
         ></img>
         <div className="text-center">
-          <p className="text-2xl font-extrabold mb-2 dark:text-white">
-            Leaderboard
-          </p>
           <p className="dark:text-white">
             This leaderboard ranks players by the number of seeds earned from
             referral bonuses
