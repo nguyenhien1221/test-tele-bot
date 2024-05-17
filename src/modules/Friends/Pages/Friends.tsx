@@ -56,13 +56,13 @@ const Friends = () => {
           className="btn-hover bg-white w-full border-[1px] border-[#4D7F0C] drop-shadow-[0_4px_0px_#4D7F0C] py-[6px] px-[7px] rounded-[30px]"
         >
           <div className="grid grid-cols-10">
-            <img
-              src="/images/leaderboard/leaderboardicon.png"
-              className="w-[37px] h-[34px] col-span-1"
-              alt=""
-            ></img>
-            <span className="col-span-8 text-left flex items-center pl-2">
-              <p className="text-sm font-semibold ">Referral leaderboard</p>
+            <span className="col-span-8 text-left flex items-center">
+              <img
+                src="/images/leaderboard/leaderboardicon.png"
+                className="w-[37px] h-[34px] col-span-1"
+                alt=""
+              ></img>
+              <p className="text-sm font-semibold pl-2">Referral leaderboard</p>
             </span>
             <div className="col-span-1 flex items-center justify-center">
               <svg
@@ -116,8 +116,8 @@ const Friends = () => {
           className={clsx(
             "overflow-auto bg-white p-3 rounded-lg",
             isSmallScreen
-              ? "max-h-[calc(100%-293px)]"
-              : "max-h-[calc(100%-300px)]",
+              ? "max-h-[calc(100%-180px)]"
+              : "max-h-[calc(100%-200px)]",
             "border-[1px] border-[#97C35B] border-solid dark:bg-transparent"
           )}
         >
@@ -138,7 +138,7 @@ const Friends = () => {
                   ></img>
                 </div>
                 <div className="col-span-8">
-                  <p className="text-sm font-extrabold mb-1">{item.name}</p>
+                  {/* <p className="text-sm font-extrabold mb-1">{item.name}</p> */}
                   <div>
                     <div className="flex items-center gap-1">
                       <span className="text-[#7D7D7D] dark:text-white text-sm">
@@ -151,7 +151,7 @@ const Friends = () => {
                         alt="token"
                       ></img>
                       <p className="text-sm font-bold">
-                        {formatDecimals(item.received_amount).toFixed(6)}
+                        {/* {formatDecimals(item.received_amount).toFixed(6)} */}
                       </p>
                     </div>
                   </div>
