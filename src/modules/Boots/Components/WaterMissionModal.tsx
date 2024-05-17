@@ -137,7 +137,7 @@ const WaterMissionsModal = ({
             </div>
           )}
 
-          <div className="pt-3 pb-1">
+          <div className="pt-3 pb-1 h-[80px]">
             <Button
               onClick={closeModal}
               className={clsx(
