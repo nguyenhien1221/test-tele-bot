@@ -120,7 +120,7 @@ const Boots = () => {
   };
 
   const handleDoWaterMision = (item: any) => {
-    if (item.type === "Share and tag") {
+    if (item.type === "like and retweet") {
       tele.openLink(item.metadata.url);
       setTimeout(() => {
         DoWaterMission.mutateAsync(item.id)
