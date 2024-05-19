@@ -168,7 +168,7 @@ const MissionsModal = ({
                         <div className=" flex items-center text-start justify-start text-[15px]">
                           {item.name}
                         </div>
-                      </div>{isLoading && loadingItem === item.id ? <div className="h-full"><Loading /></div> : <>
+                      </div>{isLoading && loadingItem === item.id ? <div className="absolute h-full"><Loading /></div> : <>
                         <div className="col-span-3 flex items-center justify-start">
                           <img
                             src="/images/icons/token_icon.png"
@@ -229,7 +229,7 @@ const MissionsModal = ({
                         <div className=" flex items-center text-start justify-start text-[15px]">
                           {item.name}
                         </div>
-                      </div>{isLoading && loadingItem === item.id ? <div className="h-full"><Loading /></div> : <>
+                      </div>{isLoading && loadingItem === item.id ? <div className="absolute h-full"><Loading /></div> : <>
                         <div className="col-span-3 flex items-center justify-start">
                           <img
                             src="/images/icons/token_icon.png"
