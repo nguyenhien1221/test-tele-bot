@@ -8,7 +8,7 @@ import { formatDecimals } from "../../../utils/formatNumber";
 import { useState } from "react";
 import Modal from "../../../components/common/Modal";
 import { getMobileOS } from "../../../utils/helper";
-import Loading from "../../../components/common/Loading";
+import ItemLoading from "../../../components/common/ItemLoading";
 
 interface ModalPropsType {
   data: any;
@@ -168,18 +168,22 @@ const MissionsModal = ({
                         <div className=" flex items-center text-start justify-start text-[15px]">
                           {item.name}
                         </div>
-                      </div>{isLoading && loadingItem === item.id ? <div className="absolute h-full"><Loading /></div> : <>
-                        <div className="col-span-3 flex items-center justify-start">
-                          <img
-                            src="/images/icons/token_icon.png"
-                            className="w-4 h-4"
-                            alt=""
-                          ></img>
-                          <span className="font-semibold text-sm ml-1">{`+${formatDecimals(
-                            item.reward_amount ?? 0
-                          )}`}</span>
-                        </div>
-                      </>}
+                      </div>
+                      <div className="col-span-3 flex items-center justify-start">
+                        {isLoading && item.id === loadingItem ?
+                          <ItemLoading />
+                          :
+                          <>
+                            <img
+                              src="/images/icons/token_icon.png"
+                              className="w-4 h-4"
+                              alt=""
+                            ></img>
+                            <span className="font-semibold text-sm ml-1">{`+${formatDecimals(
+                              item.reward_amount ?? 0
+                            )}`}</span>
+                          </>}
+                      </div>
                     </div>
                   </button>
                 ) : (
@@ -229,18 +233,24 @@ const MissionsModal = ({
                         <div className=" flex items-center text-start justify-start text-[15px]">
                           {item.name}
                         </div>
-                      </div>{isLoading && loadingItem === item.id ? <div className="absolute h-full"><Loading /></div> : <>
-                        <div className="col-span-3 flex items-center justify-start">
-                          <img
-                            src="/images/icons/token_icon.png"
-                            className="w-4 h-4"
-                            alt=""
-                          ></img>
-                          <span className="font-semibold text-sm ml-1">{`+${formatDecimals(
-                            item.reward_amount ?? 0
-                          )}`}</span>
-                        </div>
-                      </>}
+                      </div>
+                      <div className="col-span-3 flex items-center justify-start">
+                        {isLoading && item.id === loadingItem ?
+                          <ItemLoading />
+                          :
+                          <>
+                            <img
+                              src="/images/icons/token_icon.png"
+                              className="w-4 h-4"
+                              alt=""
+                            ></img>
+                            <span className="font-semibold text-sm ml-1">{`+${formatDecimals(
+                              item.reward_amount ?? 0
+                            )}`}</span>
+                          </>
+                        }
+                      </div>
+
                     </div>
                   </button>
                 );
