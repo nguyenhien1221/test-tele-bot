@@ -201,11 +201,11 @@ const Home = () => {
     AcountData.isLoading,
   ]);
 
-  useEffect(() => {
-    if (HappyDayHistory.data?.data.data?.length === 0 && count === 0) {
-      setIsGuideModalOpen(true);
-    }
-  }, [HappyDayHistory.data]);
+  // useEffect(() => {
+  //   if (HappyDayHistory.data?.data.data?.length === 0 && count === 0) {
+  //     setIsGuideModalOpen(true);
+  //   }
+  // }, [HappyDayHistory.data]);
 
   const handleClaim = () => {
     ClaimSeed.mutateAsync()

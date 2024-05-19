@@ -23,7 +23,7 @@ const LeaderBoard = () => {
         ></img>
         <div className="text-center">
           <p className="dark:text-white">
-            This leaderboard ranks players by the number of seeds earned from
+            This leaderboard ranks players by the number of SEED earned from
             referral bonuses
           </p>
         </div>
