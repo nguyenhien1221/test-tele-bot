@@ -51,6 +51,7 @@ const Home = () => {
   tele.BackButton.hide();
 
   const mode = localStorage.getItem("mode");
+  const isCloseGuide = sessionStorage.getItem("isClickGuide")
   const changeMode = useChangeMode((state: any) => state.updateMode);
 
   const AcountBalance = useGetAcountBalance();
@@ -76,7 +77,7 @@ const Home = () => {
     mode === "dark" ? "dark" : "light"
   );
   const [isOpenNotifi, setIsOpenNotifi] = useState<boolean>(false);
-  const [isGuideModalOpen, setIsGuideModalOpen] = useState<boolean>(false);
+  const [isGuideModalOpen, setIsGuideModalOpen] = useState<boolean>(isCloseGuide === "true" ?? false);
   const [isWinHappyDay, setIsWinHappyDay] = useState<{
     isOpen: boolean;
     data: any;
@@ -118,7 +119,7 @@ const Home = () => {
     startTime +
     bootsStorageLevel[getStorageUpgradesLevel(AcountData.data?.data.data)]
       ?.duration *
-      3600;
+    3600;
 
   const timePassed = currentTime - startTime;
 
@@ -351,7 +352,7 @@ const Home = () => {
                   <p className="dark:text-white text-base font-black">
                     {formatNumberFloatFix(
                       Number(formatDecimals(AcountBalance.data?.data.data)) ??
-                        0,
+                      0,
                       6
                     )}
                   </p>
@@ -395,9 +396,8 @@ const Home = () => {
               getHappyDay() && !isClaimedHappyDay ? "mt-0 mb-0" : "mt-0 mb-0"
             )}
             style={{
-              backgroundImage: `url('/images/trees/${
-                getHappyDay() && !isClaimedHappyDay ? 7 : 8
-              }.png')`,
+              backgroundImage: `url('/images/trees/${getHappyDay() && !isClaimedHappyDay ? 7 : 8
+                }.png')`,
             }}
           ></div>
 
@@ -444,11 +444,10 @@ const Home = () => {
                     <div className="col-span-2 flex items-center">
                       <div>
                         <img
-                          src={`/images/storage/${
-                            getStorageUpgradesLevel(
-                              AcountData.data?.data.data
-                            ) + 1
-                          }.png`}
+                          src={`/images/storage/${getStorageUpgradesLevel(
+                            AcountData.data?.data.data
+                          ) + 1
+                            }.png`}
                           width={isSmallScreen ? 52 : 62}
                           alt="storage"
                         ></img>
@@ -527,8 +526,12 @@ const Home = () => {
         handleClose={() => setIsOpenNotifi(false)}
       />
 
-      {isGuideModalOpen && getHappyDay() && !isClaimedHappyDay && (
-        <RecieveGiftModal handleClose={() => setIsGuideModalOpen(false)} />
+      {!isGuideModalOpen && getHappyDay() && !isClaimedHappyDay && (
+        <RecieveGiftModal handleClose={() => {
+          setIsGuideModalOpen(false);
+          sessionStorage.setItem("isClickGuide", "true")
+        }
+      } />
       )}
 
       {isWinHappyDay.isOpen && isWinHappyDay.data && (
