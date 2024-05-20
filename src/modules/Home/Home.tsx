@@ -51,7 +51,7 @@ const Home = () => {
   tele.BackButton.hide();
 
   const mode = localStorage.getItem("mode");
-  const isCloseGuide = sessionStorage.getItem("isClickGuide")
+  const isCloseGuide = sessionStorage.getItem("isClickGuide");
   const changeMode = useChangeMode((state: any) => state.updateMode);
 
   const AcountBalance = useGetAcountBalance();
@@ -77,7 +77,9 @@ const Home = () => {
     mode === "dark" ? "dark" : "light"
   );
   const [isOpenNotifi, setIsOpenNotifi] = useState<boolean>(false);
-  const [isGuideModalOpen, setIsGuideModalOpen] = useState<boolean>(isCloseGuide === "true" ?? false);
+  const [isGuideModalOpen, setIsGuideModalOpen] = useState<boolean>(
+    isCloseGuide === "true" ?? false
+  );
   const [isWinHappyDay, setIsWinHappyDay] = useState<{
     isOpen: boolean;
     data: any;
@@ -90,6 +92,7 @@ const Home = () => {
   const isSmallScreen = window.innerHeight <= 520;
   const LatestMessageTime = LatestMessage.data?.data.data;
   const ReadMessageTime = localStorage.getItem("readMessageTime");
+  const date = new Date().toISOString();
 
   const isReadNewMessage = LatestMessageTime?.date > Number(ReadMessageTime);
 
@@ -119,7 +122,7 @@ const Home = () => {
     startTime +
     bootsStorageLevel[getStorageUpgradesLevel(AcountData.data?.data.data)]
       ?.duration *
-    3600;
+      3600;
 
   const timePassed = currentTime - startTime;
 
@@ -244,7 +247,7 @@ const Home = () => {
   const handleCheckNews = () => {
     localStorage.setItem(
       "readMessageTime",
-      String(new Date().getTime() / 1000)
+      String(new Date(date).getTime() / 1000)
     );
 
     tele.openTelegramLink(process.env.REACT_APP_GROUP_URL);
@@ -266,7 +269,7 @@ const Home = () => {
     if (HappyDay.data) {
       const isHappyDay = Object.keys(
         HappyDay.data?.data.data.happy_days
-      ).includes(String(new Date().getDay()));
+      ).includes(String(new Date().getUTCDay()));
 
       return isHappyDay;
     }
@@ -352,7 +355,7 @@ const Home = () => {
                   <p className="dark:text-white text-base font-black">
                     {formatNumberFloatFix(
                       Number(formatDecimals(AcountBalance.data?.data.data)) ??
-                      0,
+                        0,
                       6
                     )}
                   </p>
@@ -396,8 +399,9 @@ const Home = () => {
               getHappyDay() && !isClaimedHappyDay ? "mt-0 mb-0" : "mt-0 mb-0"
             )}
             style={{
-              backgroundImage: `url('/images/trees/${getHappyDay() && !isClaimedHappyDay ? 7 : 8
-                }.png')`,
+              backgroundImage: `url('/images/trees/${
+                getHappyDay() && !isClaimedHappyDay ? 7 : 8
+              }.png')`,
             }}
           ></div>
 
@@ -444,10 +448,11 @@ const Home = () => {
                     <div className="col-span-2 flex items-center">
                       <div>
                         <img
-                          src={`/images/storage/${getStorageUpgradesLevel(
-                            AcountData.data?.data.data
-                          ) + 1
-                            }.png`}
+                          src={`/images/storage/${
+                            getStorageUpgradesLevel(
+                              AcountData.data?.data.data
+                            ) + 1
+                          }.png`}
                           width={isSmallScreen ? 52 : 62}
                           alt="storage"
                         ></img>
@@ -527,11 +532,12 @@ const Home = () => {
       />
 
       {!isGuideModalOpen && getHappyDay() && !isClaimedHappyDay && (
-        <RecieveGiftModal handleClose={() => {
-          setIsGuideModalOpen(false);
-          sessionStorage.setItem("isClickGuide", "true")
-        }
-      } />
+        <RecieveGiftModal
+          handleClose={() => {
+            setIsGuideModalOpen(false);
+            sessionStorage.setItem("isClickGuide", "true");
+          }}
+        />
       )}
 
       {isWinHappyDay.isOpen && isWinHappyDay.data && (

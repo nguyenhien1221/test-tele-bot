@@ -122,22 +122,21 @@ const Boots = () => {
   const handleDoWaterMision = (item: any) => {
     if (item.type === "like and retweet") {
       tele.openLink(item.metadata.url);
-      setTimeout(() => {
-        DoWaterMission.mutateAsync(item.id)
-          .then(() => {
-            toast.success("Mission completed", {
-              style: { maxWidth: 337, height: 40, borderRadius: 8 },
-              autoClose: 2000,
-            });
-            WaterMission.refetch();
-          })
-          .catch((err) => {
-            toast.error(err?.response?.data?.message, {
-              style: { maxWidth: 337, height: 40, borderRadius: 8 },
-              autoClose: 2000,
-            });
+      DoWaterMission.mutateAsync(item.id)
+        .then(() => {
+          toast.success("Mission completed", {
+            style: { maxWidth: 337, height: 40, borderRadius: 8 },
+            autoClose: 2000,
           });
-      }, 5000);
+          WaterMission.refetch();
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message, {
+            style: { maxWidth: 337, height: 40, borderRadius: 8 },
+            autoClose: 2000,
+          });
+        });
+
       return;
     }
     if (item.type === "check-in") {

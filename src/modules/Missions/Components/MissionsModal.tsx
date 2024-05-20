@@ -28,10 +28,10 @@ const MissionsModal = ({
 }: ModalPropsType) => {
   const tele = window.Telegram.WebApp;
   const missions = getMissionsByType(type, data);
-  const [loadingItem, setLoadingItem] = useState("")
+  const [loadingItem, setLoadingItem] = useState("");
 
   const handleShowPopup = (item: any, url: string) => {
-    setLoadingItem(item.id)
+    setLoadingItem(item.id);
     tele.showPopup(
       {
         message: `Do you want to open twitter ${item.metadata.name}`,
@@ -46,9 +46,7 @@ const MissionsModal = ({
             tele.openLink(
               item.type === "twitter-follow" ? url : item.metadata.url
             );
-            setTimeout(() => {
-              handleDoMission(item?.id);
-            }, 3000);
+            handleDoMission(item?.id);
             return;
           }
           tele.openLink(
@@ -61,8 +59,7 @@ const MissionsModal = ({
   };
 
   const handleOpenLink = (item: any) => {
-    setLoadingItem(item.id)
-    // window.location.href = item.metadata.url;
+    setLoadingItem(item.id);
     if (!item?.task_user?.completed) {
       tele.openTelegramLink(item?.metadata?.url);
       handleDoMission(item?.id);
@@ -93,7 +90,6 @@ const MissionsModal = ({
           </div>
 
           <div className="pt-[30px] max-h-[400px] flex-1 overflow-auto">
-
             {missions
               ?.sort((a: any, b: any) => {
                 if (a.task_user === null && b.task_user !== null) {
@@ -170,9 +166,11 @@ const MissionsModal = ({
                         </div>
                       </div>
                       <div className="col-span-3 flex items-center justify-start">
-                        {isLoading && item.id === loadingItem ?
+                        {isLoading &&
+                        item.id === loadingItem &&
+                        !item?.task_user?.completed ? (
                           <ItemLoading />
-                          :
+                        ) : (
                           <>
                             <img
                               src="/images/icons/token_icon.png"
@@ -182,7 +180,8 @@ const MissionsModal = ({
                             <span className="font-semibold text-sm ml-1">{`+${formatDecimals(
                               item.reward_amount ?? 0
                             )}`}</span>
-                          </>}
+                          </>
+                        )}
                       </div>
                     </div>
                   </button>
@@ -235,9 +234,11 @@ const MissionsModal = ({
                         </div>
                       </div>
                       <div className="col-span-3 flex items-center justify-start">
-                        {isLoading && item.id === loadingItem ?
+                        {isLoading &&
+                        item.id === loadingItem &&
+                        !item?.task_user?.completed ? (
                           <ItemLoading />
-                          :
+                        ) : (
                           <>
                             <img
                               src="/images/icons/token_icon.png"
@@ -248,9 +249,8 @@ const MissionsModal = ({
                               item.reward_amount ?? 0
                             )}`}</span>
                           </>
-                        }
+                        )}
                       </div>
-
                     </div>
                   </button>
                 );
@@ -262,14 +262,11 @@ const MissionsModal = ({
                 "border-[1px] border-[#C2C2C2] border-solid"
               )}
             >
-              <div className="text-[15px] font-semibold">
-                Coming soon...
-              </div>
+              <div className="text-[15px] font-semibold">Coming soon...</div>
               <div className="text-sm font-normal text-[#000] opacity-60 dark:text-white">
                 Follow the news so you don't miss new missions!
               </div>
             </div>
-
           </div>
 
           <div className="pt-3 pb-1 h-[80px]">
