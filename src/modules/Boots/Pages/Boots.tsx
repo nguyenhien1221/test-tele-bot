@@ -15,12 +15,9 @@ import useGetAcountBalance from "../../Home/Hooks/useGetAcountBalance";
 import {
   formatDecimals,
   formatNumberFloatFix,
-  // getNumberFormatUs,
 } from "../../../utils/formatNumber";
 import useGetAcountDetails from "../../../components/Hooks/useRegister";
 import {
-  // calculateMiningSpeed,
-  // getMiningSpeedByLevel,
   getSpeedUpgradesLevel,
   getStorageUpgradesLevel,
   getWaterUpgradesLevel,
@@ -31,7 +28,6 @@ import useDoWaterMissions from "../Hooks/useDoWaterMission";
 import WaterMissionsModal from "../Components/WaterMissionModal";
 import useUpgradeWater from "../Hooks/useUpgradeHolyWater";
 import { navPaths } from "../../../constants/navbar.constants";
-// import useGetHappyDayHistory from "../../Home/Hooks/useGetHistoyHappyday";
 
 const Boots = () => {
   const navigate = useNavigate();
@@ -44,7 +40,6 @@ const Boots = () => {
   const WaterMission = useGetWaterMissions();
   const DoWaterMission = useDoWaterMissions();
   const UpgradeWater = useUpgradeWater();
-  // const HappyDayHistory = useGetHappyDayHistory();
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
@@ -54,15 +49,6 @@ const Boots = () => {
   const [isWaterMissionOpen, setIsWaterMissionOpen] = useState(false);
 
   const isDesktop = window.innerHeight < 610 ? true : false;
-
-  // const miningSpeed =
-  //   HappyDayHistory.data &&
-  //   calculateMiningSpeed(
-  //     getMiningSpeedByLevel(0),
-  //     AcountData.data?.data.data.upgrades ?? [],
-  //     HappyDayHistory.data.data.data,
-  //     new Date().getTime()
-  //   );
 
   const handleUpgrade = () => {
     if (isOpen.type === bootTypeEnum.STORAGE) {

@@ -1,7 +1,6 @@
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useGetAcountReferees from "../Hooks/useGetAcountReferees";
-// import { copyToClipboard } from "../../../utils/helper";
 import { Slide, ToastContainer, toast } from "react-toastify";
 import clsx from "clsx";
 import { navPaths } from "../../../constants/navbar.constants";
