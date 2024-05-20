@@ -27,7 +27,7 @@ const WaterMissionsModal = ({
     setTimeout(() => {
       handleDoMission(item);
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
   };
 
   const isNotDone = data.filter((item: any) => item.task_user === null || item.task_user.repeats < item.repeats);

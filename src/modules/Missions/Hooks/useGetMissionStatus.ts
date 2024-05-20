@@ -5,9 +5,12 @@ export async function getMissionsStatus(id: any) {
   return await api.get<any>(`/api/v1/tasks/notification/${id}`);
 }
 
-export default function useGetMissionsStatus() {
+export default function useGetMissionsStatus(id:any) {
   return useQuery({
     queryKey: ["MissionsStatus"],
-    queryFn: (id) => getMissionsStatus(id),
+    queryFn: () => getMissionsStatus(id),
+    enabled:true,
+    retry:10,
+    retryDelay:1000
   });
 }

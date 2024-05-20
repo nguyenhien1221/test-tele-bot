@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { missionsTypes } from "../../../constants/missions.constants";
 import MissionsModal from "../Components/MissionsModal";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -16,6 +16,7 @@ import useGetDailyMissions from "../Hooks/useGetDaily";
 import useDoDailyMissions from "../Hooks/useDoDaily";
 import { checkSameDay } from "../../../utils/helper";
 import Progress from "../../../components/common/Progress";
+import useGetMissionsStatus from "../Hooks/useGetMissionStatus";
 
 const MissionsPage = () => {
   const location = useLocation();
@@ -26,6 +27,7 @@ const MissionsPage = () => {
   const dailyMissions = useGetDailyMissions();
   const doDailyMission = useDoDailyMissions();
 
+
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
 
@@ -35,8 +37,16 @@ const MissionsPage = () => {
     type: "",
     data: null,
   });
+  const [missionsId, setMissionId] = useState("")
 
   const isDesktop = window.innerHeight < 610;
+
+
+  const getMissionStatus = useGetMissionsStatus(String(missionsId))
+
+  useEffect(() => {
+    getMissionStatus.refetch()
+  }, [missionsId])
 
   const handleChooseMission = (index: string) => {
     // const data = missionsData.data?.data.data;
@@ -57,11 +67,22 @@ const MissionsPage = () => {
   const handleDoMission = (id: string) => {
     doMission
       .mutateAsync(id)
-      .then(() => {
-        toast.success("Mission completed", {
-          style: { maxWidth: 337, height: 40, borderRadius: 8 },
-          autoClose: 2000,
-        });
+      .then((data) => {
+        const missisonId = data?.data?.data
+        setMissionId(missisonId)
+      })
+      .then(() => { 
+        if (!!getMissionStatus.data?.data.data.completed) {
+          toast.success("Mission completed", {
+            style: { maxWidth: 337, height: 40, borderRadius: 8 },
+            autoClose: 2000,
+          });
+        } else {
+          toast.error(getMissionStatus.data?.data.data?.error, {
+            style: { maxWidth: 337, height: 40, borderRadius: 8 },
+            autoClose: 2000,
+          });
+        }
         missionsData.refetch();
       })
       .catch((err) => {
@@ -154,9 +175,9 @@ const MissionsPage = () => {
                 <div className="">
                   <p className="font-semibold text-base">Login Bonus</p>
                   {dailyMissions?.data &&
-                  ((dailyMissions?.data.data.data?.length || 0) === 0 ||
-                    (!checkSameDay(dailyMissions?.data.data.data ?? []) &&
-                      dailyMissions?.data.data.data?.length < 7)) ? (
+                    ((dailyMissions?.data.data.data?.length || 0) === 0 ||
+                      (!checkSameDay(dailyMissions?.data.data.data ?? []) &&
+                        dailyMissions?.data.data.data?.length < 7)) ? (
                     <div className="flex items-center text-sm">
                       <Progress className="mr-1" value={(0 / 1) * 100} />
                       <span>{`In progress (0/1)`}</span>
@@ -187,7 +208,7 @@ const MissionsPage = () => {
               const doneMission = getMissionsByType(
                 item.type,
                 missionsData.data?.data.data ?? []
-              ).filter((mission: any) => mission.task_user !== null).length;
+              ).filter((mission: any) => mission.task_user?.completed === true).length;
 
               let name = "";
 
@@ -252,7 +273,7 @@ const MissionsPage = () => {
           </div>
           {isOpen.isOpen && (
             <MissionsModal
-              isLoading={doMission.isPending}
+              isLoading={doMission.isPending || getMissionStatus.isLoading}
               handleDoMission={(id: string) => handleDoMission(id)}
               data={missionsData.data?.data.data ?? []}
               type={isOpen.type}
