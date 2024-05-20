@@ -30,7 +30,7 @@ const WaterMissionsModal = ({
     }, 2000);
   };
 
-  const isDone = data.filter((item: any) => item.task_user === null);
+  const isNotDone = data.filter((item: any) => item.task_user === null || item.task_user.repeats < item.repeats);
 
   return (
     <>
@@ -48,7 +48,7 @@ const WaterMissionsModal = ({
               <i className="bx bx-chevron-left"></i>
             </button>
             <div className="flex flex-col items-center ">
-              <p className="text-[24px] font-bold">{`${isDone.length} Missions Available`}</p>
+              <p className="text-[24px] font-bold">{`${isNotDone.length} Missions Available`}</p>
               <p className="text-center text-[15px]">
                 Each mission will give you new levels. You can complete the
                 missions in any order.
@@ -61,9 +61,11 @@ const WaterMissionsModal = ({
             <div className="pt-[20px] max-h-[340px] flex-1 overflow-auto">
               {data
                 ?.sort((a: any, b: any) => {
-                  if (a.task_user === null && b.task_user !== null) {
+                  const isACompleted = a.task_user !== null && a.task_user.repeats >= a.repeats;
+                  const isBCompelted = b.task_user !== null && b.task_user.repeats >= b.repeats;
+                  if (!isACompleted && isBCompelted) {
                     return -1; // a comes first if it has null value
-                  } else if (a.task_user !== null && b.task_user === null) {
+                  } else if (isACompleted && !isBCompelted) {
                     return 1; // b comes first if it has null value
                   } else {
                     return 0; // otherwise, maintain current order
@@ -80,7 +82,7 @@ const WaterMissionsModal = ({
                       rel="noreferrer"
                       className={clsx("text-center relative w-full mt-1")}
                     >
-                      {item.task_user != null && (
+                      {item.task_user != null && (item.task_user.repeats || 0 >= item.repeats) && (
                         <div
                           className={clsx(
                             "flex items-center justify-center absolute right-4 -top-4 z-20"
@@ -99,7 +101,7 @@ const WaterMissionsModal = ({
                           "z-10 py-3 px-4 relative cursor-pointer grid grid-cols-12 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
                           "dark:gradient-border-mask-mission dark:bg-transparent",
                           " dark:drop-shadow-none ",
-                          item.task_user
+                          (item.task_user?.repeats || 0 >= item.repeats)
                             ? "border-[1px] border-solid border-[#000] drop-shadow-none brightness-50"
                             : "border-[1px] border-[#4D7F0C] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
                         )}
