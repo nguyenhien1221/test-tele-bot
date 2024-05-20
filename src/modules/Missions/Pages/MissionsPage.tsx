@@ -72,13 +72,13 @@ const MissionsPage = () => {
         setMissionId(missisonId)
       })
       .then(() => { 
-        if (!!getMissionStatus.data?.data.data.completed) {
+        if (!!getMissionStatus.data?.data?.data?.completed) {
           toast.success("Mission completed", {
             style: { maxWidth: 337, height: 40, borderRadius: 8 },
             autoClose: 2000,
           });
         } else {
-          toast.error(getMissionStatus.data?.data.data?.error, {
+          toast.error(getMissionStatus.data?.data?.data?.error, {
             style: { maxWidth: 337, height: 40, borderRadius: 8 },
             autoClose: 2000,
           });

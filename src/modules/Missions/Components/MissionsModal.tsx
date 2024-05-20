@@ -61,7 +61,7 @@ const MissionsModal = ({
   const handleOpenLink = (item: any) => {
     setLoadingItem(item.id);
     if (!item?.task_user?.completed) {
-      // tele.openTelegramLink(item?.metadata?.url);
+      tele.openTelegramLink(item?.metadata?.url);
       handleDoMission(item?.id);
       return;
     }

@@ -9,7 +9,7 @@ export default function useGetMissionsStatus(id:any) {
   return useQuery({
     queryKey: ["MissionsStatus"],
     queryFn: () => getMissionsStatus(id),
-    enabled:true,
+    enabled: true,
     retry:10,
     retryDelay:1000
   });

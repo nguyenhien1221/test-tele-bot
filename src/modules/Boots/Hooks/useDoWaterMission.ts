@@ -9,5 +9,7 @@ export default function useDoWaterMissions() {
   return useMutation({
     mutationKey: ["doWaterMissions"],
     mutationFn: doWaterMissions,
+    retry:5,
+    retryDelay:3000
   });
 }
