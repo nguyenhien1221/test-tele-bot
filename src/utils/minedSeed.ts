@@ -216,21 +216,21 @@ export function calculateMinedSeeds2(
     switch (upgrade.upgrade_type) {
       case "storage-size":
         boosts.push({
-          timestamp: upgrade.timestamp,
+          timestamp: new Date(upgrade.timestamp).getTime(),
           type: BoostType.BoostTypeStorageSizeBaseUpgrade,
           val: getStorageSizeByLevel(upgrade.upgrade_level),
         });
         break;
       case "mining-speed":
         boosts.push({
-          timestamp: upgrade.timestamp,
+          timestamp: new Date(upgrade.timestamp).getTime(),
           type: BoostType.BoostTypeMiningSpeedBaseUpgrade,
           val: getMiningSpeedByLevel(upgrade.upgrade_level),
         });
         break;
       case "holy-water":
         boosts.push({
-          timestamp: upgrade.timestamp,
+          timestamp: new Date(upgrade.timestamp).getTime(),
           type: BoostType.BoostTypeMiningSpeedBonus,
           val: getHolyWaterByLevel(upgrade.upgrade_level),
         });
@@ -241,7 +241,7 @@ export function calculateMinedSeeds2(
   let copied = boosts.slice(); // Creating a shallow copy of the boosts array
 
   copied.sort((a: any, b: any) => {
-    return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+    return a.timestamp - b.timestamp;
   });
 
   let previousScale = 100;
@@ -283,15 +283,18 @@ export function calculateMinedSeeds2(
     if (boost.timestamp > from) {
       let consumingStorageSize = boost.timestamp - from; // in milliseconds
 
-      if (consumingStorageSize + consumedStorageSize > currentBaseStorageSize) {
-        consumingStorageSize = currentBaseStorageSize - consumedStorageSize;
+      if (
+        consumingStorageSize + consumedStorageSize >
+        previousBaseStorageSize
+      ) {
+        consumingStorageSize = previousBaseStorageSize - consumedStorageSize;
       }
 
       minedSeed +=
         (consumingStorageSize *
-          currentBaseMiningSpeed *
-          (100 + currentMiningSpeedBonus) *
-          currentScale) /
+          previousBaseMiningSpeed *
+          (100 + previousMiningSpeedBonus) *
+          previousScale) /
         10000;
       consumedStorageSize += consumingStorageSize;
       from = boost.timestamp;
