@@ -5,6 +5,7 @@ export const navPaths = {
   GAMES: "/games",
   REGISTER: "/register",
   LEADERBOARD: "/leaderboard",
+  OVERLOAD: "/overload",
 };
 
 export interface NavBarItem {

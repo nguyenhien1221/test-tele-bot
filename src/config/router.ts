@@ -7,6 +7,7 @@ import { friendsRoute } from "../modules/Friends/route";
 import AuthLayout from "../components/layouts/AuthLayout";
 import { registerRoute } from "../modules/Register/route";
 import { leaderboardRoute } from "../modules/LeaderBoard/route";
+import { anouncementRoute } from "../modules/Global/route";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ export const router = createBrowserRouter([
           bootsRoute,
           friendsRoute,
           leaderboardRoute,
+          anouncementRoute,
         ],
       },
     ],

@@ -20,8 +20,8 @@ const AuthLayout = () => {
   const AcountData = useGetAcountDetails();
 
   if (AcountData.isLoading) return <Loading />;
-  if (!AcountData.data && location.pathname !== navPaths.REGISTER)
-    return <Navigate to={navPaths.REGISTER} />;
+  if (!AcountData.data && location.pathname !== navPaths.OVERLOAD)
+    return <Navigate to={navPaths.OVERLOAD} />;
   if (AcountData.data && location.pathname === navPaths.REGISTER)
     return <Navigate to="/" />;
 

@@ -121,7 +121,7 @@ const MissionsPage = () => {
               <p className="text-[24px] font-extrabold">{`3 missions available`}</p>
             </div>
             <p className="text-sm font-normal">
-              Complete the mission to get golden seed
+              Complete the mission to get more seed
             </p>
           </div>
 
