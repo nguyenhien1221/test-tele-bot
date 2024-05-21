@@ -51,7 +51,6 @@ const Home = () => {
   tele.BackButton.hide();
 
   const mode = localStorage.getItem("mode");
-  const isCloseGuide = sessionStorage.getItem("isClickGuide");
   const changeMode = useChangeMode((state: any) => state.updateMode);
 
   const AcountBalance = useGetAcountBalance();
@@ -77,9 +76,7 @@ const Home = () => {
     mode === "dark" ? "dark" : "light"
   );
   const [isOpenNotifi, setIsOpenNotifi] = useState<boolean>(false);
-  const [isGuideModalOpen, setIsGuideModalOpen] = useState<boolean>(
-    isCloseGuide === "true" ?? false
-  );
+  const [isGuideModalOpen, setIsGuideModalOpen] = useState<boolean>(false);
   const [isWinHappyDay, setIsWinHappyDay] = useState<{
     isOpen: boolean;
     data: any;
@@ -149,6 +146,13 @@ const Home = () => {
       HappyDayHistory.data.data.data,
       new Date().getTime()
     );
+
+  useEffect(() => {
+    const isCloseGuide = sessionStorage.getItem("isClickGuide");
+    if (isCloseGuide === "true") {
+      setIsGuideModalOpen(true);
+    }
+  });
 
   useEffect(() => {
     if (firstLoginMission?.task_user === null) {
@@ -306,6 +310,8 @@ const Home = () => {
   const handleClaimHappyDay = () => {
     setIsWinHappyDay({ isOpen: false, data: null });
   };
+
+  console.log(!isGuideModalOpen);
 
   return (
     <>

@@ -100,15 +100,20 @@ const Friends = () => {
 
       {/* friends list */}
       {AcountReferees.data?.data.data.length > 0 && (
-        <p
-          className={clsx(
-            "font-bold ",
-            isSmallScreen ? "text-base my-2" : "text-base mb-4 mt-2",
-            "dark:text-white"
-          )}
-        >
-          {`Friend list (${AcountReferees.data?.data.data.length})`}
-        </p>
+        <>
+          <p
+            className={clsx(
+              "font-bold ",
+              isSmallScreen ? "text-base my-2" : "text-base mb-2 mt-2",
+              "dark:text-white"
+            )}
+          >
+            {`Friend list (${AcountReferees.data?.data.data.length})`}
+          </p>
+          <div className="text-[12px] h-[30px] text-[#384426] bg-[#DEEBCC] py-2 px-[10px] rounded-lg mb-3">
+            The friendlist will be updated soon due to maintenance
+          </div>
+        </>
       )}
       {AcountReferees.data?.data.data.length > 0 && (
         <div

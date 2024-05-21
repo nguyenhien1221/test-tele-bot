@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { missionsTypes } from "../../../constants/missions.constants";
 import MissionsModal from "../Components/MissionsModal";
@@ -27,7 +28,6 @@ const MissionsPage = () => {
   const dailyMissions = useGetDailyMissions();
   const doDailyMission = useDoDailyMissions();
 
-
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
 
@@ -37,16 +37,15 @@ const MissionsPage = () => {
     type: "",
     data: null,
   });
-  const [missionsId, setMissionId] = useState("")
+  const [missionsId, setMissionId] = useState("");
 
   const isDesktop = window.innerHeight < 610;
 
-
-  const getMissionStatus = useGetMissionsStatus(String(missionsId))
+  const getMissionStatus = useGetMissionsStatus(String(missionsId));
 
   useEffect(() => {
-    getMissionStatus.refetch()
-  }, [missionsId])
+    getMissionStatus.refetch();
+  }, [missionsId]);
 
   const handleChooseMission = (index: string) => {
     // const data = missionsData.data?.data.data;
@@ -68,10 +67,10 @@ const MissionsPage = () => {
     doMission
       .mutateAsync(id)
       .then((data) => {
-        const missisonId = data?.data?.data
-        setMissionId(missisonId)
+        const missisonId = data?.data?.data;
+        setMissionId(missisonId);
       })
-      .then(() => { 
+      .then(() => {
         if (!!getMissionStatus.data?.data?.data?.completed) {
           toast.success("Mission completed", {
             style: { maxWidth: 337, height: 40, borderRadius: 8 },
@@ -175,9 +174,9 @@ const MissionsPage = () => {
                 <div className="">
                   <p className="font-semibold text-base">Login Bonus</p>
                   {dailyMissions?.data &&
-                    ((dailyMissions?.data.data.data?.length || 0) === 0 ||
-                      (!checkSameDay(dailyMissions?.data.data.data ?? []) &&
-                        dailyMissions?.data.data.data?.length < 7)) ? (
+                  ((dailyMissions?.data.data.data?.length || 0) === 0 ||
+                    (!checkSameDay(dailyMissions?.data.data.data ?? []) &&
+                      dailyMissions?.data.data.data?.length < 7)) ? (
                     <div className="flex items-center text-sm">
                       <Progress className="mr-1" value={(0 / 1) * 100} />
                       <span>{`In progress (0/1)`}</span>
@@ -208,7 +207,9 @@ const MissionsPage = () => {
               const doneMission = getMissionsByType(
                 item.type,
                 missionsData.data?.data.data ?? []
-              ).filter((mission: any) => mission.task_user?.completed === true).length;
+              ).filter(
+                (mission: any) => mission.task_user?.completed === true
+              ).length;
 
               let name = "";
 
