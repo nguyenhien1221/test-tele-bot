@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { skipToken, useQuery } from "@tanstack/react-query";
 import { api } from "../../../config/api";
 
 export async function getMissionsStatus(id: any) {
@@ -7,9 +7,8 @@ export async function getMissionsStatus(id: any) {
 
 export default function useGetMissionsStatus(id: any) {
   return useQuery({
-    queryKey: ["MissionsStatus"],
-    queryFn: () => getMissionsStatus(id),
-    enabled: !!id,
+    queryKey: ["MissionsStatus", id],
+    queryFn: id ? () => getMissionsStatus(id) : skipToken,
     retry: 5,
     retryDelay: 2000,
   });
