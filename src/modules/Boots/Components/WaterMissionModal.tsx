@@ -168,6 +168,10 @@ const WaterMissionsModal = ({
                   return;
                 }
 
+                if (res?.data?.data?.error === "incomplete task") {
+                  navigate(navPaths.FRIENDS);
+                }
+
                 toast.error(res?.data?.data?.error, {
                   style: { maxWidth: 337, height: 40, borderRadius: 8 },
                   autoClose: 2000,
