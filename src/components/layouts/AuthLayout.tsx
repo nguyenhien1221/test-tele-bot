@@ -7,7 +7,12 @@ import Loading from "../common/Loading";
 const AuthLayout = () => {
   const location = useLocation();
   const tele = window.Telegram.WebApp;
-  tele.setHeaderColor("#F7FFEB");
+  // try {
+  // } catch (err) {
+  //   console.debug(err);
+  // }
+
+  tele.setHeaderColor("#F7FFE1B");
   tele.expand();
 
   const overflow = 100;
@@ -18,8 +23,15 @@ const AuthLayout = () => {
   window.scrollTo(0, overflow);
 
   const AcountData = useGetAcountDetails();
+  // console.log(AcountData.error);
 
   if (AcountData.isLoading) return <Loading />;
+  // if (
+  //   AcountData?.error &&
+  //   AcountData?.error?.code === "ERR_NETWORK" &&
+  //   location.pathname !== navPaths.OVERLOAD
+  // )
+  //   return <Navigate to={navPaths.OVERLOAD} />;
   // navigate to register page if user doesn't have acount
   if (!AcountData.data && location.pathname !== navPaths.REGISTER)
     return <Navigate to={navPaths.REGISTER} />;

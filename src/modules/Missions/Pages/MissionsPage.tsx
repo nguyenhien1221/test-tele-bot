@@ -43,9 +43,9 @@ const MissionsPage = () => {
 
   const getMissionStatus = useGetMissionsStatus(String(missionsId));
 
-  useEffect(() => {
-    getMissionStatus.refetch();
-  }, [missionsId]);
+  // useEffect(() => {
+  //   getMissionStatus.refetch();
+  // }, [missionsId]);
 
   const handleChooseMission = (index: string) => {
     // const data = missionsData.data?.data.data;
@@ -274,12 +274,15 @@ const MissionsPage = () => {
           </div>
           {isOpen.isOpen && (
             <MissionsModal
-              isLoading={doMission.isPending || getMissionStatus.isLoading}
+              isLoading={doMission.isPending || getMissionStatus.isPending}
               handleDoMission={(id: string) => handleDoMission(id)}
               data={missionsData.data?.data.data ?? []}
               type={isOpen.type}
               closeModal={() => setisOpen({ isOpen: false, type: "" })}
               isOpen={isOpen.isOpen}
+              reFetch={() => {
+                missionsData.refetch();
+              }}
             ></MissionsModal>
           )}
 

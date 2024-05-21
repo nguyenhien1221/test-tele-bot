@@ -9,7 +9,15 @@ export default function useDoMissions() {
   return useMutation({
     mutationKey: ["doMissions"],
     mutationFn: doMissions,
-    retry: 5,
+    retry: (count, err: any) => {
+      if (count >= 5) {
+        return false;
+      }
+      if (err?.response?.data.message === "task already completed") {
+        return false;
+      }
+      return true;
+    },
     retryDelay: 3000,
   });
 }

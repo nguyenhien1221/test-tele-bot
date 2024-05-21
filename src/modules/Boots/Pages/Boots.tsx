@@ -41,7 +41,6 @@ const Boots = () => {
   const WaterMission = useGetWaterMissions();
   const DoWaterMission = useDoWaterMissions();
   const UpgradeWater = useUpgradeWater();
-  
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
@@ -49,10 +48,10 @@ const Boots = () => {
   const [isOpen, setisOpen] = useState<any>({ isOpen: false, type: 0 });
   const [isOpenWater, setIsOpenWater] = useState<boolean>(false);
   const [isWaterMissionOpen, setIsWaterMissionOpen] = useState(false);
-  const [missionId, setMissionId] = useState("")
+  const [missionId, setMissionId] = useState("");
 
   const isDesktop = window.innerHeight < 610 ? true : false;
-  const GetMissionStatus = useGetMissionsStatus(String(missionId))
+  const GetMissionStatus = useGetMissionsStatus(String(missionId));
   const handleUpgrade = () => {
     if (isOpen.type === bootTypeEnum.STORAGE) {
       UpgradeStorage.mutateAsync()
@@ -96,10 +95,6 @@ const Boots = () => {
     }
   };
 
-  useEffect(()=> {
-    GetMissionStatus.refetch()
-  },[missionId])
-
   const handleBackBtn = () => {
     navigate("/");
   };
@@ -134,24 +129,24 @@ const Boots = () => {
     }
     if (item.type === "check-in") {
       DoWaterMission.mutateAsync(item.id)
-      .then((data) => {
-        const missisonId = data?.data?.data
-        setMissionId(missisonId)
-      })
-      .then(() => { 
-        if (GetMissionStatus.data?.data?.data?.repeats >= item.repeats) {
-          toast.success("Mission completed", {
-            style: { maxWidth: 337, height: 40, borderRadius: 8 },
-            autoClose: 2000,
-          });
-        } else {
-          toast.error(GetMissionStatus.data?.data?.data?.error, {
-            style: { maxWidth: 337, height: 40, borderRadius: 8 },
-            autoClose: 2000,
-          });
-        }
-       WaterMission.refetch()
-      })
+        .then((data) => {
+          const missisonId = data?.data?.data;
+          setMissionId(missisonId);
+        })
+        .then(() => {
+          if (GetMissionStatus.data?.data?.data?.repeats >= item.repeats) {
+            toast.success("Mission completed", {
+              style: { maxWidth: 337, height: 40, borderRadius: 8 },
+              autoClose: 2000,
+            });
+          } else {
+            toast.error(GetMissionStatus.data?.data?.data?.error, {
+              style: { maxWidth: 337, height: 40, borderRadius: 8 },
+              autoClose: 2000,
+            });
+          }
+          WaterMission.refetch();
+        })
         .catch((err) => {
           if (err.response?.data?.message === "incomplete task") {
             navigate(navPaths.MISSIONS, { state: { isOpenDailyModal: true } });
@@ -160,24 +155,24 @@ const Boots = () => {
     }
     if (item.type === "refer") {
       DoWaterMission.mutateAsync(item.id)
-      .then((data) => {
-        const missisonId = data?.data?.data
-        setMissionId(missisonId)
-      })
-      .then(() => { 
-        if (GetMissionStatus.data?.data?.data?.repeats >= item.repeats) {
-          toast.success("Mission completed", {
-            style: { maxWidth: 337, height: 40, borderRadius: 8 },
-            autoClose: 2000,
-          });
-        } else {
-          toast.error(GetMissionStatus.data?.data?.data?.error, {
-            style: { maxWidth: 337, height: 40, borderRadius: 8 },
-            autoClose: 2000,
-          });
-        }
-       WaterMission.refetch()
-      })
+        .then((data) => {
+          const missisonId = data?.data?.data;
+          setMissionId(missisonId);
+        })
+        .then(() => {
+          if (GetMissionStatus.data?.data?.data?.repeats >= item.repeats) {
+            toast.success("Mission completed", {
+              style: { maxWidth: 337, height: 40, borderRadius: 8 },
+              autoClose: 2000,
+            });
+          } else {
+            toast.error(GetMissionStatus.data?.data?.data?.error, {
+              style: { maxWidth: 337, height: 40, borderRadius: 8 },
+              autoClose: 2000,
+            });
+          }
+          WaterMission.refetch();
+        })
         .catch((err) => {
           toast.error(err?.response?.data?.message, {
             style: { maxWidth: 337, height: 40, borderRadius: 8 },
@@ -362,6 +357,11 @@ const Boots = () => {
 
       {isWaterMissionOpen && WaterMission.data && (
         <WaterMissionsModal
+          reFetch={() => {
+            WaterMission.refetch();
+            AcountData.refetch();
+            AcountBalance.refetch();
+          }}
           isPending={DoWaterMission.isPending}
           data={WaterMission.data?.data.data ?? []}
           handleDoMission={(item: any) => handleDoWaterMision(item)}

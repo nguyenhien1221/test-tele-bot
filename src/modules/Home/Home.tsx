@@ -311,8 +311,6 @@ const Home = () => {
     setIsWinHappyDay({ isOpen: false, data: null });
   };
 
-  console.log(!isGuideModalOpen);
-
   return (
     <>
       {AcountData.isLoading ? (

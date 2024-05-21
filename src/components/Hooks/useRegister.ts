@@ -9,6 +9,6 @@ export default function useGetAcountDetails() {
   return useQuery({
     queryKey: ["AcountDetails"],
     queryFn: () => getAcountDetails(),
-    retry: 2,
+    retry: 1,
   });
 }

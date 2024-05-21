@@ -4,6 +4,9 @@ import clsx from "clsx";
 import { useState } from "react";
 import Modal from "../../../components/common/Modal";
 import Loading from "../../../components/common/Loading";
+import useDoWaterMissions from "../Hooks/useDoWaterMission";
+import { api } from "../../../config/api";
+import { toast } from "react-toastify";
 
 interface ModalPropsType {
   isPending: boolean;
@@ -11,6 +14,7 @@ interface ModalPropsType {
   closeModal: () => void;
   handleDoMission: (id: string) => void;
   closeWaterMissionModal: () => void;
+  reFetch: () => void;
 }
 
 const WaterMissionsModal = ({
@@ -19,18 +23,175 @@ const WaterMissionsModal = ({
   closeModal,
   handleDoMission,
   closeWaterMissionModal,
+  reFetch,
 }: ModalPropsType) => {
+  const tele = window.Telegram.WebApp;
+  const DoWaterMission = useDoWaterMissions();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmitMission = (item: any) => {
     setIsLoading(true);
-    setTimeout(() => {
-      handleDoMission(item);
-      setIsLoading(false);
-    }, 1000);
+
+    if (!item?.task_user?.completed) {
+      if (item.type === "like and retweet") {
+        tele.openLink(item.metadata.url);
+        DoWaterMission.mutateAsync(item.id)
+          .then(async (data) => {
+            setIsLoading(true);
+            for (let i = 0; i <= 10; i++) {
+              let res = null;
+              try {
+                res = await api.get(
+                  `/api/v1/tasks/notification/${data?.data?.data}`
+                );
+              } catch (err) {
+                console.debug(err);
+              }
+
+              if (res?.data?.data != null) {
+                if (res?.data?.data?.data?.repeats >= item.repeats) {
+                  toast.success("Mission completed", {
+                    style: { maxWidth: 337, height: 40, borderRadius: 8 },
+                    autoClose: 2000,
+                  });
+                  setIsLoading(false);
+                  reFetch();
+                  return;
+                }
+
+                toast.error(res?.data?.data?.error, {
+                  style: { maxWidth: 337, height: 40, borderRadius: 8 },
+                  autoClose: 2000,
+                });
+                setIsLoading(false);
+                return;
+              }
+
+              if (i === 10) {
+                toast.error("max retries exceed", {
+                  style: { maxWidth: 337, height: 40, borderRadius: 8 },
+                  autoClose: 2000,
+                });
+                setIsLoading(false);
+                return;
+              }
+
+              await new Promise((r) => setTimeout(r, 1000));
+            }
+          })
+          .catch(() => {
+            setIsLoading(false);
+          });
+        return;
+      }
+      if (item.type === "check-in") {
+        DoWaterMission.mutateAsync(item.id)
+          .then(async (data) => {
+            setIsLoading(true);
+            for (let i = 0; i <= 10; i++) {
+              let res = null;
+              try {
+                res = await api.get(
+                  `/api/v1/tasks/notification/${data?.data?.data}`
+                );
+              } catch (err) {
+                console.debug(err);
+              }
+
+              if (res?.data != null) {
+                if (res?.data?.data?.data?.repeats >= item.repeats) {
+                  toast.success("Mission completed", {
+                    style: { maxWidth: 337, height: 40, borderRadius: 8 },
+                    autoClose: 2000,
+                  });
+                  setIsLoading(false);
+                  reFetch();
+                  return;
+                }
+
+                toast.error(res?.data?.data?.error, {
+                  style: { maxWidth: 337, height: 40, borderRadius: 8 },
+                  autoClose: 2000,
+                });
+                setIsLoading(false);
+                return;
+              }
+
+              if (i === 10) {
+                toast.error("max retries exceed", {
+                  style: { maxWidth: 337, height: 40, borderRadius: 8 },
+                  autoClose: 2000,
+                });
+                setIsLoading(false);
+                return;
+              }
+
+              await new Promise((r) => setTimeout(r, 1000));
+            }
+          })
+          .catch(() => {
+            setIsLoading(false);
+          });
+        return;
+      }
+      if (item.type === "refer") {
+        DoWaterMission.mutateAsync(item.id)
+          .then(async (data) => {
+            setIsLoading(true);
+            for (let i = 0; i <= 10; i++) {
+              let res = null;
+              try {
+                res = await api.get(
+                  `/api/v1/tasks/notification/${data?.data?.data}`
+                );
+              } catch (err) {
+                console.debug(err);
+              }
+
+              if (res?.data != null) {
+                if (res?.data?.data?.data?.repeats >= item.repeats) {
+                  toast.success("Mission completed", {
+                    style: { maxWidth: 337, height: 40, borderRadius: 8 },
+                    autoClose: 2000,
+                  });
+                  setIsLoading(false);
+                  reFetch();
+                  return;
+                }
+
+                toast.error(res?.data?.data?.error, {
+                  style: { maxWidth: 337, height: 40, borderRadius: 8 },
+                  autoClose: 2000,
+                });
+                setIsLoading(false);
+                return;
+              }
+
+              if (i === 10) {
+                toast.error("max retries exceed", {
+                  style: { maxWidth: 337, height: 40, borderRadius: 8 },
+                  autoClose: 2000,
+                });
+                setIsLoading(false);
+                return;
+              }
+
+              await new Promise((r) => setTimeout(r, 1000));
+            }
+          })
+          .catch(() => {
+            setIsLoading(false);
+          });
+        return;
+      }
+    }
   };
 
-  const isNotDone = data.filter((item: any) => item.task_user === null || item.task_user.repeats < item.repeats);
+  const isNotDone = data.filter(
+    (item: any) =>
+      item.task_user === null || item.task_user.repeats < item.repeats
+  );
 
   return (
     <>
@@ -55,14 +216,16 @@ const WaterMissionsModal = ({
               </p>
             </div>
           </div>
-          {isPending ? (
+          {DoWaterMission.isPending || isLoading ? (
             <Loading />
           ) : (
             <div className="pt-[20px] max-h-[340px] flex-1 overflow-auto">
               {data
                 ?.sort((a: any, b: any) => {
-                  const isACompleted = a.task_user !== null && a.task_user.repeats >= a.repeats;
-                  const isBCompelted = b.task_user !== null && b.task_user.repeats >= b.repeats;
+                  const isACompleted =
+                    a.task_user !== null && a.task_user.repeats >= a.repeats;
+                  const isBCompelted =
+                    b.task_user !== null && b.task_user.repeats >= b.repeats;
                   if (!isACompleted && isBCompelted) {
                     return -1; // a comes first if it has null value
                   } else if (isACompleted && !isBCompelted) {
@@ -82,26 +245,27 @@ const WaterMissionsModal = ({
                       rel="noreferrer"
                       className={clsx("text-center relative w-full mt-1")}
                     >
-                      {item.task_user != null && (item.task_user.repeats || 0 >= item.repeats) && (
-                        <div
-                          className={clsx(
-                            "flex items-center justify-center absolute right-4 -top-4 z-20"
-                          )}
-                        >
-                          <img
-                            src="/images/holy/check_mark.png"
-                            className="w-[29px] h-[31px]"
-                            alt=""
-                          ></img>
-                        </div>
-                      )}
+                      {item.task_user != null &&
+                        (item.task_user.repeats || 0 >= item.repeats) && (
+                          <div
+                            className={clsx(
+                              "flex items-center justify-center absolute right-4 -top-4 z-20"
+                            )}
+                          >
+                            <img
+                              src="/images/holy/check_mark.png"
+                              className="w-[29px] h-[31px]"
+                              alt=""
+                            ></img>
+                          </div>
+                        )}
                       <div
                         key={index}
                         className={clsx(
                           "z-10 py-3 px-4 relative cursor-pointer grid grid-cols-12 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
                           "dark:gradient-border-mask-mission dark:bg-transparent",
                           " dark:drop-shadow-none ",
-                          (item.task_user?.repeats || 0 >= item.repeats)
+                          item.task_user?.repeats || 0 >= item.repeats
                             ? "border-[1px] border-solid border-[#000] drop-shadow-none brightness-50"
                             : "border-[1px] border-[#4D7F0C] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
                         )}
