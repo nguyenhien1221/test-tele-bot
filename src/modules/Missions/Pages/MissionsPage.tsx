@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { missionsTypes } from "../../../constants/missions.constants";
 import MissionsModal from "../Components/MissionsModal";
 import { useLocation, useNavigate } from "react-router-dom";
