@@ -13,7 +13,9 @@ import { toast } from "react-toastify";
 import clsx from "clsx";
 import {
   boardingEventEnd,
+  boardingEventEnd2,
   boardingEventStart,
+  boardingEventStart2,
   calculateMinedSeeds2,
   calculateMiningSpeed,
   getMiningSpeedByLevel,
@@ -134,6 +136,10 @@ const Home = () => {
   const isX2 =
     boardingEventStart < new Date().getTime() &&
     new Date().getTime() < boardingEventEnd;
+
+  const isX4 =
+    boardingEventStart2 < new Date().getTime() &&
+    new Date().getTime() < boardingEventEnd2;
 
   const isClaimedHappyDay =
     HappyDayHistory.data && checkSameDay(HappyDayHistory.data.data.data);
@@ -368,13 +374,19 @@ const Home = () => {
             </div>
           </div>
           <div className="flex justify-center mt-3">
-            {isX2 && (
+            {isX4 ? (
+              <img
+                src="/images/x4.png"
+                className="w-[143px] h-[38px]"
+                alt=""
+              ></img>
+            ) : isX2 ? (
               <img
                 src="/images/x2.png"
                 className="w-[143px] h-[38px]"
                 alt=""
               ></img>
-            )}
+            ) : null}
           </div>
           <button
             onClick={handleSwitchMode}

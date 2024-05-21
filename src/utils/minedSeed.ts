@@ -180,6 +180,9 @@ export const boardingEventEnd = new Date(
   Date.UTC(2024, 5, 10, 0, 0, 0)
 ).getTime();
 
+export const boardingEventStart2 = new Date("2024-05-21T09:00:00.0Z").getTime();
+export const boardingEventEnd2 = new Date("2024-05-23T09:00:00.0Z").getTime();
+
 interface Boost {
   type: string;
   val: number;
@@ -191,6 +194,16 @@ function boardingBoosts(): Boost[] {
     {
       timestamp: boardingEventStart,
       type: BoostType.BoostTypeMiningSpeedScaleUp,
+      val: 200,
+    },
+    {
+      timestamp: boardingEventStart2,
+      type: BoostType.BoostTypeMiningSpeedScaleUp,
+      val: 200,
+    },
+    {
+      timestamp: boardingEventEnd2,
+      type: BoostType.BoostTypeMiningSpeedScaleDown,
       val: 200,
     },
     {

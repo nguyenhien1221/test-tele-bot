@@ -7,12 +7,11 @@ import Loading from "../common/Loading";
 const AuthLayout = () => {
   const location = useLocation();
   const tele = window.Telegram.WebApp;
-  // try {
-  // } catch (err) {
-  //   console.debug(err);
-  // }
-
-  tele.setHeaderColor("#F7FFE1B");
+  try {
+    tele.setHeaderColor("#F7FFEB");
+  } catch (err) {
+    console.debug(err);
+  }
   tele.expand();
 
   const overflow = 100;

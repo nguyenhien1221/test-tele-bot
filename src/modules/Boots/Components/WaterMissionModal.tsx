@@ -7,6 +7,8 @@ import Loading from "../../../components/common/Loading";
 import useDoWaterMissions from "../Hooks/useDoWaterMission";
 import { api } from "../../../config/api";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { navPaths } from "../../../constants/navbar.constants";
 
 interface ModalPropsType {
   isPending: boolean;
@@ -25,6 +27,7 @@ const WaterMissionsModal = ({
   closeWaterMissionModal,
   reFetch,
 }: ModalPropsType) => {
+  const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
   const DoWaterMission = useDoWaterMissions();
 
@@ -110,6 +113,11 @@ const WaterMissionsModal = ({
                   return;
                 }
 
+                if (res?.data?.data?.error === "incomplete task") {
+                  navigate(navPaths.MISSIONS, {
+                    state: { isOpenDailyModal: true },
+                  });
+                }
                 toast.error(res?.data?.data?.error, {
                   style: { maxWidth: 337, height: 40, borderRadius: 8 },
                   autoClose: 2000,
