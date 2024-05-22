@@ -341,7 +341,9 @@ const Home = () => {
       },
       function (btn: any) {
         if (btn === "link") {
-          tele.openLink("https://twitter.com/seedcombinator");
+          tele.openLink(
+            "https://x.com/SeedCombinator/status/1793226820873281793"
+          );
           localStorage.setItem("memeCliked", "true");
         } else {
         }
