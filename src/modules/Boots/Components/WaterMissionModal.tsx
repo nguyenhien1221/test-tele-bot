@@ -102,7 +102,7 @@ const WaterMissionsModal = ({
                 console.debug(err);
               }
 
-              if (res?.data != null) {
+              if (res?.data?.data != null) {
                 if (res?.data?.data?.data?.repeats >= item.repeats) {
                   toast.success("Mission completed", {
                     style: { maxWidth: 337, height: 40, borderRadius: 8 },
@@ -157,7 +157,7 @@ const WaterMissionsModal = ({
                 console.debug(err);
               }
 
-              if (res?.data != null) {
+              if (res?.data?.data != null) {
                 if (res?.data?.data?.data?.repeats >= item.repeats) {
                   toast.success("Mission completed", {
                     style: { maxWidth: 337, height: 40, borderRadius: 8 },

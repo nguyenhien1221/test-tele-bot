@@ -10,7 +10,6 @@ import Modal from "../../../components/common/Modal";
 import { getMobileOS } from "../../../utils/helper";
 import ItemLoading from "../../../components/common/ItemLoading";
 import TeleMissionItem from "./TeleMissionItem";
-import { Slide, ToastContainer } from "react-toastify";
 
 interface ModalPropsType {
   data: any;

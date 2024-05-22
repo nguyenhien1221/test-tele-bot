@@ -292,12 +292,9 @@ const Home = () => {
   };
 
   const getHappyDay = () => {
-    if (HappyDay.data) {
-      const isHappyDay = Object.keys(
-        HappyDay.data?.data.data.happy_days
-      ).includes(String(new Date().getUTCDay()));
-
-      return isHappyDay;
+    const happyDays = HappyDay.data?.data?.data?.happy_days;
+    if (!!happyDays) {
+      return Object.keys(happyDays).includes(String(new Date().getUTCDay()));
     }
     return false;
   };
