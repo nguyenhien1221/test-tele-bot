@@ -1,5 +1,5 @@
 export const getMissionsByType = (type: string, data: any) => {
-  if (data.length > 0) {
+  if (data?.length > 0) {
     const Missions = data?.filter((item: any) => item.type === type);
     return Missions;
   }

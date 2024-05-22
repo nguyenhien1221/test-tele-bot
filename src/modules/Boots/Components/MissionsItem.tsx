@@ -68,7 +68,7 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
     return (
       <div
         className={clsx(
-          "grid grid-cols-8 gap-3 bg-white rounded-2xl  w-full",
+          "grid grid-cols-9 gap-3 bg-white rounded-2xl  w-full",
           isSmallScreen ? "p-2" : " p-4",
           "dark:text-white dark:gradient-border-mask-mission-item dark:bg-transparent dark:drop-shadow-none",
           "border-[1px] border-[#4D7F0C] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
@@ -77,12 +77,12 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
         <div className="col-span-2 flex ">
           <img
             src={`/images/holy/${level + 1}.png`}
-            className="h-[60px] w-[60px]"
+            className="h-[60px] w-[50px]"
             width={60}
             alt=""
-          ></img>
+          ></img> 
         </div>
-        <div className="col-span-6 flex items-start flex-col justify-center">
+        <div className="col-span-7 flex items-start flex-col justify-center">
           <p className="font-semibold text-base mb-2">{`Level ${level + 1}`}</p>
           <div className="flex gap-[7px] ">
             <p className="text-sm">{`x${boostWaterLevel[level]?.speed} per hour`}</p>

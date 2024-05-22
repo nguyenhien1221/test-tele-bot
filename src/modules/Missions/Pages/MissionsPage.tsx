@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { missionsTypes } from "../../../constants/missions.constants";
 import MissionsModal from "../Components/MissionsModal";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -18,6 +18,7 @@ import useDoDailyMissions from "../Hooks/useDoDaily";
 import { checkSameDay } from "../../../utils/helper";
 import Progress from "../../../components/common/Progress";
 import useGetMissionsStatus from "../Hooks/useGetMissionStatus";
+import { useCheckMission } from "../../../store/missionStore";
 
 const MissionsPage = () => {
   const location = useLocation();
@@ -27,6 +28,8 @@ const MissionsPage = () => {
   const doMission = useDoMissions();
   const dailyMissions = useGetDailyMissions();
   const doDailyMission = useDoDailyMissions();
+
+  const hasMission = useCheckMission((state: any) => state.updateMission);
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
@@ -43,9 +46,22 @@ const MissionsPage = () => {
 
   const getMissionStatus = useGetMissionsStatus(String(missionsId));
 
-  // useEffect(() => {
-  //   getMissionStatus.refetch();
-  // }, [missionsId]);
+  useEffect(() => {
+    if (dailyMissions.data && missionsData.data) {
+      const hasGardenMission = missionsData.data?.data.data
+        .filter((item: any) => item?.type !== missionsTypes.SIGN_IN)
+        .some((item: any) => item.task_user === null);
+
+      const hasDailyMission =
+        (dailyMissions?.data.data.data?.length || 0) === 0 ||
+        (!checkSameDay(dailyMissions?.data.data.data ?? []) &&
+          dailyMissions?.data.data.data?.length < 7);
+
+      if (hasDailyMission || hasGardenMission) {
+        hasMission(true);
+      }
+    }
+  }, [dailyMissions.data, missionsData.data]);
 
   const handleChooseMission = (index: string) => {
     // const data = missionsData.data?.data.data;
@@ -119,7 +135,7 @@ const MissionsPage = () => {
       {missionsData.isLoading ? (
         <Loading />
       ) : (
-        <div className="overflow-auto pt-[42px] px-4 relative h-screen bg-[#F2FFE0] dark:bg-transparent">
+        <div className=" pt-[42px] px-4 relative h-screen bg-[#F2FFE0] dark:bg-transparent">
           <ToastContainer
             position="top-left"
             closeOnClick
@@ -148,129 +164,140 @@ const MissionsPage = () => {
           {/* options */}
 
           {/* daily missions */}
-          <div className={clsx(isDesktop ? "mt-2" : "mt-[49px]")}>
-            <div
-              onClick={() =>
-                setIsOpenDailyMission({ isOpen: true, type: "", data: null })
-              }
-              className={clsx(
-                "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
-                "dark:gradient-border-mask-mission dark:bg-transparent",
-                "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
-                "dark:boder-0 dark:drop-shadow-none "
-              )}
-            >
-              <div className="col-span-2 flex items-center">
-                <div>
-                  <img
-                    src={`/images/icons/daily.png`}
-                    width={48}
-                    height={48}
-                    alt="storage"
-                  ></img>
+          <div
+            className={clsx(
+              isDesktop ? "mt-2" : "mt-[30px]",
+              "overflow-auto max-h-[calc(100%-250px)] "
+            )}
+          >
+            <div className="p-4 mb-6 border-[1px] border-[#4D7F0C] rounded-2xl bg-[#E3FCC2] ">
+              <div className="pb-[10px] font-semibold">Daily</div>
+              <div
+                onClick={() =>
+                  setIsOpenDailyMission({ isOpen: true, type: "", data: null })
+                }
+                className={clsx(
+                  "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                  "dark:gradient-border-mask-mission dark:bg-transparent",
+                  "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
+                  "dark:boder-0 dark:drop-shadow-none "
+                )}
+              >
+                <div className="col-span-2 flex items-center">
+                  <div>
+                    <img
+                      src={`/images/icons/daily.png`}
+                      width={48}
+                      height={48}
+                      alt="storage"
+                    ></img>
+                  </div>
                 </div>
-              </div>
-              <div className="col-span-8 flex items-center dark:text-white">
-                <div className="">
-                  <p className="font-semibold text-base">Login Bonus</p>
-                  {dailyMissions?.data &&
-                  ((dailyMissions?.data.data.data?.length || 0) === 0 ||
-                    (!checkSameDay(dailyMissions?.data.data.data ?? []) &&
-                      dailyMissions?.data.data.data?.length < 7)) ? (
-                    <div className="flex items-center text-sm">
-                      <Progress className="mr-1" value={(0 / 1) * 100} />
-                      <span>{`In progress (0/1)`}</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center">
-                      <img
-                        src="/images/daily/mission_complete.png"
-                        className="dark:hidden inline-block w-4 mr-1"
-                        alt=""
-                      ></img>
-                      <img
-                        src="/images/daily/dark_mission_complete.png"
-                        className="hidden dark:inline-block w-4 mr-1"
-                        alt=""
-                      ></img>
-                      <span>{`Completed (1/1)`}</span>
-                    </div>
-                  )}
+                <div className="col-span-8 flex items-center dark:text-white">
+                  <div className="">
+                    <p className="font-semibold text-base">Login Bonus</p>
+                    {dailyMissions?.data &&
+                    ((dailyMissions?.data.data.data?.length || 0) === 0 ||
+                      (!checkSameDay(dailyMissions?.data.data.data ?? []) &&
+                        dailyMissions?.data.data.data?.length < 7)) ? (
+                      <div className="flex items-center text-sm">
+                        <Progress className="mr-1" value={(0 / 1) * 100} />
+                        <span>{`In progress (0/1)`}</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center">
+                        <img
+                          src="/images/daily/mission_complete.png"
+                          className="dark:hidden inline-block w-4 mr-1"
+                          alt=""
+                        ></img>
+                        <img
+                          src="/images/daily/dark_mission_complete.png"
+                          className="hidden dark:inline-block w-4 mr-1"
+                          alt=""
+                        ></img>
+                        <span>{`Completed (1/1)`}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-            {missionGroup.map((item, index) => {
-              const totalMission = getMissionsByType(
-                item.type,
-                missionsData.data?.data.data ?? []
-              );
-              const doneMission = getMissionsByType(
-                item.type,
-                missionsData.data?.data.data ?? []
-              ).filter(
-                (mission: any) => mission.task_user?.completed === true
-              ).length;
+            <div className="p-4 relative z-20 border-[1px] border-[#4D7F0C] rounded-2xl bg-[#E3FCC2] ">
+              <div className="pb-[10px] font-semibold">Our Garden</div>
+              {missionGroup.map((item, index) => {
+                const totalMission = getMissionsByType(
+                  item.type,
+                  missionsData.data?.data.data ?? []
+                );
+                const doneMission = getMissionsByType(
+                  item.type,
+                  missionsData.data?.data.data ?? []
+                ).filter(
+                  (mission: any) => mission.task_user?.completed === true
+                )?.length;
 
-              let name = "";
+                let name = "";
 
-              if (index === 0) {
-                name = "Follow our Ecosystem";
-              } else {
-                name = "Join our Community";
-              }
+                if (index === 0) {
+                  name = "Follow us";
+                } else {
+                  name = "Join us";
+                }
 
-              return (
-                <div
-                  onClick={() => handleChooseMission(item.type)}
-                  key={index}
-                  className={clsx(
-                    "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
-                    "dark:gradient-border-mask-mission dark:bg-transparent",
-                    "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
-                    "dark:drop-shadow-none"
-                  )}
-                >
-                  <div className="col-span-2 flex items-center">
-                    <div>
-                      <img
-                        src={`/images/icons/${item.type}.png`}
-                        width={48}
-                        height={48}
-                        alt="storage"
-                      ></img>
+                return (
+                  <div
+                    onClick={() => handleChooseMission(item.type)}
+                    key={index}
+                    className={clsx(
+                      "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                      "dark:gradient-border-mask-mission dark:bg-transparent",
+                      "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
+                      "dark:drop-shadow-none"
+                    )}
+                  >
+                    <div className="col-span-2 flex items-center">
+                      <div>
+                        <img
+                          src={`/images/icons/${item.type}.png`}
+                          width={48}
+                          height={48}
+                          alt="storage"
+                        ></img>
+                      </div>
+                    </div>
+                    <div className="col-span-8 flex items-center dark:text-white">
+                      <div className="">
+                        <p className="font-semibold text-base">{name}</p>
+                        {doneMission === totalMission?.length ? (
+                          <div className="flex items-center text-sm">
+                            <img
+                              src="/images/daily/mission_complete.png"
+                              className="dark:hidden inline-block w-4 mr-1"
+                              alt=""
+                            ></img>
+                            <img
+                              src="/images/daily/dark_mission_complete.png"
+                              className="hidden dark:inline-block w-4 mr-1"
+                              alt=""
+                            ></img>
+                            <span>{`Completed (${doneMission}/${totalMission?.length})`}</span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center text-sm">
+                            <Progress
+                              className="mr-1"
+                              value={(doneMission / totalMission?.length) * 100}
+                            />
+                            <span>{`In progress (${doneMission}/${totalMission?.length})`}</span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                  <div className="col-span-8 flex items-center dark:text-white">
-                    <div className="">
-                      <p className="font-semibold text-base">{name}</p>
-                      {doneMission === totalMission.length ? (
-                        <div className="flex items-center text-sm">
-                          <img
-                            src="/images/daily/mission_complete.png"
-                            className="dark:hidden inline-block w-4 mr-1"
-                            alt=""
-                          ></img>
-                          <img
-                            src="/images/daily/dark_mission_complete.png"
-                            className="hidden dark:inline-block w-4 mr-1"
-                            alt=""
-                          ></img>
-                          <span>{`Completed (${doneMission}/${totalMission.length})`}</span>
-                        </div>
-                      ) : (
-                        <div className="flex items-center text-sm">
-                          <Progress
-                            className="mr-1"
-                            value={(doneMission / totalMission.length) * 100}
-                          />
-                          <span>{`In progress (${doneMission}/${totalMission.length})`}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
           {isOpen.isOpen && (
             <MissionsModal

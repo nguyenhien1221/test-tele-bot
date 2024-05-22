@@ -2,9 +2,11 @@ import { Slide, ToastContainer, toast } from "react-toastify";
 import { navbarItems } from "../../constants/navbar.constants";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
+import { useCheckMission } from "../../store/missionStore";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const hasMission = useCheckMission((state: any) => state.hasMission);
 
   const handleShowToast = (index: number, item: any) => {
     if (index === 3) {
@@ -36,7 +38,13 @@ const NavBar = () => {
       <div className="">
         <div className={clsx("grid grid-cols-4 gap-2 ")}>
           {navbarItems.map((item, index) => (
-            <div className="grid-cols-1" key={index}>
+            <div className="grid-cols-1 relative" key={index}>
+              {index === 0 && hasMission && (
+                <div className="w-[14px] h-[14px] absolute z-10 -right-1">
+                  <div className="animate-blink w-full h-full absolute  rounded-[50%] "></div>
+                  <div className="w-full h-full bg-[#60941B] absolute  rounded-[50%] "></div>
+                </div>
+              )}
               <div
                 className={clsx(
                   "btn-hover dark:btn-click cursor-pointer w-full h-full p-[9px] rounded-[16px] bg-[#fff] drop-shadow-[0_3px_0px_#4D7F0C]",

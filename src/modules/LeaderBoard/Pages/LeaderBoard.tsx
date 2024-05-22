@@ -28,7 +28,7 @@ const LeaderBoard = () => {
           </p>
         </div>
       </div>
-      {LeaderBoardData.data?.data.data.length > 0 ? (
+      {LeaderBoardData.data?.data.data?.length > 0 ? (
         <div
           className={clsx(
             "bg-white p-4 rounded-lg  h-[calc(100%-160px)]",

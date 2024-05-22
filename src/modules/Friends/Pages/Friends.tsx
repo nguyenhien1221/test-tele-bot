@@ -99,7 +99,7 @@ const Friends = () => {
       </div>
 
       {/* friends list */}
-      {AcountReferees.data?.data.data.length > 0 && (
+      {AcountReferees.data?.data.data?.length > 0 && (
         <>
           <p
             className={clsx(
@@ -108,20 +108,20 @@ const Friends = () => {
               "dark:text-white"
             )}
           >
-            {`Friend list (${AcountReferees.data?.data.data.length})`}
+            {`Friend list (${AcountReferees.data?.data.data?.length})`}
           </p>
-          <div className="text-[12px] h-[30px] text-[#384426] bg-[#DEEBCC] py-2 px-[10px] rounded-lg mb-3">
+          <div className="text-[12px] min-h-[30px] text-[#384426] bg-[#DEEBCC] py-2 px-[10px] rounded-lg mb-3 text-center">
             The friendlist will be updated soon due to maintenance
           </div>
         </>
       )}
-      {AcountReferees.data?.data.data.length > 0 && (
+      {AcountReferees.data?.data.data?.length > 0 && (
         <div
           className={clsx(
             "overflow-auto bg-white p-3 rounded-lg",
             isSmallScreen
-              ? "max-h-[calc(100%-180px)]"
-              : "max-h-[calc(100%-200px)]",
+              ? "max-h-[calc(100%-250px)]"
+              : "max-h-[calc(100%-250px)]",
             "border-[1px] border-[#97C35B] border-solid dark:bg-transparent"
           )}
         >
@@ -146,7 +146,7 @@ const Friends = () => {
                   <div>
                     <div className="flex items-center gap-1">
                       <span className="text-[#7D7D7D] dark:text-white text-sm">
-                        You recieved:
+                        You received:
                       </span>
                       <img
                         src="/images/icons/token_icon.png"

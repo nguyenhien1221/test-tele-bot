@@ -22,7 +22,7 @@ const DailyMissonModal = ({
   isLoading,
 }: ModalPropsType) => {
   const claimed = (no: number) => {
-    if (!data || !data.length) {
+    if (!data || !data?.length) {
       return false;
     }
 
@@ -30,18 +30,18 @@ const DailyMissonModal = ({
   };
 
   const unlocked = (no: number) => {
-    if (!data || !data.length) {
+    if (!data || !data?.length) {
       return no === 1;
     }
 
     // data.length is the number of days claimed.
     // claimed means the reward is already unlocked;
-    if (no <= data.length) {
+    if (no <= data?.length) {
       return true;
     }
 
     // suppose the last claim days is n. then n+2 should be locked
-    if (no > data.length + 1) {
+    if (no > data?.length + 1) {
       return false;
     }
 
@@ -94,7 +94,7 @@ const DailyMissonModal = ({
             {/* row 1 */}
             {[...Array(7)].map((item: any, index: number) => {
               const day = index + 1;
-              const isCheck = index < data.length;
+              const isCheck = index < data?.length;
               return (
                 <div
                   key={index}

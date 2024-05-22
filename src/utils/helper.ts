@@ -15,7 +15,7 @@ export const isSameDay = (data: any) => {
 };
 
 export const checkSameDay = (data: any) => {
-  if (!data.length || !data[0] || !data[0].timestamp) {
+  if (!data?.length || !data[0] || !data[0].timestamp) {
     return false;
   }
 

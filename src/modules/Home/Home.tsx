@@ -44,16 +44,19 @@ import useGetHappyDay from "./Hooks/useGetHappyDay";
 import useClaimHappyDay from "./Hooks/useClaimHappyDay";
 import useGetHappyDayHistory from "./Hooks/useGetHistoyHappyday";
 import { checkSameDay } from "../../utils/helper";
+import { missionsTypes } from "../../constants/missions.constants";
+import useGetDailyMissions from "../Missions/Hooks/useGetDaily";
+import { useCheckMission } from "../../store/missionStore";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
-  // const isExpanded = tele.isExpanded;
-  // const viewHeight = tele.viewportHeight;
 
   tele.BackButton.hide();
 
   const mode = localStorage.getItem("mode");
+  const isMemeContest = localStorage.getItem("memeCliked");
   const changeMode = useChangeMode((state: any) => state.updateMode);
+  const hasMission = useCheckMission((state: any) => state.updateMission);
 
   const AcountBalance = useGetAcountBalance();
   const AcountData = useGetAcountDetails();
@@ -64,6 +67,7 @@ const Home = () => {
   const HappyDay = useGetHappyDay();
   const ClaimHappyDay = useClaimHappyDay();
   const HappyDayHistory = useGetHappyDayHistory();
+  const dailyMissions = useGetDailyMissions();
 
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
   const [instorage, setInstorage] = useState<any>(() => {
@@ -154,6 +158,23 @@ const Home = () => {
     );
 
   useEffect(() => {
+    if (dailyMissions.data && MissionsData.data) {
+      const hasGardenMission = MissionsData.data?.data.data
+        .filter((item: any) => item?.type !== missionsTypes.SIGN_IN)
+        .some((item: any) => item.task_user === null);
+
+      const hasDailyMission =
+        (dailyMissions?.data.data.data?.length || 0) === 0 ||
+        (!checkSameDay(dailyMissions?.data.data.data ?? []) &&
+          dailyMissions?.data.data.data?.length < 7);
+
+      if (hasDailyMission || hasGardenMission) {
+        hasMission(true);
+      }
+    }
+  }, [dailyMissions.data, MissionsData.data]);
+
+  useEffect(() => {
     const isCloseGuide = sessionStorage.getItem("isClickGuide");
     if (isCloseGuide === "true") {
       setIsGuideModalOpen(true);
@@ -169,7 +190,7 @@ const Home = () => {
   }, [MissionsData.data, firstLoginMission]);
 
   useEffect(() => {
-    if (timePassed >= 120) {
+    if (timePassed >= 1800) {
       setIsFull(true);
     } else {
       setIsFull(false);
@@ -177,6 +198,7 @@ const Home = () => {
     }
   }, [timePassed]);
 
+  // caculate progessbar
   useEffect(() => {
     if (progressRef.current) {
       countProgess = setInterval(() => {
@@ -214,12 +236,6 @@ const Home = () => {
     progressRef.current,
     AcountData.isLoading,
   ]);
-
-  // useEffect(() => {
-  //   if (HappyDayHistory.data?.data.data?.length === 0 && count === 0) {
-  //     setIsGuideModalOpen(true);
-  //   }
-  // }, [HappyDayHistory.data]);
 
   const handleClaim = () => {
     ClaimSeed.mutateAsync()
@@ -317,6 +333,25 @@ const Home = () => {
     setIsWinHappyDay({ isOpen: false, data: null });
   };
 
+  const handleTapMemeContest = () => {
+    tele.showPopup(
+      {
+        message: `Do you want to open twitter `,
+        buttons: [
+          { id: "link", type: "default", text: "Open" },
+          { type: "cancel" },
+        ],
+      },
+      function (btn: any) {
+        if (btn === "link") {
+          tele.openLink("https://twitter.com/seedcombinator");
+          localStorage.setItem("memeCliked", "true");
+        } else {
+        }
+      }
+    );
+  };
+
   return (
     <>
       {AcountData.isLoading ? (
@@ -410,7 +445,7 @@ const Home = () => {
             }}
             ref={treeRef}
             className={clsx(
-              "flex flex-1 max-h-[550px] justify-center bg-no-repeat bg-contain bg-center z-30 ",
+              "flex flex-1 max-h-[550px] relative justify-center bg-no-repeat bg-contain bg-center z-30 ",
               // isSmallScreen ? "mb-2 mt-2" : "mb-5 mt-4 ",
               getHappyDay() && !isClaimedHappyDay ? "mt-0 mb-0" : "mt-0 mb-0"
             )}
@@ -419,7 +454,21 @@ const Home = () => {
                 getHappyDay() && !isClaimedHappyDay ? 7 : 8
               }.png')`,
             }}
-          ></div>
+          >
+            {!isMemeContest && (
+              <div className="absolute top-[60%] -translate-y-[50%] left-[115px] ">
+                <img
+                  onClick={() => handleTapMemeContest()}
+                  className={clsx(
+                    "dance-human",
+                    isSmallScreen ? "w-[48px] h-[60px]" : "w-[78px] h-[90px]"
+                  )}
+                  src="/images/trees/human.png"
+                  alt=""
+                ></img>
+              </div>
+            )}
+          </div>
 
           {/* storage button */}
           <div className=" dark:rounded-2xl z-10">
