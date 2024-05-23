@@ -63,12 +63,12 @@ const HolyWaterModal = ({
   };
 
   const renderButton = () => {
-    const doneMission = userData.filter(
+    const doneMission = userData?.filter(
       (item: any) =>
         item?.task_user != null && item?.task_user?.repeats >= item?.repeats
     );
 
-    if (doneMission.length > boostWaterLevel[storageLevel].missions) {
+    if (doneMission?.length > boostWaterLevel[storageLevel].missions) {
       return (
         <LoadingButton
           loading={isLoading}

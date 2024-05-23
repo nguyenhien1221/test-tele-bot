@@ -46,7 +46,8 @@ import useGetHappyDayHistory from "./Hooks/useGetHistoyHappyday";
 import { checkSameDay } from "../../utils/helper";
 import { missionsTypes } from "../../constants/missions.constants";
 import useGetDailyMissions from "../Missions/Hooks/useGetDaily";
-import { useCheckMission } from "../../store/missionStore";
+import Tooltip from "@mui/material/Tooltip";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 const Home = () => {
   const tele = window.Telegram.WebApp;
@@ -56,7 +57,6 @@ const Home = () => {
   const mode = localStorage.getItem("mode");
   const isMemeContest = localStorage.getItem("memeCliked");
   const changeMode = useChangeMode((state: any) => state.updateMode);
-  const hasMission = useCheckMission((state: any) => state.updateMission);
 
   const AcountBalance = useGetAcountBalance();
   const AcountData = useGetAcountDetails();
@@ -91,6 +91,7 @@ const Home = () => {
     data: null,
   });
   const [count, setCount] = useState<number>(0);
+  const [isToolTipOpen, setIsToolTipOpen] = useState<boolean>(false);
 
   const isSmallScreen = window.innerHeight <= 520;
   const LatestMessageTime = LatestMessage.data?.data.data;
@@ -108,11 +109,11 @@ const Home = () => {
   if (firstLoginMission?.task_user?.completed) {
     minedSeed = formatDecimals(
       calculateMinedSeeds2(
-        AcountData.data?.data.data.last_claim,
+        AcountData.data?.data?.data?.last_claim,
         getMiningSpeedByLevel(0),
         getStorageSizeByLevel(0),
-        AcountData.data?.data.data.upgrades ?? [],
-        HappyDayHistory.data?.data.data ?? [],
+        AcountData.data?.data?.data?.upgrades ?? [],
+        HappyDayHistory.data?.data?.data ?? [],
         new Date().getTime()
       )
     );
@@ -152,14 +153,16 @@ const Home = () => {
     HappyDayHistory.data &&
     calculateMiningSpeed(
       getMiningSpeedByLevel(0),
-      AcountData.data?.data.data.upgrades ?? [],
-      HappyDayHistory.data.data.data,
+      AcountData.data?.data?.data?.upgrades ?? [],
+      HappyDayHistory.data?.data?.data,
       new Date().getTime()
     );
 
+  let hasMissions = false;
+
   useEffect(() => {
     if (dailyMissions.data && MissionsData.data) {
-      const hasGardenMission = MissionsData.data?.data.data
+      const hasGardenMission = MissionsData.data?.data?.data
         .filter((item: any) => item?.type !== missionsTypes.SIGN_IN)
         .some((item: any) => item.task_user === null);
 
@@ -169,7 +172,7 @@ const Home = () => {
           dailyMissions?.data.data.data?.length < 7);
 
       if (hasDailyMission || hasGardenMission) {
-        hasMission(true);
+        hasMissions = true;
       }
     }
   }, [dailyMissions.data, MissionsData.data]);
@@ -342,7 +345,7 @@ const Home = () => {
       function (btn: any) {
         if (btn === "link") {
           tele.openLink(
-            "https://x.com/SeedCombinator/status/1793226820873281793"
+            "https://x.com/SeedCombinator/status/1793230054803353994"
           );
           localStorage.setItem("memeCliked", "true");
         } else {
@@ -455,7 +458,7 @@ const Home = () => {
             }}
           >
             {!isMemeContest && (
-              <div className="absolute top-[60%] -translate-y-[50%] left-[115px] ">
+              <div className="absolute top-[64%] -translate-y-[50%] left-[115px] ">
                 <img
                   onClick={() => handleTapMemeContest()}
                   className={clsx(
@@ -554,20 +557,48 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="flex items-center justify-end col-span-3 ">
-                      <LoadingButton
-                        variant="contained"
-                        loading={ClaimSeed.isPending}
-                        disabled={!isFull || isClaimed}
-                        onClick={handleClaim}
-                        className={clsx(
-                          "w-[100px] h-40px capitalize rounded-lg text-base font-bold",
-                          "text-[#fff] bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B] ",
-                          "btn-hover  disabled:bg-[#B1B1B1] disabled:drop-shadow-[0_4px_0px_#797979] disabled:border-[#C4C4C4]",
-                          isSmallScreen ? "py-2" : "py-3"
-                        )}
+                      <ClickAwayListener
+                        onClickAway={() => {
+                          setIsToolTipOpen(false);
+                        }}
                       >
-                        Claim
-                      </LoadingButton>
+                        <Tooltip
+                          arrow
+                          placement="top"
+                          PopperProps={{
+                            disablePortal: false,
+                          }}
+                          onClose={() => {
+                            setIsToolTipOpen(false);
+                          }}
+                          open={isToolTipOpen}
+                          disableFocusListener
+                          disableHoverListener
+                          disableTouchListener
+                          title="Claim after 30 minutes"
+                        >
+                          <span
+                            onClick={() => {
+                              (!isFull || isClaimed) && setIsToolTipOpen(true);
+                            }}
+                          >
+                            <LoadingButton
+                              variant="contained"
+                              loading={ClaimSeed.isPending}
+                              disabled={!isFull || isClaimed}
+                              onClick={handleClaim}
+                              className={clsx(
+                                "w-[100px] h-40px capitalize rounded-lg text-base font-bold",
+                                "text-[#fff] bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B] ",
+                                "btn-hover disabled:bg-[#B1B1B1] disabled:drop-shadow-[0_4px_0px_#797979] disabled:border-[#C4C4C4]",
+                                isSmallScreen ? "py-2" : "py-3"
+                              )}
+                            >
+                              Claim
+                            </LoadingButton>
+                          </span>
+                        </Tooltip>
+                      </ClickAwayListener>
                     </div>
                   </div>
                 </div>
@@ -576,7 +607,7 @@ const Home = () => {
           </div>
 
           <div className={clsx("fixed left-4 right-4 z-30", "bottom-[40px] ")}>
-            <NavBar />
+            <NavBar hasMission={hasMissions} />
           </div>
         </div>
       )}

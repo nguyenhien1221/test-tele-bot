@@ -2,11 +2,12 @@ import { Slide, ToastContainer, toast } from "react-toastify";
 import { navbarItems } from "../../constants/navbar.constants";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
-import { useCheckMission } from "../../store/missionStore";
 
-const NavBar = () => {
+interface NavBarPropType {
+  hasMission: boolean;
+}
+const NavBar = ({ hasMission }: NavBarPropType) => {
   const navigate = useNavigate();
-  const hasMission = useCheckMission((state: any) => state.hasMission);
 
   const handleShowToast = (index: number, item: any) => {
     if (index === 3) {
@@ -42,7 +43,7 @@ const NavBar = () => {
               {index === 0 && hasMission && (
                 <div className="w-[14px] h-[14px] absolute z-10 -right-1">
                   <div className="animate-blink w-full h-full absolute  rounded-[50%] "></div>
-                  <div className="w-full h-full bg-[#60941B] absolute  rounded-[50%] "></div>
+                  <div className="w-full h-full bg-[#FFA928] absolute  rounded-[50%] "></div>
                 </div>
               )}
               <div

@@ -246,7 +246,7 @@ code {
 }
 
 .animate-blink {
-  background-color: #60941b;
+  background-color: #ffa928;
   animation: ping 1.15s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 

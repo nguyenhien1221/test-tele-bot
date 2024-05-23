@@ -96,7 +96,7 @@ const DailyMissonModal = ({
               const day = index + 1;
               const isCheck = index < data?.length;
               return (
-                <div
+                <button
                   key={index}
                   onClick={() => handleDoMission()}
                   className={clsx(
@@ -144,7 +144,7 @@ const DailyMissonModal = ({
                       {formatDecimals(dailyBonusValue[index])}
                     </p>
                   </div>
-                </div>
+                </button>
               );
             })}
           </div>

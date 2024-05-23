@@ -242,94 +242,95 @@ const Boots = () => {
       </div>
       {/* options */}
       <div className={clsx(isDesktop ? "mt-2" : "mt-[49px]")}>
-        {bootOptions.map((item, index) => {
-          let price = 0.2;
-          let level = 0;
-          let icon = "";
-          const storagePrice =
-            bootsStorageLevel[
-              getStorageUpgradesLevel(AcountData.data?.data.data) + 1
-            ]?.price;
-          const speedPrice =
-            boostSpeedLevel[
-              getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
-            ]?.price;
+        {AcountData.data?.data?.data &&
+          bootOptions.map((item, index) => {
+            let price = 0.2;
+            let level = 0;
+            let icon = "";
+            const storagePrice =
+              bootsStorageLevel[
+                getStorageUpgradesLevel(AcountData.data?.data.data) + 1
+              ]?.price;
+            const speedPrice =
+              boostSpeedLevel[
+                getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
+              ]?.price;
 
-          if (index === 0) {
-            price = storagePrice;
-            level = getStorageUpgradesLevel(AcountData.data?.data.data);
-            icon = `/images/storage/${
-              getStorageUpgradesLevel(AcountData.data?.data.data) + 1
-            }.png`;
-          } else if (index === 1) {
-            price = speedPrice;
-            level = getSpeedUpgradesLevel(AcountData.data?.data.data);
-            icon = `/images/trees/${
-              getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
-            }.png`;
-          } else {
-            price = 0.2;
-            level = getWaterUpgradesLevel(AcountData.data?.data.data);
-            icon = `/images/holy/${
-              getWaterUpgradesLevel(AcountData.data?.data.data) + 1
-            }.png`;
-          }
+            if (index === 0) {
+              price = storagePrice;
+              level = getStorageUpgradesLevel(AcountData.data?.data.data);
+              icon = `/images/storage/${
+                getStorageUpgradesLevel(AcountData.data?.data.data) + 1
+              }.png`;
+            } else if (index === 1) {
+              price = speedPrice;
+              level = getSpeedUpgradesLevel(AcountData.data?.data.data);
+              icon = `/images/trees/${
+                getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
+              }.png`;
+            } else {
+              price = 0.2;
+              level = getWaterUpgradesLevel(AcountData.data?.data.data);
+              icon = `/images/holy/${
+                getWaterUpgradesLevel(AcountData.data?.data.data) + 1
+              }.png`;
+            }
 
-          return (
-            <div
-              onClick={() => handleOpenModal(index)}
-              key={index}
-              className={clsx(
-                "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-7 gap-0 bg-white rounded-2xl p-4 w-full mb-[18px] ",
-                "dark:gradient-border-mask-mission dark:bg-transparent dark:drop-shadow-none",
-                "border-[1px] border-[#4D7F0C] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
-              )}
-            >
-              <div className="col-span-2 flex items-center ">
-                <div className="">
-                  <img
-                    className="object-contain w-[73px] h-[67px]"
-                    src={icon}
-                    width={73}
-                    height={67}
-                    alt="storage"
-                  ></img>
-                </div>
-              </div>
-              <div className="col-span-5 dark:text-white">
-                <p className="font-semibold mb-1">{`${item.title} Level ${
-                  level + 1
-                }`}</p>
-                <div className=" mb-1">
-                  <p className="text-sm font-normal">{item.description}</p>
-                </div>
-                <div>
-                  <div className={clsx("flex items-center gap-1")}>
+            return (
+              <div
+                onClick={() => handleOpenModal(index)}
+                key={index}
+                className={clsx(
+                  "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-7 gap-0 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                  "dark:gradient-border-mask-mission dark:bg-transparent dark:drop-shadow-none",
+                  "border-[1px] border-[#4D7F0C] border-solid drop-shadow-[0_4px_0px_#4D7F0C]"
+                )}
+              >
+                <div className="col-span-2 flex items-center ">
+                  <div className="">
                     <img
-                      className={clsx(index === 2 ? "w-[21px] h-5" : "")}
-                      src={`/images/icons/${
-                        index === 2 ? "holy" : "token_icon"
-                      }.png`}
-                      width={14}
-                      height={14}
-                      alt="token"
+                      className="object-contain w-[73px] h-[67px]"
+                      src={icon}
+                      width={73}
+                      height={67}
+                      alt="storage"
                     ></img>
-                    <p className="text-xs font-normal">
-                      {`
+                  </div>
+                </div>
+                <div className="col-span-5 dark:text-white">
+                  <p className="font-semibold mb-1">{`${item.title} Level ${
+                    level + 1
+                  }`}</p>
+                  <div className=" mb-1">
+                    <p className="text-sm font-normal">{item.description}</p>
+                  </div>
+                  <div>
+                    <div className={clsx("flex items-center gap-1")}>
+                      <img
+                        className={clsx(index === 2 ? "w-[21px] h-5" : "")}
+                        src={`/images/icons/${
+                          index === 2 ? "holy" : "token_icon"
+                        }.png`}
+                        width={14}
+                        height={14}
+                        alt="token"
+                      ></img>
+                      <p className="text-xs font-normal">
+                        {`
                       ${index === 2 ? "" : price} ${
-                        index === 2 ? "Complete mission" : ""
-                      } to upgrade
+                          index === 2 ? "Complete mission" : ""
+                        } to upgrade
                       `}
-                    </p>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
 
-      {isOpen.isOpen && AcountData.data?.data.data && (
+      {isOpen.isOpen && AcountData.data && (
         <BootsModal
           isLoading={UpgradeStorage.isPending || UpgradeSpeed.isPending}
           storageLevel={

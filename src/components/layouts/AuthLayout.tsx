@@ -22,6 +22,9 @@ const AuthLayout = () => {
   window.scrollTo(0, overflow);
 
   const AcountData = useGetAcountDetails();
+
+  // console.log(AcountData);
+
   if (AcountData.isLoading) return <Loading />;
   // if (
   //   AcountData?.error &&

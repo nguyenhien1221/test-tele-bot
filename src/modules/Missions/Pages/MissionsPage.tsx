@@ -18,7 +18,6 @@ import useDoDailyMissions from "../Hooks/useDoDaily";
 import { checkSameDay } from "../../../utils/helper";
 import Progress from "../../../components/common/Progress";
 import useGetMissionsStatus from "../Hooks/useGetMissionStatus";
-import { useCheckMission } from "../../../store/missionStore";
 
 const MissionsPage = () => {
   const location = useLocation();
@@ -28,8 +27,6 @@ const MissionsPage = () => {
   const doMission = useDoMissions();
   const dailyMissions = useGetDailyMissions();
   const doDailyMission = useDoDailyMissions();
-
-  const hasMission = useCheckMission((state: any) => state.updateMission);
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
@@ -43,25 +40,9 @@ const MissionsPage = () => {
   const [missionsId, setMissionId] = useState("");
 
   const isDesktop = window.innerHeight < 610;
+  const isSmallPhone = window.innerHeight <= 736;
 
   const getMissionStatus = useGetMissionsStatus(String(missionsId));
-
-  useEffect(() => {
-    if (dailyMissions.data && missionsData.data) {
-      const hasGardenMission = missionsData.data?.data.data
-        .filter((item: any) => item?.type !== missionsTypes.SIGN_IN)
-        .some((item: any) => item.task_user === null);
-
-      const hasDailyMission =
-        (dailyMissions?.data.data.data?.length || 0) === 0 ||
-        (!checkSameDay(dailyMissions?.data.data.data ?? []) &&
-          dailyMissions?.data.data.data?.length < 7);
-
-      if (hasDailyMission || hasGardenMission) {
-        hasMission(true);
-      }
-    }
-  }, [dailyMissions.data, missionsData.data]);
 
   const handleChooseMission = (index: string) => {
     // const data = missionsData.data?.data.data;
@@ -170,8 +151,16 @@ const MissionsPage = () => {
               "overflow-auto max-h-[calc(100%-250px)] "
             )}
           >
-            <div className="p-4 mb-6 border-[1px] border-[#4D7F0C] rounded-2xl bg-[#E3FCC2] ">
-              <div className="pb-[10px] font-semibold">Daily</div>
+            <div
+              className={clsx(
+                "dark:bg-[#E3FCC214]",
+                " mb-6 border-[1px] border-[#4D7F0C] rounded-2xl bg-[#E3FCC2]",
+                isSmallPhone ? "p-2" : "p-4"
+              )}
+            >
+              <div className="pb-[10px] font-semibold dark:text-white">
+                Daily
+              </div>
               <div
                 onClick={() =>
                   setIsOpenDailyMission({ isOpen: true, type: "", data: null })
@@ -223,8 +212,16 @@ const MissionsPage = () => {
                 </div>
               </div>
             </div>
-            <div className="p-4 relative z-20 border-[1px] border-[#4D7F0C] rounded-2xl bg-[#E3FCC2] ">
-              <div className="pb-[10px] font-semibold">Our Garden</div>
+            <div
+              className={clsx(
+                "dark:bg-[#E3FCC214]",
+                " relative z-20 border-[1px] border-[#4D7F0C] rounded-2xl bg-[#E3FCC2] ",
+                isSmallPhone ? "p-2" : "p-4"
+              )}
+            >
+              <div className="pb-[10px] font-semibold dark:text-white">
+                Our Garden
+              </div>
               {missionGroup.map((item, index) => {
                 const totalMission = getMissionsByType(
                   item.type,
@@ -236,14 +233,6 @@ const MissionsPage = () => {
                 ).filter(
                   (mission: any) => mission.task_user?.completed === true
                 )?.length;
-
-                let name = "";
-
-                if (index === 0) {
-                  name = "Follow us";
-                } else {
-                  name = "Join us";
-                }
 
                 return (
                   <div
@@ -268,7 +257,7 @@ const MissionsPage = () => {
                     </div>
                     <div className="col-span-8 flex items-center dark:text-white">
                       <div className="">
-                        <p className="font-semibold text-base">{name}</p>
+                        <p className="font-semibold text-base">{item.type}</p>
                         {doneMission === totalMission?.length ? (
                           <div className="flex items-center text-sm">
                             <img

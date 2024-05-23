@@ -200,7 +200,7 @@ const WaterMissionsModal = ({
     }
   };
 
-  const isNotDone = data.filter(
+  const isNotDone = data?.filter(
     (item: any) =>
       item.task_user === null || item.task_user.repeats < item.repeats
   );
@@ -221,7 +221,7 @@ const WaterMissionsModal = ({
               <i className="bx bx-chevron-left"></i>
             </button>
             <div className="flex flex-col items-center ">
-              <p className="text-[24px] font-bold">{`${isNotDone.length} Missions Available`}</p>
+              <p className="text-[24px] font-bold">{`${isNotDone?.length} Missions Available`}</p>
               <p className="text-center text-[15px]">
                 Each mission will give you new levels. You can complete the
                 missions in any order.
