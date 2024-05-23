@@ -34,3 +34,5 @@ export const router = createBrowserRouter([
     Component: undefined,
   },
 ]);
+
+console.log("cache prune");

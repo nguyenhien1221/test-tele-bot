@@ -23,10 +23,9 @@ const Friends = () => {
     navigate("/");
   };
 
-  const totalRefAmount = AcountReferees.data?.data.data.reduce(
-    (total: any, item: any) => (total += item.received_amount),
-    0
-  );
+  const totalRefAmount = (AcountReferees?.data?.data?.data || []).reduce(
+    (total: any, item: any) => total + item.received_amount, 0
+  ) || 0;
 
   const handleCopyLink = () => {
     toast.success("Link copied to clipboard", {
