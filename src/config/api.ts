@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const initData = localStorage.getItem("__telegram__initParams");
+const initData = sessionStorage.getItem("__telegram__initParams");
 console.log(initData);
 
 export const api = axios.create({
