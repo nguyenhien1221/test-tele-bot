@@ -22,7 +22,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <SDKProvider acceptCustomStyles debug>
+      <SDKProvider>
         <QueryClientProvider client={queryClient}>
           <ToastContainer
             transition={Slide}
