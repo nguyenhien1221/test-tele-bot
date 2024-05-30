@@ -1,7 +1,7 @@
-import { Slide, ToastContainer, toast } from "react-toastify";
 import { navbarItems } from "../../constants/navbar.constants";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
+import { Slide, ToastContainer } from "react-toastify";
 
 interface NavBarPropType {
   hasMission: boolean;
@@ -10,19 +10,8 @@ const NavBar = ({ hasMission }: NavBarPropType) => {
   const navigate = useNavigate();
 
   const handleShowToast = (index: number, item: any) => {
-    if (index === 3) {
-      toast.info("Coming soon", {
-        autoClose: 2000,
-        style: { maxWidth: 337, height: 40, borderRadius: 8 },
-        progressStyle: {
-          backgroundColor: "#FF8C21",
-        },
-        icon: <img src="/images/icons/clock.png" alt=""></img>,
-      });
-    } else {
-      navigate(item.path);
-      return;
-    }
+    navigate(item.path);
+    return;
   };
 
   return (

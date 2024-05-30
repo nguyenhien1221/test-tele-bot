@@ -102,9 +102,29 @@ const Boots = () => {
   const handleOpenModal = (type: number) => {
     if (type === bootTypeEnum.WATER) {
       setIsOpenWater(true);
-    } else {
-      setisOpen({ isOpen: true, type: type });
+      return;
     }
+
+    if (
+      type === bootTypeEnum.STORAGE &&
+      getStorageUpgradesLevel(AcountData.data?.data.data) + 1 < 6
+    ) {
+      setisOpen({ isOpen: true, type: type });
+      return;
+    }
+
+    if (
+      type === bootTypeEnum.SPEED &&
+      getSpeedUpgradesLevel(AcountData.data?.data.data) + 1 < 6
+    ) {
+      setisOpen({ isOpen: true, type: type });
+      return;
+    }
+
+    toast.error("You have reached the maximum level", {
+      style: { maxWidth: 337, height: 40, borderRadius: 8 },
+      autoClose: 2000,
+    });
   };
 
   const handleDoWaterMision = (item: any) => {
@@ -256,24 +276,24 @@ const Boots = () => {
                 getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
               ]?.price;
 
+            const storageMaxLevel = Object.keys(bootsStorageLevel).length;
+            const speedMaxLevel = Object.keys(boostSpeedLevel).length;
+
             if (index === 0) {
               price = storagePrice;
               level = getStorageUpgradesLevel(AcountData.data?.data.data);
-              icon = `/images/storage/${
-                getStorageUpgradesLevel(AcountData.data?.data.data) + 1
-              }.png`;
+              icon = `/images/storage/${getStorageUpgradesLevel(AcountData.data?.data.data) + 1
+                }.png`;
             } else if (index === 1) {
               price = speedPrice;
               level = getSpeedUpgradesLevel(AcountData.data?.data.data);
-              icon = `/images/trees/${
-                getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
-              }.png`;
+              icon = `/images/trees/${getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
+                }.png`;
             } else {
               price = 0.2;
               level = getWaterUpgradesLevel(AcountData.data?.data.data);
-              icon = `/images/holy/${
-                getWaterUpgradesLevel(AcountData.data?.data.data) + 1
-              }.png`;
+              icon = `/images/holy/${getWaterUpgradesLevel(AcountData.data?.data.data) + 1
+                }.png`;
             }
 
             return (
@@ -298,31 +318,38 @@ const Boots = () => {
                   </div>
                 </div>
                 <div className="col-span-5 dark:text-white">
-                  <p className="font-semibold mb-1">{`${item.title} Level ${
-                    level + 1
-                  }`}</p>
+                  <p className="font-semibold mb-1">{`${item.title} Level ${level + 1
+                    }`}</p>
                   <div className=" mb-1">
                     <p className="text-sm font-normal">{item.description}</p>
                   </div>
                   <div>
-                    <div className={clsx("flex items-center gap-1")}>
-                      <img
-                        className={clsx(index === 2 ? "w-[21px] h-5" : "")}
-                        src={`/images/icons/${
-                          index === 2 ? "holy" : "token_icon"
-                        }.png`}
-                        width={14}
-                        height={14}
-                        alt="token"
-                      ></img>
-                      <p className="text-xs font-normal">
-                        {`
+                    {(level + 1 === storageMaxLevel ||
+                      level + 1 === speedMaxLevel) &&
+                    index !== bootTypeEnum.WATER ? (
+                      <div className="text-xs font-normal">
+                        Max Level Achieved
+                      </div>
+                    ) : (
+                      <div className={clsx("flex items-center gap-1")}>
+                        <img
+                          className={clsx(index === 2 ? "w-[21px] h-5" : "")}
+                          src={`/images/icons/${
+                            index === 2 ? "holy" : "token_icon"
+                          }.png`}
+                          width={14}
+                          height={14}
+                          alt="token"
+                        ></img>
+                        <p className="text-xs font-normal">
+                          {`
                       ${index === 2 ? "" : price} ${
-                          index === 2 ? "Complete mission" : ""
-                        } to upgrade
+                            index === 2 ? "Complete mission" : ""
+                          } to upgrade
                       `}
-                      </p>
-                    </div>
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

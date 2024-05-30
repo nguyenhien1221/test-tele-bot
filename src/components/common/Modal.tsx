@@ -64,7 +64,7 @@ const Modal = ({ closeModal, children }: ModalPropsType) => {
       />
       <div
         onClick={closeModal}
-        className="fixed z-10 flex flex-col-reverse items-center w-full h-full top-0 left-0 bg-black bg-opacity-50"
+        className="fixed z-30 flex flex-col-reverse items-center w-full h-full top-0 left-0 bg-black bg-opacity-50"
       ></div>
       <div
         onMouseUpCapture={() => getMouseUp()}

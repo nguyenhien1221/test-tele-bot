@@ -6,6 +6,7 @@ export const navPaths = {
   REGISTER: "/register",
   LEADERBOARD: "/leaderboard",
   OVERLOAD: "/overload",
+  DAPP: "/dapp",
 };
 
 export interface NavBarItem {
@@ -34,7 +35,7 @@ export const navbarItems: NavBarItem[] = [
   },
   {
     icon: "/images/navbar/games.png",
-    name: "Apps",
-    path: navPaths.GAMES,
+    name: "DApp",
+    path: navPaths.DAPP,
   },
 ];

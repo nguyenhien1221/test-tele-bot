@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import Modal from "../../../components/common/Modal";
 import { Button } from "@mui/material";
-import { Slide, ToastContainer } from "react-toastify";
+// import { Slide, ToastContainer } from "react-toastify";
 import { formatDecimals } from "../../../utils/formatNumber";
 import Loading from "../../../components/common/Loading";
 import { dailyBonusValue } from "../../../constants/missions.constants";
@@ -10,7 +10,6 @@ import { dailyBonusValue } from "../../../constants/missions.constants";
 interface ModalPropsType {
   isLoading: boolean;
   data: any;
-  type: string;
   closeModal: () => void;
   handleDoMission: () => void;
 }
@@ -63,10 +62,36 @@ const DailyMissonModal = ({
     return truncatedLastClaim.getTime() < truncatedNow.getTime();
   };
 
+  const getWeekDays = (weekNumber: number) => {
+    const startDayOfWeek = (weekNumber - 1) * 7 + 1;
+    return Array.from({ length: 7 }, (_, i) => startDayOfWeek + i);
+  };
+
+  const updateDaysOfWeek = () => {
+    const curentDay =
+      data?.reduce(
+        (prev: any, current: any) => (prev.no > current.no ? prev : current),
+        0
+      ).no ?? 0;
+
+    let weekNumber = Math.floor(curentDay / 7) + 1;
+    const curentWeekDays = getWeekDays(weekNumber);
+    const maxDayOfWeek = Math.max(...curentWeekDays);
+
+    // if claim the last day of this week, but day hasnt passed yet, render current week
+    // maxDayOfWeek - 6 to get first day of next week, so make the func unlocked always compare lastclaim vs now
+    if (curentDay === maxDayOfWeek - 7 && !unlocked(maxDayOfWeek - 6)) {
+      weekNumber--;
+      return getWeekDays(weekNumber);
+    }
+
+    return curentWeekDays;
+  };
+
   return (
     <>
       <Modal closeModal={closeModal}>
-        <ToastContainer
+        {/* <ToastContainer
           position="top-left"
           closeOnClick
           transition={Slide}
@@ -74,14 +99,13 @@ const DailyMissonModal = ({
           limit={1}
           stacked
           className="top-3 max-w-[337px] left-[50%] -translate-x-[50%]"
-        />
+        /> */}
         <div className="flex flex-col h-full ">
           <div className="w-full ">
             <div className="flex flex-col items-center dark:text-white">
               <p className="text-[24px] font-bold">Login Bonus!</p>
               <p className="text-center">
-                With every missions done, your Holy Water levels up. You can
-                complete the missions in any order.
+                Login every day to claim your rewards!
               </p>
             </div>
           </div>
@@ -92,9 +116,7 @@ const DailyMissonModal = ({
           )}
           <div className="grid grid-cols-3 gap-x-4 gap-y-0 pt-5 max-h-[340px] flex-1 px-2 overflow-auto">
             {/* row 1 */}
-            {[...Array(7)].map((item: any, index: number) => {
-              const day = index + 1;
-              const isCheck = index < data?.length;
+            {updateDaysOfWeek().map((day: any, index: number) => {
               return (
                 <button
                   key={index}
@@ -131,7 +153,7 @@ const DailyMissonModal = ({
                       ></img>
                     </div>
                   )}
-                  <div className="absolute text-[11px] font-semibold left-0 top-0  text-white w-[53px] flex items-center h-[19px] bg-[#4E800D] px-[10px] rounded-br-xl rounded-tl-[12px]">
+                  <div className="absolute text-[11px] font-semibold left-0 top-0  text-white w-[60px] flex items-center h-[19px] bg-[#4E800D] px-[10px] rounded-br-xl rounded-tl-[12px]">
                     {`Day ${day}`}
                   </div>
                   <div>

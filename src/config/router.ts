@@ -8,6 +8,7 @@ import AuthLayout from "../components/layouts/AuthLayout";
 import { registerRoute } from "../modules/Register/route";
 import { leaderboardRoute } from "../modules/LeaderBoard/route";
 import { anouncementRoute } from "../modules/Global/route";
+import { dappRoute } from "../modules/Dapp/route";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ export const router = createBrowserRouter([
           friendsRoute,
           leaderboardRoute,
           anouncementRoute,
+          dappRoute,
         ],
       },
     ],

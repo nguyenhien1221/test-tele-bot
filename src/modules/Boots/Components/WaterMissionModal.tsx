@@ -9,6 +9,7 @@ import { api } from "../../../config/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { navPaths } from "../../../constants/navbar.constants";
+import { renderErrMessage } from "../../../utils/helper";
 
 interface ModalPropsType {
   isPending: boolean;
@@ -63,7 +64,7 @@ const WaterMissionsModal = ({
                   return;
                 }
 
-                toast.error(res?.data?.data?.error, {
+                toast.error(renderErrMessage(res?.data?.data?.error), {
                   style: { maxWidth: 337, height: 40, borderRadius: 8 },
                   autoClose: 2000,
                 });
@@ -114,11 +115,11 @@ const WaterMissionsModal = ({
                 }
 
                 if (res?.data?.data?.error === "incomplete task") {
-                  navigate(navPaths.MISSIONS, {
+                  navigate("/", {
                     state: { isOpenDailyModal: true },
                   });
                 }
-                toast.error(res?.data?.data?.error, {
+                toast.error(renderErrMessage(res?.data?.data?.error), {
                   style: { maxWidth: 337, height: 40, borderRadius: 8 },
                   autoClose: 2000,
                 });
@@ -172,7 +173,7 @@ const WaterMissionsModal = ({
                   navigate(navPaths.FRIENDS);
                 }
 
-                toast.error(res?.data?.data?.error, {
+                toast.error(renderErrMessage(res?.data?.data?.error), {
                   style: { maxWidth: 337, height: 40, borderRadius: 8 },
                   autoClose: 2000,
                 });
@@ -300,7 +301,7 @@ const WaterMissionsModal = ({
                   );
                 })}
 
-              <div
+              {/* <div
                 className={clsx(
                   "py-3 px-4 relative bg-white rounded-2xl p-4 w-full mb-[18px] ",
                   "dark:boder-1 dark:border-[#fff] dark:bg-transparent",
@@ -311,7 +312,7 @@ const WaterMissionsModal = ({
                 <div className="text-sm font-normal text-[#000] opacity-60 dark:text-white">
                   Follow the news so you don't miss new missions!
                 </div>
-              </div>
+              </div> */}
             </div>
           )}
 

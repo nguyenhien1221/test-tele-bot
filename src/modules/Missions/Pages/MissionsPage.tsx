@@ -1,23 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { missionsTypes } from "../../../constants/missions.constants";
 import MissionsModal from "../Components/MissionsModal";
 import { useLocation, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import useGetMissions from "../Hooks/useGetMissions";
-import {
-  getMissionsByType,
-  removeDuplicateItemsByType,
-} from "../Utils/missions";
 import useDoMissions from "../Hooks/useDoMissions";
 import { Slide, ToastContainer, toast } from "react-toastify";
 import Loading from "../../../components/common/Loading";
 import DailyMissonModal from "../Components/DailyMissonModal";
 import useGetDailyMissions from "../Hooks/useGetDaily";
 import useDoDailyMissions from "../Hooks/useDoDaily";
-import { checkSameDay } from "../../../utils/helper";
+import { renderErrMessage } from "../../../utils/helper";
 import Progress from "../../../components/common/Progress";
-import useGetMissionsStatus from "../Hooks/useGetMissionStatus";
+import { api } from "../../../config/api";
+import { navPaths } from "../../../constants/navbar.constants";
 
 const MissionsPage = () => {
   const location = useLocation();
@@ -31,62 +28,101 @@ const MissionsPage = () => {
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
 
-  const [isOpen, setisOpen] = useState({ isOpen: false, type: "" });
+  const [isOpen, setisOpen] = useState<{
+    isOpen: boolean;
+    type: string;
+    missions: any[];
+  }>({ isOpen: false, type: "", missions: [] });
   const [isOpenDailyMission, setIsOpenDailyMission] = useState<any>({
     isOpen: location?.state?.isOpenDailyModal ?? false,
     type: "",
     data: null,
   });
-  const [missionsId, setMissionId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const isDesktop = window.innerHeight < 610;
   const isSmallPhone = window.innerHeight <= 736;
 
-  const getMissionStatus = useGetMissionsStatus(String(missionsId));
-
-  const handleChooseMission = (index: string) => {
-    // const data = missionsData.data?.data.data;
-    // if (index === missionsTypes.TWITTER_FOLLOW) {
-    //   if (!data[data.length - 1]?.task_user?.completed) {
-    //     handleDoMission(data[data.length - 1]?.id);
-    //   }
-    //   return;
-    // }
-    setisOpen({ isOpen: true, type: index });
+  const handleChooseMission = (subgroupType: string, missions: any[]) => {
+    setisOpen({ isOpen: true, type: subgroupType, missions: missions });
   };
 
   const handleBackBtn = () => {
     navigate("/");
-    setisOpen({ isOpen: false, type: "" });
+    setisOpen({ isOpen: false, type: "", missions: [] });
   };
 
-  const handleDoMission = (id: string) => {
-    doMission
-      .mutateAsync(id)
-      .then((data) => {
-        const missisonId = data?.data?.data;
-        setMissionId(missisonId);
-      })
-      .then(() => {
-        if (!!getMissionStatus.data?.data?.data?.completed) {
-          toast.success("Mission completed", {
+  const handleDoMission = (item: any) => {
+    if (item?.task_user === null || !item?.task_user?.completed) {
+      // open telegram when mission telegram boost is not done yet
+      if (item.type === missionsTypes.TELEGRAM_BOOST) {
+        tele.openTelegramLink(item?.metadata?.url ?? "");
+      }
+      doMission
+        .mutateAsync(item.id)
+        .then(async (data) => {
+          setLoading(true);
+          for (let i = 0; i <= 10; i++) {
+            let res = null;
+            try {
+              res = await api.get(
+                `/api/v1/tasks/notification/${data?.data?.data}`
+              );
+            } catch (err) {
+              console.debug(err);
+            }
+
+            if (res?.data?.data != null) {
+              if (!!res?.data?.data?.data?.completed) {
+                toast.success("Mission completed", {
+                  style: { maxWidth: 337, height: 40, borderRadius: 8 },
+                  autoClose: 2000,
+                });
+                setLoading(false);
+                missionsData.refetch();
+                return;
+              }
+
+              // redirect to refer page when refer-premium mission is not done yet
+              if (
+                res?.data?.data?.error === "incomplete task" &&
+                item.type === missionsTypes.REFER_PREMIUM
+              ) {
+                navigate(navPaths.FRIENDS);
+              }
+
+              toast.error(renderErrMessage(res?.data?.data?.error), {
+                style: { maxWidth: 337, height: 40, borderRadius: 8 },
+                autoClose: 2000,
+              });
+              setLoading(false);
+              return;
+            }
+
+            if (i === 10) {
+              toast.error("Verify mission timed out", {
+                style: { maxWidth: 337, height: 40, borderRadius: 8 },
+                autoClose: 2000,
+              });
+              setLoading(false);
+              return;
+            }
+
+            await new Promise((r) => setTimeout(r, 1000));
+          }
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message, {
             style: { maxWidth: 337, height: 40, borderRadius: 8 },
             autoClose: 2000,
           });
-        } else {
-          toast.error(getMissionStatus.data?.data?.data?.error, {
-            style: { maxWidth: 337, height: 40, borderRadius: 8 },
-            autoClose: 2000,
-          });
-        }
-        missionsData.refetch();
-      })
-      .catch((err) => {
-        toast.error(err?.response?.data?.message, {
-          style: { maxWidth: 337, height: 40, borderRadius: 8 },
-          autoClose: 2000,
         });
-      });
+      return;
+    }
+    if (item.type === missionsTypes.TELEGRAM_BOOST) {
+      tele.openTelegramLink(item?.metadata?.url ?? "");
+      return;
+    }
   };
 
   const handleDoDailyMission = () => {
@@ -107,10 +143,70 @@ const MissionsPage = () => {
       });
   };
 
-  const missionGroup = removeDuplicateItemsByType(
-    missionsData.data?.data.data ?? []
-  ).filter((item) => item?.type !== missionsTypes.SIGN_IN);
+  const missions = (missionsData.data?.data?.data ?? []).filter(
+    (item: any) => item?.type !== missionsTypes.SIGN_IN
+  );
+  const missionGroups = (() => {
+    const groups: {
+      [key: string]: {
+        name: string;
+        order: number;
+        subgroups: {
+          [key: string]: {
+            subgroup_img: string;
+            type: string;
+            name: string;
+            order: number;
+            missions: any[];
+          };
+        };
+      };
+    } = {};
+    for (let i = 0; i < missions.length; i++) {
+      const missionGroupName = missions[i]?.metadata?.group_name || "Others";
+      const missionGroupOrder =
+        Number(missions[i]?.metadata?.group_order) || 999_999_999;
+      const missionSubgroupName =
+        missions[i]?.metadata?.subgroup_name || "Common";
+      const missionSubgroupType =
+        missions[i]?.metadata?.subgroup_type || "common";
+      const missionSubgroupOrder =
+        Number(missions[i]?.metadata?.subgroup_order) || 999_999_999;
+      const subgroupImgUrl =
+        missions[i]?.metadata?.subgroup_img || "/images/timeout.png";
+      const group = groups[missionGroupName] || {
+        name: missionGroupName,
+        order: missionGroupOrder,
+        subgroups: {},
+      };
 
+      const subgroup = group.subgroups[missionSubgroupType] || {
+        subgroup_img: subgroupImgUrl,
+        type: missionSubgroupType,
+        name: missionSubgroupName,
+        order: missionSubgroupOrder,
+        missions: [],
+      };
+
+      subgroup.missions.push(missions[i]);
+
+      group.subgroups[missionSubgroupType] = subgroup;
+      groups[missionGroupName] = group;
+    }
+
+    return Object.values(groups)
+      .map((group) => ({
+        ...group,
+        subgroups: Object.values(group.subgroups).sort(
+          (a, b) => a.order - b.order
+        ),
+      }))
+      .sort((a, b) => a.order - b.order);
+  })();
+
+  const modalMissions = missions.filter(
+    (item: any) => item.metadata.subgroup_name === isOpen.type
+  );
   return (
     <>
       {missionsData.isLoading ? (
@@ -128,30 +224,17 @@ const MissionsPage = () => {
           />
           {/* boot info */}
           <div className="flex flex-col items-center dark:text-white">
-            <div className="flex flex-col items-center gap-3">
-              <img
-                src="/images/icons/token_icon.png"
-                width={100}
-                height={100}
-                alt="token"
-              ></img>
-              <p className="text-[24px] font-extrabold">{`3 missions available`}</p>
-            </div>
-            <p className="text-sm font-normal">
-              Complete the mission to get more seed
-            </p>
+            <p className="text-[24px] font-extrabold">Missions</p>
           </div>
-
-          {/* options */}
 
           {/* daily missions */}
           <div
             className={clsx(
-              isDesktop ? "mt-2" : "mt-[30px]",
-              "overflow-auto max-h-[calc(100%-250px)] "
+              isDesktop ? "mt-2" : "mt-3",
+              "overflow-auto max-h-[calc(100%-100px)] "
             )}
           >
-            <div
+            {/* <div
               className={clsx(
                 "dark:bg-[#E3FCC214]",
                 " mb-6 border-[1px] border-[#4D7F0C] rounded-2xl bg-[#E3FCC2]",
@@ -166,7 +249,7 @@ const MissionsPage = () => {
                   setIsOpenDailyMission({ isOpen: true, type: "", data: null })
                 }
                 className={clsx(
-                  "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                  "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full ",
                   "dark:gradient-border-mask-mission dark:bg-transparent",
                   "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
                   "dark:boder-0 dark:drop-shadow-none "
@@ -186,9 +269,8 @@ const MissionsPage = () => {
                   <div className="">
                     <p className="font-semibold text-base">Login Bonus</p>
                     {dailyMissions?.data &&
-                    ((dailyMissions?.data.data.data?.length || 0) === 0 ||
-                      (!checkSameDay(dailyMissions?.data.data.data ?? []) &&
-                        dailyMissions?.data.data.data?.length < 7)) ? (
+                    (dailyMissions?.data.data.data?.length === 0 ||
+                      !checkSameDay(dailyMissions?.data?.data?.data ?? [])) ? (
                       <div className="flex items-center text-sm">
                         <Progress className="mr-1" value={(0 / 1) * 100} />
                         <span>{`In progress (0/1)`}</span>
@@ -211,90 +293,96 @@ const MissionsPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              className={clsx(
-                "dark:bg-[#E3FCC214]",
-                " relative z-20 border-[1px] border-[#4D7F0C] rounded-2xl bg-[#E3FCC2] ",
-                isSmallPhone ? "p-2" : "p-4"
-              )}
-            >
-              <div className="pb-[10px] font-semibold dark:text-white">
-                Our Garden
-              </div>
-              {missionGroup.map((item, index) => {
-                const totalMission = getMissionsByType(
-                  item.type,
-                  missionsData.data?.data.data ?? []
-                );
-                const doneMission = getMissionsByType(
-                  item.type,
-                  missionsData.data?.data.data ?? []
-                ).filter(
-                  (mission: any) => mission.task_user?.completed === true
-                )?.length;
-
-                return (
-                  <div
-                    onClick={() => handleChooseMission(item.type)}
-                    key={index}
-                    className={clsx(
-                      "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
-                      "dark:gradient-border-mask-mission dark:bg-transparent",
-                      "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
-                      "dark:drop-shadow-none"
-                    )}
-                  >
-                    <div className="col-span-2 flex items-center">
-                      <div>
-                        <img
-                          src={`/images/icons/${item.type}.png`}
-                          width={48}
-                          height={48}
-                          alt="storage"
-                        ></img>
-                      </div>
-                    </div>
-                    <div className="col-span-8 flex items-center dark:text-white">
-                      <div className="">
-                        <p className="font-semibold text-base">{item.type}</p>
-                        {doneMission === totalMission?.length ? (
-                          <div className="flex items-center text-sm">
-                            <img
-                              src="/images/daily/mission_complete.png"
-                              className="dark:hidden inline-block w-4 mr-1"
-                              alt=""
-                            ></img>
-                            <img
-                              src="/images/daily/dark_mission_complete.png"
-                              className="hidden dark:inline-block w-4 mr-1"
-                              alt=""
-                            ></img>
-                            <span>{`Completed (${doneMission}/${totalMission?.length})`}</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center text-sm">
-                            <Progress
-                              className="mr-1"
-                              value={(doneMission / totalMission?.length) * 100}
-                            />
-                            <span>{`In progress (${doneMission}/${totalMission?.length})`}</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+            </div> */}
+            {missionGroups.map((group, index) => {
+              return (
+                <div
+                  key={`mission-group-${index}`}
+                  className={clsx(
+                    "dark:bg-[#E3FCC214]",
+                    index !== missionGroups.length ? "mb-6" : "",
+                    "relative z-20 border-[1px] border-[#4D7F0C] rounded-2xl bg-[#E3FCC2] ",
+                    isSmallPhone ? "px-2 pt-2" : "px-4 pt-4"
+                  )}
+                >
+                  <div className="pb-[10px] font-semibold dark:text-white">
+                    {group.name}
                   </div>
-                );
-              })}
-            </div>
+                  {group.subgroups.map((subgroup, index) => {
+                    const totalMission = subgroup.missions.length;
+                    const doneMission = subgroup.missions.filter(
+                      (mission: any) => mission.task_user?.completed === true
+                    )?.length;
+
+                    return (
+                      <div
+                        onClick={() => {
+                          handleChooseMission(subgroup.name, subgroup.missions);
+                        }}
+                        key={index}
+                        className={clsx(
+                          "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                          "dark:gradient-border-mask-mission dark:bg-transparent",
+                          "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
+                          "dark:drop-shadow-none"
+                        )}
+                      >
+                        <div className="col-span-2 flex items-center">
+                          <div>
+                            <img
+                              src={subgroup.subgroup_img}
+                              width={48}
+                              height={48}
+                              alt="storage"
+                            ></img>
+                          </div>
+                        </div>
+                        <div className="col-span-8 flex items-center dark:text-white">
+                          <div className="">
+                            <p className="font-semibold text-base">
+                              {subgroup.name}
+                            </p>
+                            {doneMission === totalMission ? (
+                              <div className="flex items-center text-sm">
+                                <img
+                                  src="/images/daily/mission_complete.png"
+                                  className="dark:hidden inline-block w-4 mr-1"
+                                  alt=""
+                                ></img>
+                                <img
+                                  src="/images/daily/dark_mission_complete.png"
+                                  className="hidden dark:inline-block w-4 mr-1"
+                                  alt=""
+                                ></img>
+                                <span>{`Completed (${doneMission}/${totalMission})`}</span>
+                              </div>
+                            ) : (
+                              <div className="flex items-center text-sm">
+                                <Progress
+                                  className="mr-1"
+                                  value={(doneMission / totalMission) * 100}
+                                />
+                                <span>{`In progress (${doneMission}/${totalMission})`}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
           </div>
           {isOpen.isOpen && (
             <MissionsModal
-              isLoading={doMission.isPending || getMissionStatus.isPending}
-              handleDoMission={(id: string) => handleDoMission(id)}
-              data={missionsData.data?.data.data ?? []}
+              isLoading={doMission.isPending || loading}
+              handleDoMission={(item: string) => handleDoMission(item)}
+              missions={modalMissions}
               type={isOpen.type}
-              closeModal={() => setisOpen({ isOpen: false, type: "" })}
+              closeModal={() =>
+                setisOpen({ isOpen: false, type: "", missions: [] })
+              }
               isOpen={isOpen.isOpen}
               reFetch={() => {
                 missionsData.refetch();
@@ -307,7 +395,6 @@ const MissionsPage = () => {
               isLoading={doDailyMission.isPending}
               handleDoMission={() => handleDoDailyMission()}
               data={dailyMissions?.data.data.data ?? []}
-              type={isOpen.type}
               closeModal={() =>
                 setIsOpenDailyMission({ isOpen: false, type: "", data: null })
               }

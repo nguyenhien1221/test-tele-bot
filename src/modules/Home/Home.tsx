@@ -46,16 +46,20 @@ import useGetHappyDayHistory from "./Hooks/useGetHistoyHappyday";
 import { checkSameDay } from "../../utils/helper";
 import { missionsTypes } from "../../constants/missions.constants";
 import useGetDailyMissions from "../Missions/Hooks/useGetDaily";
-import Tooltip from "@mui/material/Tooltip";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
+import { api } from "../../config/api";
+import DailyMissonModal from "../Missions/Components/DailyMissonModal";
+import useDoDailyMissions from "../Missions/Hooks/useDoDaily";
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
+  const location = useLocation();
   const tele = window.Telegram.WebApp;
 
   tele.BackButton.hide();
 
   const mode = localStorage.getItem("mode");
-  const isMemeContest = localStorage.getItem("memeCliked");
+  // const isMemeContest = localStorage.getItem("memeCliked");
+  const isCloseGuide = sessionStorage.getItem("isClickGuide");
   const changeMode = useChangeMode((state: any) => state.updateMode);
 
   const AcountBalance = useGetAcountBalance();
@@ -68,6 +72,7 @@ const Home = () => {
   const ClaimHappyDay = useClaimHappyDay();
   const HappyDayHistory = useGetHappyDayHistory();
   const dailyMissions = useGetDailyMissions();
+  const doDailyMission = useDoDailyMissions();
 
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
   const [instorage, setInstorage] = useState<any>(() => {
@@ -82,7 +87,9 @@ const Home = () => {
     mode === "dark" ? "dark" : "light"
   );
   const [isOpenNotifi, setIsOpenNotifi] = useState<boolean>(false);
-  const [isGuideModalOpen, setIsGuideModalOpen] = useState<boolean>(false);
+  const [isGuideModalOpen, setIsGuideModalOpen] = useState<boolean>(
+    isCloseGuide === "true"
+  );
   const [isWinHappyDay, setIsWinHappyDay] = useState<{
     isOpen: boolean;
     data: any;
@@ -91,7 +98,11 @@ const Home = () => {
     data: null,
   });
   const [count, setCount] = useState<number>(0);
-  const [isToolTipOpen, setIsToolTipOpen] = useState<boolean>(false);
+  const [hasMissions, setHasMissions] = useState<boolean>(false);
+  const [isFirstLoginLoading, setIsFirstLoginLoading] = useState(false);
+  const [isOpenDailyMission, setIsOpenDailyMission] = useState<boolean>(
+    location?.state?.isOpenDailyModal ?? false
+  );
 
   const isSmallScreen = window.innerHeight <= 520;
   const LatestMessageTime = LatestMessage.data?.data.data;
@@ -158,13 +169,11 @@ const Home = () => {
       new Date().getTime()
     );
 
-  let hasMissions = false;
-
   useEffect(() => {
     if (dailyMissions.data && MissionsData.data) {
       const hasGardenMission = MissionsData.data?.data?.data
         .filter((item: any) => item?.type !== missionsTypes.SIGN_IN)
-        .some((item: any) => item.task_user === null);
+        .some((item: any) => item.task_user === null || !item.task_user.completed);
 
       const hasDailyMission =
         (dailyMissions?.data.data.data?.length || 0) === 0 ||
@@ -172,20 +181,19 @@ const Home = () => {
           dailyMissions?.data.data.data?.length < 7);
 
       if (hasDailyMission || hasGardenMission) {
-        hasMissions = true;
+        setHasMissions(true);
+        return;
       }
+      setHasMissions(false);
     }
   }, [dailyMissions.data, MissionsData.data]);
 
   useEffect(() => {
-    const isCloseGuide = sessionStorage.getItem("isClickGuide");
-    if (isCloseGuide === "true") {
-      setIsGuideModalOpen(true);
-    }
-  });
-
-  useEffect(() => {
-    if (firstLoginMission?.task_user === null) {
+    if (
+      firstLoginMission != null &&
+      (firstLoginMission?.task_user == null ||
+        !firstLoginMission?.task_user?.completed)
+    ) {
       setIsOpen(true);
     } else {
       setIsOpen(false);
@@ -261,15 +269,51 @@ const Home = () => {
   const handleClaimMissionReward = () => {
     doMission
       .mutateAsync(firstLoginMission.id)
-      .then(() => {
-        MissionsData.refetch();
-        AcountBalance.refetch();
-        AcountData.refetch();
-        setIsOpenNotifi(true);
-        setIsOpen(false);
+      .then(async (data) => {
+        setIsFirstLoginLoading(true);
+        for (let i = 0; i <= 10; i++) {
+          let res = null;
+          try {
+            res = await api.get(
+              `/api/v1/tasks/notification/${data?.data?.data}`
+            );
+          } catch (err) {
+            console.debug(err);
+          }
+
+          if (res?.data?.data != null) {
+            if (!!res?.data?.data?.data?.completed) {
+              setIsFirstLoginLoading(false);
+              MissionsData.refetch();
+              AcountBalance.refetch();
+              AcountData.refetch();
+              setIsOpenNotifi(true);
+              setIsOpen(false);
+              return;
+            }
+
+            toast.error("Something went wrong", {
+              style: { maxWidth: 337, height: 40, borderRadius: 8 },
+              autoClose: 2000,
+            });
+            setIsFirstLoginLoading(false);
+            return;
+          }
+
+          if (i === 10) {
+            toast.error("Something went wrong", {
+              style: { maxWidth: 337, height: 40, borderRadius: 8 },
+              autoClose: 2000,
+            });
+            setIsFirstLoginLoading(false);
+            return;
+          }
+
+          await new Promise((r) => setTimeout(r, 1000));
+        }
       })
       .catch((err) => {
-        toast.error(err.response?.data?.message, { autoClose: 2000 });
+        toast.error("Something went wrong", { autoClose: 2000 });
       });
   };
 
@@ -311,7 +355,7 @@ const Home = () => {
       }, 100);
       return;
     }
-    if (count >= 10) {
+    if (count === 10) {
       ClaimHappyDay.mutateAsync()
         .then((data) => {
           setIsWinHappyDay({ isOpen: true, data: data });
@@ -324,8 +368,10 @@ const Home = () => {
           toast.error(error?.response?.data?.message, {
             style: { borderRadius: 8 },
           });
+        })
+        .finally(() => {
+          setCount(0);
         });
-      setCount(0);
     }
   };
 
@@ -333,26 +379,44 @@ const Home = () => {
     setIsWinHappyDay({ isOpen: false, data: null });
   };
 
-  const handleTapMemeContest = () => {
-    tele.showPopup(
-      {
-        message: `Do you want to open twitter `,
-        buttons: [
-          { id: "link", type: "default", text: "Open" },
-          { type: "cancel" },
-        ],
-      },
-      function (btn: any) {
-        if (btn === "link") {
-          tele.openLink(
-            "https://x.com/SeedCombinator/status/1793230054803353994"
-          );
-          localStorage.setItem("memeCliked", "true");
-        } else {
-        }
-      }
-    );
+  const handleDoDailyMission = () => {
+    doDailyMission
+      .mutateAsync()
+      .then(() => {
+        toast.success("Mission completed", {
+          style: { maxWidth: 337, height: 40, borderRadius: 8 },
+          autoClose: 2000,
+        });
+        dailyMissions.refetch();
+      })
+      .catch((err) => {
+        toast.error(err?.respone?.data?.message, {
+          style: { maxWidth: 337, height: 40, borderRadius: 8 },
+          autoClose: 2000,
+        });
+      });
   };
+
+  // const handleTapMemeContest = () => {
+  //   tele.showPopup(
+  //     {
+  //       message: `Do you want to open twitter `,
+  //       buttons: [
+  //         { id: "link", type: "default", text: "Open" },
+  //         { type: "cancel" },
+  //       ],
+  //     },
+  //     function (btn: any) {
+  //       if (btn === "link") {
+  //         tele.openLink(
+  //           "https://x.com/SeedCombinator/status/1793230054803353994"
+  //         );
+  //         localStorage.setItem("memeCliked", "true");
+  //       } else {
+  //       }
+  //     }
+  //   );
+  // };
 
   return (
     <>
@@ -367,14 +431,14 @@ const Home = () => {
           )}
         >
           <div>
-            <div className="flex flex-col items-center flex-1 pt-3">
-              <p
+            <div className="flex flex-col items-center flex-1 pt-3 relative">
+              {/* <p
                 className={
                   "dark:text-white text-base font-normal ,dark:text-white"
                 }
               >
                 In Storage:
-              </p>
+              </p> */}
               <div className="flex items-center justify-center gap-2">
                 <div className="w-[50px]">
                   <img
@@ -408,38 +472,77 @@ const Home = () => {
                   </p>
                 </div>
               </div>
+
+              {/* light-dark mode btn */}
+              <button
+                onClick={handleSwitchMode}
+                className={clsx(
+                  "btn-hover z-20  rounded-lg w-[44px] h-[44px] flex justify-center items-center",
+                  "absolute left-0 top-4",
+                  "bg-[#FFFFFF] border-[1px] border-[#A1C96D]  drop-shadow-[0_2px_0px_#4C7E0B]",
+                  "dark:radial-bg dark:border-[1px] dark:border-[#B0D381]"
+                )}
+              >
+                <img
+                  className="w-[30px] h-[30px]"
+                  src={
+                    theme === "light" ? "/images/light.png" : "/images/dark.png"
+                  }
+                  alt=""
+                />
+              </button>
+
+              {/* game btn  */}
+              <button
+                className={clsx(
+                  "btn-hover z-20  rounded-lg w-[44px] h-[44px] flex justify-center items-center",
+                  "absolute right-0 top-4",
+                  "bg-[#FFFFFF] border-[2px] border-[#A1C96D]  drop-shadow-[0_2px_0px_#4C7E0B]",
+                  "dark:radial-bg dark:border-[1px] dark:border-[#B0D381]"
+                )}
+              >
+                <img
+                  className="w-[30px] h-[30px]"
+                  src={"/images/game.png"}
+                  alt=""
+                />
+              </button>
+            </div>
+            <div className="flex justify-center relative">
+              {isX4 ? (
+                <img
+                  src="/images/x4.png"
+                  className="w-[143px] h-[38px]"
+                  alt=""
+                ></img>
+              ) : isX2 ? (
+                <img
+                  src="/images/x2.png"
+                  className="w-[143px] h-[38px]"
+                  alt=""
+                ></img>
+              ) : null}
+
+              {/* daily mission btn  */}
+              <button
+                onClick={() => {
+                  setIsOpenDailyMission(true);
+                }}
+                className={clsx(
+                  "btn-hover z-20  rounded-lg w-[44px] h-[44px] flex justify-center items-center",
+                  "absolute right-0 bottom-2",
+                  "bg-[#FFFFFF] border-[2px] border-[#A1C96D]  drop-shadow-[0_2px_0px_#4C7E0B]",
+                  "dark:radial-bg dark:border-[1px] dark:border-[#B0D381]"
+                )}
+              >
+                <img
+                  className="w-[30px] h-[30px]"
+                  src={"/images/daily_icon.png"}
+                  alt=""
+                />
+              </button>
             </div>
           </div>
-          <div className="flex justify-center mt-3">
-            {isX4 ? (
-              <img
-                src="/images/x4.png"
-                className="w-[143px] h-[38px]"
-                alt=""
-              ></img>
-            ) : isX2 ? (
-              <img
-                src="/images/x2.png"
-                className="w-[143px] h-[38px]"
-                alt=""
-              ></img>
-            ) : null}
-          </div>
-          <button
-            onClick={handleSwitchMode}
-            className={clsx(
-              "btn-hover  fixed right-8  z-40  rounded-[50%] w-[48px] h-[48px] flex justify-center items-center",
-              "bg-[#7BB52C]  drop-shadow-[0_3px_0px_#4C7E0B]",
-              "dark:radial-bg dark:border-[3px] dark:border-[#B0D381]",
-              isSmallScreen ? "top-[160px]" : "top-[200px]"
-            )}
-          >
-            <img
-              className="w-[30px] h-[30px]"
-              src={theme === "light" ? "/images/light.png" : "/images/dark.png"}
-              alt=""
-            />
-          </button>
 
           <div
             onClick={() => {
@@ -457,7 +560,7 @@ const Home = () => {
               }.png')`,
             }}
           >
-            {!isMemeContest && (
+            {/* {!isMemeContest && (
               <div className="absolute top-[64%] -translate-y-[50%] left-[115px] ">
                 <img
                   onClick={() => handleTapMemeContest()}
@@ -469,7 +572,7 @@ const Home = () => {
                   alt=""
                 ></img>
               </div>
-            )}
+            )} */}
           </div>
 
           {/* storage button */}
@@ -557,48 +660,45 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="flex items-center justify-end col-span-3 ">
-                      <ClickAwayListener
-                        onClickAway={() => {
-                          setIsToolTipOpen(false);
+                      <span
+                        onClick={() => {
+                          const timeRemain = Math.floor(
+                            (1800 - timePassed) / 60
+                          );
+
+                          if (!toast.isActive("cant_claim")) {
+                            if (!isFull || isClaimed) {
+                              toast.error(
+                                `Claim after ${
+                                  timeRemain <= 1
+                                    ? `1 minute`
+                                    : `${timeRemain} minutes`
+                                }`,
+                                {
+                                  toastId: "cant_claim",
+                                  autoClose: 2000,
+                                  style: { borderRadius: 8 },
+                                }
+                              );
+                            }
+                          }
                         }}
                       >
-                        <Tooltip
-                          arrow
-                          placement="top"
-                          PopperProps={{
-                            disablePortal: false,
-                          }}
-                          onClose={() => {
-                            setIsToolTipOpen(false);
-                          }}
-                          open={isToolTipOpen}
-                          disableFocusListener
-                          disableHoverListener
-                          disableTouchListener
-                          title="Claim after 30 minutes"
+                        <LoadingButton
+                          variant="contained"
+                          loading={ClaimSeed.isPending}
+                          disabled={!isFull || isClaimed}
+                          onClick={handleClaim}
+                          className={clsx(
+                            "w-[100px] h-40px capitalize rounded-lg text-base font-bold",
+                            "text-[#fff] bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B] ",
+                            "btn-hover disabled:bg-[#B1B1B1] disabled:drop-shadow-[0_4px_0px_#797979] disabled:border-[#C4C4C4]",
+                            isSmallScreen ? "py-2" : "py-3"
+                          )}
                         >
-                          <span
-                            onClick={() => {
-                              (!isFull || isClaimed) && setIsToolTipOpen(true);
-                            }}
-                          >
-                            <LoadingButton
-                              variant="contained"
-                              loading={ClaimSeed.isPending}
-                              disabled={!isFull || isClaimed}
-                              onClick={handleClaim}
-                              className={clsx(
-                                "w-[100px] h-40px capitalize rounded-lg text-base font-bold",
-                                "text-[#fff] bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B] ",
-                                "btn-hover disabled:bg-[#B1B1B1] disabled:drop-shadow-[0_4px_0px_#797979] disabled:border-[#C4C4C4]",
-                                isSmallScreen ? "py-2" : "py-3"
-                              )}
-                            >
-                              Claim
-                            </LoadingButton>
-                          </span>
-                        </Tooltip>
-                      </ClickAwayListener>
+                          Claim
+                        </LoadingButton>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -612,14 +712,17 @@ const Home = () => {
         </div>
       )}
 
-      {isOpen && firstLoginMission?.task_user === null && (
-        <GetFirstTokenModal
-          isLoading={doMission.isPending}
-          handleClaim={() => handleClaimMissionReward()}
-          reward={formatDecimals(firstLoginMission?.reward_amount ?? 0)}
-          closeModal={() => setIsOpen(false)}
-        />
-      )}
+      {isOpen &&
+        firstLoginMission != null &&
+        (firstLoginMission.task_user == null ||
+          !firstLoginMission.task_user.completed) && (
+          <GetFirstTokenModal
+            isLoading={doMission.isPending || isFirstLoginLoading}
+            handleClaim={() => handleClaimMissionReward()}
+            reward={formatDecimals(firstLoginMission?.reward_amount ?? 0)}
+            closeModal={() => setIsOpen(false)}
+          />
+        )}
 
       <NotifiModal
         isOpen={isOpenNotifi}
@@ -629,7 +732,7 @@ const Home = () => {
       {!isGuideModalOpen && getHappyDay() && !isClaimedHappyDay && (
         <RecieveGiftModal
           handleClose={() => {
-            setIsGuideModalOpen(false);
+            setIsGuideModalOpen(true);
             sessionStorage.setItem("isClickGuide", "true");
           }}
         />
@@ -639,6 +742,15 @@ const Home = () => {
         <WinPriceModal
           data={isWinHappyDay.data}
           handleClose={() => handleClaimHappyDay()}
+        />
+      )}
+
+      {isOpenDailyMission && dailyMissions?.data && (
+        <DailyMissonModal
+          isLoading={doDailyMission.isPending}
+          handleDoMission={() => handleDoDailyMission()}
+          data={dailyMissions?.data.data.data ?? []}
+          closeModal={() => setIsOpenDailyMission(false)}
         />
       )}
     </>

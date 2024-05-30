@@ -23,9 +23,11 @@ const Friends = () => {
     navigate("/");
   };
 
-  const totalRefAmount = (AcountReferees?.data?.data?.data || []).reduce(
-    (total: any, item: any) => total + item.received_amount, 0
-  ) || 0;
+  const totalRefAmount =
+    (AcountReferees?.data?.data?.data || []).reduce(
+      (total: any, item: any) => total + item.received_amount,
+      0
+    ) || 0;
 
   const handleCopyLink = () => {
     toast.success("Link copied to clipboard", {
@@ -93,7 +95,8 @@ const Friends = () => {
           </p>
         </div>
         <p className="text-sm font-normal text-center">
-          Total seeds earned from your referrals
+          Earn 20% cashback whenever your friend claims SEED. Double cashback if
+          they're premium.
         </p>
       </div>
 
@@ -109,9 +112,9 @@ const Friends = () => {
           >
             {`Friend list (${AcountReferees.data?.data.data?.length})`}
           </p>
-          <div className="text-[12px] min-h-[30px] text-[#384426] bg-[#DEEBCC] py-2 px-[10px] rounded-lg mb-3 text-center">
+          {/* <div className="text-[12px] min-h-[30px] text-[#384426] bg-[#DEEBCC] py-2 px-[10px] rounded-lg mb-3 text-center">
             The friendlist will be updated soon due to maintenance
-          </div>
+          </div> */}
         </>
       )}
       {AcountReferees.data?.data.data?.length > 0 && (
@@ -119,48 +122,69 @@ const Friends = () => {
           className={clsx(
             "overflow-auto bg-white p-3 rounded-lg",
             isSmallScreen
-              ? "max-h-[calc(100%-250px)]"
-              : "max-h-[calc(100%-250px)]",
+              ? "max-h-[calc(100%-200px)]"
+              : "max-h-[calc(100%-230px)]",
             "border-[1px] border-[#97C35B] border-solid dark:bg-transparent"
           )}
         >
           {AcountReferees.data?.data.data &&
-            AcountReferees.data?.data.data.map((item: any) => (
-              <div
-                className={clsx(
-                  "grid grid-cols-10 gap-3 bg-white rounded-2xl py-4 px-2 w-full  ",
-                  " dark:bg-transparent dark:text-white"
-                )}
-              >
-                <div className="col-span-2 flex ">
-                  <img
-                    src="/images/icons/user.svg"
-                    width={48}
-                    height={48}
-                    alt="avt"
-                  ></img>
-                </div>
-                <div className="col-span-8">
-                  <p className="text-sm font-extrabold mb-1">{item.name}</p>
-                  <div>
-                    <div className="flex items-center gap-1">
-                      <span className="text-[#7D7D7D] dark:text-white text-sm">
-                        You received:
-                      </span>
-                      <img
-                        src="/images/icons/token_icon.png"
-                        width={18}
-                        height={18}
-                        alt="token"
-                      ></img>
-                      <p className="text-sm font-bold">
-                        {formatDecimals(item.received_amount).toFixed(6)}
-                      </p>
+            AcountReferees.data?.data.data
+              .sort((a: any, b: any) => b.is_premium - a.is_premium)
+              .map((item: any) => (
+                <div
+                  className={clsx(
+                    "grid grid-cols-10 gap-3 bg-white rounded-2xl py-4 px-2 w-full  ",
+                    " dark:bg-transparent dark:text-white"
+                  )}
+                >
+                  <div className="col-span-2 flex ">
+                    <img
+                      src="/images/icons/user.svg"
+                      width={48}
+                      height={48}
+                      alt="avt"
+                    ></img>
+                  </div>
+                  <div className="col-span-8">
+                    <div className="flex items-center gap-1 mb-1">
+                      <p className="text-sm font-extrabold ">{item.name}</p>
+                      {item.is_premium && (
+                        <span className="h-[18px] w-full flex items-center">
+                          <img
+                            className="w-4 h-[14px] dark:hidden block"
+                            src="/images/leaderboard/indicator.svg"
+                            alt=""
+                          ></img>
+                          <img
+                            className="w-4 h-[14px] dark:block hidden"
+                            src="/images/leaderboard/white_indicator.svg"
+                            alt=""
+                          ></img>
+                          <p className="ml-1 text-[12px] text-[#7D7D7D]">
+                            x2 cashback
+                          </p>
+                        </span>
+                      )}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1">
+                        <span className="text-[#7D7D7D] dark:text-white text-sm">
+                          You received:
+                        </span>
+                        <img
+                          src="/images/icons/token_icon.png"
+                          width={18}
+                          height={18}
+                          alt="token"
+                        ></img>
+                        <p className="text-sm font-bold">
+                          {formatDecimals(item.received_amount).toFixed(6)}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
         </div>
       )}
 

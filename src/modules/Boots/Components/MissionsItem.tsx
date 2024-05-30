@@ -80,12 +80,12 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
             className="h-[60px] w-[50px]"
             width={60}
             alt=""
-          ></img> 
+          ></img>
         </div>
         <div className="col-span-7 flex items-start flex-col justify-center">
           <p className="font-semibold text-base mb-2">{`Level ${level + 1}`}</p>
           <div className="flex gap-[7px] ">
-            <p className="text-sm">{`x${boostWaterLevel[level]?.speed} per hour`}</p>
+            <p className="text-sm">{`x${boostWaterLevel[level]?.speed} speed`}</p>
           </div>
         </div>
       </div>

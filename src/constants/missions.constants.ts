@@ -1,8 +1,10 @@
 export const missionsTypes = {
   SIGN_IN: "sign-in",
-  TWITTER_FOLLOW: "twitter-follow",
-  TELEGRAM__JOIN: "telegram-join",
+  TWITTER_FOLLOW: "Follow us",
+  TELEGRAM__JOIN: "Join community",
   DAILY: "daily",
+  TELEGRAM_BOOST: "telegram-boost",
+  REFER_PREMIUM: "refer-premium",
 };
 
 export const missionsOptions = [

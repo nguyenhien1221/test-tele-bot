@@ -20,3 +20,13 @@ export const getNumberFormatUs = (
     maximumFractionDigits: fix ? fix : 2,
   });
 };
+
+export const convertNumber = (number: number) => {
+  const thresholds = [100, 500, 1000, 5000, 10000, 100000];
+  for (let i = thresholds.length - 1; i >= 0; i--) {
+    if (number >= thresholds[i]) {
+      return thresholds[i] + "+";
+    }
+  }
+  return number.toString();
+};

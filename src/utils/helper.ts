@@ -40,3 +40,10 @@ export const getMobileOS = () => {
   }
   return "Other";
 };
+
+export const renderErrMessage = (errMessage: string) => {
+  if (!errMessage) {
+    return "Something went wrong";
+  }
+  return errMessage === "incomplete task" ? "Incomplete mission" : errMessage;
+};

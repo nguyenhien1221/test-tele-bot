@@ -12,7 +12,7 @@ import ItemLoading from "../../../components/common/ItemLoading";
 import TeleMissionItem from "./TeleMissionItem";
 
 interface ModalPropsType {
-  data: any;
+  missions: any[];
   type: string;
   isOpen: boolean;
   closeModal: () => void;
@@ -24,13 +24,12 @@ interface ModalPropsType {
 const MissionsModal = ({
   closeModal,
   type,
-  data,
+  missions,
   handleDoMission,
   isLoading,
   reFetch,
 }: ModalPropsType) => {
   const tele = window.Telegram.WebApp;
-  const missions = getMissionsByType(type, data);
   const [loadingItem, setLoadingItem] = useState("");
 
   const handleShowPopup = (item: any, url: string) => {
@@ -45,21 +44,26 @@ const MissionsModal = ({
       },
       function (btn: any) {
         if (btn === "link") {
-          if (!item?.task_user?.completed) {
+          if (item?.task_user === null || !item?.task_user?.completed) {
             tele.openLink(
-              item.type === "twitter-follow" ? url : item.metadata.url
+              item.type === missionsTypes.TWITTER_FOLLOW ? url : item.metadata.url
             );
-            handleDoMission(item?.id);
+            handleDoMission(item);
             return;
           }
           tele.openLink(
-            item.type === "twitter-follow" ? url : item.metadata.url
+            item.type === missionsTypes.TWITTER_FOLLOW ? url : item.metadata.url
           );
         } else {
         }
       }
     );
   };
+
+  const handleClickMissionOthers = (item: any) => {
+    setLoadingItem(item.id);
+    handleDoMission(item);
+  }
 
   // const handleOpenLink = (item: any) => {
   //   setLoadingItem(item.id);
@@ -111,12 +115,12 @@ const MissionsModal = ({
                 const twitterUrl = () => {
                   if (
                     getMobileOS() === "Android" &&
-                    item.type === "twitter-follow"
+                    item.type === missionsTypes.TWITTER_FOLLOW
                   ) {
                     return item.metadata?.url;
                   } else if (
                     getMobileOS() === "iOS" &&
-                    item.type === "twitter-follow"
+                    item.type === missionsTypes.TWITTER_FOLLOW
                   ) {
                     return item.metadata?.ios_url;
                   } else {
@@ -124,11 +128,96 @@ const MissionsModal = ({
                   }
                 };
 
-                return item.type === "twitter-follow" ? (
+                if (item.type === missionsTypes.TWITTER_FOLLOW) {
+                  return (
+                    <button
+                      disabled={isLoading}
+                      key={item.id}
+                      onClick={() => {
+                        handleShowPopup(item, twitterUrl());
+                      }}
+                      rel="noreferrer"
+                      className={clsx("text-center relative w-full mt-1")}
+                    >
+                      {item.task_user != null &&
+                        (item.task_user.repeats || 0 >= item.repeats) && (
+                          <div
+                            className={clsx(
+                              "w-[30px] h-[30px] rounded-[50%] flex items-center justify-center absolute right-4 -top-4 z-20"
+                            )}
+                          >
+                            <img
+                              src="/images/holy/check_mark.png"
+                              className="w-[31px] h-[31px]"
+                              alt=""
+                            ></img>
+                          </div>
+                        )}
+                      <div
+                        key={index}
+                        className={clsx(
+                          "z-10 py-3 px-4 relative cursor-pointer grid grid-cols-12 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                          "dark:gradient-border-mask-mission dark:bg-transparent",
+                          " dark:drop-shadow-none ",
+                          item.task_user?.repeats || 0 >= item.repeats
+                            ? "border-[1px] border-solid border-[#000] drop-shadow-none brightness-50"
+                            : "border-[1px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C] btn-hover dark:btn-click"
+                        )}
+                      >
+                        <div className="col-span-9 flex">
+                          <div className=" flex items-center mr-4">
+                            <div className="rounded-lg drop-shadow-lg overflow-hidden w-8 h-8">
+                              <img
+                                src={item.metadata.image_url}
+                                className="w-8 h-8"
+                                alt=""
+                              ></img>
+                            </div>
+                          </div>
+
+                          <div className=" flex items-center text-start justify-start text-[15px]">
+                            {item.name}
+                          </div>
+                        </div>
+                        <div className="col-span-3 flex items-center justify-start">
+                          {isLoading &&
+                            item.id === loadingItem &&
+                            !item?.task_user?.completed ? (
+                            <ItemLoading />
+                          ) : (
+                            <>
+                              <img
+                                src="/images/icons/token_icon.png"
+                                className="w-4 h-4"
+                                alt=""
+                              ></img>
+                              <span className="font-semibold text-sm ml-1">{`+${formatDecimals(
+                                item.reward_amount ?? 0
+                              )}`}</span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </button>
+                  )
+                }
+
+                if (item.type === missionsTypes.TELEGRAM__JOIN) {
+                  return (
+                    <TeleMissionItem
+                      key={item.id}
+                      item={item}
+                      reFetch={() => reFetch()}
+                    />
+                  )
+                }
+
+                return (
                   <button
+                    disabled={isLoading}
                     key={item.id}
                     onClick={() => {
-                      handleShowPopup(item, twitterUrl());
+                      handleClickMissionOthers(item);
                     }}
                     rel="noreferrer"
                     className={clsx("text-center relative w-full mt-1")}
@@ -175,8 +264,8 @@ const MissionsModal = ({
                       </div>
                       <div className="col-span-3 flex items-center justify-start">
                         {isLoading &&
-                        item.id === loadingItem &&
-                        !item?.task_user?.completed ? (
+                          item.id === loadingItem &&
+                          !item?.task_user?.completed ? (
                           <ItemLoading />
                         ) : (
                           <>
@@ -193,15 +282,9 @@ const MissionsModal = ({
                       </div>
                     </div>
                   </button>
-                ) : (
-                  <TeleMissionItem
-                    key={item.id}
-                    item={item}
-                    reFetch={() => reFetch()}
-                  />
-                );
+                )
               })}
-            <div
+            {/* <div
               className={clsx(
                 "py-3 px-4 relative bg-white rounded-2xl p-4 w-full mb-[18px] ",
                 "dark:boder-1 dark:border-[#fff] dark:bg-transparent",
@@ -212,7 +295,7 @@ const MissionsModal = ({
               <div className="text-sm font-normal text-[#000] opacity-60 dark:text-white">
                 Follow the news so you don't miss new missions!
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="pt-3 pb-1 h-[80px]">

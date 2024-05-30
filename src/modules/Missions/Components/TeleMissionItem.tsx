@@ -6,6 +6,7 @@ import useDoMissions from "../Hooks/useDoMissions";
 import { toast } from "react-toastify";
 
 import { api } from "../../../config/api";
+import { renderErrMessage } from "../../../utils/helper";
 
 interface TeleMissionItemType {
   item: any;
@@ -19,8 +20,8 @@ const TeleMissionItem = ({ item, reFetch }: TeleMissionItemType) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleOpenLink = () => {
-    if (!item?.task_user?.completed) {
-      tele.openTelegramLink(item?.metadata?.url);
+    if (item?.task_user === null || !item?.task_user?.completed) {
+      tele.openTelegramLink(item?.metadata?.url ?? "");
       doMission
         .mutateAsync(item?.id)
         .then(async (data) => {
@@ -46,7 +47,7 @@ const TeleMissionItem = ({ item, reFetch }: TeleMissionItemType) => {
                 return;
               }
 
-              toast.error(res?.data?.data?.error, {
+              toast.error(renderErrMessage(res?.data?.data?.error), {
                 style: { maxWidth: 337, height: 40, borderRadius: 8 },
                 autoClose: 2000,
               });
@@ -71,11 +72,12 @@ const TeleMissionItem = ({ item, reFetch }: TeleMissionItemType) => {
         });
       return;
     }
-    tele.openTelegramLink(item?.metadata?.url);
+    tele.openTelegramLink(item?.metadata?.url ?? "");
   };
   return (
     <>
       <button
+        disabled={loading}
         onClick={() => {
           handleOpenLink();
         }}

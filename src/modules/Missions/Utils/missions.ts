@@ -14,3 +14,13 @@ export const removeDuplicateItemsByType = (items: any[]): any[] => {
 
   return Array.from(uniqueItemsMap.values());
 };
+
+export const removeDuplicateItemsByGroup = (items: any[]): any[] => {
+  const uniqueItemsMap = new Map<string, any>();
+
+  items.forEach((item) => {
+    uniqueItemsMap.set(item.metadata.group_name, item);
+  });
+
+  return Array.from(uniqueItemsMap.values());
+};
