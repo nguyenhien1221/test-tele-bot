@@ -38,9 +38,9 @@ const Friends = () => {
 
   const handleShareLink = () => {
     tele.openTelegramLink(
-      `https://t.me/share/url?url={${
+      `https://t.me/share/url?url=${
         process.env.REACT_APP_BOT_URL
-      }startapp=${String(userID)}}&text={text}`
+      }startapp=${String(userID)}`
     );
   };
 
