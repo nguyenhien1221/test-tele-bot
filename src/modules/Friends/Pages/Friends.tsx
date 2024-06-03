@@ -23,6 +23,9 @@ const Friends = () => {
     navigate("/");
   };
 
+  const defaultInviteTextEncoded =
+    "Join+now+with+me+as+an+early+bird+%E2%80%94+SEED+just+launched+with+huge+potential%21++Plant-to-earn+from+thousands+of+Web3+projects+in+SEED+ecosystem+with+me.+%F0%9F%A5%B3+%2B0.1+SEED+as+a+welcome+gift+%F0%9F%92%B2Earn+20%25+cashback+from+frens";
+
   const totalRefAmount =
     (AcountReferees?.data?.data?.data || []).reduce(
       (total: any, item: any) => total + item.received_amount,
@@ -40,7 +43,7 @@ const Friends = () => {
     tele.openTelegramLink(
       `https://t.me/share/url?url=${
         process.env.REACT_APP_BOT_URL
-      }startapp=${String(userID)}`
+      }startapp=${String(userID)}&text=${defaultInviteTextEncoded}`
     );
   };
 
