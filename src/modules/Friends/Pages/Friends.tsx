@@ -49,7 +49,7 @@ const Friends = () => {
   };
 
   return (
-    <div className="pt-[42px] px-4 pb-[100px] bg-[#F2FFE0] dark:bg-transparent h-screen relative z-30">
+    <div className="pt-[42px] px-4 pb-[100px] bg-[#F2FFE0] dark:bg-transparent h-screen fixed bottom-0 z-30">
       <ToastContainer
         position="top-left"
         closeOnClick
