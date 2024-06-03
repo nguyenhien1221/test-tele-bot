@@ -36,6 +36,14 @@ const Friends = () => {
     });
   };
 
+  const handleShareLink = () => {
+    tele.openTelegramLink(
+      `https://t.me/share/url?url={${
+        process.env.REACT_APP_BOT_URL
+      }startapp=${String(userID)}}&text={text}`
+    );
+  };
+
   const handleNavigateLeaderBoard = () => {
     navigate(navPaths.LEADERBOARD);
   };
@@ -189,20 +197,29 @@ const Friends = () => {
       )}
 
       <div className="absolute bottom-[30px] right-4 left-4">
-        <CopyToClipboard
-          text={`${process.env.REACT_APP_BOT_URL}startapp=${String(userID)}`}
-        >
+        <div className="flex">
           <Button
-            onClick={() => handleCopyLink()}
-            startIcon={<img src="images/icons/copy.svg" alt="copy" />}
+            onClick={() => handleShareLink()}
             className={clsx(
               "font-bold capitalize text-[16px] text-white py-[18px] w-full rounded-xl ",
               "btn-hover  bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
             )}
           >
-            Copy invite link
+            Invite
           </Button>
-        </CopyToClipboard>
+          <CopyToClipboard
+            text={`${process.env.REACT_APP_BOT_URL}startapp=${String(userID)}`}
+          >
+            <Button
+              onClick={() => handleCopyLink()}
+              startIcon={<img src="images/icons/copy.svg" alt="copy" />}
+              className={clsx(
+                "font-bold capitalize text-[16px] text-white py-[18px] w-full rounded-xl ",
+                "btn-hover  bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
+              )}
+            ></Button>
+          </CopyToClipboard>
+        </div>
       </div>
     </div>
   );
