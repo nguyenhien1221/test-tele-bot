@@ -15,7 +15,7 @@ const AuthLayout = () => {
   tele.expand();
 
   const overflow = 100;
-  document.body.style.overflowY = "hidden";
+  document.body.style.overflowY = "auto";
   document.body.style.marginTop = `${overflow}px`;
   document.body.style.height = window.innerHeight + overflow + "px";
   document.body.style.paddingBottom = `${overflow}px`;

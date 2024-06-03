@@ -26,7 +26,7 @@ const HomeLayout = () => {
   return (
     <div
       className={clsx(
-        "h-full bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A] relative z-0 left-0 right-0 bottom-0 top-0",
+        "h-full bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A] fixed z-0 left-0 right-0 bottom-0 top-0",
         "dark:bg-none dark:bg-[#030C02]"
       )}
     >
