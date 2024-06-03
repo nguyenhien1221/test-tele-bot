@@ -23,7 +23,7 @@ const Friends = () => {
     navigate("/");
   };
 
-  const defaultInviteTextEncoded = `%0ASEED%20App%20-%20where%20every%20SEED%20is%20the%20genesis%20of%20everything.%0A%0AJoin%20now%20with%20me%20as%20an%20early%20bird%20%E2%80%94%20SEED%20just%20launched%20with%20huge%20potential%21%0A%0APlant-to-earn%20from%20thousands%20of%20Web3%20projects%20in%20SEED%20ecosystem%20with%20me.%0A%F0%9F%A5%B3%20%2B0.1%20SEED%20as%20a%20welcome%20gift%0A%F0%9F%92%B2Earn%2020%25%20cashback%20from%20frens`;
+  const defaultInviteTextEncoded = `%F0%9F%98%8D%20%20SEED%20App%20-%20where%20every%20SEED%20is%20the%20genesis%20of%20everything.%0A%0AJoin%20now%20with%20me%20as%20an%20early%20bird%20%E2%80%94%20SEED%20just%20launched%20with%20huge%20potential%21%0A%0APlant-to-earn%20from%20thousands%20of%20Web3%20projects%20in%20SEED%20ecosystem%20with%20me.%0A%F0%9F%A5%B3%20%2B0.1%20SEED%20as%20a%20welcome%20gift%0A%F0%9F%92%B2Earn%2020%25%20cashback%20from%20frens`;
 
   const totalRefAmount =
     (AcountReferees?.data?.data?.data || []).reduce(
