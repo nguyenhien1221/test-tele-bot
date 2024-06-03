@@ -23,8 +23,14 @@ const Friends = () => {
     navigate("/");
   };
 
-  const defaultInviteTextEncoded =
-    "Join+now+with+me+as+an+early+bird+%E2%80%94+SEED+just+launched+with+huge+potential%21++Plant-to-earn+from+thousands+of+Web3+projects+in+SEED+ecosystem+with+me.+%F0%9F%A5%B3+%2B0.1+SEED+as+a+welcome+gift+%F0%9F%92%B2Earn+20%25+cashback+from+frens";
+  const defaultInviteTextEncoded = `
+    SEED App - where every SEED is the genesis of everything.
+    
+    Join now with me as an early bird — SEED just launched with huge potential!
+    
+    Plant-to-earn from thousands of Web3 projects in SEED ecosystem with me.
+    🥳 +0.1 SEED as a welcome gift
+    💲Earn 20% cashback from frens`;
 
   const totalRefAmount =
     (AcountReferees?.data?.data?.data || []).reduce(
