@@ -5,8 +5,13 @@ export const navPaths = {
   GAMES: "/games",
   REGISTER: "/register",
   LEADERBOARD: "/leaderboard",
-  OVERLOAD: "/overload",
+  MAINTENANCE: "/maintenance",
+  RELOAD: "/reload",
+  VOTING: "/voting",
+  TUT: "/tutorial",
   DAPP: "/dapp",
+  MYSTERY_BOX: "/mystery-box",
+  UPGRADE_BOX: "/upgrade-box",
 };
 
 export interface NavBarItem {
@@ -35,7 +40,12 @@ export const navbarItems: NavBarItem[] = [
   },
   {
     icon: "/images/navbar/games.png",
-    name: "DApp",
+    name: "DApps",
     path: navPaths.DAPP,
   },
+  // {
+  //   icon: "/images/navbar/voting-game.png",
+  //   name: "Games",
+  //   path: navPaths.VOTING,
+  // },
 ];

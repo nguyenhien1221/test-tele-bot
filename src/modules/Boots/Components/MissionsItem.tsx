@@ -26,7 +26,7 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
       >
         <div className="col-span-2 flex ">
           <img
-            src={`/images/storage/${level + 1}.png`}
+            src={`/images/storage/${level + 1}.png?v=3`}
             width={60}
             alt="storage"
           ></img>
@@ -52,7 +52,11 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
         )}
       >
         <div className="col-span-2 flex ">
-          <img src={`/images/trees/${level + 1}.png`} width={60} alt=""></img>
+          <img
+            src={`/images/trees/${level + 1}.png?v=3`}
+            width={60}
+            alt=""
+          ></img>
         </div>
         <div className="col-span-5 flex flex-col justify-center items-start">
           <p className="font-semibold text-base mb-2">{`Level ${level + 1}`}</p>
@@ -76,7 +80,7 @@ const MissionsItem = ({ level, type }: MissionsItemPropType) => {
       >
         <div className="col-span-2 flex ">
           <img
-            src={`/images/holy/${level + 1}.png`}
+            src={`/images/holy/${level + 1}.png?v=3`}
             className="h-[60px] w-[50px]"
             width={60}
             alt=""

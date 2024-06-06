@@ -1,7 +1,7 @@
-import { navbarItems } from "../../constants/navbar.constants";
+import { navPaths, navbarItems } from "../../constants/navbar.constants";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
-import { Slide, ToastContainer } from "react-toastify";
+import { Slide, ToastContainer, toast } from "react-toastify";
 
 interface NavBarPropType {
   hasMission: boolean;
@@ -10,6 +10,15 @@ const NavBar = ({ hasMission }: NavBarPropType) => {
   const navigate = useNavigate();
 
   const handleShowToast = (index: number, item: any) => {
+    if (item.path === navPaths.DAPP || item.path === navPaths.VOTING) {
+      !toast.isActive("coming_soon") &&
+        toast.error("Coming soon", {
+          style: { maxWidth: 337, height: 40, borderRadius: 8 },
+          autoClose: 2000,
+          toastId: "coming_soon",
+        });
+      return;
+    }
     navigate(item.path);
     return;
   };
@@ -28,7 +37,7 @@ const NavBar = ({ hasMission }: NavBarPropType) => {
       <div className="">
         <div className={clsx("grid grid-cols-4 gap-2 ")}>
           {navbarItems.map((item, index) => (
-            <div className="grid-cols-1 relative" key={index}>
+            <div className="flex-1 relative" key={index}>
               {index === 0 && hasMission && (
                 <div className="w-[14px] h-[14px] absolute z-10 -right-1">
                   <div className="animate-blink w-full h-full absolute  rounded-[50%] "></div>
@@ -42,7 +51,7 @@ const NavBar = ({ hasMission }: NavBarPropType) => {
                 )}
                 onClick={() => handleShowToast(index, item)}
               >
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center pb-[2px] lsm:pb-0">
                   <div className="h-[36px] ">
                     <img
                       className="h-[36px]"

@@ -17,9 +17,7 @@ const GetFirstTokenModal = ({
 
   return (
     <>
-      <div
-        className="fixed z-40 flex flex-col-reverse items-center w-full h-full top-0 left-0 bg-black bg-opacity-50"
-      ></div>
+      <div className="fixed z-40 flex flex-col-reverse items-center w-full h-full top-0 left-0 bg-black bg-opacity-50"></div>
       <div className="fixed z-40 pb-4 pt-10  bottom-0 left-0 flex flex-col items-center h-[75%] px-4 w-full rounded-t-2xl bg-[#F2FFE0]">
         <div className="h-[5px] absolute -top-[14px] w-10 bg-white rounded-2xl"></div>
         <div
@@ -27,7 +25,7 @@ const GetFirstTokenModal = ({
             "max-h-[117px] w-full mb-2 flex flex-1 justify-center bg-no-repeat bg-contain bg-center",
             isSmallScreen ? "max-h-[100px]" : ""
           )}
-          style={{ backgroundImage: "url('/images/icons/token_icon.png')" }}
+          style={{ backgroundImage: "url('/images/create.png?v=3')" }}
         ></div>
         <div className="text-[32px] font-black">{`+${reward} SEED`}</div>
 

@@ -16,7 +16,7 @@ const CardItem = () => {
         <div>
           <div className="flex items-center gap-1">
             <img
-              src="/images/icons/token_icon.png"
+              src="/images/icons/token_icon.png?v=3"
               width={14}
               height={14}
               alt="token"

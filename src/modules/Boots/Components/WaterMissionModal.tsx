@@ -15,7 +15,7 @@ interface ModalPropsType {
   isPending: boolean;
   data: any;
   closeModal: () => void;
-  handleDoMission: (id: string) => void;
+  handleOpenDailyMission: () => void;
   closeWaterMissionModal: () => void;
   reFetch: () => void;
 }
@@ -24,7 +24,7 @@ const WaterMissionsModal = ({
   isPending,
   data,
   closeModal,
-  handleDoMission,
+  handleOpenDailyMission,
   closeWaterMissionModal,
   reFetch,
 }: ModalPropsType) => {
@@ -115,9 +115,7 @@ const WaterMissionsModal = ({
                 }
 
                 if (res?.data?.data?.error === "incomplete task") {
-                  navigate("/", {
-                    state: { isOpenDailyModal: true },
-                  });
+                  handleOpenDailyMission();
                 }
                 toast.error(renderErrMessage(res?.data?.data?.error), {
                   style: { maxWidth: 337, height: 40, borderRadius: 8 },

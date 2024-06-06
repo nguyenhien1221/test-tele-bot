@@ -30,3 +30,9 @@ export const convertNumber = (number: number) => {
   }
   return number.toString();
 };
+
+export const formatNumberUS = (value: number | string) => {
+  return typeof value === "number"
+    ? value.toLocaleString("en-US")
+    : (+value).toLocaleString("en-US");
+};

@@ -6,7 +6,6 @@ import { theme } from "./styles/theme";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./config/queryClient";
 import { Slide, ToastContainer } from "react-toastify";
-// import { SDKProvider } from "@tma.js/sdk-react";
 declare global {
   interface Window {
     Telegram: any;
@@ -22,7 +21,6 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {/* <SDKProvider> */}
       <QueryClientProvider client={queryClient}>
         <ToastContainer
           transition={Slide}
@@ -37,7 +35,6 @@ function App() {
         />
         <RouterProvider router={router}></RouterProvider>
       </QueryClientProvider>
-      {/* </SDKProvider> */}
     </ThemeProvider>
   );
 }

@@ -6,6 +6,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.prune-cache {
+  display: none;
+}
+
+.prune-cache-2 {
+  display: none;
+}
+
 .font-x {
   font-family: "Varela Round", sans-serif !important;
   font-weight: 400;
@@ -197,21 +205,21 @@ code {
 }
 
 .Toastify__toast {
-  width: fit-content !important;
+  max-width: fit-content !important;
   display: flex;
   align-items: center;
   padding: 0 !important;
-  height: 40px !important;
+  max-height: 60px !important;
   min-height: unset !important;
 }
 
 .Toastify__toast-body {
   margin: 0 !important;
-  padding: 0 10px !important;
+  padding: 5px 10px !important;
   font-weight: 600;
   color: #000;
-  height: 17px !important;
-  text-align: center;
+  height: 40px !important;
+  text-align: left !important;
   font-size: 16px !important;
 }
 
@@ -228,7 +236,8 @@ code {
 
 .MuiTooltip-tooltip {
   background-color: white !important;
-  width: 230px !important;
+  max-width: 398px;
+  min-width: 230px;
   color: black !important;
   margin-top: 14px !important;
   border-radius: 14px !important;
@@ -236,12 +245,22 @@ code {
 }
 
 .MuiTooltip-popper {
-  width: 230px !important;
+  max-width: 398px;
+  min-width: 230px;
 }
 
 .MuiTooltip-arrow::before {
   background-color: #fff !important;
   box-shadow: 0px 2px 5px #c5c5c5;
+}
+
+.box-tooltip {
+  .MuiTooltip-popper {
+    transform: translate3d(0px, -115px, 0px) !important;
+  }
+  .MuiTooltip-arrow {
+    transform: translate3d(60px, 0px, 0px) !important;
+  }
 }
 
 .dark\:radial-bg:where(.dark, .dark *) {
@@ -256,6 +275,9 @@ code {
 .btn-hover:active {
   transform: translateY(4px);
   filter: drop-shadow(0px 0px 0px) !important;
+
+  /* Fix flickering on ios */
+  border: none;
 }
 
 .dark\:btn-click:where(.dark, .dark *):active {
@@ -293,5 +315,203 @@ code {
 
   100% {
     transform: scale(1);
+  }
+}
+
+.cm-avatar img {
+  animation: shakeAvatar;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+/* .cm-avatar img:nth-of-type(even) { animation-delay: .5s }
+.cm-avatar img:nth-of-type(odd) { animation-delay: 10s } */
+
+@keyframes shakeAvatar {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  5% {
+    transform: translate(3px, 0) rotate(5deg);
+  }
+  10% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  15% {
+    transform: translate(-3px, 0) rotate(-5deg);
+  }
+  20% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+.rotateVoting {
+  animation: rotate;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  /* 50% {
+    transform: rotate(180deg);
+  } */
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.shake_calendar {
+  animation-name: shake;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(2px, 0px) rotate(0deg);
+  }
+  50% {
+    transform: translate(-2px, 0px) rotate(0deg);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+}
+
+.liner_bg {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.dark\:dark_liner_bg:where(.dark, .dark *) {
+  background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.loadingProgress {
+  box-sizing: content-box;
+  height: 7px;
+  position: relative;
+  background: #f0f0f0;
+}
+.loadingProgress > span {
+  display: block;
+  height: 100%;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  /* border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px; */
+  background-color: #afe760;
+  background-image: linear-gradient(
+    center bottom,
+    rgb(111, 255, 150) 37%,
+    rgb(84, 240, 84) 69%
+  );
+  /* box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.4); */
+  position: relative;
+  overflow: hidden;
+}
+.loadingProgress > span:after,
+.animate > span > span {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.4) 75%,
+    transparent 75%,
+    transparent
+  );
+  z-index: 1;
+  background-size: 50px 50px;
+  animation: move 4s linear infinite;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  overflow: hidden;
+}
+
+.animate > span:after {
+  display: none;
+}
+
+@keyframes move {
+  0% {
+    background-position: 50px 50px;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.paper-firework-appear {
+  animation: appear 0.2s ease-in;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.box-appear {
+  animation: box_appear 0.2s ease-in;
+}
+
+@keyframes box_appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.flare {
+  animation: spin 20s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

@@ -23,7 +23,7 @@ const TimeoutModal = ({ handleClose }: ModalPropsType) => {
         >
           <img
             className="h-[135px] w-[127px] mb-2"
-            src={`/images/timeout.png`}
+            src={`/images/timeout.png?v=3`}
             alt=""
           ></img>
           <div className="text-center ">

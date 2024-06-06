@@ -38,7 +38,7 @@ import { Button } from "@mui/material";
 import useGetLatestMessage from "./Hooks/useGetLatestMessage";
 import NotifiModal from "../../components/common/NotifiModal";
 import { useChangeMode } from "../../store/modeStore";
-import RecieveGiftModal from "./Components/RecieveGiftModal";
+// import RecieveGiftModal from "./Components/RecieveGiftModal";
 import WinPriceModal from "./Components/WinPriceModal";
 import useGetHappyDay from "./Hooks/useGetHappyDay";
 import useClaimHappyDay from "./Hooks/useClaimHappyDay";
@@ -49,18 +49,31 @@ import useGetDailyMissions from "../Missions/Hooks/useGetDaily";
 import { api } from "../../config/api";
 import DailyMissonModal from "../Missions/Components/DailyMissonModal";
 import useDoDailyMissions from "../Missions/Hooks/useDoDaily";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { navPaths } from "../../constants/navbar.constants";
+import OpenBoxAoouncement from "../MysteryBox/Components/OpenBoxAoouncement";
+import useGetBoxMe from "../MysteryBox/Hooks/useGetBoxMe";
+import useGetMyBox from "../MysteryBox/Hooks/useGetMyBox";
+import useGetBoxSettings from "../MysteryBox/Hooks/useGetBoxSetting";
+import { useMyBox } from "../../store/boxStore";
+import { useBoxSettings } from "../../store/boxSettingsStore";
+import useClaimBox from "../MysteryBox/Hooks/useClaimBox";
 
 const Home = () => {
-  const location = useLocation();
+  console.debug("cache prune");
   const tele = window.Telegram.WebApp;
 
   tele.BackButton.hide();
 
+  const navigate = useNavigate();
   const mode = localStorage.getItem("mode");
   // const isMemeContest = localStorage.getItem("memeCliked");
   const isCloseGuide = sessionStorage.getItem("isClickGuide");
   const changeMode = useChangeMode((state: any) => state.updateMode);
+  const setBox = useMyBox((state: any) => state.updateBox);
+  const setBoxSettings = useBoxSettings(
+    (state: any) => state.updateBoxSettings
+  );
 
   const AcountBalance = useGetAcountBalance();
   const AcountData = useGetAcountDetails();
@@ -73,6 +86,10 @@ const Home = () => {
   const HappyDayHistory = useGetHappyDayHistory();
   const dailyMissions = useGetDailyMissions();
   const doDailyMission = useDoDailyMissions();
+  const BoxMe = useGetBoxMe();
+  const MyBox = useGetMyBox();
+  const BoxSettings = useGetBoxSettings();
+  const ClaimBox = useClaimBox();
 
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
   const [instorage, setInstorage] = useState<any>(() => {
@@ -100,20 +117,35 @@ const Home = () => {
   const [count, setCount] = useState<number>(0);
   const [hasMissions, setHasMissions] = useState<boolean>(false);
   const [isFirstLoginLoading, setIsFirstLoginLoading] = useState(false);
-  const [isOpenDailyMission, setIsOpenDailyMission] = useState<boolean>(
-    location?.state?.isOpenDailyModal ?? false
+  const [isOpenDailyMission, setIsOpenDailyMission] = useState<boolean>(false);
+  const [isOpenMysteryBox, setIsOpenMysteryBox] = useState<boolean>(
+    MyBox.data?.data?.data === undefined
   );
 
-  const isSmallScreen = window.innerHeight <= 520;
+  const isSmallScreen = window.innerHeight <= 590;
   const LatestMessageTime = LatestMessage.data?.data.data;
   const ReadMessageTime = localStorage.getItem("readMessageTime");
   const date = new Date().toISOString();
 
   const isReadNewMessage = LatestMessageTime?.date > Number(ReadMessageTime);
 
+  let OPEN_BOX_DAY = 0;
+
+  if (BoxSettings.data) {
+    OPEN_BOX_DAY = Number(
+      new Date(BoxSettings.data?.data?.data?.claim_box_after).getTime()
+    );
+  }
+
+  const boxLevel = MyBox.data
+    ? MyBox.data?.data?.data?.level + MyBox.data?.data?.data?.upgrades?.length
+    : BoxMe.data?.data?.data?.initial_box_level;
+
+  const isDayToOpenBox = new Date().getTime() >= OPEN_BOX_DAY;
+
   const firstLoginMission =
     MissionsData.data &&
-    MissionsData.data.data.data.find((item: any) => item.type === "sign-in");
+    MissionsData.data.data.data?.find((item: any) => item.type === "sign-in");
 
   let minedSeed = 0;
 
@@ -157,9 +189,6 @@ const Home = () => {
     boardingEventStart2 < new Date().getTime() &&
     new Date().getTime() < boardingEventEnd2;
 
-  const isClaimedHappyDay =
-    HappyDayHistory.data && checkSameDay(HappyDayHistory.data.data.data);
-
   const miningSpeed =
     HappyDayHistory.data &&
     calculateMiningSpeed(
@@ -169,18 +198,33 @@ const Home = () => {
       new Date().getTime()
     );
 
+  let hasDailyMission = false;
+  if (dailyMissions?.data) {
+    hasDailyMission =
+      dailyMissions?.data.data.data?.length === 0 ||
+      !checkSameDay(dailyMissions?.data.data.data);
+  }
+
+  let hasBox = MyBox.data === undefined;
+
+  useEffect(() => {
+    if (BoxMe.data) {
+      setBox(BoxMe.data?.data?.data);
+    }
+    if (BoxSettings.data) {
+      setBoxSettings(BoxSettings.data?.data?.data);
+    }
+  }, [BoxMe.data, BoxSettings.data]);
+
   useEffect(() => {
     if (dailyMissions.data && MissionsData.data) {
       const hasGardenMission = MissionsData.data?.data?.data
-        .filter((item: any) => item?.type !== missionsTypes.SIGN_IN)
-        .some((item: any) => item.task_user === null || !item.task_user.completed);
+        ?.filter((item: any) => item?.type !== missionsTypes.SIGN_IN)
+        ?.some(
+          (item: any) => item.task_user === null || !item.task_user.completed
+        );
 
-      const hasDailyMission =
-        (dailyMissions?.data.data.data?.length || 0) === 0 ||
-        (!checkSameDay(dailyMissions?.data.data.data ?? []) &&
-          dailyMissions?.data.data.data?.length < 7);
-
-      if (hasDailyMission || hasGardenMission) {
+      if (hasGardenMission) {
         setHasMissions(true);
         return;
       }
@@ -261,7 +305,10 @@ const Home = () => {
         AcountData.refetch();
       })
       .catch((err) => {
-        toast.error(err.response.data.message, { autoClose: 2000 });
+        toast.error(err.response.data.message, {
+          style: { maxWidth: 337, height: 40, borderRadius: 8 },
+          autoClose: 2000,
+        });
         AcountData.refetch();
       });
   };
@@ -346,6 +393,13 @@ const Home = () => {
     return false;
   };
 
+  const checkHistoryClaimHappyDays = () => {
+    if (!!HappyDayHistory.data) {
+      return checkSameDay(HappyDayHistory.data?.data?.data ?? []);
+    }
+    return true;
+  };
+
   const handleTapTree = () => {
     if (count < 10) {
       setCount(count + 1);
@@ -356,22 +410,23 @@ const Home = () => {
       return;
     }
     if (count === 10) {
-      ClaimHappyDay.mutateAsync()
-        .then((data) => {
-          setIsWinHappyDay({ isOpen: true, data: data });
-          AcountBalance.refetch();
-          AcountData.refetch();
-          MissionsData.refetch();
-          HappyDayHistory.refetch();
-        })
-        .catch((error) => {
-          toast.error(error?.response?.data?.message, {
-            style: { borderRadius: 8 },
+      !ClaimHappyDay.isPending &&
+        ClaimHappyDay.mutateAsync()
+          .then((data) => {
+            setIsWinHappyDay({ isOpen: true, data: data });
+            AcountBalance.refetch();
+            AcountData.refetch();
+            MissionsData.refetch();
+            HappyDayHistory.refetch();
+          })
+          .catch((error) => {
+            toast.error(error?.response?.data?.message, {
+              style: { borderRadius: 8 },
+            });
+          })
+          .finally(() => {
+            setCount(0);
           });
-        })
-        .finally(() => {
-          setCount(0);
-        });
     }
   };
 
@@ -388,6 +443,7 @@ const Home = () => {
           autoClose: 2000,
         });
         dailyMissions.refetch();
+        MissionsData.refetch();
       })
       .catch((err) => {
         toast.error(err?.respone?.data?.message, {
@@ -397,26 +453,29 @@ const Home = () => {
       });
   };
 
-  // const handleTapMemeContest = () => {
-  //   tele.showPopup(
-  //     {
-  //       message: `Do you want to open twitter `,
-  //       buttons: [
-  //         { id: "link", type: "default", text: "Open" },
-  //         { type: "cancel" },
-  //       ],
-  //     },
-  //     function (btn: any) {
-  //       if (btn === "link") {
-  //         tele.openLink(
-  //           "https://x.com/SeedCombinator/status/1793230054803353994"
-  //         );
-  //         localStorage.setItem("memeCliked", "true");
-  //       } else {
-  //       }
-  //     }
-  //   );
-  // };
+  const handleTapTreeBox = () => {
+    tele.openTelegramLink("https://t.me/seedupdates/44");
+  };
+
+  const handleNavigateToBox = () => {
+    navigate(navPaths.MYSTERY_BOX);
+  };
+
+  const handleClaimBox = () => {
+    ClaimBox.mutateAsync()
+      .then(() => {
+        MyBox.refetch();
+        setIsOpenMysteryBox(true);
+        navigate(navPaths.MYSTERY_BOX);
+      })
+      .catch((err) => {
+        setIsOpenMysteryBox(true);
+        toast.error(err?.response?.data?.message, {
+          style: { maxWidth: 337, height: 40, borderRadius: 8 },
+          autoClose: 2000,
+        });
+      });
+  };
 
   return (
     <>
@@ -430,19 +489,13 @@ const Home = () => {
             "bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A]"
           )}
         >
-          <div>
-            <div className="flex flex-col items-center flex-1 pt-3 relative">
-              {/* <p
-                className={
-                  "dark:text-white text-base font-normal ,dark:text-white"
-                }
-              >
-                In Storage:
-              </p> */}
+          <div className="mt-[20px]">
+            <div className="flex flex-col items-center flex-1 relative">
+              <p className="dark:text-[#fff]">In Storage:</p>
               <div className="flex items-center justify-center gap-2">
                 <div className="w-[50px]">
                   <img
-                    src="/images/icons/token_icon.png"
+                    src="/images/icons/token_icon.png?v=3"
                     width={44}
                     height={44}
                     alt="token"
@@ -458,7 +511,7 @@ const Home = () => {
                 </p>
                 <div className="flex items-center gap-1">
                   <img
-                    src="/images/icons/token_icon.png"
+                    src="/images/icons/token_icon.png?v=3"
                     width={17}
                     height={17}
                     alt="token"
@@ -473,27 +526,8 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* light-dark mode btn */}
-              <button
-                onClick={handleSwitchMode}
-                className={clsx(
-                  "btn-hover z-20  rounded-lg w-[44px] h-[44px] flex justify-center items-center",
-                  "absolute left-0 top-4",
-                  "bg-[#FFFFFF] border-[1px] border-[#A1C96D]  drop-shadow-[0_2px_0px_#4C7E0B]",
-                  "dark:radial-bg dark:border-[1px] dark:border-[#B0D381]"
-                )}
-              >
-                <img
-                  className="w-[30px] h-[30px]"
-                  src={
-                    theme === "light" ? "/images/light.png" : "/images/dark.png"
-                  }
-                  alt=""
-                />
-              </button>
-
               {/* game btn  */}
-              <button
+              {/* <button
                 className={clsx(
                   "btn-hover z-20  rounded-lg w-[44px] h-[44px] flex justify-center items-center",
                   "absolute right-0 top-4",
@@ -506,9 +540,9 @@ const Home = () => {
                   src={"/images/game.png"}
                   alt=""
                 />
-              </button>
+              </button> */}
             </div>
-            <div className="flex justify-center relative">
+            <div className="flex justify-center relative mt-2">
               {isX4 ? (
                 <img
                   src="/images/x4.png"
@@ -523,6 +557,45 @@ const Home = () => {
                 ></img>
               ) : null}
 
+              {/* light-dark mode btn */}
+              <button
+                onClick={handleSwitchMode}
+                className={clsx(
+                  "btn-hover z-20  rounded-lg w-[44px] h-[44px] flex justify-center items-center",
+                  "absolute left-0 -bottom-[10px]"
+                  // "bg-[#FFFFFF] border-[1px] border-[#A1C96D]  drop-shadow-[0_2px_0px_#4C7E0B]",
+                  // "dark:radial-bg dark:border-[1px] dark:border-[#B0D381]"
+                )}
+              >
+                <img
+                  className="w-[44px] h-[44px]"
+                  src={
+                    theme === "light"
+                      ? "/images/light.png?v=3"
+                      : "/images/dark.png?v=3"
+                  }
+                  alt=""
+                />
+              </button>
+
+              {/* mystery box btn */}
+              {isDayToOpenBox &&
+                BoxMe.data?.data?.data?.initial_box_level > 0 && (
+                  <button
+                    onClick={handleNavigateToBox}
+                    className={clsx(
+                      "btn-hover z-20  rounded-lg w-[44px] h-[44px] flex justify-center items-center",
+                      "absolute left-0 -bottom-[65px]"
+                    )}
+                  >
+                    <img
+                      className="w-[44px] h-[44px]"
+                      src={`/images/box/${boxLevel}.png?v=3`}
+                      alt=""
+                    />
+                  </button>
+                )}
+
               {/* daily mission btn  */}
               <button
                 onClick={() => {
@@ -530,54 +603,75 @@ const Home = () => {
                 }}
                 className={clsx(
                   "btn-hover z-20  rounded-lg w-[44px] h-[44px] flex justify-center items-center",
-                  "absolute right-0 bottom-2",
-                  "bg-[#FFFFFF] border-[2px] border-[#A1C96D]  drop-shadow-[0_2px_0px_#4C7E0B]",
-                  "dark:radial-bg dark:border-[1px] dark:border-[#B0D381]"
+                  "absolute right-0 -bottom-[10px]"
+                  // "bg-[#FFFFFF] border-[2px] border-[#A1C96D]  drop-shadow-[0_2px_0px_#4C7E0B]",
+                  // "dark:radial-bg dark:border-[1px] dark:border-[#B0D381]"
+                )}
+              >
+                {hasDailyMission && (
+                  <div className="w-[10px] h-[10px] absolute z-10 -right-0 top-0">
+                    <div className="animate-blink w-full h-full absolute  rounded-[50%] "></div>
+                    <div className="w-full h-full bg-[#FFA928] absolute  rounded-[50%] "></div>
+                  </div>
+                )}
+                <img
+                  className="w-[48px] h-[52px]"
+                  src={"/images/daily_icon.png?v=3"}
+                  alt=""
+                />
+              </button>
+
+              {/* voting game btn  */}
+              <button
+                onClick={() => navigate(navPaths.VOTING)}
+                className={clsx(
+                  "btn-hover z-20 rounded-lg w-[44px] h-[44px] flex justify-center items-center",
+                  "absolute right-0 -bottom-[65px]"
                 )}
               >
                 <img
-                  className="w-[30px] h-[30px]"
-                  src={"/images/daily_icon.png"}
+                  className="w-[48px] h-[52px]"
+                  src={"/images/voting-game.png"}
                   alt=""
                 />
               </button>
             </div>
           </div>
-
           <div
             onClick={() => {
-              getHappyDay() && !isClaimedHappyDay && handleTapTree();
+              getHappyDay() && !checkHistoryClaimHappyDays() && handleTapTree();
             }}
             ref={treeRef}
             className={clsx(
-              "flex flex-1 max-h-[550px] relative justify-center bg-no-repeat bg-contain bg-center z-30 ",
+              "flex flex-1 max-h-[510px] relative justify-center bg-no-repeat bg-contain bg-center z-10",
               // isSmallScreen ? "mb-2 mt-2" : "mb-5 mt-4 ",
-              getHappyDay() && !isClaimedHappyDay ? "mt-0 mb-0" : "mt-0 mb-0"
+              getHappyDay() && !checkHistoryClaimHappyDays()
+                ? "mt-0 mb-0"
+                : "mt-0 mb-0"
             )}
             style={{
               backgroundImage: `url('/images/trees/${
-                getHappyDay() && !isClaimedHappyDay ? 7 : 8
-              }.png')`,
+                getHappyDay() && !checkHistoryClaimHappyDays() ? 7 : 8
+              }.png?v=4')`,
             }}
           >
-            {/* {!isMemeContest && (
-              <div className="absolute top-[64%] -translate-y-[50%] left-[115px] ">
+            {!isDayToOpenBox && (
+              <div className="absolute top-[69%] -translate-y-[50%] left-[33%] ">
                 <img
-                  onClick={() => handleTapMemeContest()}
+                  onClick={() => handleTapTreeBox()}
                   className={clsx(
-                    "dance-human",
-                    isSmallScreen ? "w-[48px] h-[60px]" : "w-[78px] h-[90px]"
+                    isSmallScreen ? "w-[48px] h-[50px]" : "w-[70px] h-[70px]"
                   )}
-                  src="/images/trees/human.png"
+                  src="/images/tree_box.png"
                   alt=""
                 ></img>
               </div>
-            )} */}
+            )}
           </div>
 
           {/* storage button */}
-          <div className=" dark:rounded-2xl z-10">
-            <div className={clsx("max-h-[90px] ", isSmallScreen ? "mt-1" : "")}>
+          <div className="dark:rounded-2xl z-10">
+            <div className={clsx("max-h-[90px]", isSmallScreen ? "mt-1" : "")}>
               <div className="dark:gradient-border-mask-storage dark:rounded-2xl">
                 <div
                   className={clsx(
@@ -622,7 +716,7 @@ const Home = () => {
                             getStorageUpgradesLevel(
                               AcountData.data?.data.data
                             ) + 1
-                          }.png`}
+                          }.png?v=3`}
                           width={isSmallScreen ? 52 : 62}
                           alt="storage"
                         ></img>
@@ -644,6 +738,7 @@ const Home = () => {
                             "Filled"
                           ) : (
                             <Countdown
+                              isShowDay={false}
                               date={endTime * 1000}
                               onComplete={() => clearInterval(countProgess)}
                             ></Countdown>
@@ -729,14 +824,14 @@ const Home = () => {
         handleClose={() => setIsOpenNotifi(false)}
       />
 
-      {!isGuideModalOpen && getHappyDay() && !isClaimedHappyDay && (
+      {/* {!isGuideModalOpen && getHappyDay() && !checkHistoryClaimHappyDays() && (
         <RecieveGiftModal
           handleClose={() => {
             setIsGuideModalOpen(true);
             sessionStorage.setItem("isClickGuide", "true");
           }}
         />
-      )}
+      )} */}
 
       {isWinHappyDay.isOpen && isWinHappyDay.data && (
         <WinPriceModal
@@ -753,6 +848,20 @@ const Home = () => {
           closeModal={() => setIsOpenDailyMission(false)}
         />
       )}
+
+      {isOpenMysteryBox &&
+        isDayToOpenBox &&
+        hasBox &&
+        BoxMe.data?.data?.data?.initial_box_level > 0 && (
+          <OpenBoxAoouncement
+            isLoading={ClaimBox.isPending}
+            level={BoxMe.data?.data?.data?.initial_box_level}
+            handleClose={() => {}}
+            handleClaimBox={() => {
+              handleClaimBox();
+            }}
+          />
+        )}
     </>
   );
 };

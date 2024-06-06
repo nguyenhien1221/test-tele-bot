@@ -36,7 +36,7 @@ export function calculateMinedSeeds(
   let minedSeed = 0;
   let consumedStorageSize = 0;
 
-  for (let i = 0; i < copied.length; i++) {
+  for (let i = 0; i < copied?.length; i++) {
     let upgrade = copied[i];
     let newMiningSpeedLevel = currentMiningSpeedLevel;
     let newStorageSizeLevel = currentStorageSizeLevel;
@@ -177,7 +177,7 @@ export const boardingEventStart = new Date(
   Date.UTC(2024, 4, 7, 0, 0, 0)
 ).getTime();
 export const boardingEventEnd = new Date(
-  Date.UTC(2024, 5, 10, 0, 0, 0)
+  Date.UTC(2024, 6, 1, 0, 0, 0)
 ).getTime();
 
 export const boardingEventStart2 = new Date("2024-05-21T09:00:00.0Z").getTime();
@@ -336,7 +336,7 @@ export function calculateMinedSeeds2(
 export function HappyDaysUserRewardsToBoosts(rewards: any) {
   var boosts: Boost[] = [];
 
-  for (var i = 0; i < rewards.length; i++) {
+  for (var i = 0; i < rewards?.length; i++) {
     var reward = rewards[i];
     switch (reward.type) {
       case "mining-speed":

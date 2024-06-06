@@ -11,6 +11,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { registerImgs } from "../../../constants/register";
 
 const CreateAcount = () => {
+  console.debug('cache prune - 2');
   const tele = window.Telegram.WebApp;
 
   tele.BackButton.show();

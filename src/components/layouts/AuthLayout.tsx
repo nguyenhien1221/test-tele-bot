@@ -3,6 +3,8 @@ import { navPaths } from "../../constants/navbar.constants";
 import useGetAcountDetails from "../Hooks/useRegister";
 import { Suspense } from "react";
 import Loading from "../common/Loading";
+import { AxiosError } from "axios";
+import { ResponseCode } from "../../constants/response";
 
 const AuthLayout = () => {
   const location = useLocation();
@@ -23,22 +25,41 @@ const AuthLayout = () => {
 
   const AcountData = useGetAcountDetails();
 
-  // console.log(AcountData);
+  const statusCode = (AcountData.error as AxiosError)?.response?.status
 
   if (AcountData.isLoading) return <Loading />;
-  // if (
-  //   AcountData?.error &&
-  //   AcountData?.error?.code === "ERR_NETWORK" &&
-  //   location.pathname !== navPaths.OVERLOAD
-  // )
-  //   return <Navigate to={navPaths.OVERLOAD} />;
-  // navigate to register page if user doesn't have acount
-  if (!AcountData.data && location.pathname !== navPaths.REGISTER)
-    return <Navigate to={navPaths.REGISTER} />;
-  // navigate to home page if user has acount
-  if (AcountData.data && location.pathname === navPaths.REGISTER)
-    return <Navigate to="/" />;
 
+  // navigate to reload page if has error
+  if (
+    (statusCode === ResponseCode.SERVER_ERR ||
+      statusCode === ResponseCode.SERVER_UNKNOWN ||
+      statusCode === ResponseCode.UNAUTHORIZED) &&
+    location.pathname !== navPaths.RELOAD
+  )
+    return <Navigate to={navPaths.RELOAD} />;
+
+  // navigate to maintenance when fix maintain server
+  if (
+    statusCode === ResponseCode.SERVER_MAINTAIN &&
+    location.pathname !== navPaths.MAINTENANCE
+  )
+    return <Navigate to={navPaths.MAINTENANCE} />;
+
+  // navigate to register page if dont have acount
+  if (!AcountData.data &&
+    location.pathname !== navPaths.REGISTER &&
+    statusCode === ResponseCode.NOT_FOUND
+  )
+    return <Navigate to={navPaths.REGISTER} />;
+
+  // navigate to home page if user has acount
+  if (AcountData.data &&
+    (location.pathname === navPaths.REGISTER ||
+    location.pathname === navPaths.MAINTENANCE ||
+    location.pathname === navPaths.RELOAD)
+  )
+    return <Navigate to="/" />;
+  
   return (
     <Suspense fallback={<Loading />}>
       <Outlet />

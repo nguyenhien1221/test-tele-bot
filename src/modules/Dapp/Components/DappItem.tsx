@@ -19,7 +19,9 @@ const DappItem = ({ dappItems, numberOfItems }: DappItemProps) => {
       <div className="pt-[13px] pb-6 px-[20px]">
         <p className="font-extrabold mb-4">{`SECRET ${numberOfItems} // $TBA${numberOfItems}`}</p>
         <div className="w-[71px] h-[25px] bg-[#E1E1E1] py-1 px-[10px] text-sm font-medium rounded">
-          <p className="leading-[16px] ">Smeme</p>
+          <p className="leading-[16px] font-medium text-center">
+            {numberOfItems === 2 ? "NFT" : "Smeme"}
+          </p>
         </div>
         <div className="my-4">
           {dappItems.map((item) => {

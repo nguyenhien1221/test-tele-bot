@@ -27,10 +27,14 @@ import useGetWaterMissions from "../Hooks/useGetHolyTask";
 import useDoWaterMissions from "../Hooks/useDoWaterMission";
 import WaterMissionsModal from "../Components/WaterMissionModal";
 import useUpgradeWater from "../Hooks/useUpgradeHolyWater";
-import { navPaths } from "../../../constants/navbar.constants";
-import useGetMissionsStatus from "../../Missions/Hooks/useGetMissionStatus";
+// import { navPaths } from "../../../constants/navbar.constants";
+// import useGetMissionsStatus from "../../Missions/Hooks/useGetMissionStatus";
+import DailyMissonModal from "../../Missions/Components/DailyMissonModal";
+import useGetDailyMissions from "../../Missions/Hooks/useGetDaily";
+import useDoDailyMissions from "../../Missions/Hooks/useDoDaily";
 
 const Boots = () => {
+  console.debug('cache prune - 2');
   const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
 
@@ -41,6 +45,8 @@ const Boots = () => {
   const WaterMission = useGetWaterMissions();
   const DoWaterMission = useDoWaterMissions();
   const UpgradeWater = useUpgradeWater();
+  const dailyMissions = useGetDailyMissions();
+  const doDailyMission = useDoDailyMissions();
 
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
@@ -48,10 +54,11 @@ const Boots = () => {
   const [isOpen, setisOpen] = useState<any>({ isOpen: false, type: 0 });
   const [isOpenWater, setIsOpenWater] = useState<boolean>(false);
   const [isWaterMissionOpen, setIsWaterMissionOpen] = useState(false);
-  const [missionId, setMissionId] = useState("");
+  // const [missionId, setMissionId] = useState("");
+  const [isOpenDailyMission, setIsOpenDailyMission] = useState<boolean>(false);
 
   const isDesktop = window.innerHeight < 610 ? true : false;
-  const GetMissionStatus = useGetMissionsStatus(String(missionId));
+  // const GetMissionStatus = useGetMissionsStatus(String(missionId));
   const handleUpgrade = () => {
     if (isOpen.type === bootTypeEnum.STORAGE) {
       UpgradeStorage.mutateAsync()
@@ -127,80 +134,80 @@ const Boots = () => {
     });
   };
 
-  const handleDoWaterMision = (item: any) => {
-    if (item.type === "like and retweet") {
-      tele.openLink(item.metadata.url);
-      DoWaterMission.mutateAsync(item.id)
-        .then(() => {
-          toast.success("Mission completed", {
-            style: { maxWidth: 337, height: 40, borderRadius: 8 },
-            autoClose: 2000,
-          });
-          WaterMission.refetch();
-        })
-        .catch((err) => {
-          toast.error(err?.response?.data?.message, {
-            style: { maxWidth: 337, height: 40, borderRadius: 8 },
-            autoClose: 2000,
-          });
-        });
+  // const handleDoWaterMision = (item: any) => {
+  //   if (item.type === "like and retweet") {
+  //     tele.openLink(item.metadata.url);
+  //     DoWaterMission.mutateAsync(item.id)
+  //       .then(() => {
+  //         toast.success("Mission completed", {
+  //           style: { maxWidth: 337, height: 40, borderRadius: 8 },
+  //           autoClose: 2000,
+  //         });
+  //         WaterMission.refetch();
+  //       })
+  //       .catch((err) => {
+  //         toast.error(err?.response?.data?.message, {
+  //           style: { maxWidth: 337, height: 40, borderRadius: 8 },
+  //           autoClose: 2000,
+  //         });
+  //       });
 
-      return;
-    }
-    if (item.type === "check-in") {
-      DoWaterMission.mutateAsync(item.id)
-        .then((data) => {
-          const missisonId = data?.data?.data;
-          setMissionId(missisonId);
-        })
-        .then(() => {
-          if (GetMissionStatus.data?.data?.data?.repeats >= item.repeats) {
-            toast.success("Mission completed", {
-              style: { maxWidth: 337, height: 40, borderRadius: 8 },
-              autoClose: 2000,
-            });
-          } else {
-            toast.error(GetMissionStatus.data?.data?.data?.error, {
-              style: { maxWidth: 337, height: 40, borderRadius: 8 },
-              autoClose: 2000,
-            });
-          }
-          WaterMission.refetch();
-        })
-        .catch((err) => {
-          if (err.response?.data?.message === "incomplete task") {
-            navigate(navPaths.MISSIONS, { state: { isOpenDailyModal: true } });
-          }
-        });
-    }
-    if (item.type === "refer") {
-      DoWaterMission.mutateAsync(item.id)
-        .then((data) => {
-          const missisonId = data?.data?.data;
-          setMissionId(missisonId);
-        })
-        .then(() => {
-          if (GetMissionStatus.data?.data?.data?.repeats >= item.repeats) {
-            toast.success("Mission completed", {
-              style: { maxWidth: 337, height: 40, borderRadius: 8 },
-              autoClose: 2000,
-            });
-          } else {
-            toast.error(GetMissionStatus.data?.data?.data?.error, {
-              style: { maxWidth: 337, height: 40, borderRadius: 8 },
-              autoClose: 2000,
-            });
-          }
-          WaterMission.refetch();
-        })
-        .catch((err) => {
-          toast.error(err?.response?.data?.message, {
-            style: { maxWidth: 337, height: 40, borderRadius: 8 },
-            autoClose: 2000,
-          });
-        });
-    }
-  };
+  //     return;
+  //   }
+  //   if (item.type === "check-in") {
+  //     DoWaterMission.mutateAsync(item.id)
+  //       .then((data) => {
+  //         const missisonId = data?.data?.data;
+  //         setMissionId(missisonId);
+  //       })
+  //       .then(() => {
+  //         if (GetMissionStatus.data?.data?.data?.repeats >= item.repeats) {
+  //           toast.success("Mission completed", {
+  //             style: { maxWidth: 337, height: 40, borderRadius: 8 },
+  //             autoClose: 2000,
+  //           });
+  //         } else {
+  //           toast.error(GetMissionStatus.data?.data?.data?.error, {
+  //             style: { maxWidth: 337, height: 40, borderRadius: 8 },
+  //             autoClose: 2000,
+  //           });
+  //         }
+  //         WaterMission.refetch();
+  //       })
+  //       .catch((err) => {
+  //         if (err.response?.data?.message === "incomplete task") {
+  //           navigate(navPaths.MISSIONS, { state: { isOpenDailyModal: true } });
+  //         }
+  //       });
+  //   }
+  //   if (item.type === "refer") {
+  //     DoWaterMission.mutateAsync(item.id)
+  //       .then((data) => {
+  //         const missisonId = data?.data?.data;
+  //         setMissionId(missisonId);
+  //       })
+  //       .then(() => {
+  //         if (GetMissionStatus.data?.data?.data?.repeats >= item.repeats) {
+  //           toast.success("Mission completed", {
+  //             style: { maxWidth: 337, height: 40, borderRadius: 8 },
+  //             autoClose: 2000,
+  //           });
+  //         } else {
+  //           toast.error(GetMissionStatus.data?.data?.data?.error, {
+  //             style: { maxWidth: 337, height: 40, borderRadius: 8 },
+  //             autoClose: 2000,
+  //           });
+  //         }
+  //         WaterMission.refetch();
+  //       })
+  //       .catch((err) => {
+  //         toast.error(err?.response?.data?.message, {
+  //           style: { maxWidth: 337, height: 40, borderRadius: 8 },
+  //           autoClose: 2000,
+  //         });
+  //       });
+  //   }
+  // };
 
   const handleOpenWaterMissionModal = () => {
     setIsWaterMissionOpen(true);
@@ -226,6 +233,24 @@ const Boots = () => {
       });
   };
 
+  const handleDoDailyMission = () => {
+    doDailyMission
+      .mutateAsync()
+      .then(() => {
+        toast.success("Mission completed", {
+          style: { maxWidth: 337, height: 40, borderRadius: 8 },
+          autoClose: 2000,
+        });
+        dailyMissions.refetch();
+      })
+      .catch((err) => {
+        toast.error(err?.respone?.data?.message, {
+          style: { maxWidth: 337, height: 40, borderRadius: 8 },
+          autoClose: 2000,
+        });
+      });
+  };
+
   return (
     <div
       className={clsx(
@@ -247,7 +272,7 @@ const Boots = () => {
         <p className="text-base font-normal">Your balance</p>
         <div className="flex items-center gap-2">
           <img
-            src="/images/icons/token_icon.png"
+            src="/images/icons/token_icon.png?v=3"
             width={44}
             height={44}
             alt="token"
@@ -282,18 +307,21 @@ const Boots = () => {
             if (index === 0) {
               price = storagePrice;
               level = getStorageUpgradesLevel(AcountData.data?.data.data);
-              icon = `/images/storage/${getStorageUpgradesLevel(AcountData.data?.data.data) + 1
-                }.png`;
+              icon = `/images/storage/${
+                getStorageUpgradesLevel(AcountData.data?.data.data) + 1
+              }.png?v=3`;
             } else if (index === 1) {
               price = speedPrice;
               level = getSpeedUpgradesLevel(AcountData.data?.data.data);
-              icon = `/images/trees/${getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
-                }.png`;
+              icon = `/images/trees/${
+                getSpeedUpgradesLevel(AcountData.data?.data.data) + 1
+              }.png?v=3`;
             } else {
               price = 0.2;
               level = getWaterUpgradesLevel(AcountData.data?.data.data);
-              icon = `/images/holy/${getWaterUpgradesLevel(AcountData.data?.data.data) + 1
-                }.png`;
+              icon = `/images/holy/${
+                getWaterUpgradesLevel(AcountData.data?.data.data) + 1
+              }.png?v=3`;
             }
 
             return (
@@ -318,8 +346,9 @@ const Boots = () => {
                   </div>
                 </div>
                 <div className="col-span-5 dark:text-white">
-                  <p className="font-semibold mb-1">{`${item.title} Level ${level + 1
-                    }`}</p>
+                  <p className="font-semibold mb-1">{`${item.title} Level ${
+                    level + 1
+                  }`}</p>
                   <div className=" mb-1">
                     <p className="text-sm font-normal">{item.description}</p>
                   </div>
@@ -336,7 +365,7 @@ const Boots = () => {
                           className={clsx(index === 2 ? "w-[21px] h-5" : "")}
                           src={`/images/icons/${
                             index === 2 ? "holy" : "token_icon"
-                          }.png`}
+                          }.png?v=3`}
                           width={14}
                           height={14}
                           alt="token"
@@ -392,7 +421,9 @@ const Boots = () => {
           }}
           isPending={DoWaterMission.isPending}
           data={WaterMission.data?.data.data ?? []}
-          handleDoMission={(item: any) => handleDoWaterMision(item)}
+          handleOpenDailyMission={() => {
+            setIsOpenDailyMission(true);
+          }}
           closeModal={() => {
             setIsWaterMissionOpen(false);
             setIsOpenWater(false);
@@ -400,6 +431,15 @@ const Boots = () => {
           closeWaterMissionModal={() => {
             setIsWaterMissionOpen(false);
           }}
+        />
+      )}
+
+      {isOpenDailyMission && dailyMissions?.data && (
+        <DailyMissonModal
+          isLoading={doDailyMission.isPending}
+          handleDoMission={() => handleDoDailyMission()}
+          data={dailyMissions?.data.data.data ?? []}
+          closeModal={() => setIsOpenDailyMission(false)}
         />
       )}
     </div>

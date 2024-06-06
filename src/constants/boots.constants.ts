@@ -8,7 +8,7 @@ export const bootOptions = [
   {
     icon: "/images/storage/1.png",
     title: "Storage",
-    description: "Decrease time between claims",
+    description: "Increase time between claims",
   },
   {
     icon: "/images/trees/1.png",

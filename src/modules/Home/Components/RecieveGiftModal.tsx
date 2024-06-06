@@ -5,7 +5,6 @@ interface RecieveGiftModalProps {
 }
 
 const RecieveGiftModal = ({ handleClose }: RecieveGiftModalProps) => {
-  const isSmallScreen = window.innerHeight <= 520 ;
   return (
     <div
       onClick={handleClose}
@@ -13,134 +12,34 @@ const RecieveGiftModal = ({ handleClose }: RecieveGiftModalProps) => {
     >
       <div
         className={clsx(
-          "h-screen w-screen overflow-hidden flex flex-col flex-1 px-4 pb-[140px] relative ",
-          "dark:bg-transparent dark:bg-gradient-to-b from-transparent via-transparent to-transparent ",
-          "bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A]"
+          "h-screen w-screen overflow-hidden flex flex-col flex-1 px-4 pb-[140px]"
         )}
       >
-        <div className="opacity-0">
-          <div className="flex flex-col items-center flex-1 ">
-            <p
-              className={
-                "dark:text-white text-base font-normal ,dark:text-white"
-              }
-            >
-              In Storage:
-            </p>
-            <div className="flex items-center gap-2">
-              <img
-                src="/images/icons/token_icon.png"
-                width={44}
-                height={44}
-                alt="token"
-              ></img>
-              <p className="dark:text-white text-[35px] font-black"></p>
-            </div>
-            <div className="flex gap-2 items-center">
-              <p className="dark:text-white text-base font-normal">
-                SEED Balance:
-              </p>
-              <div className="flex items-center gap-1">
-                <img
-                  src="/images/icons/token_icon.png"
-                  width={17}
-                  height={17}
-                  alt="token"
-                ></img>
-              </div>
-            </div>
-          </div>
+        <div className="h-[180px]">
         </div>
-
         <div
           className={clsx(
-            "flex flex-1 max-h-[560px] justify-center bg-no-repeat bg-contain bg-center z-30 relative",
-            isSmallScreen ? "mb-2 mt-2" : "mb-5 mt-4"
+            "flex flex-1 max-h-[382px] justify-center bg-no-repeat bg-contain bg-center z-30 relative",
           )}
           style={{
-            backgroundImage: "url('/images/trees/6.png')",
+            backgroundImage: "url('/images/trees/8.png?v=3')",
           }}
         >
-          <img
-            className="h-[110px] w-[88px] absolute right-0 -bottom-[30px]"
-            src="/images/icons/arrowguide.png"
-            alt=""
-          ></img>
-          <div className="text-white text-center font-semibold absolute -bottom-[55px]">
-            Tap 10 times to <br />
-            unbox special gift
-          </div>
-        </div>
-
-        <div className=" rounded-2xl  z-10 opacity-0">
           <div
             className={clsx(
-              "max-h-[90px] min-h-[90px] ",
-              isSmallScreen ? "mt-1" : ""
+              "max-h-[90px] min-h-[90px] flex items-end gap-4 justify-end",
+              "absolute -bottom-6 right-0"
             )}
           >
-            <div className="dark:gradient-border-mask-storage">
-              <div
-                className={clsx(
-                  "rounded-2xl w-full relative overflow-hidden ",
-                  "dark:bg-transparent",
-                  "bg-white",
-                  isSmallScreen ? "p-2" : "p-4"
-                )}
-              >
-                {/* progess bar */}
-                <div
-                  className={clsx(
-                    "h-full top-0 left-0 absolute z-10",
-                    "dark:bg-[#112C0D]",
-                    "bg-[#E4FFCE]"
-                  )}
-                ></div>
-
-                {/* blur when has news */}
-
-                <div className={clsx("relative z-10 grid grid-cols-8 gap-1")}>
-                  <div className="col-span-2 flex items-center">
-                    <div></div>
-                  </div>
-                  <div className="col-span-3 dark:text-white">
-                    <p
-                      className={
-                        isSmallScreen
-                          ? "font-extrabold  text-sm"
-                          : "font-extrabold"
-                      }
-                    >
-                      Storage
-                    </p>
-                    <div className="flex gap-[7px]">
-                      {/* <img
-                      src={
-                        isFill
-                          ? "/images/icons/time_checked.svg"
-                          : "/images/icons/clock.svg"
-                      }
-                      width={14}
-                      alt="clock"
-                    ></img> */}
-                      <p className="text-sm font-medium "></p>
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1">
-                        {/* <img
-                        src="/images/icons/token_icon.png"
-                        width={14}
-                        height={14}
-                        alt="token"
-                      ></img> */}
-                        <p className="text-xs font-normal "></p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-end col-span-3 "></div>
-                </div>
-              </div>
+            <div className="text-white text-center font-semibold  right-[100px] bottom-0">
+              Tap 10 times to <br />
+              unbox special gift
             </div>
+            <img
+              className="h-[110px] w-[88px]  right-0 bottom-0"
+              src="/images/icons/arrowguide.png"
+              alt=""
+            ></img>
           </div>
         </div>
       </div>

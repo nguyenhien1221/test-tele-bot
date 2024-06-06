@@ -2,7 +2,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from "@mui/material";
 import { missionsTypes } from "../../../constants/missions.constants";
-import { getMissionsByType } from "../Utils/missions";
 import clsx from "clsx";
 import { formatDecimals } from "../../../utils/formatNumber";
 import { useState } from "react";
@@ -36,7 +35,7 @@ const MissionsModal = ({
     setLoadingItem(item.id);
     tele.showPopup(
       {
-        message: `Do you want to open twitter ${item.metadata.name}`,
+        message: `Do you want to open ${item.metadata.name}`,
         buttons: [
           { id: "link", type: "default", text: "Open" },
           { type: "cancel" },
@@ -46,7 +45,9 @@ const MissionsModal = ({
         if (btn === "link") {
           if (item?.task_user === null || !item?.task_user?.completed) {
             tele.openLink(
-              item.type === missionsTypes.TWITTER_FOLLOW ? url : item.metadata.url
+              item.type === missionsTypes.TWITTER_FOLLOW
+                ? url
+                : item.metadata.url
             );
             handleDoMission(item);
             return;
@@ -63,7 +64,7 @@ const MissionsModal = ({
   const handleClickMissionOthers = (item: any) => {
     setLoadingItem(item.id);
     handleDoMission(item);
-  }
+  };
 
   // const handleOpenLink = (item: any) => {
   //   setLoadingItem(item.id);
@@ -181,13 +182,13 @@ const MissionsModal = ({
                         </div>
                         <div className="col-span-3 flex items-center justify-start">
                           {isLoading &&
-                            item.id === loadingItem &&
-                            !item?.task_user?.completed ? (
+                          item.id === loadingItem &&
+                          !item?.task_user?.completed ? (
                             <ItemLoading />
                           ) : (
                             <>
                               <img
-                                src="/images/icons/token_icon.png"
+                                src="/images/icons/token_icon.png?v=3"
                                 className="w-4 h-4"
                                 alt=""
                               ></img>
@@ -199,7 +200,7 @@ const MissionsModal = ({
                         </div>
                       </div>
                     </button>
-                  )
+                  );
                 }
 
                 if (item.type === missionsTypes.TELEGRAM__JOIN) {
@@ -209,7 +210,7 @@ const MissionsModal = ({
                       item={item}
                       reFetch={() => reFetch()}
                     />
-                  )
+                  );
                 }
 
                 return (
@@ -264,13 +265,13 @@ const MissionsModal = ({
                       </div>
                       <div className="col-span-3 flex items-center justify-start">
                         {isLoading &&
-                          item.id === loadingItem &&
-                          !item?.task_user?.completed ? (
+                        item.id === loadingItem &&
+                        !item?.task_user?.completed ? (
                           <ItemLoading />
                         ) : (
                           <>
                             <img
-                              src="/images/icons/token_icon.png"
+                              src="/images/icons/token_icon.png?v=3"
                               className="w-4 h-4"
                               alt=""
                             ></img>
@@ -282,7 +283,7 @@ const MissionsModal = ({
                       </div>
                     </div>
                   </button>
-                )
+                );
               })}
             {/* <div
               className={clsx(

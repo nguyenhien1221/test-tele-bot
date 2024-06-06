@@ -131,7 +131,7 @@ const TeleMissionItem = ({ item, reFetch }: TeleMissionItemType) => {
             ) : (
               <>
                 <img
-                  src="/images/icons/token_icon.png"
+                  src="/images/icons/token_icon.png?v=3"
                   className="w-4 h-4"
                   alt=""
                 ></img>

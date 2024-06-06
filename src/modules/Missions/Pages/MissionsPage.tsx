@@ -17,6 +17,7 @@ import { api } from "../../../config/api";
 import { navPaths } from "../../../constants/navbar.constants";
 
 const MissionsPage = () => {
+  console.debug('cache prune - 2');
   const location = useLocation();
   const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
@@ -173,7 +174,7 @@ const MissionsPage = () => {
       const missionSubgroupOrder =
         Number(missions[i]?.metadata?.subgroup_order) || 999_999_999;
       const subgroupImgUrl =
-        missions[i]?.metadata?.subgroup_img || "/images/timeout.png";
+        missions[i]?.metadata?.subgroup_img || "/images/timeout.png?v=3";
       const group = groups[missionGroupName] || {
         name: missionGroupName,
         order: missionGroupOrder,
@@ -207,6 +208,30 @@ const MissionsPage = () => {
   const modalMissions = missions.filter(
     (item: any) => item.metadata.subgroup_name === isOpen.type
   );
+
+  const sortedGroups = missionGroups.sort((a, b) => {
+    const isACompleted = a.subgroups.every((subgroup) =>
+      subgroup.missions.every(
+        (mission) =>
+          mission?.task_user !== null || mission?.task_user?.completed === true
+      )
+    );
+    const isBCompleted = b.subgroups.every((subgroup) =>
+      subgroup.missions.every(
+        (mission) =>
+          mission?.task_user !== null || mission?.task_user?.completed === true
+      )
+    );
+
+    if (!isACompleted && isBCompleted) {
+      return -1;
+    }
+    if (isACompleted && !isBCompleted) {
+      return 1;
+    }
+    return 0;
+  });
+
   return (
     <>
       {missionsData.isLoading ? (
@@ -294,7 +319,7 @@ const MissionsPage = () => {
                 </div>
               </div>
             </div> */}
-            {missionGroups.map((group, index) => {
+            {sortedGroups.map((group, index) => {
               return (
                 <div
                   key={`mission-group-${index}`}
@@ -308,68 +333,92 @@ const MissionsPage = () => {
                   <div className="pb-[10px] font-semibold dark:text-white">
                     {group.name}
                   </div>
-                  {group.subgroups.map((subgroup, index) => {
-                    const totalMission = subgroup.missions.length;
-                    const doneMission = subgroup.missions.filter(
-                      (mission: any) => mission.task_user?.completed === true
-                    )?.length;
+                  {group.subgroups
+                    .sort((a, b) => {
+                      const isACompleted = a.missions.every(
+                        (mission) =>
+                          mission?.task_user !== null ||
+                          mission?.task_user?.completed === true
+                      );
 
-                    return (
-                      <div
-                        onClick={() => {
-                          handleChooseMission(subgroup.name, subgroup.missions);
-                        }}
-                        key={index}
-                        className={clsx(
-                          "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
-                          "dark:gradient-border-mask-mission dark:bg-transparent",
-                          "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
-                          "dark:drop-shadow-none"
-                        )}
-                      >
-                        <div className="col-span-2 flex items-center">
-                          <div>
-                            <img
-                              src={subgroup.subgroup_img}
-                              width={48}
-                              height={48}
-                              alt="storage"
-                            ></img>
+                      const isBCompelted = b.missions.every(
+                        (mission) =>
+                          mission?.task_user !== null ||
+                          mission?.task_user?.completed === true
+                      );
+                      if (!isACompleted && isBCompelted) {
+                        return -1;
+                      }
+                      if (isACompleted && !isBCompelted) {
+                        return 1;
+                      }
+                      return 0;
+                    })
+                    .map((subgroup, index) => {
+                      const totalMission = subgroup.missions.length;
+                      const doneMission = subgroup.missions.filter(
+                        (mission: any) => mission.task_user?.completed === true
+                      )?.length;
+
+                      return (
+                        <div
+                          onClick={() => {
+                            handleChooseMission(
+                              subgroup.name,
+                              subgroup.missions
+                            );
+                          }}
+                          key={index}
+                          className={clsx(
+                            "btn-hover dark:btn-click z-10 relative cursor-pointer grid grid-cols-10 gap-3 bg-white rounded-2xl p-4 w-full mb-[18px] ",
+                            "dark:gradient-border-mask-mission dark:bg-transparent",
+                            "border-[3px] border-[#97C35B] border-solid drop-shadow-[0_4px_0px_#4D7F0C]",
+                            "dark:drop-shadow-none"
+                          )}
+                        >
+                          <div className="col-span-2 flex items-center">
+                            <div>
+                              <img
+                                src={subgroup.subgroup_img}
+                                width={48}
+                                height={48}
+                                alt="storage"
+                              ></img>
+                            </div>
+                          </div>
+                          <div className="col-span-8 flex items-center dark:text-white">
+                            <div className="">
+                              <p className="font-semibold text-base">
+                                {subgroup.name}
+                              </p>
+                              {doneMission === totalMission ? (
+                                <div className="flex items-center text-sm">
+                                  <img
+                                    src="/images/daily/mission_complete.png"
+                                    className="dark:hidden inline-block w-4 mr-1"
+                                    alt=""
+                                  ></img>
+                                  <img
+                                    src="/images/daily/dark_mission_complete.png"
+                                    className="hidden dark:inline-block w-4 mr-1"
+                                    alt=""
+                                  ></img>
+                                  <span>{`Completed (${doneMission}/${totalMission})`}</span>
+                                </div>
+                              ) : (
+                                <div className="flex items-center text-sm">
+                                  <Progress
+                                    className="mr-1"
+                                    value={(doneMission / totalMission) * 100}
+                                  />
+                                  <span>{`In progress (${doneMission}/${totalMission})`}</span>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
-                        <div className="col-span-8 flex items-center dark:text-white">
-                          <div className="">
-                            <p className="font-semibold text-base">
-                              {subgroup.name}
-                            </p>
-                            {doneMission === totalMission ? (
-                              <div className="flex items-center text-sm">
-                                <img
-                                  src="/images/daily/mission_complete.png"
-                                  className="dark:hidden inline-block w-4 mr-1"
-                                  alt=""
-                                ></img>
-                                <img
-                                  src="/images/daily/dark_mission_complete.png"
-                                  className="hidden dark:inline-block w-4 mr-1"
-                                  alt=""
-                                ></img>
-                                <span>{`Completed (${doneMission}/${totalMission})`}</span>
-                              </div>
-                            ) : (
-                              <div className="flex items-center text-sm">
-                                <Progress
-                                  className="mr-1"
-                                  value={(doneMission / totalMission) * 100}
-                                />
-                                <span>{`In progress (${doneMission}/${totalMission})`}</span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
                 </div>
               );
             })}

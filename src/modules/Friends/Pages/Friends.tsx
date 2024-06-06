@@ -1,16 +1,24 @@
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useGetAcountReferees from "../Hooks/useGetAcountReferees";
 import { Slide, ToastContainer, toast } from "react-toastify";
 import clsx from "clsx";
 import { navPaths } from "../../../constants/navbar.constants";
 import { formatDecimals } from "../../../utils/formatNumber";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useState } from "react";
+import QRcodeModal from "../Components/QRcodeModal";
 
 const Friends = () => {
+  console.debug("cache prune");
   const mode = localStorage.getItem("mode");
   const navigate = useNavigate();
+  const location = useLocation();
   const tele = window.Telegram.WebApp;
+
+  const isFromUpgradeBox = location?.state?.fromUpgradeBox ?? false;
+
+  const [isOpenQR, setIsOpenQR] = useState<boolean>(false);
 
   const userID = tele.initDataUnsafe?.user?.id;
   const isSmallScreen = window.innerHeight <= 520;
@@ -20,10 +28,14 @@ const Friends = () => {
   tele.BackButton.show();
   tele.BackButton.onClick(() => handleBackBtn());
   const handleBackBtn = () => {
+    if (isFromUpgradeBox) {
+      navigate(navPaths.UPGRADE_BOX);
+      return;
+    }
     navigate("/");
   };
 
-  const defaultInviteTextEncoded = `%0ASEED%20App%20-%20where%20every%20SEED%20is%20the%20genesis%20of%20everything.%0A%0AJoin%20now%20with%20me%20as%20an%20early%20bird%20%E2%80%94%20SEED%20just%20launched%20with%20huge%20potential%21%0A%0APlant-to-earn%20from%20thousands%20of%20Web3%20projects%20in%20SEED%20ecosystem%20with%20me.%0A%F0%9F%A5%B3%20%2B0.1%20SEED%20as%20a%20welcome%20gift%0A%F0%9F%92%B2Earn%2020%25%20cashback%20from%20frens`;
+  const defaultInviteTextEncoded = `SEED%20App%20-%20where%20every%20SEED%20is%20the%20genesis%20of%20everything.%0AJoin%20now%20with%20me%20as%20an%20early%20bird%20%E2%80%94%20SEED%20just%20launched%20with%20huge%20potential%21%0APlant-to-earn%20from%20thousands%20of%20Web3%20projects%20in%20SEED%20ecosystem%20with%20me.%0A%F0%9F%A5%B3%20%2B0.1%20SEED%20as%20a%20welcome%20gift%0A%F0%9F%92%B2Earn%2020%25%20cashback%20from%20frens`;
 
   const totalRefAmount =
     (AcountReferees?.data?.data?.data || []).reduce(
@@ -32,10 +44,12 @@ const Friends = () => {
     ) || 0;
 
   const handleCopyLink = () => {
-    toast.success("Link copied to clipboard", {
-      autoClose: 2000,
-      style: { maxWidth: 337, height: 40, borderRadius: 8 },
-    });
+    !toast.isActive("copy_link") &&
+      toast.success("Link copied to clipboard", {
+        toastId: "copy_link",
+        autoClose: 2000,
+        style: { maxWidth: 337, height: 40, borderRadius: 8 },
+      });
   };
 
   const handleShareLink = () => {
@@ -51,7 +65,7 @@ const Friends = () => {
   };
 
   return (
-    <div className="pt-[42px] px-4 pb-[100px] bg-[#F2FFE0] dark:bg-transparent h-screen relative bottom-0 z-0">
+    <div className="pt-[42px] px-4 pb-[100px] bg-[#F2FFE0] dark:bg-transparent h-screen relative z-30">
       <ToastContainer
         position="top-left"
         closeOnClick
@@ -95,7 +109,7 @@ const Friends = () => {
         <div className="flex items-center gap-3">
           <img
             className="h-[31px] w-[31px]"
-            src="/images/icons/token_icon.png"
+            src="/images/icons/token_icon.png?v=3"
             width={119}
             height={99}
             alt="token"
@@ -149,7 +163,7 @@ const Friends = () => {
                 >
                   <div className="col-span-2 flex ">
                     <img
-                      src="/images/icons/user.svg"
+                      src="/images/icons/user.png?v=3"
                       width={48}
                       height={48}
                       alt="avt"
@@ -182,7 +196,7 @@ const Friends = () => {
                           You received:
                         </span>
                         <img
-                          src="/images/icons/token_icon.png"
+                          src="/images/icons/token_icon.png?v=3"
                           width={18}
                           height={18}
                           alt="token"
@@ -199,30 +213,70 @@ const Friends = () => {
       )}
 
       <div className="absolute bottom-[30px] right-4 left-4">
-        <div className="flex">
-          <Button
-            onClick={() => handleShareLink()}
-            className={clsx(
-              "font-bold capitalize text-[16px] text-white py-[18px] w-full rounded-xl ",
-              "btn-hover  bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
-            )}
-          >
-            Invite
-          </Button>
-          <CopyToClipboard
-            text={`${process.env.REACT_APP_BOT_URL}startapp=${String(userID)}`}
-          >
-            <Button
-              onClick={() => handleCopyLink()}
-              startIcon={<img src="images/icons/copy.svg" alt="copy" />}
+        <div className="grid grid-cols-5 gap-1">
+          <div className="col-span-3">
+            <button
+              onClick={handleShareLink}
               className={clsx(
-                "font-bold capitalize text-[16px] text-white py-[18px] w-full rounded-xl ",
-                "btn-hover  bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
+                "font-bold text-white py-[18px] w-full rounded-xl flex items-center justify-center gap-2",
+                "btn-hover bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
               )}
-            ></Button>
-          </CopyToClipboard>
+            >
+              Invite a friend
+              <img
+                className="w-5 h-[22px]"
+                src="images/icons/invite.svg"
+                alt=""
+              ></img>
+            </button>
+          </div>
+          <div className="col-span-1 flex justify-center">
+            <CopyToClipboard
+              text={`${process.env.REACT_APP_BOT_URL}startapp=${String(
+                userID
+              )}`}
+            >
+              <Button
+                onClick={() => handleCopyLink()}
+                className={clsx(
+                  "font-bold text-white p-0 w-full rounded-xl h-full flex items-center justify-center",
+                  "btn-hover bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
+                )}
+              >
+                <img
+                  className="w-[30px]"
+                  src="images/icons/copy.svg"
+                  alt=""
+                ></img>
+              </Button>
+            </CopyToClipboard>
+          </div>
+          <div className="col-span-1 flex justify-center">
+            <Button
+              onClick={() => setIsOpenQR(true)}
+              className={clsx(
+                "font-bold text-[16px] text-white p-0 w-full rounded-xl h-full flex items-center justify-center",
+                "btn-hover bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
+              )}
+            >
+              <img
+                className="w-[30px]"
+                src="images/icons/qr_code.svg"
+                alt=""
+              ></img>
+            </Button>
+          </div>
         </div>
       </div>
+
+      {isOpenQR && (
+        <QRcodeModal
+          inviteLink={`${process.env.REACT_APP_BOT_URL}startapp=${String(
+            userID
+          )}`}
+          handleClose={() => setIsOpenQR(false)}
+        />
+      )}
     </div>
   );
 };

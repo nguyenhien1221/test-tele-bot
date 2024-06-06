@@ -8,7 +8,9 @@ import AuthLayout from "../components/layouts/AuthLayout";
 import { registerRoute } from "../modules/Register/route";
 import { leaderboardRoute } from "../modules/LeaderBoard/route";
 import { anouncementRoute } from "../modules/Global/route";
+import { tutRoute, votingRoute } from "../modules/Voting/route";
 import { dappRoute } from "../modules/Dapp/route";
+import { mysteryBoxRoute } from "../modules/MysteryBox/route";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +29,9 @@ export const router = createBrowserRouter([
           leaderboardRoute,
           anouncementRoute,
           dappRoute,
+          votingRoute,
+          mysteryBoxRoute,
+          tutRoute,
         ],
       },
     ],
@@ -36,5 +41,3 @@ export const router = createBrowserRouter([
     Component: undefined,
   },
 ]);
-
-console.log("cache prune");
