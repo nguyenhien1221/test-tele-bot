@@ -25,25 +25,25 @@ const Voting = () => {
 
   const VotingGames = useGetVotingGames();
   const votingGames = VotingGames?.data?.data?.data;
-
-  const gameStartAt = new Date(
-    votingGames && votingGames[0]?.started_at
-  ).getTime();
-  const gameEndAt = new Date(votingGames && votingGames[0]?.ended_at).getTime();
-  const treasuryBase =
-    Number(votingGames && votingGames[0]?.treasury_base) / 10 ** 9;
-  const treasuryPerVote =
-    Number(votingGames && votingGames[0]?.treasury_per_vote) / 10 ** 9;
-
-  const treasuryCap =
-    Number(votingGames && votingGames[0]?.treasury_cap) / 10 ** 9;
-
-  const totalVote = Number(votingGames && votingGames[0]?.total_vote);
   const gameId = votingGames && votingGames[0]?.id;
-  const gameSeason = votingGames && votingGames[0]?.season;
 
   const VotingGameDetail = useGetVotingGameDetail(gameId);
   const votingDetail = VotingGameDetail?.data?.data?.data;
+
+  const gameSeason = votingDetail && votingDetail?.season;
+  const gameStartAt = new Date(
+      votingDetail && votingDetail?.started_at
+  ).getTime();
+  const gameEndAt = new Date(votingDetail && votingDetail?.ended_at).getTime();
+  const treasuryBase =
+      Number(votingDetail && votingDetail?.treasury_base) / 10 ** 9;
+  const treasuryPerVote =
+      Number(votingDetail && votingDetail?.treasury_per_vote) / 10 ** 9;
+
+  const treasuryCap =
+      Number(votingDetail && votingDetail?.treasury_cap) / 10 ** 9;
+
+  const totalVote = Number(votingDetail && votingDetail?.total_vote);
 
   // const VotingGameDetail = useGetVotingGameDetail(gameId);
   // const votingDetail = VotingGameDetail?.data?.data?.data;
@@ -66,12 +66,12 @@ const Voting = () => {
         stacked
         className="top-3 max-w-[337px] left-[50%] -translate-x-[50%]"
       />
-      {VotingGames.isLoading ? (
+      {VotingGames.isLoading || VotingGameDetail.isLoading ? (
         <Loading />
       ) : (
         <>
           <div className="pt-5 bg-[#F2FFE0] dark:bg-transparent h-screen flex flex-col relative z-30">
-            {votingGames && votingGames?.length > 0 ? (
+            {votingDetail ? (
               <>
                 {/* Header */}
                 <div className="relative z-40 px-4 flex flex-col gap-[5px] lsm:gap-[10px]">

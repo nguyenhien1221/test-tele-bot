@@ -19,7 +19,8 @@ const NotifiModal = ({ isOpen, handleClose }: ModalProps) => {
           Congratulations
         </h2>
         <p className="text-center font-normal mb-6">
-          You got 2x SPEED 🧭 Exclusive to accounts created in the Beta version.
+          You got x2 speed exclusive to accounts created in the early stages of
+          the main version.
         </p>
         <div className="flex justify-center ">
           <Button

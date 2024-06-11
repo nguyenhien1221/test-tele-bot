@@ -11,7 +11,7 @@ import QRcodeModal from "../Components/QRcodeModal";
 
 const Friends = () => {
   console.debug("cache prune");
-  const mode = localStorage.getItem("mode");
+  // const mode = localStorage.getItem("mode");
   const navigate = useNavigate();
   const location = useLocation();
   const tele = window.Telegram.WebApp;
@@ -60,9 +60,9 @@ const Friends = () => {
     );
   };
 
-  const handleNavigateLeaderBoard = () => {
-    navigate(navPaths.LEADERBOARD);
-  };
+  // const handleNavigateLeaderBoard = () => {
+  //   navigate(navPaths.LEADERBOARD);
+  // };
 
   return (
     <div className="pt-[42px] px-4 pb-[100px] bg-[#F2FFE0] dark:bg-transparent h-screen relative z-30">
@@ -74,37 +74,37 @@ const Friends = () => {
         limit={1}
         className="top-3 max-w-[337px] left-[50%] -translate-x-[50%]"
       />
-      <div className="mb-5 pb-1">
-        <button
-          onClick={handleNavigateLeaderBoard}
-          className="btn-hover bg-white w-full border-[1px] border-[#4D7F0C] drop-shadow-[0_4px_0px_#4D7F0C] py-[6px] px-[7px] rounded-[30px]"
-        >
-          <div className="grid grid-cols-10">
-            <span className="col-span-9 text-left flex items-center">
-              <img
-                src="/images/leaderboard/leaderboardicon.png"
-                className="w-[37px] h-[34px] col-span-1"
-                alt=""
-              ></img>
-              <p className="text-sm font-semibold pl-2">Referral leaderboard</p>
-            </span>
-            <div className="col-span-1 flex items-center justify-center">
-              <svg
-                width="8"
-                height="16"
-                viewBox="0 0 6 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1.6875 1.3125L5.6875 5.28125C5.875 5.5 6 5.75 6 6C6 6.21875 5.875 6.5 5.6875 6.6875L1.6875 10.6562C1.40625 10.9375 0.96875 11.0312 0.59375 10.875C0.21875 10.7188 0 10.4062 0 10V2C0 1.625 0.21875 1.25 0.59375 1.09375C0.96875 0.9375 1.40625 1.03125 1.6875 1.3125Z"
-                  fill={mode === "dark" ? "black" : "black"}
-                />
-              </svg>
-            </div>
-          </div>
-        </button>
-      </div>
+      {/*<div className="mb-5 pb-1">*/}
+      {/*  <button*/}
+      {/*    onClick={handleNavigateLeaderBoard}*/}
+      {/*    className="btn-hover bg-white w-full border-[1px] border-[#4D7F0C] drop-shadow-[0_4px_0px_#4D7F0C] py-[6px] px-[7px] rounded-[30px]"*/}
+      {/*  >*/}
+      {/*    <div className="grid grid-cols-10">*/}
+      {/*      <span className="col-span-9 text-left flex items-center">*/}
+      {/*        <img*/}
+      {/*          src="/images/leaderboard/leaderboardicon.png"*/}
+      {/*          className="w-[37px] h-[34px] col-span-1"*/}
+      {/*          alt=""*/}
+      {/*        ></img>*/}
+      {/*        <p className="text-sm font-semibold pl-2">Referral leaderboard</p>*/}
+      {/*      </span>*/}
+      {/*      <div className="col-span-1 flex items-center justify-center">*/}
+      {/*        <svg*/}
+      {/*          width="8"*/}
+      {/*          height="16"*/}
+      {/*          viewBox="0 0 6 12"*/}
+      {/*          fill="none"*/}
+      {/*          xmlns="http://www.w3.org/2000/svg"*/}
+      {/*        >*/}
+      {/*          <path*/}
+      {/*            d="M1.6875 1.3125L5.6875 5.28125C5.875 5.5 6 5.75 6 6C6 6.21875 5.875 6.5 5.6875 6.6875L1.6875 10.6562C1.40625 10.9375 0.96875 11.0312 0.59375 10.875C0.21875 10.7188 0 10.4062 0 10V2C0 1.625 0.21875 1.25 0.59375 1.09375C0.96875 0.9375 1.40625 1.03125 1.6875 1.3125Z"*/}
+      {/*            fill={mode === "dark" ? "black" : "black"}*/}
+      {/*          />*/}
+      {/*        </svg>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </button>*/}
+      {/*</div>*/}
       <div className="flex flex-col items-center dark:text-white">
         <div className="flex items-center gap-3">
           <img

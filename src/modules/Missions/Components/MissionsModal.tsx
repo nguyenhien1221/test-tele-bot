@@ -41,7 +41,7 @@ const MissionsModal = ({
           { type: "cancel" },
         ],
       },
-      function (btn: any) {
+      async function (btn: any) {
         if (btn === "link") {
           if (item?.task_user === null || !item?.task_user?.completed) {
             tele.openLink(
@@ -49,6 +49,7 @@ const MissionsModal = ({
                 ? url
                 : item.metadata.url
             );
+            await new Promise((r) => setTimeout(r, 3000));
             handleDoMission(item);
             return;
           }

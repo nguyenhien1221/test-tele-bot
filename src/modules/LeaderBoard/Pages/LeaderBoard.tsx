@@ -13,7 +13,7 @@ import { useState } from "react";
 import useGetUserRank from "../Hooks/useGetUserRank";
 
 const LeaderBoard = () => {
-  console.debug("cache prune - 2");
+  console.debug('cache prune - 2');
   const navigate = useNavigate();
   const tele = window.Telegram.WebApp;
   const LeaderBoardData = useGetLeaderBoard();

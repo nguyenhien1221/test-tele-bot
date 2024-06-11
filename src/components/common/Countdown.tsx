@@ -6,7 +6,7 @@ const containerClassName = "flex items-center",
   descriptionClassName = "text-sm font-medium ";
 
 const showdayValueClassName =
-    "flex justify-center items-center tracking-tighter w-[53px] h-[53px] rounded text-white font-bold text-[24px] bg-[#F2FFE0] border-y-[26px] border-t-[#9CC861] border-b-[#74B121]",
+    "flex justify-center items-center tracking-tighter w-[53.3px] h-[52.4px] rounded text-white font-bold text-[24px] bg-[#F2FFE0] border-y-[26.5px] border-t-[#9CC861] border-b-[#74B121]",
   showdaydescriptionClassName = "tracking text-[10px]",
   showdayContainerClassName = "flex flex-col justify-center items-center gap-1";
 
@@ -28,14 +28,14 @@ export default function Countdown({
       renderer={({ days, hours, minutes, seconds }: any) => {
         return !!isShowDay ? (
           <div className="grid grid-cols-[repeat(7,auto)] gap-[10px]">
-            <div className={days !== 0 ? showdayContainerClassName : "hidden"}>
+            <div className={showdayContainerClassName}>
               <div className={showdayValueClassName}>
                 {String(days).padStart(2, "0")}
               </div>
               <div className={showdaydescriptionClassName}>DAYS</div>
             </div>
             <div className="flex text-4xl text-[#86B04A] mt-[1px]">:</div>
-            <div className={hours !== 0 ? showdayContainerClassName : "hidden"}>
+            <div className={showdayContainerClassName}>
               <div className={showdayValueClassName}>
                 {String(hours).padStart(2, "0")}
               </div>

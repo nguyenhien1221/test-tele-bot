@@ -12,6 +12,7 @@ export const navPaths = {
   DAPP: "/dapp",
   MYSTERY_BOX: "/mystery-box",
   UPGRADE_BOX: "/upgrade-box",
+  OPEN_BOX: "/open-box",
 };
 
 export interface NavBarItem {

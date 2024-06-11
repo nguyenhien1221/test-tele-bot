@@ -152,9 +152,11 @@ const UpgradeBox = () => {
             <UpgradeBoxItem level={boxLevel + 1} />
             <div className="flex justify-center text-sm">
               {BoxUpgradeInfo.data &&
-                !!BoxUpgradeInfo.data?.data?.data[boxLevel + 1] && (
+                BoxUpgradeInfo.data?.data?.data[boxLevel + 1] !== undefined && (
                   <div>
-                    <p>{`(${BoxUpgradeInfo.data?.data?.data[boxLevel + 1]} ${
+                    <p className="text-[#000] dark:text-[#fff]">{`(${
+                      BoxUpgradeInfo.data?.data?.data[boxLevel + 1]
+                    } ${
                       BoxUpgradeInfo.data?.data?.data[boxLevel + 1] <= 1
                         ? "Box"
                         : "Boxes"

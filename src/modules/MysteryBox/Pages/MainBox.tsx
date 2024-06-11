@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import clsx from "clsx";
 import Countdown from "../../../components/common/Countdown";
 import { useScreenSize } from "../../../Hooks/useScreenSize";
@@ -6,6 +7,9 @@ import { navPaths } from "../../../constants/navbar.constants";
 import { useBoxSettings } from "../../../store/boxSettingsStore";
 import useGetMyBox from "../Hooks/useGetMyBox";
 import Loading from "../../../components/common/Loading";
+import { LoadingButton } from "@mui/lab";
+import CaptChaModal from "../Components/CaptChaModal";
+import { useState } from "react";
 
 const MainBox = () => {
   const tele = window.Telegram.WebApp;
@@ -13,6 +17,8 @@ const MainBox = () => {
   const { height } = useScreenSize();
   const BoxSettings = useBoxSettings((state: any) => state.myBoxSettings);
   const MyBox = useGetMyBox();
+
+  const [isCapchaModalOpen, setisCapchaModalOpen] = useState<boolean>(false);
 
   const boxLevel =
     MyBox.data?.data?.data?.level + MyBox.data?.data?.data?.upgrades?.length;
@@ -30,6 +36,16 @@ const MainBox = () => {
 
   const handleGetLevelUpBox = () => {
     navigate(navPaths.UPGRADE_BOX);
+  };
+
+  const handleCheckCaptcha = () => {
+    setisCapchaModalOpen(true);
+  };
+
+  const handleOpenBox = (value: any) => {
+    console.log(value);
+    setisCapchaModalOpen(false);
+    navigate(navPaths.OPEN_BOX);
   };
 
   return (
@@ -69,15 +85,18 @@ const MainBox = () => {
         )}
         <div className="absolute bottom-[30px] right-4 left-4">
           <div className="col-span-3">
-            {isAbleToOpenBox ? (
-              <button
-                className={clsx(
-                  "font-extrabold text-white py-[18px] w-full rounded-xl flex items-center justify-center gap-2",
-                  "btn-hover bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
-                )}
-              >
-                Open
-              </button>
+            {!isAbleToOpenBox ? (
+              <>
+                <LoadingButton
+                  onClick={() => handleCheckCaptcha()}
+                  className={clsx(
+                    "font-extrabold normal-case text-white py-[18px] w-full rounded-xl flex items-center justify-center gap-2",
+                    "btn-hover bg-gradient-to-r from-[#97C35B] to-[#61A700] drop-shadow-[0_4px_0px_#4C7E0B]"
+                  )}
+                >
+                  Open
+                </LoadingButton>
+              </>
             ) : (
               <button
                 onClick={() =>
@@ -108,6 +127,16 @@ const MainBox = () => {
           </div>
         </div>
       </div>
+      {isCapchaModalOpen && (
+        <CaptChaModal
+          handleClose={() => {
+            setisCapchaModalOpen(false);
+          }}
+          handleOpenBox={(value) => {
+            handleOpenBox(value);
+          }}
+        />
+      )}
     </>
   );
 };

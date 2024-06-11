@@ -129,6 +129,9 @@ const Home = () => {
 
   const isReadNewMessage = LatestMessageTime?.date > Number(ReadMessageTime);
 
+  const isMysteryBoxDataLoading =
+    MyBox.isPending || BoxMe.isPending || BoxSettings.isPending;
+
   let OPEN_BOX_DAY = 0;
 
   if (BoxSettings.data) {
@@ -477,6 +480,8 @@ const Home = () => {
       });
   };
 
+  const handleClickEgg = () => {};
+
   return (
     <>
       {AcountData.isLoading ? (
@@ -525,22 +530,6 @@ const Home = () => {
                   </p>
                 </div>
               </div>
-
-              {/* game btn  */}
-              {/* <button
-                className={clsx(
-                  "btn-hover z-20  rounded-lg w-[44px] h-[44px] flex justify-center items-center",
-                  "absolute right-0 top-4",
-                  "bg-[#FFFFFF] border-[2px] border-[#A1C96D]  drop-shadow-[0_2px_0px_#4C7E0B]",
-                  "dark:radial-bg dark:border-[1px] dark:border-[#B0D381]"
-                )}
-              >
-                <img
-                  className="w-[30px] h-[30px]"
-                  src={"/images/game.png"}
-                  alt=""
-                />
-              </button> */}
             </div>
             <div className="flex justify-center relative mt-2">
               {isX4 ? (
@@ -581,19 +570,37 @@ const Home = () => {
               {/* mystery box btn */}
               {isDayToOpenBox &&
                 BoxMe.data?.data?.data?.initial_box_level > 0 && (
-                  <button
-                    onClick={handleNavigateToBox}
-                    className={clsx(
-                      "btn-hover z-20  rounded-lg w-[44px] h-[44px] flex justify-center items-center",
-                      "absolute left-0 -bottom-[65px]"
+                  <>
+                    {false ? (
+                      <button
+                        onClick={handleNavigateToBox}
+                        className={clsx(
+                          "btn-hover z-20  rounded-lg w-[44px] h-[44px] flex justify-center items-center",
+                          "absolute left-0 -bottom-[65px]"
+                        )}
+                      >
+                        <img
+                          className="w-[44px] h-[44px]"
+                          src={`/images/box/${boxLevel}.png?v=3`}
+                          alt=""
+                        />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleClickEgg}
+                        className={clsx(
+                          "z-20  rounded-lg w-[44px] h-[44px] flex justify-center items-center",
+                          "absolute left-0 -bottom-[65px]"
+                        )}
+                      >
+                        <img
+                          className="w-[44px] h-[44px]"
+                          src={`/images/egg/${boxLevel}.png?v=3`}
+                          alt=""
+                        />
+                      </button>
                     )}
-                  >
-                    <img
-                      className="w-[44px] h-[44px]"
-                      src={`/images/box/${boxLevel}.png?v=3`}
-                      alt=""
-                    />
-                  </button>
+                  </>
                 )}
 
               {/* daily mission btn  */}
@@ -849,7 +856,8 @@ const Home = () => {
         />
       )}
 
-      {isOpenMysteryBox &&
+      {!isMysteryBoxDataLoading &&
+        isOpenMysteryBox &&
         isDayToOpenBox &&
         hasBox &&
         BoxMe.data?.data?.data?.initial_box_level > 0 && (
