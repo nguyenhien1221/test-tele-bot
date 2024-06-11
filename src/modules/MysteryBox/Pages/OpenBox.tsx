@@ -2,7 +2,6 @@ import clsx from "clsx";
 import { useScreenSize } from "../../../Hooks/useScreenSize";
 import useGetMyBox from "../Hooks/useGetMyBox";
 import Loading from "../../../components/common/Loading";
-import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
 
 const OpenBox = () => {
